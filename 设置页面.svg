@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="480" height="420" viewBox="0 0 480 420" xmlns="http://www.w3.org/2000/svg" style="background-color: #F9F9F9;">
+    <style>
+        .page-title { font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: 600; fill: #333333; }
+        .section-title { font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: 500; fill: #333333; }
+        .main-text { font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #333333; }
+        .sub-text { font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #666666; }
+        .btn-text { font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; font-size: 13px; font-weight: 500; fill: white; text-anchor: middle; }
+        .link-text { font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #337AB7; text-decoration: underline; cursor: pointer; }
+        .input-text { font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #333333; }
+        .delete-btn { font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #C9302C; cursor: pointer; text-anchor: middle; }
+        .tag { font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; font-size: 11px; font-weight: 500; fill: white; text-anchor: middle; }
+        .checkbox-label { font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #333333; cursor: pointer;}
+        .checkmark { font-size: 14px; fill: #4A90E2; text-anchor: middle; font-weight: bold; }
+    </style>
+
+    <text x="30" y="45" class="page-title">EasyCV 设置</text>
+
+    <g transform="translate(30, 70)">
+        <rect width="420" height="70" rx="4" ry="4" fill="#F5F5F5" stroke="#E3E3E3"/>
+        <text x="15" y="28" class="main-text" style="font-weight: 500;">
+            <tspan x="15">我们郑重承诺：绝不追踪您的浏览历史，</tspan>
+            <tspan x="15" dy="1.4em">绝不收集您的个人数据。您的信任高于一切。</tspan>
+        </text>
+        <text x="405" y="42" class="link-text" text-anchor="end">查看开源代码</text>
+    </g>
+
+    <g transform="translate(30, 165)">
+        <text class="section-title">自动开启列表</text>
+        <text y="20" class="sub-text">在以下网站访问时，将自动为您开启指定功能。</text>
+        
+        <g transform="translate(0, 40)">
+            <rect width="320" height="34" rx="4" ry="4" fill="white" stroke="#CCCCCC"/>
+            <text x="10" y="22" class="input-text" fill="#999">输入域名 (如 example.com)</text>
+            <g transform="translate(330, 0)" style="cursor: pointer;">
+                <rect width="90" height="34" rx="4" ry="4" fill="#4A90E2"/>
+                <text x="45" y="22" class="btn-text">添加</text>
+            </g>
+        </g>
+        
+        <g transform="translate(0, 90)" class="checkbox-label">
+            <g transform="translate(0, 0)">
+                <rect x="0" y="-7" width="14" height="14" rx="2" fill="#E9F2FC" stroke="#4A90E2"/>
+                <text x="7" y="4" class="checkmark">✓</text>
+                <text x="22" y="5">仅解锁复制</text>
+            </g>
+             
+            <g transform="translate(120, 0)">
+                <rect x="0" y="-7" width="14" height="14" rx="2" fill="white" stroke="#CCCCCC"/>
+                <text x="22" y="5">仅解锁粘贴</text>
+            </g>
+             
+            <g transform="translate(240, 0)">
+                <rect x="0" y="-7" width="14" height="14" rx="2" fill="white" stroke="#CCCCCC"/>
+                <text x="22" y="5">全部解锁</text>
+            </g>
+        </g>
+        
+        <g transform="translate(0, 125)" class="sub-text" style="font-weight: 500;">
+            <rect width="420" height="25" fill="#F0F0F0" rx="2"/>
+            <text x="15" y="17">网站域名</text>
+            <text x="250" y="17">自动设置</text>
+            <text x="370" y="17">操作</text>
+        </g>
+        
+        <g transform="translate(0, 150)">
+            <rect width="420" height="40" fill="white" stroke="#EAEAEA" stroke-width="0 1 1 1"/>
+            <text x="15" y="25" class="input-text">developer.mozilla.org</text>
+            <g transform="translate(250, 10)">
+                <rect width="60" height="20" rx="10" fill="#4A90E2" />
+                <text x="30" y="14" class="tag">仅复制</text>
+            </g>
+            <text x="385" y="25" class="delete-btn" title="删除">🗑</text>
+        </g>
+        
+        <g transform="translate(0, 190)">
+            <rect width="420" height="40" fill="white" stroke="#EAEAEA" stroke-width="0 1 1 1"/>
+            <text x="15" y="25" class="input-text">192.168.1.1</text>
+            <g transform="translate(250, 10)">
+                <rect width="60" height="20" rx="10" fill="#5CB85C" />
+                <text x="30" y="14" class="tag">全部解锁</text>
+            </g>
+            <text x="385" y="25" class="delete-btn" title="删除">🗑</text>
+        </g>
+    </g>
+</svg>
