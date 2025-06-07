@@ -25,6 +25,8 @@
         .settings-link-text { font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #337AB7; text-decoration: underline; cursor: pointer; }
         .checkbox-label { font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #333333; cursor: pointer;}
         .checkmark { font-size: 14px; fill: #4A90E2; text-anchor: middle; font-weight: bold; }
+
+        .fixed-text { font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #333333; text-anchor: start; }
     </style>
     
     <g id="popup-row">
@@ -107,22 +109,20 @@
     </g>
     
     <g id="settings-row">
-        <g transform="translate(40, 580)">
+        <g transform="translate(40, 600)">
             <text x="240" y="-15" class="title">6. 设置页面 (已更新)</text>
             <g class="settings-container">
                 <rect width="480" height="420" rx="4" fill="#FDFDFD" stroke="#CCCCCC"/>
                 <text x="30" y="45" class="page-title">EasyCV 设置</text>
                 <g transform="translate(30, 70)">
                     <rect width="420" height="70" rx="4" ry="4" fill="#F5F5F5" stroke="#E3E3E3"/>
-                    <text x="15" y="28" class="main-text" text-anchor="start">
-                        <tspan x="15">我们郑重承诺：绝不追踪您的浏览历史，</tspan>
-                        <tspan x="15" dy="1.4em">绝不收集您的个人数据。您的信任高于一切。</tspan>
-                    </text>
+                    <text x="15" y="25" class="fixed-text">我们郑重承诺：绝不追踪您的浏览历史，</text>
+                    <text x="15" y="45" class="fixed-text">绝不收集您的个人数据。您的信任高于一切。</text>                    
                     <text x="405" y="42" class="settings-link-text" text-anchor="end">查看开源代码</text>
                 </g>
                 <g transform="translate(30, 165)">
                     <text class="section-title">自动开启列表</text>
-                    <text y="20" class="sub-text">在以下网站访问时，将自动为您开启指定功能。</text>
+                    <text x="126" y="20" class="sub-text">在以下网站访问时，将自动为您开启指定功能。</text>
                     <g transform="translate(0, 40)">
                         <rect width="320" height="34" rx="4" ry="4" fill="white" stroke="#CCCCCC"/>
                         <text x="10" y="22" class="input-text" fill="#999">输入域名 (如 example.com)</text>
