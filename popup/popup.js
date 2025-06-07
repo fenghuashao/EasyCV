@@ -120,6 +120,14 @@ class PopupManager {
       });
     }
     
+    // 添加到自动开启按钮
+    const addToAutoBtn = document.getElementById('addToAutoBtn');
+    if (addToAutoBtn) {
+      addToAutoBtn.addEventListener('click', () => {
+        this.handleAddToAutoEnable();
+      });
+    }
+    
     // 测试复制按钮
     const testCopyBtn = document.getElementById('testCopyBtn');
     if (testCopyBtn) {
@@ -300,6 +308,40 @@ class PopupManager {
   }
   
   /**
+   * 处理添加到自动开启列表
+   */
+  async handleAddToAutoEnable() {
+    try {
+      if (!this.currentTab || !this.currentTab.url) {
+        this.showNotification('无法获取当前页面信息', 'error');
+        return;
+      }
+      
+      const url = new URL(this.currentTab.url);
+      const domain = url.hostname;
+      
+      // 检查是否已在列表中
+      const autoEnableList = await this.storageUtils.getAutoEnableList();
+      if (autoEnableList.includes(domain)) {
+        this.showNotification('该网站已在自动开启列表中', 'info');
+        return;
+      }
+      
+      // 添加到列表
+      await this.storageUtils.addToAutoEnableList(domain);
+      
+      this.showNotification(`已将 ${domain} 添加到自动开启列表`, 'success');
+      
+      // 更新按钮状态
+      this.updateAutoEnableButton();
+      
+    } catch (error) {
+      console.error('Failed to add to auto enable list:', error);
+      this.showNotification('添加失败', 'error');
+    }
+  }
+  
+  /**
    * 更新页面状态
    */
   async updatePageStatus() {
@@ -359,6 +401,9 @@ class PopupManager {
     try {
       // 加载统计数据
       await this.loadStatistics();
+      
+      // 更新自动开启按钮状态
+      await this.updateAutoEnableButton();
       
     } catch (error) {
       console.error('Failed to load data:', error);
@@ -459,6 +504,39 @@ class PopupManager {
       } else {
         loadingOverlay.classList.remove('show');
       }
+    }
+  }
+  
+  /**
+   * 更新自动开启按钮状态
+   */
+  async updateAutoEnableButton() {
+    try {
+      const addToAutoBtn = document.getElementById('addToAutoBtn');
+      if (!addToAutoBtn || !this.currentTab) {
+        return;
+      }
+      
+      const url = new URL(this.currentTab.url);
+      const domain = url.hostname;
+      const autoEnableList = await this.storageUtils.getAutoEnableList();
+      
+      if (autoEnableList.includes(domain)) {
+        addToAutoBtn.textContent = '已在自动开启列表';
+        addToAutoBtn.disabled = true;
+        addToAutoBtn.classList.add('disabled');
+      } else {
+        addToAutoBtn.innerHTML = `
+          <svg class="btn-icon" viewBox="0 0 24 24">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+          </svg>
+          添加到自动开启
+        `;
+        addToAutoBtn.disabled = false;
+        addToAutoBtn.classList.remove('disabled');
+      }
+    } catch (error) {
+      console.error('Failed to update auto enable button:', error);
     }
   }
   

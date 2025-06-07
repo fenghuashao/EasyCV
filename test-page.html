@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyCV 功能测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .disabled-copy {
+            pointer-events: none;
+        }
+        .test-title {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .status {
+            margin-top: 10px;
+            padding: 5px;
+            background: #f0f0f0;
+            border-radius: 3px;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>EasyCV 插件功能测试页面</h1>
+    <p>此页面用于测试 EasyCV 插件的各项功能。请按照以下步骤进行测试：</p>
+    
+    <div class="test-section">
+        <div class="test-title">测试1: CSS user-select 限制</div>
+        <div class="no-select">
+            这段文字被CSS设置为不可选择。正常情况下无法选择此文本。
+            启用EasyCV后应该可以正常选择和复制。
+        </div>
+        <div class="status" id="test1-status">状态：等待测试</div>
+    </div>
+    
+    <div class="test-section">
+        <div class="test-title">测试2: 右键菜单禁用</div>
+        <div id="no-context-menu">
+            这段文字禁用了右键菜单。正常情况下右键无效。
+            启用EasyCV后应该可以正常使用右键菜单。
+        </div>
+        <div class="status" id="test2-status">状态：等待测试</div>
+    </div>
+    
+    <div class="test-section">
+        <div class="test-title">测试3: 复制快捷键禁用</div>
+        <div id="no-copy-shortcut">
+            这段文字禁用了Ctrl+C快捷键。选择文本后按Ctrl+C无效。
+            启用EasyCV后应该可以正常使用Ctrl+C复制。
+        </div>
+        <div class="status" id="test3-status">状态：等待测试</div>
+    </div>
+    
+    <div class="test-section">
+        <div class="test-title">测试4: 选择事件拦截</div>
+        <div id="no-select-event">
+            这段文字拦截了选择事件。尝试选择时会被阻止。
+            启用EasyCV后应该可以正常选择文本。
+        </div>
+        <div class="status" id="test4-status">状态：等待测试</div>
+    </div>
+    
+    <div class="test-section">
+        <div class="test-title">测试5: 正常文本（对照组）</div>
+        <div id="normal-text">
+            这是正常的文本，没有任何限制。
+            应该可以正常选择、复制和使用右键菜单。
+        </div>
+        <div class="status success" id="test5-status">状态：正常</div>
+    </div>
+    
+    <div class="test-section">
+        <div class="test-title">插件状态检测</div>
+        <button onclick="checkPluginStatus()">检测插件状态</button>
+        <div class="status" id="plugin-status">状态：未检测</div>
+    </div>
+    
+    <script>
+        // 禁用右键菜单
+        document.getElementById('no-context-menu').addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            document.getElementById('test2-status').textContent = '状态：右键菜单被阻止';
+            document.getElementById('test2-status').className = 'status error';
+        });
+        
+        // 禁用复制快捷键
+        document.getElementById('no-copy-shortcut').addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'c') {
+                e.preventDefault();
+                document.getElementById('test3-status').textContent = '状态：Ctrl+C被阻止';
+                document.getElementById('test3-status').className = 'status error';
+            }
+        });
+        
+        // 禁用选择事件
+        document.getElementById('no-select-event').addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            document.getElementById('test4-status').textContent = '状态：选择被阻止';
+            document.getElementById('test4-status').className = 'status error';
+        });
+        
+        // 检测插件状态
+        function checkPluginStatus() {
+            const statusElement = document.getElementById('plugin-status');
+            
+            // 检测是否有EasyCV注入的标记
+            if (window.EasyCVInjected) {
+                statusElement.textContent = '状态：EasyCV插件已激活';
+                statusElement.className = 'status success';
+            } else {
+                statusElement.textContent = '状态：EasyCV插件未检测到';
+                statusElement.className = 'status error';
+            }
+        }
+        
+        // 监听选择变化
+        document.addEventListener('selectionchange', function() {
+            const selection = window.getSelection();
+            if (selection.toString().length > 0) {
+                const range = selection.getRangeAt(0);
+                const container = range.commonAncestorContainer.parentElement || range.commonAncestorContainer;
+                
+                if (container.closest('#no-select-event')) {
+                    document.getElementById('test4-status').textContent = '状态：选择成功（插件生效）';
+                    document.getElementById('test4-status').className = 'status success';
+                }
+                
+                if (container.closest('.no-select')) {
+                    document.getElementById('test1-status').textContent = '状态：选择成功（插件生效）';
+                    document.getElementById('test1-status').className = 'status success';
+                }
+            }
+        });
+        
+        // 监听右键菜单恢复
+        document.getElementById('no-context-menu').addEventListener('contextmenu', function(e) {
+            // 如果事件没有被阻止，说明插件生效了
+            setTimeout(() => {
+                if (!e.defaultPrevented) {
+                    document.getElementById('test2-status').textContent = '状态：右键菜单恢复（插件生效）';
+                    document.getElementById('test2-status').className = 'status success';
+                }
+            }, 100);
+        });
+        
+        // 页面加载完成后的初始检测
+        window.addEventListener('load', function() {
+            setTimeout(checkPluginStatus, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{
+  "name": "easycv",
+  "version": "1.0.0",
+  "description": "EasyCV - 解除网页复制粘贴限制的浏览器插件",
+  "main": "manifest.json",
+  "scripts": {
+    "dev": "echo 'Development mode - Load extension in Chrome'",
+    "build": "node scripts/build.js",
+    "test": "echo 'Running tests...'",
+    "test:coverage": "echo 'Running coverage tests...'",
+    "lint": "echo 'Linting code...'",
+    "lint:fix": "echo 'Fixing lint issues...'",
+    "package": "npm run build && npm run zip",
+    "zip": "node scripts/package.js",
+    "clean": "node scripts/clean.js",
+    "bump:patch": "node scripts/bump-version.js patch",
+    "bump:minor": "node scripts/bump-version.js minor",
+    "bump:major": "node scripts/bump-version.js major",
+    "release": "npm run clean && npm run build && npm run package",
+    "deploy": "node scripts/deploy.js",
+    "deploy:patch": "node scripts/deploy.js --bump patch",
+    "deploy:minor": "node scripts/deploy.js --bump minor",
+    "deploy:major": "node scripts/deploy.js --bump major",
+    "deploy:build-only": "node scripts/deploy.js --build-only",
+    "deploy:dry-run": "node scripts/deploy.js --dry-run"
+  },
+  "keywords": [
+    "chrome-extension",
+    "copy-paste",
+    "web-utility",
+    "productivity"
+  ],
+  "author": "EasyCV Team",
+  "license": "MIT",
+  "devDependencies": {
+    "archiver": "^5.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/EasyCV.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/EasyCV/issues"
+  },
+  "homepage": "https://github.com/your-org/EasyCV#readme"
+}
