@@ -105,7 +105,7 @@ class Cleaner {
         if (stat.isFile()) {
           totalSize += stat.size;
         } else if (stat.isDirectory()) {
-          totalSize += this.getDirSize(itemPath);
+          totalSize += this.calculateDirSize(itemPath);
         }
       }
     }
