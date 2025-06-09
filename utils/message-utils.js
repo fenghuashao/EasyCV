@@ -17,7 +17,7 @@ class MessageUtils {
     REPORT_ERROR: 'report_error',
     PAGE_ANALYZED: 'page_analyzed'
   };
-  
+
   /**
    * 发送消息到后台脚本
    * @param {string} type - 消息类型
@@ -29,17 +29,16 @@ class MessageUtils {
       const message = {
         type,
         data,
-        timestamp: Date.now(),
-        tabId: await this.getCurrentTabId()
+        timestamp: Date.now()
       };
-      
+
       return await chrome.runtime.sendMessage(message);
     } catch (error) {
       console.error('Failed to send message to background:', error);
       throw error;
     }
   }
-  
+
   /**
    * 发送消息到内容脚本
    * @param {number} tabId - 标签页ID
@@ -54,14 +53,14 @@ class MessageUtils {
         data,
         timestamp: Date.now()
       };
-      
+
       return await chrome.tabs.sendMessage(tabId, message);
     } catch (error) {
       console.error('Failed to send message to content script:', error);
       throw error;
     }
   }
-  
+
   /**
    * 监听消息
    * @param {Function} handler - 消息处理函数
@@ -70,7 +69,7 @@ class MessageUtils {
     if (typeof handler !== 'function') {
       throw new Error('Message handler must be a function');
     }
-    
+
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       try {
         // 验证消息格式
@@ -78,10 +77,10 @@ class MessageUtils {
           console.warn('Invalid message format:', message);
           return false;
         }
-        
+
         // 调用处理函数
         const result = handler(message, sender, sendResponse);
-        
+
         // 如果返回Promise，保持连接开放
         if (result instanceof Promise) {
           result
@@ -89,7 +88,7 @@ class MessageUtils {
             .catch(error => sendResponse({ success: false, error: error.message }));
           return true; // 保持消息通道开放
         }
-        
+
         return false;
       } catch (error) {
         console.error('Message handler error:', error);
@@ -98,19 +97,19 @@ class MessageUtils {
       }
     });
   }
-  
+
   /**
    * 验证消息格式
    * @param {Object} message - 消息对象
    * @returns {boolean} 是否有效
    */
   static isValidMessage(message) {
-    return message && 
-           typeof message === 'object' && 
-           typeof message.type === 'string' &&
-           Object.values(this.MESSAGE_TYPES).includes(message.type);
+    return message &&
+      typeof message === 'object' &&
+      typeof message.type === 'string' &&
+      Object.values(this.MESSAGE_TYPES).includes(message.type);
   }
-  
+
   /**
    * 获取当前标签页ID
    * @returns {Promise<number>} 标签页ID
@@ -124,7 +123,7 @@ class MessageUtils {
       return null;
     }
   }
-  
+
   /**
    * 广播消息到所有标签页
    * @param {string} type - 消息类型
@@ -133,19 +132,19 @@ class MessageUtils {
   static async broadcastToAllTabs(type, data = {}) {
     try {
       const tabs = await chrome.tabs.query({});
-      const promises = tabs.map(tab => 
+      const promises = tabs.map(tab =>
         this.sendToContent(tab.id, type, data).catch(error => {
           // 忽略无法发送的标签页（如chrome://页面）
           console.debug(`Failed to send to tab ${tab.id}:`, error);
         })
       );
-      
+
       await Promise.allSettled(promises);
     } catch (error) {
       console.error('Failed to broadcast message:', error);
     }
   }
-  
+
   /**
    * 创建响应对象
    * @param {boolean} success - 是否成功
@@ -161,7 +160,7 @@ class MessageUtils {
       timestamp: Date.now()
     };
   }
-  
+
   /**
    * 处理异步消息响应
    * @param {Promise} promise - 异步操作Promise

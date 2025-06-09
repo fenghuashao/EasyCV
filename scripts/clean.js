@@ -12,7 +12,8 @@ class Cleaner {
     this.dirsToClean = [
       'dist',
       'node_modules/.cache',
-      '.tmp'
+      '.tmp',
+      'releases'
     ];
     this.filesToClean = [
       'build-info.json',
@@ -63,17 +64,17 @@ class Cleaner {
    */
   findMatchingFiles(dir, pattern) {
     const files = [];
-    
+
     if (!fs.existsSync(dir)) {
       return files;
     }
-    
+
     const items = fs.readdirSync(dir);
-    
+
     for (const item of items) {
       const itemPath = path.join(dir, item);
       const stat = fs.statSync(itemPath);
-      
+
       if (stat.isFile()) {
         // 简单的通配符匹配
         if (pattern.includes('*')) {
@@ -89,7 +90,7 @@ class Cleaner {
         files.push(...this.findMatchingFiles(itemPath, pattern));
       }
     }
-    
+
     return files;
   }
 
@@ -98,7 +99,7 @@ class Cleaner {
    */
   calculateSize(paths) {
     let totalSize = 0;
-    
+
     for (const itemPath of paths) {
       if (fs.existsSync(itemPath)) {
         const stat = fs.statSync(itemPath);
@@ -109,7 +110,7 @@ class Cleaner {
         }
       }
     }
-    
+
     return totalSize;
   }
 
@@ -118,19 +119,19 @@ class Cleaner {
    */
   calculateDirSize(dirPath) {
     let totalSize = 0;
-    
+
     if (!fs.existsSync(dirPath)) {
       return 0;
     }
-    
+
     try {
       const items = fs.readdirSync(dirPath);
-      
+
       for (const item of items) {
         const itemPath = path.join(dirPath, item);
         if (fs.existsSync(itemPath)) {
           const stats = fs.statSync(itemPath);
-          
+
           if (stats.isDirectory()) {
             totalSize += this.calculateDirSize(itemPath);
           } else {
@@ -141,7 +142,7 @@ class Cleaner {
     } catch (error) {
       // 忽略访问错误
     }
-    
+
     return totalSize;
   }
 
@@ -160,11 +161,11 @@ class Cleaner {
    */
   async clean(options = {}) {
     console.log('🧹 开始清理 EasyCV...');
-    console.log('=' .repeat(50));
-    
+    console.log('='.repeat(50));
+
     const itemsToClean = [];
     let cleanedCount = 0;
-    
+
     try {
       // 收集要清理的目录
       for (const dir of this.dirsToClean) {
@@ -173,24 +174,24 @@ class Cleaner {
           itemsToClean.push(dirPath);
         }
       }
-      
+
       // 收集要清理的文件
       for (const filePattern of this.filesToClean) {
         const matchingFiles = this.findMatchingFiles(this.sourceDir, filePattern);
         itemsToClean.push(...matchingFiles);
       }
-      
+
       if (itemsToClean.length === 0) {
         console.log('✨ 没有需要清理的文件');
         return;
       }
-      
+
       // 计算总大小
       const totalSize = this.calculateSize(itemsToClean);
-      
+
       console.log(`📋 发现 ${itemsToClean.length} 个项目需要清理`);
       console.log(`💾 预计释放空间: ${this.formatFileSize(totalSize)}`);
-      
+
       if (options.dryRun) {
         console.log('\n🔍 预览模式 - 将要清理的项目:');
         for (const item of itemsToClean) {
@@ -200,9 +201,9 @@ class Cleaner {
         }
         return;
       }
-      
+
       console.log('\n🗑️  正在清理...');
-      
+
       // 执行清理
       for (const item of itemsToClean) {
         try {
@@ -221,12 +222,12 @@ class Cleaner {
           // 继续清理其他项目，不中断整个流程
         }
       }
-      
-      console.log('=' .repeat(50));
+
+      console.log('='.repeat(50));
       console.log(`✅ 清理完成!`);
       console.log(`🗑️  清理项目: ${cleanedCount}/${itemsToClean.length}`);
       console.log(`💾 释放空间: ${this.formatFileSize(totalSize)}`);
-      
+
     } catch (error) {
       console.error('❌ 清理失败:', error.message);
       process.exit(1);
@@ -237,17 +238,17 @@ class Cleaner {
 // 执行清理
 if (require.main === module) {
   const cleaner = new Cleaner();
-  
+
   // 检查命令行参数
   const args = process.argv.slice(2);
   const options = {
     dryRun: args.includes('--dry-run') || args.includes('-n')
   };
-  
+
   if (options.dryRun) {
     console.log('🔍 运行预览模式...');
   }
-  
+
   cleaner.clean(options);
 }
 
