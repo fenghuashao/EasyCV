@@ -50,7 +50,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "content/injector.js"
+        "content/injector.js",
+        "icons/*.png"
       ],
       "matches": [
         "<all_urls>"
