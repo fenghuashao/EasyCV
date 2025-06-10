@@ -196,7 +196,7 @@ class PopupManager {
       await this.storageUtils.setPluginSettings({ copyEnabled: enabled });
 
       // 发送消息到background script
-      await this.messageUtils.sendToBackground({
+      await MessageUtils.sendToBackground({
         type: 'TOGGLE_COPY',
         enabled: enabled
       });
@@ -224,7 +224,7 @@ class PopupManager {
     } catch (error) {
       console.error('Failed to toggle copy:', error);
       this.showNotification('复制功能操作失败', 'error');
-      
+
       // 记录操作失败类型
       await this.recordFailedOperation('复制失败');
 
@@ -249,7 +249,7 @@ class PopupManager {
       await this.storageUtils.setPluginSettings({ pasteEnabled: enabled });
 
       // 发送消息到background script
-      await this.messageUtils.sendToBackground({
+      await MessageUtils.sendToBackground({
         type: 'TOGGLE_PASTE',
         enabled: enabled
       });
@@ -277,7 +277,7 @@ class PopupManager {
     } catch (error) {
       console.error('Failed to toggle paste:', error);
       this.showNotification('粘贴功能操作失败', 'error');
-      
+
       // 记录操作失败类型
       await this.recordFailedOperation('粘贴失败');
 
@@ -300,23 +300,20 @@ class PopupManager {
       await this.storageUtils.setPluginSettings({ forceMode });
 
       // 发送消息到background script
-      await this.messageUtils.sendToBackground({
-        type: 'TOGGLE_FORCE_MODE',
-        forceMode: forceMode
-      });
+      await MessageUtils.sendToBackground('TOGGLE_FORCE_MODE', { forceMode });
 
       // 如果启用强力模式，刷新当前页面
       if (forceMode && this.currentTab) {
         try {
           // 刷新页面
           await chrome.tabs.reload(this.currentTab.id);
-          
+
           // 显示刷新提示
           this.showNotification('强力模式已启用，页面正在刷新...', 'success');
-          
+
           // 设置自动关闭定时器，用户交互可以取消
           this.setAutoCloseTimer(1500);
-          
+
           return;
         } catch (error) {
           console.error('Failed to reload page:', error);
@@ -327,10 +324,7 @@ class PopupManager {
       // 发送消息到当前页面的content script
       if (this.currentTab) {
         try {
-          await this.messageUtils.sendToContentScript(this.currentTab.id, {
-            type: 'FORCE_MODE_CHANGED',
-            forceMode: forceMode
-          });
+          await MessageUtils.sendToContent(this.currentTab.id, 'FORCE_MODE_CHANGED', { forceMode });
         } catch (error) {
           console.log('Content script not available');
         }
@@ -362,9 +356,7 @@ class PopupManager {
         });
 
         // 发送刷新检测消息
-        await this.messageUtils.sendToContentScript(this.currentTab.id, {
-          type: 'REFRESH_DETECTION'
-        });
+        await MessageUtils.sendToContent(this.currentTab.id, 'REFRESH_DETECTION', {});
 
         // 更新页面状态
         setTimeout(() => {
@@ -389,9 +381,7 @@ class PopupManager {
     try {
       if (this.currentTab) {
         // 发送测试复制消息
-        const response = await this.messageUtils.sendToContentScript(this.currentTab.id, {
-          type: 'TEST_COPY'
-        });
+        const response = await MessageUtils.sendToContent(this.currentTab.id, 'TEST_COPY', {});
 
         if (response && response.success) {
           this.showNotification('复制功能正常', 'success');
@@ -420,14 +410,14 @@ class PopupManager {
       const domain = url.hostname;
 
       // 检查是否已在列表中
-      const autoEnableList = await this.storageUtils.getAutoEnableList();
-    if (autoEnableList.find(item => item.domain === domain)) {
-      this.showNotification('该网站已在自动开启列表中', 'info');
-      return;
-    }
+      const autoEnableList = await StorageUtils.getAutoEnableList();
+      if (autoEnableList.find(item => item.domain === domain)) {
+        this.showNotification('该网站已在自动开启列表中', 'info');
+        return;
+      }
 
-    // 添加到自动开启列表（默认全部解锁）
-    await this.storageUtils.addToAutoEnableList(domain, true, true);
+      // 添加到自动开启列表（默认全部解锁）
+      await StorageUtils.addToAutoEnableList(domain, true, true);
 
       this.showNotification(`已将 ${domain} 添加到自动开启列表`, 'success');
 
@@ -522,7 +512,7 @@ class PopupManager {
    */
   async loadStatistics() {
     try {
-      const stats = await this.storageUtils.getStatistics();
+      const stats = await StorageUtils.getStatistics();
 
       // 更新总网站数
       const totalSitesElement = document.getElementById('totalSites');
@@ -597,10 +587,10 @@ class PopupManager {
     try {
       // 获取当前页面信息
       const currentUrl = this.currentTab ? this.currentTab.url : 'unknown';
-      
+
       // 获取最近的操作失败类型（如果有的话）
       const lastFailedOperation = await this.getLastFailedOperation();
-      
+
       // 构建反馈URL，包含页面信息
       const feedbackData = {
         url: currentUrl,
@@ -608,18 +598,18 @@ class PopupManager {
         timestamp: new Date().toISOString(),
         userAgent: navigator.userAgent
       };
-      
+
       // 将反馈数据发送到background script进行处理
       await this.messageUtils.sendToBackground({
         type: 'SUBMIT_FEEDBACK',
         data: feedbackData
       });
-      
+
       // 打开反馈页面
       chrome.tabs.create({
         url: `https://github.com/your-username/easycv/issues/new?title=问题反馈&body=页面URL: ${encodeURIComponent(currentUrl)}%0A操作类型: ${lastFailedOperation || '一般问题'}%0A时间: ${encodeURIComponent(new Date().toLocaleString())}`
       });
-      
+
       window.close();
     } catch (error) {
       console.error('Failed to open feedback page:', error);
@@ -629,7 +619,7 @@ class PopupManager {
       });
       window.close();
     }
-   }
+  }
 
   /**
    * 获取最近的操作失败类型
@@ -637,7 +627,7 @@ class PopupManager {
   async getLastFailedOperation() {
     try {
       // 从存储中获取最近的失败操作记录
-      const result = await this.storageUtils.get('lastFailedOperation');
+      const result = await StorageUtils.get('lastFailedOperation');
       return result.lastFailedOperation || this.lastFailedOperation;
     } catch (error) {
       console.error('Failed to get last failed operation:', error);
@@ -651,7 +641,7 @@ class PopupManager {
   async recordFailedOperation(operationType) {
     try {
       this.lastFailedOperation = operationType;
-      await this.storageUtils.set({ lastFailedOperation: operationType });
+      await StorageUtils.set({ lastFailedOperation: operationType });
       console.log('Recorded failed operation:', operationType);
     } catch (error) {
       console.error('Failed to record failed operation:', error);
@@ -684,10 +674,10 @@ class PopupManager {
 
       const url = new URL(this.currentTab.url);
       const domain = url.hostname;
-      const autoEnableList = await this.storageUtils.getAutoEnableList();
+      const autoEnableList = await StorageUtils.getAutoEnableList();
 
       const config = autoEnableList.find(item => item.domain === domain);
-      
+
       if (config) {
         let statusText = '已在自动开启列表';
         if (config.copyEnabled && config.pasteEnabled) {
@@ -697,7 +687,7 @@ class PopupManager {
         } else if (config.pasteEnabled) {
           statusText += '（仅粘贴）';
         }
-        
+
         addToAutoBtn.textContent = statusText;
         addToAutoBtn.disabled = true;
         addToAutoBtn.classList.add('disabled');
@@ -751,22 +741,22 @@ class PopupManager {
 
       const url = new URL(this.currentTab.url);
       const domain = url.hostname;
-      const autoEnableList = await this.storageUtils.getAutoEnableList();
-      
+      const autoEnableList = await StorageUtils.getAutoEnableList();
+
       // 检查是否在自动开启列表中
       const config = autoEnableList.find(item => item.domain === domain);
       if (config) {
         console.log(`Applying auto-enable config for ${domain}:`, config);
-        
+
         // 更新插件设置以匹配自动开启配置
-        await this.storageUtils.setPluginSettings({
+        await StorageUtils.setPluginSettings({
           copyEnabled: config.copyEnabled,
           pasteEnabled: config.pasteEnabled
         });
-        
+
         // 更新UI状态
         await this.updateUIFromSettings();
-        
+
         // 发送消息到background script
         await this.messageUtils.sendToBackground({
           type: 'AUTO_ENABLE_APPLIED',
@@ -790,8 +780,8 @@ class PopupManager {
 
       const url = new URL(this.currentTab.url);
       const domain = url.hostname;
-      const autoEnableList = await this.storageUtils.getAutoEnableList();
-      
+      const autoEnableList = await StorageUtils.getAutoEnableList();
+
       // 检查是否在自动开启列表中
       const config = autoEnableList.find(item => item.domain === domain);
       if (!config) {
@@ -800,11 +790,11 @@ class PopupManager {
 
       // 获取当前插件设置
       const settings = await this.storageUtils.getPluginSettings();
-      
+
       // 检查功能是否已按配置启用
       const copyMatches = config.copyEnabled === settings.copyEnabled;
       const pasteMatches = config.pasteEnabled === settings.pasteEnabled;
-      
+
       if (copyMatches && pasteMatches) {
         // 功能已按自动开启配置激活
         let statusText = '自动开启成功';
@@ -815,13 +805,13 @@ class PopupManager {
         } else if (config.pasteEnabled) {
           statusText += '（仅粘贴）';
         }
-        
+
         return {
           className: 'status-indicator active',
           text: statusText
         };
       }
-      
+
       return null;
     } catch (error) {
       console.error('Failed to check auto enable first interaction:', error);
@@ -835,7 +825,7 @@ class PopupManager {
   setupUserInteractionDetection() {
     // 监听各种用户交互事件
     const interactionEvents = ['click', 'keydown', 'mousedown', 'touchstart', 'scroll'];
-    
+
     interactionEvents.forEach(eventType => {
       document.addEventListener(eventType, () => {
         this.markUserInteracted();
@@ -886,7 +876,7 @@ class PopupManager {
    */
   cleanup() {
     this.stopPeriodicUpdate();
-    
+
     // 清理自动关闭定时器
     if (this.autoCloseTimer) {
       clearTimeout(this.autoCloseTimer);

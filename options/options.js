@@ -267,10 +267,10 @@ class OptionsManager {
       this.settings = await this.storageUtils.getPluginSettings();
       
       // 加载白名单
-      this.whitelist = await this.storageUtils.getAutoEnableList();
+      this.whitelist = await StorageUtils.getAutoEnableList();
       
       // 加载统计数据
-      this.statistics = await this.storageUtils.getStatistics();
+      this.statistics = await StorageUtils.getStatistics();
       
     } catch (error) {
       console.error('Failed to load data:', error);
