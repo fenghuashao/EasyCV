@@ -15,7 +15,9 @@ class MessageUtils {
     GET_SETTINGS: 'get_settings',
     UPDATE_SETTINGS: 'update_settings',
     REPORT_ERROR: 'report_error',
-    PAGE_ANALYZED: 'page_analyzed'
+    PAGE_ANALYZED: 'page_analyzed',
+    COPY_STATUS_CHANGED: 'copy_status_changed',
+    PASTE_STATUS_CHANGED: 'paste_status_changed'
   };
 
   /**

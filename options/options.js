@@ -77,11 +77,19 @@ class OptionsManager {
    * 绑定常规设置事件
    */
   bindGeneralSettingsEvents() {
-    // 启用插件
-    const enablePlugin = document.getElementById('enablePlugin');
-    if (enablePlugin) {
-      enablePlugin.addEventListener('change', (e) => {
-        this.updateSetting('enabled', e.target.checked);
+    // 启用复制
+    const enableCopy = document.getElementById('enableCopy');
+    if (enableCopy) {
+      enableCopy.addEventListener('change', (e) => {
+        this.updateSetting('copyEnabled', e.target.checked);
+      });
+    }
+    
+    // 启用粘贴
+    const enablePaste = document.getElementById('enablePaste');
+    if (enablePaste) {
+      enablePaste.addEventListener('change', (e) => {
+        this.updateSetting('pasteEnabled', e.target.checked);
       });
     }
     
@@ -290,8 +298,11 @@ class OptionsManager {
    */
   updateFormValues() {
     // 常规设置
-    const enablePlugin = document.getElementById('enablePlugin');
-    if (enablePlugin) enablePlugin.checked = this.settings.enabled ?? true;
+    const enableCopy = document.getElementById('enableCopy');
+    if (enableCopy) enableCopy.checked = this.settings.copyEnabled ?? true;
+    
+    const enablePaste = document.getElementById('enablePaste');
+    if (enablePaste) enablePaste.checked = this.settings.pasteEnabled ?? true;
     
     const autoDetect = document.getElementById('autoDetect');
     if (autoDetect) autoDetect.checked = this.settings.autoDetect ?? true;
@@ -353,26 +364,65 @@ class OptionsManager {
     }
     
     // 检查是否已存在
-    if (this.whitelist.includes(domain)) {
+    if (this.whitelist.find(item => item.domain === domain)) {
       this.showNotification('域名已存在', 'warning');
       return;
     }
     
+    // 获取精细化控制选项
+    const copyEnabled = document.getElementById('enableCopyOption').checked;
+    const pasteEnabled = document.getElementById('enablePasteOption').checked;
+    
+    if (!copyEnabled && !pasteEnabled) {
+      this.showNotification('请至少选择一个功能', 'warning');
+      return;
+    }
+    
     try {
-      this.whitelist.push(domain);
-      await this.storageUtils.setAutoEnableList(this.whitelist);
+      const config = {
+        domain,
+        copyEnabled,
+        pasteEnabled
+      };
       
-      // 清空输入框
+      // 检查是否为编辑模式
       const input = document.getElementById('whitelistInput');
-      if (input) input.value = '';
+      const isEditing = input && input.hasAttribute('data-editing');
+      const editingDomain = isEditing ? input.getAttribute('data-editing') : null;
+      
+      this.whitelist.push(config);
+      await this.storageUtils.set({ [this.storageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: this.whitelist });
+      
+      // 清空输入框和重置选项
+      if (input) {
+        input.value = '';
+        input.removeAttribute('data-editing');
+      }
+      document.getElementById('enableCopyOption').checked = true;
+      document.getElementById('enablePasteOption').checked = true;
+      
+      // 重置按钮状态
+      const addBtn = document.getElementById('addWhitelistBtn');
+      if (addBtn) {
+        addBtn.textContent = '添加';
+        addBtn.classList.remove('updating');
+      }
+      
+      // 移除编辑高亮
+      const editingItems = document.querySelectorAll('.whitelist-item.editing');
+      editingItems.forEach(item => item.classList.remove('editing'));
       
       // 重新渲染列表
       this.renderWhitelist();
       
-      this.showNotification('域名已添加', 'success');
+      if (isEditing && editingDomain) {
+        this.showNotification(`${editingDomain} 的配置已更新`, 'success');
+      } else {
+        this.showNotification('域名已添加', 'success');
+      }
     } catch (error) {
       console.error('Failed to add whitelist domain:', error);
-      this.showNotification('添加失败', 'error');
+      this.showNotification(isEditing ? '更新失败' : '添加失败', 'error');
     }
   }
   
@@ -381,8 +431,8 @@ class OptionsManager {
    */
   async removeWhitelistDomain(domain) {
     try {
-      this.whitelist = this.whitelist.filter(d => d !== domain);
-      await this.storageUtils.setAutoEnableList(this.whitelist);
+      this.whitelist = this.whitelist.filter(item => item.domain !== domain);
+      await this.storageUtils.set({ [this.storageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: this.whitelist });
       
       // 重新渲染列表
       this.renderWhitelist();
@@ -391,6 +441,53 @@ class OptionsManager {
     } catch (error) {
       console.error('Failed to remove whitelist domain:', error);
       this.showNotification('删除失败', 'error');
+    }
+  }
+  
+  /**
+   * 编辑白名单域名配置
+   */
+  async editWhitelistDomain(domain) {
+    const config = this.whitelist.find(item => item.domain === domain);
+    if (!config) return;
+    
+    // 高亮正在编辑的项目
+    const editingItem = document.querySelector(`[data-domain="${domain}"]`);
+    if (editingItem) {
+      editingItem.classList.add('editing');
+    }
+    
+    // 填充编辑表单
+    const input = document.getElementById('whitelistInput');
+    const copyOption = document.getElementById('enableCopyOption');
+    const pasteOption = document.getElementById('enablePasteOption');
+    const addBtn = document.getElementById('addWhitelistBtn');
+    
+    if (input) {
+      input.value = domain;
+      input.setAttribute('data-editing', domain);
+    }
+    if (copyOption) copyOption.checked = config.copyEnabled;
+    if (pasteOption) pasteOption.checked = config.pasteEnabled;
+    if (addBtn) {
+      addBtn.textContent = '更新配置';
+      addBtn.classList.add('updating');
+    }
+    
+    // 显示编辑提示
+    this.showNotification(`正在编辑 ${domain} 的配置`, 'info');
+    
+    // 先删除原配置
+    await this.removeWhitelistDomain(domain);
+    
+    // 滚动到添加表单
+    const addForm = document.querySelector('.add-whitelist');
+    if (addForm) {
+      addForm.scrollIntoView({ behavior: 'smooth' });
+      // 聚焦到输入框
+      setTimeout(() => {
+        if (input) input.focus();
+      }, 300);
     }
   }
   
@@ -413,16 +510,52 @@ class OptionsManager {
       return;
     }
     
-    const html = this.whitelist.map(domain => `
-      <div class="whitelist-item">
-        <span class="whitelist-domain">${domain}</span>
-        <div class="whitelist-actions">
-          <button class="action-btn-small delete" onclick="optionsManager.removeWhitelistDomain('${domain}')">
-            删除
-          </button>
+    const html = this.whitelist.map(config => {
+      const { domain, copyEnabled, pasteEnabled } = config;
+      let statusTags = '';
+      let statusIcon = '';
+      
+      if (copyEnabled && pasteEnabled) {
+        statusTags = '<span class="status-tag all">全部解锁</span>';
+        statusIcon = '<svg class="status-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M11,16.5L18,9.5L16.5,8L11,13.5L7.5,10L6,11.5L11,16.5Z"/></svg>';
+      } else if (copyEnabled) {
+        statusTags = '<span class="status-tag copy">仅解锁复制</span>';
+        statusIcon = '<svg class="status-icon" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/></svg>';
+      } else if (pasteEnabled) {
+        statusTags = '<span class="status-tag paste">仅解锁粘贴</span>';
+        statusIcon = '<svg class="status-icon" viewBox="0 0 24 24"><path d="M19,20H5V4H7V7H17V4H19M12,2A1,1 0 0,1 13,3A1,1 0 0,1 12,4A1,1 0 0,1 11,3A1,1 0 0,1 12,2M19,2H14.82C14.4,0.84 13.3,0 12,0C10.7,0 9.6,0.84 9.18,2H5A2,2 0 0,0 3,4V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V4A2,2 0 0,0 19,2Z"/></svg>';
+      }
+      
+      const featureList = [];
+      if (copyEnabled) featureList.push('复制');
+      if (pasteEnabled) featureList.push('粘贴');
+      const featureText = featureList.join(' + ');
+      
+      return `
+        <div class="whitelist-item" data-domain="${domain}">
+          <div class="whitelist-info">
+            <div class="domain-header">
+              ${statusIcon}
+              <span class="whitelist-domain">${domain}</span>
+            </div>
+            <div class="whitelist-status">
+              ${statusTags}
+              <span class="feature-summary">启用功能: ${featureText}</span>
+            </div>
+          </div>
+          <div class="whitelist-actions">
+            <button class="action-btn-small edit" onclick="optionsManager.editWhitelistDomain('${domain}')" title="编辑配置">
+              <svg viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/></svg>
+              编辑
+            </button>
+            <button class="action-btn-small delete" onclick="optionsManager.removeWhitelistDomain('${domain}')" title="删除网站">
+              <svg viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+              删除
+            </button>
+          </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
     
     container.innerHTML = html;
   }

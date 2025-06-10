@@ -6,10 +6,25 @@
 class CopyPasteManager {
   constructor() {
     this.isEnabled = false;
+    this.copyEnabled = true;
+    this.pasteEnabled = true;
     this.forceMode = false;
     this.originalStyles = new Map();
     this.originalHandlers = new Map();
     this.observer = null;
+    
+    // 性能优化相关
+    this.processedElements = new WeakSet();
+    this.pendingElements = new Set();
+    this.processingTimer = null;
+    this.batchSize = 50; // 批量处理大小
+    this.debounceDelay = 100; // 防抖延迟
+    this.lastProcessTime = 0;
+    this.performanceMetrics = {
+      processedCount: 0,
+      totalTime: 0,
+      averageTime: 0
+    };
 
     this.initializeManager();
   }
@@ -54,6 +69,8 @@ class CopyPasteManager {
 
       if (response?.success) {
         this.isEnabled = response.data.enabled;
+        this.copyEnabled = response.data.copyEnabled !== false;
+        this.pasteEnabled = response.data.pasteEnabled !== false;
         this.forceMode = response.data.forceMode;
       }
     } catch (error) {
@@ -72,6 +89,12 @@ class CopyPasteManager {
         switch (type) {
           case MessageUtils.MESSAGE_TYPES.TOGGLE_PLUGIN:
             return await this.handleTogglePlugin(data);
+
+          case 'COPY_STATUS_CHANGED':
+            return await this.handleCopyToggle(data);
+
+          case 'PASTE_STATUS_CHANGED':
+            return await this.handlePasteToggle(data);
 
           case MessageUtils.MESSAGE_TYPES.ENABLE_FORCE_MODE:
             return await this.handleEnableForceMode();
@@ -118,14 +141,17 @@ class CopyPasteManager {
    */
   enableCopyPaste() {
     try {
+      console.log('启用复制粘贴功能');
+      
+      // 清理之前的性能数据
+      this.clearPerformanceData();
+      
       // 移除全局限制
       this.removeGlobalRestrictions();
 
-      // 处理所有文本元素
-      const textElements = DOMUtils.getTextElements();
-      textElements.forEach(element => {
-        this.processElement(element);
-      });
+      // 批量处理页面中的所有元素
+      const allElements = document.querySelectorAll('*');
+      this.scheduleElementProcessing(Array.from(allElements));
 
       // 注入自定义脚本（用于处理更深层的限制）
       this.injectCustomScript();
@@ -138,34 +164,41 @@ class CopyPasteManager {
   }
 
   /**
-   * 禁用复制粘贴功能（恢复原始状态）
+   * 禁用复制粘贴功能
    */
   disableCopyPaste() {
-    try {
-      // 恢复原始样式
-      this.originalStyles.forEach((styles, element) => {
-        Object.entries(styles).forEach(([property, value]) => {
-          element.style.setProperty(property, value);
-        });
-      });
-
-      // 恢复原始事件处理器
-      this.originalHandlers.forEach((handlers, element) => {
-        Object.entries(handlers).forEach(([event, handler]) => {
-          if (handler) {
-            element.addEventListener(event, handler);
-          }
-        });
-      });
-
-      // 清空记录
-      this.originalStyles.clear();
-      this.originalHandlers.clear();
-
-      console.log('Original copy-paste restrictions restored');
-    } catch (error) {
-      console.error('Failed to disable copy-paste:', error);
+    console.log('禁用复制粘贴功能');
+    
+    // 停止DOM观察器
+    if (this.observer) {
+      this.observer.disconnect();
+      this.observer = null;
     }
+    
+    // 清理性能数据和待处理队列
+    this.clearPerformanceData();
+    
+    // 恢复所有元素的原始状态
+    this.originalStyles.forEach((styles, element) => {
+      if (element && element.isConnected) {
+        Object.keys(styles).forEach(property => {
+          element.style.setProperty(property, styles[property], 'important');
+        });
+      }
+    });
+    
+    // 恢复原始事件处理器
+    this.originalHandlers.forEach((handlers, element) => {
+      if (element && element.isConnected) {
+        Object.keys(handlers).forEach(event => {
+          element[event] = handlers[event];
+        });
+      }
+    });
+    
+    // 清空缓存
+    this.originalStyles.clear();
+    this.originalHandlers.clear();
   }
 
   /**
@@ -179,41 +212,64 @@ class CopyPasteManager {
       }
     });
 
-    // 移除全局事件监听器
-    const globalEvents = ['selectstart', 'contextmenu', 'dragstart', 'copy'];
-    globalEvents.forEach(eventType => {
-      document.removeEventListener(eventType, this.preventDefaultHandler, true);
-      document.addEventListener(eventType, this.allowDefaultHandler, true);
-    });
+    // 根据独立设置移除全局事件监听器
+    const copyEvents = ['selectstart', 'contextmenu', 'dragstart', 'copy'];
+    const pasteEvents = ['paste'];
+    
+    if (this.copyEnabled) {
+      copyEvents.forEach(eventType => {
+        document.removeEventListener(eventType, this.preventDefaultHandler, true);
+        document.addEventListener(eventType, this.allowDefaultHandler, true);
+      });
+    }
+    
+    if (this.pasteEnabled) {
+      pasteEvents.forEach(eventType => {
+        document.removeEventListener(eventType, this.preventDefaultHandler, true);
+        document.addEventListener(eventType, this.allowDefaultHandler, true);
+      });
+    }
   }
 
   /**
-   * 处理单个元素
+   * 处理单个元素（优化版本）
    */
   processElement(element) {
-    if (!element || element.dataset?.easycvProcessed) return;
+    if (!element || this.processedElements.has(element)) return;
 
-    // 标记已处理
-    element.dataset.easycvProcessed = 'true';
+    const startTime = performance.now();
 
-    // 保存原始样式
-    this.saveOriginalStyles(element);
+    try {
+      // 标记已处理
+      this.processedElements.add(element);
+      element.dataset.easycvProcessed = 'true';
 
-    // 移除CSS限制
-    DOMUtils.modifyStyles(element, {
-      'user-select': 'text',
-      '-webkit-user-select': 'text',
-      '-moz-user-select': 'text',
-      '-ms-user-select': 'text',
-      'pointer-events': 'auto'
-    });
+      // 保存原始样式
+      this.saveOriginalStyles(element);
 
-    // 移除事件限制
-    this.removeEventRestrictions(element);
+      // 根据独立设置来处理CSS限制
+      if (this.copyEnabled) {
+        DOMUtils.modifyStyles(element, {
+          'user-select': 'text',
+          '-webkit-user-select': 'text',
+          '-moz-user-select': 'text',
+          '-ms-user-select': 'text',
+          'pointer-events': 'auto'
+        });
+      }
 
-    // 强力模式处理
-    if (this.forceMode) {
-      this.applyForceMode(element);
+      // 移除事件限制（根据独立设置）
+      this.removeEventRestrictions(element);
+
+      // 强力模式处理
+      if (this.forceMode) {
+        this.applyForceMode(element);
+      }
+
+      // 更新性能指标
+      this.updatePerformanceMetrics(performance.now() - startTime);
+    } catch (error) {
+      console.warn('Failed to process element:', error);
     }
   }
 
@@ -237,21 +293,41 @@ class CopyPasteManager {
    * 移除事件限制
    */
   removeEventRestrictions(element) {
-    const events = ['selectstart', 'contextmenu', 'dragstart', 'copy', 'mousedown'];
+    const copyEvents = ['selectstart', 'contextmenu', 'dragstart', 'copy', 'mousedown'];
+    const pasteEvents = ['paste'];
     const originalHandlers = {};
 
-    events.forEach(eventType => {
-      // 保存原始处理器
-      const originalHandler = element[`on${eventType}`];
-      originalHandlers[eventType] = originalHandler;
+    // 处理复制相关事件
+    if (this.copyEnabled) {
+      copyEvents.forEach(eventType => {
+        // 保存原始处理器
+        const originalHandler = element[`on${eventType}`];
+        originalHandlers[eventType] = originalHandler;
 
-      // 移除内联事件处理器
-      element[`on${eventType}`] = null;
-      element.removeAttribute(`on${eventType}`);
+        // 移除内联事件处理器
+        element[`on${eventType}`] = null;
+        element.removeAttribute(`on${eventType}`);
 
-      // 添加我们的处理器
-      element.addEventListener(eventType, this.allowDefaultHandler, true);
-    });
+        // 添加我们的处理器
+        element.addEventListener(eventType, this.allowDefaultHandler, true);
+      });
+    }
+
+    // 处理粘贴相关事件
+    if (this.pasteEnabled) {
+      pasteEvents.forEach(eventType => {
+        // 保存原始处理器
+        const originalHandler = element[`on${eventType}`];
+        originalHandlers[eventType] = originalHandler;
+
+        // 移除内联事件处理器
+        element[`on${eventType}`] = null;
+        element.removeAttribute(`on${eventType}`);
+
+        // 添加我们的处理器
+        element.addEventListener(eventType, this.allowDefaultHandler, true);
+      });
+    }
 
     this.originalHandlers.set(element, originalHandlers);
   }
@@ -260,26 +336,38 @@ class CopyPasteManager {
    * 应用强力模式
    */
   applyForceMode(element) {
-    // 强制移除所有可能的限制
-    DOMUtils.modifyStyles(element, {
-      '-webkit-touch-callout': 'default',
-      '-webkit-user-select': 'text !important',
-      '-khtml-user-select': 'text !important',
-      '-moz-user-select': 'text !important',
-      '-ms-user-select': 'text !important',
-      'user-select': 'text !important',
-      'pointer-events': 'auto !important'
-    });
+    // 根据独立设置应用强力模式
+    if (this.copyEnabled) {
+      // 强制移除复制相关的限制
+      DOMUtils.modifyStyles(element, {
+        '-webkit-touch-callout': 'default',
+        '-webkit-user-select': 'text !important',
+        '-khtml-user-select': 'text !important',
+        '-moz-user-select': 'text !important',
+        '-ms-user-select': 'text !important',
+        'user-select': 'text !important',
+        'pointer-events': 'auto !important'
+      });
 
-    // 移除所有可能的属性
-    const restrictiveAttrs = [
-      'onselectstart', 'ondragstart', 'oncontextmenu',
-      'oncopy', 'oncut', 'onpaste', 'onmousedown'
-    ];
+      // 移除复制相关的属性
+      const copyAttrs = [
+        'onselectstart', 'ondragstart', 'oncontextmenu',
+        'oncopy', 'oncut', 'onmousedown'
+      ];
 
-    restrictiveAttrs.forEach(attr => {
-      element.removeAttribute(attr);
-    });
+      copyAttrs.forEach(attr => {
+        element.removeAttribute(attr);
+      });
+    }
+
+    if (this.pasteEnabled) {
+      // 移除粘贴相关的属性
+      const pasteAttrs = ['onpaste'];
+
+      pasteAttrs.forEach(attr => {
+        element.removeAttribute(attr);
+      });
+    }
   }
 
   /**
@@ -293,30 +381,40 @@ class CopyPasteManager {
   }
 
   /**
-   * 设置DOM观察器
+   * 设置DOM观察器（优化版本）
    */
   setupDOMObserver() {
     this.observer = new MutationObserver((mutations) => {
       if (!this.isEnabled) return;
 
+      const elementsToProcess = new Set();
+
       mutations.forEach((mutation) => {
         mutation.addedNodes.forEach((node) => {
           if (node.nodeType === Node.ELEMENT_NODE) {
-            // 处理新添加的元素
-            this.processElement(node);
-
-            // 处理子元素
-            DOMUtils.traverseElements(node, (element) => {
-              this.processElement(element);
-            });
+            elementsToProcess.add(node);
+            
+            // 收集子元素
+            const childElements = node.querySelectorAll('*');
+            childElements.forEach(child => elementsToProcess.add(child));
           }
         });
       });
+
+      // 批量处理元素
+      if (elementsToProcess.size > 0) {
+        this.scheduleElementProcessing(Array.from(elementsToProcess));
+      }
     });
 
     this.observer.observe(document.body, {
       childList: true,
-      subtree: true
+      subtree: true,
+      // 优化观察器配置
+      attributes: false,
+      attributeOldValue: false,
+      characterData: false,
+      characterDataOldValue: false
     });
   }
 
@@ -355,17 +453,58 @@ class CopyPasteManager {
   }
 
   /**
+   * 处理复制功能切换
+   */
+  async handleCopyToggle(data) {
+    const newState = data?.enabled ?? !this.copyEnabled;
+    this.copyEnabled = newState;
+
+    // 重新应用设置
+    this.updateCopyPasteSettings();
+
+    return { success: true, copyEnabled: this.copyEnabled };
+  }
+
+  /**
+   * 处理粘贴功能切换
+   */
+  async handlePasteToggle(data) {
+    const newState = data?.enabled ?? !this.pasteEnabled;
+    this.pasteEnabled = newState;
+
+    // 重新应用设置
+    this.updateCopyPasteSettings();
+
+    return { success: true, pasteEnabled: this.pasteEnabled };
+  }
+
+  /**
+   * 更新复制粘贴设置
+   */
+  updateCopyPasteSettings() {
+    // 如果插件整体启用，则根据独立设置来控制功能
+    if (this.isEnabled) {
+      this.enableCopyPaste();
+    }
+  }
+
+  /**
    * 处理启用强力模式
    */
   async handleEnableForceMode() {
     this.forceMode = true;
 
     if (this.isEnabled) {
-      // 重新处理所有元素
+      // 重新处理所有元素，应用强力模式
       const allElements = document.querySelectorAll('*');
       allElements.forEach(element => {
-        this.applyForceMode(element);
+        this.processElement(element);
       });
+      
+      // 重新注入自定义脚本以确保强力模式生效
+      this.injectCustomScript();
+      
+      console.log('Force mode enabled and applied to all elements');
     }
 
     return { success: true, forceMode: true };
@@ -403,6 +542,93 @@ class CopyPasteManager {
     }
 
     return { success: true };
+  }
+
+  /**
+   * 调度元素处理（防抖机制）
+   */
+  scheduleElementProcessing(elements) {
+    // 添加到待处理队列
+    elements.forEach(el => this.pendingElements.add(el));
+
+    // 清除之前的定时器
+    if (this.processingTimer) {
+      clearTimeout(this.processingTimer);
+    }
+
+    // 设置防抖定时器
+    this.processingTimer = setTimeout(() => {
+      this.processBatchElements();
+    }, this.debounceDelay);
+  }
+
+  /**
+   * 批量处理元素
+   */
+  processBatchElements() {
+    if (this.pendingElements.size === 0) return;
+
+    const elements = Array.from(this.pendingElements);
+    this.pendingElements.clear();
+
+    // 分批处理以避免阻塞主线程
+    const processBatch = (startIndex) => {
+      const endIndex = Math.min(startIndex + this.batchSize, elements.length);
+      
+      for (let i = startIndex; i < endIndex; i++) {
+        const element = elements[i];
+        if (element && element.isConnected) {
+          this.processElement(element);
+        }
+      }
+
+      // 如果还有元素需要处理，使用requestIdleCallback或setTimeout继续
+      if (endIndex < elements.length) {
+        if (window.requestIdleCallback) {
+          requestIdleCallback(() => processBatch(endIndex));
+        } else {
+          setTimeout(() => processBatch(endIndex), 0);
+        }
+      }
+    };
+
+    processBatch(0);
+  }
+
+  /**
+   * 更新性能指标
+   */
+  updatePerformanceMetrics(processingTime) {
+    this.performanceMetrics.processedCount++;
+    this.performanceMetrics.totalTime += processingTime;
+    this.performanceMetrics.averageTime = 
+      this.performanceMetrics.totalTime / this.performanceMetrics.processedCount;
+
+    // 定期输出性能统计（仅在开发模式）
+    if (this.performanceMetrics.processedCount % 100 === 0) {
+      console.debug('CopyPaste Performance:', {
+        processed: this.performanceMetrics.processedCount,
+        avgTime: this.performanceMetrics.averageTime.toFixed(2) + 'ms',
+        totalTime: this.performanceMetrics.totalTime.toFixed(2) + 'ms'
+      });
+    }
+  }
+
+  /**
+   * 清理性能数据
+   */
+  clearPerformanceData() {
+    this.processedElements = new WeakSet();
+    this.pendingElements.clear();
+    if (this.processingTimer) {
+      clearTimeout(this.processingTimer);
+      this.processingTimer = null;
+    }
+    this.performanceMetrics = {
+      processedCount: 0,
+      totalTime: 0,
+      averageTime: 0
+    };
   }
 
   /**

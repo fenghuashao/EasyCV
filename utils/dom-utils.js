@@ -4,18 +4,65 @@
  */
 class DOMUtils {
   /**
-   * 移除元素的事件监听器
+   * 移除元素的事件监听器（安全增强版本）
    * @param {Element} element - 目标元素
    * @param {Array<string>} events - 事件类型数组
    */
   static removeEventListeners(element, events) {
-    if (!element || !Array.isArray(events)) return;
+    if (!element || !element.nodeType || !Array.isArray(events)) {
+      console.warn('DOMUtils.removeEventListeners: Invalid parameters');
+      return;
+    }
     
-    events.forEach(eventType => {
-      // 克隆元素来移除所有事件监听器
+    try {
+      // 检查元素是否仍在DOM中
+      if (!element.isConnected) {
+        console.warn('DOMUtils.removeEventListeners: Element not connected to DOM');
+        return;
+      }
+      
+      // 检查是否有父节点
+      if (!element.parentNode) {
+        console.warn('DOMUtils.removeEventListeners: Element has no parent node');
+        return;
+      }
+      
+      // 保存原始元素的引用和位置信息
+      const parent = element.parentNode;
+      const nextSibling = element.nextSibling;
+      
+      // 克隆元素（深度克隆以保持子元素）
       const newElement = element.cloneNode(true);
-      element.parentNode?.replaceChild(newElement, element);
-    });
+      
+      // 清理特定事件的内联处理器
+      events.forEach(eventType => {
+        try {
+          const handlerProperty = `on${eventType.toLowerCase()}`;
+          if (newElement[handlerProperty]) {
+            newElement[handlerProperty] = null;
+          }
+          if (newElement.hasAttribute(handlerProperty)) {
+            newElement.removeAttribute(handlerProperty);
+          }
+        } catch (error) {
+          console.warn(`DOMUtils: Error cleaning ${eventType} handler:`, error);
+        }
+      });
+      
+      // 替换元素
+      if (nextSibling) {
+        parent.insertBefore(newElement, nextSibling);
+      } else {
+        parent.appendChild(newElement);
+      }
+      parent.removeChild(element);
+      
+      console.log(`DOMUtils: Successfully removed event listeners for events: ${events.join(', ')}`);
+      return newElement;
+    } catch (error) {
+      console.error('DOMUtils.removeEventListeners: Error occurred:', error);
+      return element; // 返回原始元素以防止破坏
+    }
   }
   
   /**

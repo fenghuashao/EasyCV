@@ -301,23 +301,146 @@ input:checked + .slider:before {
 
 .add-form {
   display: flex;
+  flex-direction: column;
   gap: 12px;
-  align-items: center;
+  margin-bottom: 24px;
 }
 
-.add-form input {
-  flex: 1;
+.add-form input[type="text"] {
   padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
   font-size: 14px;
-  transition: var(--transition);
+  transition: border-color 0.2s ease;
 }
 
-.add-form input:focus {
+.add-form input[type="text"]:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+}
+
+.control-options {
+  margin: 16px 0;
+}
+
+.option-group {
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.option-title {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.custom-checkbox:hover {
+  background: var(--background-tertiary);
+}
+
+.custom-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: relative;
+  height: 18px;
+  width: 18px;
+  background-color: var(--background-primary);
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.custom-checkbox input:checked ~ .checkmark {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.custom-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.feature-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.feature-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+.option-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--background-tertiary);
+  border-radius: 6px;
+  border-left: 3px solid var(--primary-color);
+}
+
+.hint-icon {
+  width: 16px;
+  height: 16px;
+  fill: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-hint span {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.3;
 }
 
 .whitelist-list {
@@ -333,46 +456,168 @@ input:checked + .slider:before {
 
 .whitelist-item {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  background: var(--background-secondary);
+  align-items: flex-start;
+  padding: 20px;
+  border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  margin-bottom: 8px;
+  background: var(--background-secondary);
   transition: var(--transition);
+  margin-bottom: 12px;
+  position: relative;
 }
 
 .whitelist-item:hover {
+  border-color: var(--primary-color);
   background: var(--background-tertiary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.whitelist-item.editing {
+  border-color: #ffc107;
+  background: #fff3cd;
+  box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.2);
+}
+
+.whitelist-item.editing .whitelist-domain {
+  color: #856404;
+}
+
+.whitelist-item.editing::before {
+  content: "正在编辑";
+  position: absolute;
+  top: -8px;
+  right: 12px;
+  background: #ffc107;
+  color: #212529;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  z-index: 1;
+}
+
+.whitelist-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.domain-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.status-icon path {
+  fill: var(--primary-color);
 }
 
 .whitelist-domain {
-  font-size: 14px;
+  font-weight: 600;
   color: var(--text-primary);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.whitelist-status {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feature-summary {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.status-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
   font-weight: 500;
+  color: white;
+}
+
+.status-tag.all {
+  background-color: #28a745;
+}
+
+.status-tag.copy {
+  background-color: #007bff;
+}
+
+.status-tag.paste {
+  background-color: #ffc107;
+  color: #212529;
 }
 
 .whitelist-actions {
   display: flex;
   gap: 8px;
+  align-items: flex-start;
+  margin-top: 4px;
 }
 
 .action-btn-small {
-  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
   border: none;
-  border-radius: 4px;
-  font-size: 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.action-btn-small svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.action-btn-small.edit {
+  background-color: #6c757d;
+  color: white;
+  border: 1px solid transparent;
+}
+
+.action-btn-small.edit:hover {
+  background-color: #5a6268;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn-small.edit svg path {
+  fill: currentColor;
 }
 
 .action-btn-small.delete {
   background: var(--error-color);
   color: white;
+  border: 1px solid transparent;
 }
 
 .action-btn-small.delete:hover {
   background: #d93025;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+}
+
+.action-btn-small.delete svg path {
+  fill: currentColor;
 }
 
 /* 空状态 */
@@ -419,6 +664,30 @@ input:checked + .slider:before {
 
 .btn-primary:hover {
   background: var(--primary-hover);
+}
+
+.btn-primary.updating {
+  background: #ffc107;
+  color: #212529;
+  position: relative;
+  padding-left: 36px;
+}
+
+.btn-primary.updating:hover {
+  background: #e0a800;
+  color: #212529;
+}
+
+.btn-primary.updating::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23212529" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/></svg>') no-repeat center;
+  background-size: contain;
 }
 
 .btn-secondary {

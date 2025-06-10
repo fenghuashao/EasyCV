@@ -72,21 +72,43 @@
   };
   
   /**
-   * 检查监听器是否是限制性的
+   * 检查监听器是否是限制性的（增强安全版本）
    */
   function isRestrictiveListener(listener) {
-    if (typeof listener === 'function') {
-      const funcStr = listener.toString();
+    if (!listener) return false;
+    
+    try {
+      if (typeof listener === 'function') {
+        const funcStr = listener.toString();
+        
+        // 检查是否包含阻止默认行为的代码
+        const restrictivePatterns = [
+          /preventDefault/i,
+          /return\s+false/i,
+          /stopPropagation/i,
+          /stopImmediatePropagation/i,
+          // 添加更多限制性模式
+          /event\.returnValue\s*=\s*false/i,
+          /cancelBubble\s*=\s*true/i
+        ];
+        
+        return restrictivePatterns.some(pattern => pattern.test(funcStr));
+      }
       
-      // 检查是否包含阻止默认行为的代码
-      const restrictivePatterns = [
-        /preventDefault/i,
-        /return\s+false/i,
-        /stopPropagation/i,
-        /stopImmediatePropagation/i
-      ];
-      
-      return restrictivePatterns.some(pattern => pattern.test(funcStr));
+      if (typeof listener === 'string') {
+        // 处理字符串形式的事件处理器
+        const restrictivePatterns = [
+          /preventDefault/i,
+          /return\s+false/i,
+          /event\.returnValue\s*=\s*false/i
+        ];
+        
+        return restrictivePatterns.some(pattern => pattern.test(listener));
+      }
+    } catch (error) {
+      console.warn('EasyCV: Error checking listener restrictiveness:', error);
+      // 出错时保守处理，认为是限制性的
+      return true;
     }
     
     return false;
@@ -131,21 +153,53 @@
   };
   
   /**
-   * 移除现有的限制性事件监听器
+   * 移除现有的限制性事件监听器（增强安全版本）
    */
   function removeExistingRestrictiveListeners() {
-    const elements = document.querySelectorAll('*');
-    
-    elements.forEach(element => {
-      interceptedEvents.forEach(eventType => {
-        // 尝试移除可能的限制性监听器
-        const inlineHandler = element[`on${eventType}`];
-        if (inlineHandler && isRestrictiveListener(inlineHandler)) {
-          console.log(`EasyCV: Removed restrictive inline ${eventType} handler`);
-          element[`on${eventType}`] = null;
+    try {
+      // 限制查询范围，避免性能问题
+      const selectors = [
+        'body', 'html', 'div', 'p', 'span', 'article', 'section',
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'td', 'th'
+      ];
+      
+      selectors.forEach(selector => {
+        try {
+          const elements = document.querySelectorAll(selector);
+          
+          elements.forEach(element => {
+            if (!element || !element.nodeType) return;
+            
+            interceptedEvents.forEach(eventType => {
+              try {
+                const handlerProperty = `on${eventType}`;
+                const inlineHandler = element[handlerProperty];
+                
+                if (inlineHandler && isRestrictiveListener(inlineHandler)) {
+                  console.log(`EasyCV: Removed restrictive inline ${eventType} handler`);
+                  element[handlerProperty] = null;
+                }
+                
+                // 同时检查属性形式的处理器
+                if (element.hasAttribute(handlerProperty)) {
+                  const attrHandler = element.getAttribute(handlerProperty);
+                  if (attrHandler && isRestrictiveListener(attrHandler)) {
+                    console.log(`EasyCV: Removed restrictive ${handlerProperty} attribute`);
+                    element.removeAttribute(handlerProperty);
+                  }
+                }
+              } catch (error) {
+                console.warn(`EasyCV: Error processing ${eventType} on element:`, error);
+              }
+            });
+          });
+        } catch (error) {
+          console.warn(`EasyCV: Error querying ${selector} elements:`, error);
         }
       });
-    });
+    } catch (error) {
+      console.error('EasyCV: Error in removeExistingRestrictiveListeners:', error);
+    }
   }
   
   /**
@@ -182,77 +236,184 @@
   }
   
   /**
-   * 监听DOM变化，处理动态添加的限制
+   * 监听DOM变化，处理动态添加的限制（增强安全版本）
    */
+  let dynamicObserver = null;
+  
   function setupDynamicProtection() {
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-          if (node.nodeType === Node.ELEMENT_NODE) {
-            // 检查新添加的元素是否有限制性属性
-            interceptedEvents.forEach(eventType => {
-              const attrName = `on${eventType}`;
-              if (node.hasAttribute(attrName)) {
-                const handler = node.getAttribute(attrName);
-                if (handler && (handler.includes('return false') || 
-                               handler.includes('preventDefault'))) {
-                  console.log(`EasyCV: Removed restrictive ${attrName} attribute from new element`);
-                  node.removeAttribute(attrName);
-                }
-              }
+    try {
+      // 如果已有观察器，先断开连接
+      if (dynamicObserver) {
+        dynamicObserver.disconnect();
+      }
+      
+      dynamicObserver = new MutationObserver((mutations) => {
+        try {
+          // 限制处理的变化数量，避免性能问题
+          const maxMutations = 50;
+          const limitedMutations = mutations.slice(0, maxMutations);
+          
+          limitedMutations.forEach((mutation) => {
+            try {
+              mutation.addedNodes.forEach((node) => {
+                if (!node || node.nodeType !== Node.ELEMENT_NODE) return;
+                
+                // 检查新添加的元素是否有限制性属性
+                interceptedEvents.forEach(eventType => {
+                  try {
+                    const attrName = `on${eventType}`;
+                    
+                    // 检查属性形式的处理器
+                    if (node.hasAttribute && node.hasAttribute(attrName)) {
+                      const handler = node.getAttribute(attrName);
+                      if (handler && isRestrictiveListener(handler)) {
+                        console.log(`EasyCV: Removed restrictive ${attrName} attribute from new element`);
+                        node.removeAttribute(attrName);
+                      }
+                    }
+                    
+                    // 检查属性形式的处理器
+                    if (node[attrName] && isRestrictiveListener(node[attrName])) {
+                      console.log(`EasyCV: Removed restrictive ${attrName} property from new element`);
+                      node[attrName] = null;
+                    }
+                  } catch (error) {
+                    console.warn(`EasyCV: Error processing ${eventType} on new element:`, error);
+                  }
+                });
+              });
+            } catch (error) {
+              console.warn('EasyCV: Error processing mutation:', error);
+            }
+          });
+        } catch (error) {
+          console.error('EasyCV: Error in mutation observer callback:', error);
+        }
+      });
+      
+      // 确保document.body存在
+      if (document.body) {
+        dynamicObserver.observe(document.body, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: interceptedEvents.map(event => `on${event}`)
+        });
+      } else {
+        // 如果body还不存在，等待DOM加载
+        document.addEventListener('DOMContentLoaded', () => {
+          if (document.body && dynamicObserver) {
+            dynamicObserver.observe(document.body, {
+              childList: true,
+              subtree: true,
+              attributes: true,
+              attributeFilter: interceptedEvents.map(event => `on${event}`)
             });
           }
         });
-      });
-    });
-    
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: interceptedEvents.map(event => `on${event}`)
-    });
+      }
+    } catch (error) {
+      console.error('EasyCV: Error setting up dynamic protection:', error);
+    }
   }
   
   /**
-   * 强制启用文本选择
+   * 强制启用文本选择（增强版本）
    */
   function forceEnableTextSelection() {
-    // 创建样式表强制启用文本选择
-    const style = document.createElement('style');
-    style.textContent = `
-      * {
-        -webkit-user-select: text !important;
-        -moz-user-select: text !important;
-        -ms-user-select: text !important;
-        user-select: text !important;
-        -webkit-touch-callout: default !important;
+    try {
+      // 检查是否已经注入过样式
+      if (document.querySelector('style[data-easycv-injected="text-selection"]')) {
+        return;
       }
       
-      /* 确保常见的文本元素可选择 */
-      p, div, span, article, section, h1, h2, h3, h4, h5, h6,
-      li, td, th, blockquote, pre, code {
-        -webkit-user-select: text !important;
-        -moz-user-select: text !important;
-        -ms-user-select: text !important;
-        user-select: text !important;
+      // 创建样式表强制启用文本选择
+      const style = document.createElement('style');
+      style.setAttribute('data-easycv-injected', 'text-selection');
+      style.textContent = `
+        * {
+          -webkit-user-select: text !important;
+          -moz-user-select: text !important;
+          -ms-user-select: text !important;
+          user-select: text !important;
+          -webkit-touch-callout: default !important;
+        }
+        
+        /* 确保常见的文本元素可选择 */
+        p, div, span, article, section, h1, h2, h3, h4, h5, h6,
+        li, td, th, blockquote, pre, code {
+          -webkit-user-select: text !important;
+          -moz-user-select: text !important;
+          -ms-user-select: text !important;
+          user-select: text !important;
+        }
+        
+        /* 确保输入元素正常工作 */
+        input, textarea, select {
+          -webkit-user-select: text !important;
+          -moz-user-select: text !important;
+          -ms-user-select: text !important;
+          user-select: text !important;
+          pointer-events: auto !important;
+        }
+      `;
+      
+      // 添加到head，确保优先级
+      const target = document.head || document.documentElement;
+      if (target) {
+        target.appendChild(style);
+        console.log('EasyCV: Text selection styles injected');
       }
-    `;
-    
-    // 添加到head，确保优先级
-    (document.head || document.documentElement).appendChild(style);
+    } catch (error) {
+      console.error('EasyCV: Error injecting text selection styles:', error);
+    }
   }
   
   /**
-   * 恢复原始功能
+   * 恢复原始功能（增强清理版本）
    */
   function restoreOriginalFunctions() {
-    // 恢复原始的事件方法
-    EventTarget.prototype.addEventListener = originalFunctions.addEventListener;
-    EventTarget.prototype.removeEventListener = originalFunctions.removeEventListener;
-    Event.prototype.preventDefault = originalFunctions.preventDefault;
-    Event.prototype.stopPropagation = originalFunctions.stopPropagation;
-    Event.prototype.stopImmediatePropagation = originalFunctions.stopImmediatePropagation;
+    try {
+      // 停止动态观察器
+      if (dynamicObserver) {
+        dynamicObserver.disconnect();
+        dynamicObserver = null;
+      }
+      
+      // 恢复原始的事件方法
+      if (originalFunctions.addEventListener) {
+        EventTarget.prototype.addEventListener = originalFunctions.addEventListener;
+      }
+      if (originalFunctions.removeEventListener) {
+        EventTarget.prototype.removeEventListener = originalFunctions.removeEventListener;
+      }
+      if (originalFunctions.preventDefault) {
+        Event.prototype.preventDefault = originalFunctions.preventDefault;
+      }
+      if (originalFunctions.stopPropagation) {
+        Event.prototype.stopPropagation = originalFunctions.stopPropagation;
+      }
+      if (originalFunctions.stopImmediatePropagation) {
+        Event.prototype.stopImmediatePropagation = originalFunctions.stopImmediatePropagation;
+      }
+      
+      // 清理拦截的监听器映射
+      interceptedListeners.clear();
+      
+      // 移除注入的样式
+      const injectedStyles = document.querySelectorAll('style[data-easycv-injected]');
+      injectedStyles.forEach(style => {
+        try {
+          style.remove();
+        } catch (error) {
+          console.warn('EasyCV: Error removing injected style:', error);
+        }
+      });
+      
+      console.log('EasyCV: Original functions restored and cleanup completed');
+    } catch (error) {
+      console.error('EasyCV: Error restoring original functions:', error);
+    }
   }
   
   /**

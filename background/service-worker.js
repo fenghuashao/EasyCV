@@ -63,10 +63,19 @@ class BackgroundManager {
             return await this.handleUpdateSettings(data);
             
           case MessageUtils.MESSAGE_TYPES.REPORT_ERROR:
-            return await this.handleReportError(data, sender);
+        return await this.handleReportError(data, sender);
+        
+      case 'SUBMIT_FEEDBACK':
+        return await this.handleSubmitFeedback(data, sender);
             
           case MessageUtils.MESSAGE_TYPES.PAGE_ANALYZED:
             return await this.handlePageAnalyzed(data, sender);
+            
+          case MessageUtils.MESSAGE_TYPES.COPY_STATUS_CHANGED:
+            return await this.handleCopyStatusChanged(data);
+            
+          case MessageUtils.MESSAGE_TYPES.PASTE_STATUS_CHANGED:
+            return await this.handlePasteStatusChanged(data);
             
           default:
             throw new Error(`Unknown message type: ${type}`);
@@ -197,10 +206,17 @@ class BackgroundManager {
     
     // 如果指定了标签页，只对该标签页启用
     if (data?.tabId) {
-      await MessageUtils.sendToContent(
-        data.tabId,
-        MessageUtils.MESSAGE_TYPES.ENABLE_FORCE_MODE
-      );
+      try {
+        // 先尝试发送消息到content script
+        await MessageUtils.sendToContent(
+          data.tabId,
+          MessageUtils.MESSAGE_TYPES.ENABLE_FORCE_MODE
+        );
+      } catch (error) {
+        // 如果content script不可用（比如页面刚刷新），忽略错误
+        // 强力模式状态已保存，页面重新加载时会自动应用
+        console.log('Content script not available, force mode will be applied on page load');
+      }
     } else {
       // 广播到所有标签页
       await MessageUtils.broadcastToAllTabs(
@@ -243,14 +259,69 @@ class BackgroundManager {
    * 处理错误报告
    */
   async handleReportError(data, sender) {
-    console.error('Error reported from content script:', {
+    const errorReport = {
       error: data,
       sender: sender,
-      timestamp: new Date().toISOString()
-    });
+      timestamp: new Date().toISOString(),
+      url: data.url || sender.tab?.url || 'unknown',
+      userAgent: navigator.userAgent
+    };
     
-    // 这里可以添加错误收集逻辑
+    console.error('Error reported from content script:', errorReport);
+    
+    // 保存错误报告到本地存储（用于反馈时参考）
+    try {
+      const existingReports = await StorageUtils.get('errorReports') || { errorReports: [] };
+      const reports = existingReports.errorReports || [];
+      
+      // 只保留最近的10个错误报告
+      reports.push(errorReport);
+      if (reports.length > 10) {
+        reports.shift();
+      }
+      
+      await StorageUtils.set({ errorReports: reports });
+    } catch (error) {
+      console.error('Failed to save error report:', error);
+    }
+    
     return { received: true };
+   }
+   
+  /**
+   * 处理用户反馈提交
+   */
+  async handleSubmitFeedback(data, sender) {
+    const feedbackData = {
+      ...data.data,
+      tabId: sender.tab?.id,
+      timestamp: new Date().toISOString()
+    };
+    
+    console.log('User feedback submitted:', feedbackData);
+    
+    // 保存反馈数据到本地存储
+    try {
+      const existingFeedback = await StorageUtils.get('userFeedback') || { userFeedback: [] };
+      const feedback = existingFeedback.userFeedback || [];
+      
+      feedback.push(feedbackData);
+      
+      // 只保留最近的20个反馈记录
+      if (feedback.length > 20) {
+        feedback.shift();
+      }
+      
+      await StorageUtils.set({ userFeedback: feedback });
+      
+      // 可以在这里添加发送到服务器的逻辑
+      // await this.sendFeedbackToServer(feedbackData);
+      
+    } catch (error) {
+      console.error('Failed to save feedback:', error);
+    }
+    
+    return { success: true };
   }
   
   /**
@@ -297,6 +368,40 @@ class BackgroundManager {
     }
   }
   
+  /**
+   * 处理复制状态变更
+   */
+  async handleCopyStatusChanged(data) {
+    const settings = await StorageUtils.getPluginSettings();
+    settings.copyEnabled = data.enabled;
+    await StorageUtils.setPluginSettings(settings);
+    
+    // 广播到所有标签页
+    await MessageUtils.broadcastToAllTabs(
+      MessageUtils.MESSAGE_TYPES.COPY_STATUS_CHANGED,
+      { enabled: data.enabled }
+    );
+    
+    return { success: true };
+  }
+  
+  /**
+   * 处理粘贴状态变更
+   */
+  async handlePasteStatusChanged(data) {
+    const settings = await StorageUtils.getPluginSettings();
+    settings.pasteEnabled = data.enabled;
+    await StorageUtils.setPluginSettings(settings);
+    
+    // 广播到所有标签页
+    await MessageUtils.broadcastToAllTabs(
+      MessageUtils.MESSAGE_TYPES.PASTE_STATUS_CHANGED,
+      { enabled: data.enabled }
+    );
+    
+    return { success: true };
+  }
+
   /**
    * 更新插件图标
    */
@@ -346,12 +451,37 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
       const autoEnableList = await StorageUtils.getAutoEnableList();
       
       // 检查是否在自动启用列表中
-      if (autoEnableList.includes(url.hostname)) {
-        await MessageUtils.sendToContent(
-          tabId,
-          MessageUtils.MESSAGE_TYPES.TOGGLE_PLUGIN,
-          { enabled: true }
-        );
+      const config = autoEnableList.find(item => item.domain === url.hostname);
+      if (config) {
+        console.log(`Auto-enabling for ${url.hostname}:`, config);
+        
+        // 更新插件设置以匹配自动开启配置
+        await StorageUtils.setPluginSettings({
+          copyEnabled: config.copyEnabled,
+          pasteEnabled: config.pasteEnabled
+        });
+        
+        // 根据配置发送相应的启用消息
+        if (config.copyEnabled) {
+          chrome.tabs.sendMessage(tabId, {
+            type: MessageUtils.MESSAGE_TYPES.COPY_STATUS_CHANGED,
+            enabled: true
+          }).catch(() => {
+            // 忽略错误，可能是内容脚本还未加载
+          });
+        }
+        
+        if (config.pasteEnabled) {
+          chrome.tabs.sendMessage(tabId, {
+            type: MessageUtils.MESSAGE_TYPES.PASTE_STATUS_CHANGED,
+            enabled: true
+          }).catch(() => {
+            // 忽略错误，可能是内容脚本还未加载
+          });
+        }
+        
+        // 更新图标状态
+        updateIcon(tabId, config.copyEnabled || config.pasteEnabled);
       }
     } catch (error) {
       // 忽略无效URL

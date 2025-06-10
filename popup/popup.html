@@ -24,16 +24,28 @@
 
     <!-- 主要控制区域 -->
     <main class="popup-main">
-      <!-- 主开关 -->
-      <div class="main-toggle-section">
-        <div class="toggle-info">
-          <h2 class="toggle-title">插件状态</h2>
-          <p class="toggle-description">启用后自动解除网页复制粘贴限制</p>
+      <!-- 独立控制按钮 -->
+      <div class="control-buttons-section">
+        <div class="control-info">
+          <h2 class="control-title">功能控制</h2>
+          <p class="control-description">独立控制复制和粘贴功能</p>
         </div>
-        <label class="toggle-switch">
-          <input type="checkbox" id="mainToggle" checked>
-          <span class="slider"></span>
-        </label>
+        <div class="control-buttons">
+          <div class="control-item">
+            <label class="control-label">解锁复制</label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="copyToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="control-item">
+            <label class="control-label">解锁粘贴</label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="pasteToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
       </div>
 
       <!-- 当前页面状态 -->

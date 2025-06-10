@@ -70,11 +70,22 @@
 
           <div class="setting-item">
             <div class="setting-info">
-              <label class="setting-label">启用插件</label>
-              <p class="setting-description">全局启用或禁用EasyCV插件功能</p>
+              <label class="setting-label">解锁复制</label>
+              <p class="setting-description">启用或禁用复制功能解锁</p>
             </div>
             <label class="toggle-switch">
-              <input type="checkbox" id="enablePlugin" checked>
+              <input type="checkbox" id="enableCopy" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <label class="setting-label">解锁粘贴</label>
+              <p class="setting-description">启用或禁用粘贴功能解锁</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="enablePaste" checked>
               <span class="slider"></span>
             </label>
           </div>
@@ -152,6 +163,35 @@
             <h3 class="section-title">添加网站</h3>
             <div class="add-form">
               <input type="text" id="whitelistInput" placeholder="输入网站域名，如：example.com">
+              <div class="control-options">
+                <div class="option-group">
+                  <h4 class="option-title">功能选择</h4>
+                  <div class="checkbox-group">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" id="enableCopyOption" checked>
+                      <span class="checkmark"></span>
+                      <span class="checkbox-text">
+                        <span class="feature-name">解锁复制</span>
+                        <span class="feature-desc">允许在该网站复制受保护的内容</span>
+                      </span>
+                    </label>
+                    <label class="custom-checkbox">
+                      <input type="checkbox" id="enablePasteOption" checked>
+                      <span class="checkmark"></span>
+                      <span class="checkbox-text">
+                        <span class="feature-name">解锁粘贴</span>
+                        <span class="feature-desc">允许在该网站粘贴内容到输入框</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="option-hint">
+                    <svg class="hint-icon" viewBox="0 0 24 24">
+                      <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17A1.5,1.5 0 0,1 10.5,15.5A1.5,1.5 0 0,1 12,14A1.5,1.5 0 0,1 13.5,15.5A1.5,1.5 0 0,1 12,17M12,10.5A1.5,1.5 0 0,1 10.5,9A1.5,1.5 0 0,1 12,7.5A1.5,1.5 0 0,1 13.5,9A1.5,1.5 0 0,1 12,10.5Z"/>
+                    </svg>
+                    <span>至少选择一个功能才能添加到自动开启列表</span>
+                  </div>
+                </div>
+              </div>
               <button class="btn btn-primary" id="addWhitelistBtn">添加</button>
             </div>
           </div>

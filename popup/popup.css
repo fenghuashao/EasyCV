@@ -100,33 +100,60 @@ body {
   overflow-y: auto;
 }
 
-/* 主开关区域 */
-.main-toggle-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px;
+/* 独立控制按钮区域 */
+.control-buttons-section {
+  padding: 20px;
   background: var(--background-secondary);
   border-radius: var(--border-radius);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   border: 1px solid var(--border-color);
 }
 
-.toggle-info {
-  flex: 1;
+.control-info {
+  margin-bottom: 16px;
 }
 
-.toggle-title {
+.control-title {
   font-size: 16px;
   font-weight: 600;
-  margin-bottom: 4px;
+  margin: 0 0 4px 0;
   color: var(--text-primary);
 }
 
-.toggle-description {
-  font-size: 12px;
+.control-description {
+  font-size: 13px;
   color: var(--text-secondary);
   margin: 0;
+  line-height: 1.4;
+}
+
+.control-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.control-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--background-primary);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.control-item:hover {
+  background: #f5f5f5;
+}
+
+.control-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0;
+  cursor: pointer;
 }
 
 /* 开关样式 */
@@ -179,15 +206,15 @@ body {
   width: 14px;
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: var(--primary-color);
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   transform: translateX(24px);
 }
 
-.toggle-switch.small input:checked + .slider:before {
+.toggle-switch.small input:checked+.slider:before {
   transform: translateX(20px);
 }
 
@@ -296,40 +323,40 @@ input:checked + .slider:before {
 }
 
 .action-btn {
-    flex: 1;
-    min-width: 120px;
-    padding: 8px 12px;
-    background: var(--background-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    color: var(--text-primary);
-    font-size: 12px;
-    cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-  }
-  
-  .action-btn:hover {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-  }
-  
-  .action-btn.disabled {
-    background: var(--background-secondary);
-    color: var(--text-disabled);
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-  
-  .action-btn.disabled:hover {
-    background: var(--background-secondary);
-    color: var(--text-disabled);
-    border-color: var(--border-color);
-  }
+  flex: 1;
+  min-width: 120px;
+  padding: 8px 12px;
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  color: var(--text-primary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.action-btn:hover {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.action-btn.disabled {
+  background: var(--background-secondary);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.action-btn.disabled:hover {
+  background: var(--background-secondary);
+  color: var(--text-disabled);
+  border-color: var(--border-color);
+}
 
 .action-btn:active {
   transform: translateY(1px);
@@ -439,8 +466,13 @@ input:checked + .slider:before {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-text {
@@ -517,17 +549,17 @@ input:checked + .slider:before {
   .popup-main {
     padding: 0 16px;
   }
-  
+
   .main-toggle-section,
   .current-page-section {
     padding: 12px;
     margin-bottom: 12px;
   }
-  
+
   .stats-grid {
     gap: 8px;
   }
-  
+
   .stat-item {
     padding: 8px 6px;
   }
@@ -557,6 +589,7 @@ input:checked + .slider:before {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -591,12 +624,12 @@ input:checked + .slider:before {
     --background-secondary: #303134;
     --border-color: #5f6368;
   }
-  
+
   .action-btn,
   .stat-item {
     background: var(--background-secondary);
   }
-  
+
   .notification {
     background: var(--background-secondary);
   }
