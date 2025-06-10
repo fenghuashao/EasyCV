@@ -481,7 +481,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         }
         
         // 更新图标状态
-        updateIcon(tabId, config.copyEnabled || config.pasteEnabled);
+        backgroundManager.updateIcon();
       }
     } catch (error) {
       // 忽略无效URL

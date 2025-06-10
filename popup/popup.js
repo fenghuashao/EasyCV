@@ -4,8 +4,6 @@
  */
 
 // 导入工具类
-import { MessageUtils } from '../utils/message-utils.js';
-import { StorageUtils } from '../utils/storage-utils.js';
 
 class PopupManager {
   constructor() {

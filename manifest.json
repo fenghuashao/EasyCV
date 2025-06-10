@@ -21,9 +21,9 @@
         "<all_urls>"
       ],
       "js": [
-        "utils/dom-utils.js",
         "utils/message-utils.js",
         "utils/storage-utils.js",
+        "utils/dom-utils.js",
         "content/content.js"
       ],
       "run_at": "document_start",
@@ -51,7 +51,8 @@
     {
       "resources": [
         "content/injector.js",
-        "icons/*.png"
+        "icons/*.png",
+        "utils/*.js"
       ],
       "matches": [
         "<all_urls>"

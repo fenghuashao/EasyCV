@@ -174,8 +174,3 @@ class MessageUtils {
       .catch(error => sendResponse(this.createResponse(false, null, error.message)));
   }
 }
-
-// 导出工具类
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = MessageUtils;
-}

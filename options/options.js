@@ -4,8 +4,6 @@
  */
 
 // 导入工具类
-import { StorageUtils } from '../utils/storage-utils.js';
-import { MessageUtils } from '../utils/message-utils.js';
 
 class OptionsManager {
   constructor() {

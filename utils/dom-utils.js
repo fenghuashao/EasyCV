@@ -13,27 +13,27 @@ class DOMUtils {
       console.warn('DOMUtils.removeEventListeners: Invalid parameters');
       return;
     }
-    
+
     try {
       // 检查元素是否仍在DOM中
       if (!element.isConnected) {
         console.warn('DOMUtils.removeEventListeners: Element not connected to DOM');
         return;
       }
-      
+
       // 检查是否有父节点
       if (!element.parentNode) {
         console.warn('DOMUtils.removeEventListeners: Element has no parent node');
         return;
       }
-      
+
       // 保存原始元素的引用和位置信息
       const parent = element.parentNode;
       const nextSibling = element.nextSibling;
-      
+
       // 克隆元素（深度克隆以保持子元素）
       const newElement = element.cloneNode(true);
-      
+
       // 清理特定事件的内联处理器
       events.forEach(eventType => {
         try {
@@ -48,7 +48,7 @@ class DOMUtils {
           console.warn(`DOMUtils: Error cleaning ${eventType} handler:`, error);
         }
       });
-      
+
       // 替换元素
       if (nextSibling) {
         parent.insertBefore(newElement, nextSibling);
@@ -56,7 +56,7 @@ class DOMUtils {
         parent.appendChild(newElement);
       }
       parent.removeChild(element);
-      
+
       console.log(`DOMUtils: Successfully removed event listeners for events: ${events.join(', ')}`);
       return newElement;
     } catch (error) {
@@ -64,7 +64,7 @@ class DOMUtils {
       return element; // 返回原始元素以防止破坏
     }
   }
-  
+
   /**
    * 修改元素的CSS属性
    * @param {Element} element - 目标元素
@@ -72,7 +72,7 @@ class DOMUtils {
    */
   static modifyStyles(element, styles) {
     if (!element || typeof styles !== 'object') return;
-    
+
     Object.entries(styles).forEach(([property, value]) => {
       try {
         element.style.setProperty(property, value, 'important');
@@ -81,7 +81,7 @@ class DOMUtils {
       }
     });
   }
-  
+
   /**
    * 检测文本选择限制
    * @param {Element} element - 检测的元素
@@ -95,29 +95,29 @@ class DOMUtils {
       dragStart: false,
       copy: false
     };
-    
+
     // 检查CSS user-select属性
     const computedStyle = window.getComputedStyle(element);
     if (computedStyle.userSelect === 'none') {
       restrictions.userSelect = true;
     }
-    
+
     // 检查是否禁用了右键菜单
-    if (element.oncontextmenu === null || 
-        element.getAttribute('oncontextmenu') === 'return false') {
+    if (element.oncontextmenu === null ||
+      element.getAttribute('oncontextmenu') === 'return false') {
       restrictions.contextMenu = true;
     }
-    
+
     return restrictions;
   }
-  
+
   /**
    * 恢复元素的原始行为
    * @param {Element} element - 目标元素
    */
   static restoreOriginalBehavior(element) {
     if (!element) return;
-    
+
     // 恢复文本选择
     this.modifyStyles(element, {
       'user-select': 'text',
@@ -125,17 +125,17 @@ class DOMUtils {
       '-moz-user-select': 'text',
       '-ms-user-select': 'text'
     });
-    
+
     // 移除禁用属性
     element.removeAttribute('onselectstart');
     element.removeAttribute('ondragstart');
     element.removeAttribute('oncontextmenu');
-    
+
     // 移除禁用事件监听器
     const events = ['selectstart', 'dragstart', 'contextmenu', 'copy'];
     this.removeEventListeners(element, events);
   }
-  
+
   /**
    * 递归处理所有子元素
    * @param {Element} rootElement - 根元素
@@ -143,16 +143,16 @@ class DOMUtils {
    */
   static traverseElements(rootElement, callback) {
     if (!rootElement || typeof callback !== 'function') return;
-    
+
     // 处理当前元素
     callback(rootElement);
-    
+
     // 递归处理子元素
     Array.from(rootElement.children).forEach(child => {
       this.traverseElements(child, callback);
     });
   }
-  
+
   /**
    * 安全地执行DOM操作
    * @param {Function} operation - DOM操作函数
@@ -166,7 +166,7 @@ class DOMUtils {
       return null;
     }
   }
-  
+
   /**
    * 检查元素是否可见
    * @param {Element} element - 目标元素
@@ -174,35 +174,30 @@ class DOMUtils {
    */
   static isElementVisible(element) {
     if (!element) return false;
-    
+
     const style = window.getComputedStyle(element);
-    return style.display !== 'none' && 
-           style.visibility !== 'hidden' && 
-           style.opacity !== '0';
+    return style.display !== 'none' &&
+      style.visibility !== 'hidden' &&
+      style.opacity !== '0';
   }
-  
+
   /**
    * 获取页面中所有文本元素
    * @returns {Array<Element>} 文本元素数组
    */
   static getTextElements() {
     const textSelectors = [
-      'p', 'div', 'span', 'article', 'section', 
+      'p', 'div', 'span', 'article', 'section',
       'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
       'li', 'td', 'th', 'blockquote', 'pre'
     ];
-    
+
     const elements = [];
     textSelectors.forEach(selector => {
       const found = document.querySelectorAll(selector);
       elements.push(...Array.from(found));
     });
-    
+
     return elements.filter(el => this.isElementVisible(el));
   }
-}
-
-// 导出工具类
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = DOMUtils;
 }

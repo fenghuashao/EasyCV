@@ -14,7 +14,7 @@ class StorageUtils {
     STATISTICS: 'statistics',
     LAST_UPDATE: 'last_update'
   };
-  
+
   /**
    * 默认设置
    */
@@ -28,7 +28,7 @@ class StorageUtils {
     copyEnabled: true,
     pasteEnabled: true
   };
-  
+
   /**
    * 获取存储数据
    * @param {string|Array<string>} keys - 存储键名
@@ -39,7 +39,7 @@ class StorageUtils {
       if (typeof keys === 'string') {
         keys = [keys];
       }
-      
+
       const result = await chrome.storage.sync.get(keys);
       return result;
     } catch (error) {
@@ -48,7 +48,7 @@ class StorageUtils {
       return await chrome.storage.local.get(keys);
     }
   }
-  
+
   /**
    * 设置存储数据
    * @param {Object} data - 要存储的数据
@@ -63,7 +63,7 @@ class StorageUtils {
       await chrome.storage.local.set(data);
     }
   }
-  
+
   /**
    * 删除存储数据
    * @param {string|Array<string>} keys - 要删除的键名
@@ -77,7 +77,7 @@ class StorageUtils {
       await chrome.storage.local.remove(keys);
     }
   }
-  
+
   /**
    * 清空所有存储数据
    * @returns {Promise<void>}
@@ -90,7 +90,7 @@ class StorageUtils {
       console.error('Failed to clear storage:', error);
     }
   }
-  
+
   /**
    * 获取插件启用状态
    * @returns {Promise<boolean>} 是否启用
@@ -99,7 +99,7 @@ class StorageUtils {
     const result = await this.get(this.STORAGE_KEYS.PLUGIN_ENABLED);
     return result[this.STORAGE_KEYS.PLUGIN_ENABLED] ?? this.DEFAULT_SETTINGS.pluginEnabled;
   }
-  
+
   /**
    * 设置插件启用状态
    * @param {boolean} enabled - 是否启用
@@ -108,7 +108,7 @@ class StorageUtils {
   static async setPluginEnabled(enabled) {
     await this.set({ [this.STORAGE_KEYS.PLUGIN_ENABLED]: enabled });
   }
-  
+
   /**
    * 获取强力模式状态
    * @returns {Promise<boolean>} 是否启用强力模式
@@ -117,7 +117,7 @@ class StorageUtils {
     const result = await this.get(this.STORAGE_KEYS.FORCE_MODE);
     return result[this.STORAGE_KEYS.FORCE_MODE] ?? this.DEFAULT_SETTINGS.forceMode;
   }
-  
+
   /**
    * 设置强力模式状态
    * @param {boolean} enabled - 是否启用强力模式
@@ -126,7 +126,7 @@ class StorageUtils {
   static async setForceMode(enabled) {
     await this.set({ [this.STORAGE_KEYS.FORCE_MODE]: enabled });
   }
-  
+
   /**
    * 获取自动启用列表
    * @returns {Promise<Array<Object>>} 域名配置列表
@@ -134,7 +134,7 @@ class StorageUtils {
   static async getAutoEnableList() {
     const result = await this.get(this.STORAGE_KEYS.AUTO_ENABLE_LIST);
     const list = result[this.STORAGE_KEYS.AUTO_ENABLE_LIST] ?? this.DEFAULT_SETTINGS.autoEnableList;
-    
+
     // 兼容旧版本的字符串数组格式
     if (list.length > 0 && typeof list[0] === 'string') {
       return list.map(domain => ({
@@ -143,10 +143,10 @@ class StorageUtils {
         pasteEnabled: true
       }));
     }
-    
+
     return list;
   }
-  
+
   /**
    * 添加域名到自动启用列表
    * @param {string|Object} domainOrConfig - 域名字符串或配置对象
@@ -156,7 +156,7 @@ class StorageUtils {
    */
   static async addToAutoEnableList(domainOrConfig, copyEnabled = true, pasteEnabled = true) {
     const list = await this.getAutoEnableList();
-    
+
     let config;
     if (typeof domainOrConfig === 'string') {
       config = {
@@ -167,7 +167,7 @@ class StorageUtils {
     } else {
       config = domainOrConfig;
     }
-    
+
     // 检查是否已存在该域名
     const existingIndex = list.findIndex(item => item.domain === config.domain);
     if (existingIndex === -1) {
@@ -175,7 +175,7 @@ class StorageUtils {
       await this.set({ [this.STORAGE_KEYS.AUTO_ENABLE_LIST]: list });
     }
   }
-  
+
   /**
    * 从自动启用列表移除域名
    * @param {string} domain - 域名
@@ -189,7 +189,7 @@ class StorageUtils {
       await this.set({ [this.STORAGE_KEYS.AUTO_ENABLE_LIST]: list });
     }
   }
-  
+
   /**
    * 更新自动启用列表中域名的配置
    * @param {string} domain - 域名
@@ -206,7 +206,7 @@ class StorageUtils {
       await this.set({ [this.STORAGE_KEYS.AUTO_ENABLE_LIST]: list });
     }
   }
-  
+
   /**
    * 获取特定域名的自动启用配置
    * @param {string} domain - 域名
@@ -216,7 +216,7 @@ class StorageUtils {
     const list = await this.getAutoEnableList();
     return list.find(item => item.domain === domain) || null;
   }
-  
+
   /**
    * 获取用户设置
    * @returns {Promise<Object>} 用户设置对象
@@ -225,7 +225,7 @@ class StorageUtils {
     const result = await this.get(this.STORAGE_KEYS.USER_SETTINGS);
     return { ...this.DEFAULT_SETTINGS, ...result[this.STORAGE_KEYS.USER_SETTINGS] };
   }
-  
+
   /**
    * 更新用户设置
    * @param {Object} settings - 设置对象
@@ -236,7 +236,7 @@ class StorageUtils {
     const newSettings = { ...currentSettings, ...settings };
     await this.set({ [this.STORAGE_KEYS.USER_SETTINGS]: newSettings });
   }
-  
+
   /**
    * 获取统计数据
    * @returns {Promise<Object>} 统计数据
@@ -249,7 +249,7 @@ class StorageUtils {
       lastUsed: null
     };
   }
-  
+
   /**
    * 更新统计数据
    * @param {Object} stats - 统计数据
@@ -260,7 +260,7 @@ class StorageUtils {
     const newStats = { ...currentStats, ...stats };
     await this.set({ [this.STORAGE_KEYS.STATISTICS]: newStats });
   }
-  
+
   /**
    * 监听存储变化
    * @param {Function} callback - 回调函数
@@ -269,12 +269,12 @@ class StorageUtils {
     if (typeof callback !== 'function') {
       throw new Error('Storage listener must be a function');
     }
-    
+
     chrome.storage.onChanged.addListener((changes, areaName) => {
       callback(changes, areaName);
     });
   }
-  
+
   /**
    * 导出所有设置
    * @returns {Promise<Object>} 所有设置数据
@@ -288,7 +288,7 @@ class StorageUtils {
       version: '1.0.0'
     };
   }
-  
+
   /**
    * 导入设置
    * @param {Object} data - 设置数据
@@ -298,17 +298,17 @@ class StorageUtils {
     if (!data || typeof data !== 'object') {
       throw new Error('Invalid import data');
     }
-    
+
     // 验证数据格式
     const validKeys = Object.values(this.STORAGE_KEYS);
     const importData = {};
-    
+
     validKeys.forEach(key => {
       if (data.hasOwnProperty(key)) {
         importData[key] = data[key];
       }
     });
-    
+
     await this.set(importData);
   }
 
@@ -322,7 +322,7 @@ class StorageUtils {
       StorageUtils.getForceMode(),
       StorageUtils.getUserSettings()
     ]);
-    
+
     return {
       enabled,
       forceMode,
@@ -337,36 +337,31 @@ class StorageUtils {
    */
   async setPluginSettings(settings) {
     const updates = [];
-    
+
     if (settings.hasOwnProperty('enabled')) {
       updates.push(StorageUtils.setPluginEnabled(settings.enabled));
     }
-    
+
     if (settings.hasOwnProperty('forceMode')) {
       updates.push(StorageUtils.setForceMode(settings.forceMode));
     }
-    
+
     // 处理其他用户设置，包括新的复制粘贴控制选项
     const userSettingsKeys = ['showNotifications', 'enableStatistics', 'theme', 'copyEnabled', 'pasteEnabled'];
     const userSettingsUpdate = {};
     let hasUserSettings = false;
-    
+
     userSettingsKeys.forEach(key => {
       if (settings.hasOwnProperty(key)) {
         userSettingsUpdate[key] = settings[key];
         hasUserSettings = true;
       }
     });
-    
+
     if (hasUserSettings) {
       updates.push(StorageUtils.updateUserSettings(userSettingsUpdate));
     }
-    
+
     await Promise.all(updates);
   }
-}
-
-// 导出工具类
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = StorageUtils;
 }
