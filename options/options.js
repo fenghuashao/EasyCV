@@ -56,6 +56,24 @@ class OptionsManager {
     
     // 关于页面
     this.bindAboutEvents();
+    
+    // 通知关闭按钮
+    this.bindNotificationEvents();
+  }
+  
+  /**
+   * 绑定通知事件
+   */
+  bindNotificationEvents() {
+    document.addEventListener('click', (e) => {
+      const closeBtn = e.target.closest('[data-action="close-notification"]');
+      if (closeBtn) {
+        const notification = closeBtn.closest('.notification');
+        if (notification) {
+          notification.classList.remove('show');
+        }
+      }
+    });
   }
   
   /**
@@ -542,11 +560,11 @@ class OptionsManager {
             </div>
           </div>
           <div class="whitelist-actions">
-            <button class="action-btn-small edit" onclick="optionsManager.editWhitelistDomain('${domain}')" title="编辑配置">
+            <button class="action-btn-small edit" data-domain="${domain}" title="编辑配置">
               <svg viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/></svg>
               编辑
             </button>
-            <button class="action-btn-small delete" onclick="optionsManager.removeWhitelistDomain('${domain}')" title="删除网站">
+            <button class="action-btn-small delete" data-domain="${domain}" title="删除网站">
               <svg viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
               删除
             </button>
@@ -556,6 +574,36 @@ class OptionsManager {
     }).join('');
     
     container.innerHTML = html;
+    
+    // 添加事件委托处理编辑和删除按钮
+    this.setupWhitelistEventListeners(container);
+  }
+  
+  /**
+   * 设置白名单事件监听器
+   */
+  setupWhitelistEventListeners(container) {
+    // 事件委托处理编辑按钮
+    container.addEventListener('click', (e) => {
+      const editBtn = e.target.closest('.action-btn-small.edit');
+      if (editBtn) {
+        const domain = editBtn.getAttribute('data-domain');
+        if (domain) {
+          this.editWhitelistDomain(domain);
+        }
+        return;
+      }
+      
+      // 事件委托处理删除按钮
+      const deleteBtn = e.target.closest('.action-btn-small.delete');
+      if (deleteBtn) {
+        const domain = deleteBtn.getAttribute('data-domain');
+        if (domain) {
+          this.removeWhitelistDomain(domain);
+        }
+        return;
+      }
+    });
   }
   
   /**
