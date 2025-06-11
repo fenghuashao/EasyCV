@@ -105,6 +105,18 @@ class CopyPasteManager {
           case MessageUtils.MESSAGE_TYPES.UPDATE_STATUS:
             return await this.handleUpdateStatus(data);
 
+          case MessageUtils.MESSAGE_TYPES.PING:
+            return { success: true, message: 'Content script is available' };
+
+          case 'FORCE_MODE_CHANGED':
+            return await this.handleForceModeChanged(data);
+
+          case 'REFRESH_DETECTION':
+            return await this.handleRefreshDetection(data);
+
+          case 'TEST_COPY':
+            return await this.handleTestCopy(data);
+
           default:
             return { success: false, error: 'Unknown message type' };
         }
@@ -644,6 +656,69 @@ class CopyPasteManager {
         timestamp: new Date().toISOString()
       }
     ).catch(console.error);
+  }
+
+  /**
+   * 处理强制模式变更
+   */
+  async handleForceModeChanged(data) {
+    try {
+      const { forceMode } = data;
+      this.forceMode = forceMode;
+      
+      if (forceMode) {
+        this.enableCopyPaste();
+      } else {
+        this.disableCopyPaste();
+      }
+      
+      return { success: true, forceMode: this.forceMode };
+    } catch (error) {
+      console.error('Failed to handle force mode change:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * 处理刷新检测
+   */
+  async handleRefreshDetection(data) {
+    try {
+      // 重新检测页面限制
+      this.detectRestrictions();
+      
+      // 如果启用，重新应用设置
+      if (this.isEnabled) {
+        this.enableCopyPaste();
+      }
+      
+      return { success: true, message: 'Detection refreshed' };
+    } catch (error) {
+      console.error('Failed to handle refresh detection:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * 处理测试复制
+   */
+  async handleTestCopy(data) {
+    try {
+      // 检查当前复制状态
+      const canCopy = this.copyEnabled && this.isEnabled;
+      
+      return { 
+        success: true, 
+        canCopy,
+        copyEnabled: this.copyEnabled,
+        pasteEnabled: this.pasteEnabled,
+        isEnabled: this.isEnabled,
+        forceMode: this.forceMode
+      };
+    } catch (error) {
+      console.error('Failed to handle test copy:', error);
+      return { success: false, error: error.message };
+    }
   }
 
   /**

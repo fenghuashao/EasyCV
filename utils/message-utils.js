@@ -17,7 +17,8 @@ class MessageUtils {
     REPORT_ERROR: 'report_error',
     PAGE_ANALYZED: 'page_analyzed',
     COPY_STATUS_CHANGED: 'copy_status_changed',
-    PASTE_STATUS_CHANGED: 'paste_status_changed'
+    PASTE_STATUS_CHANGED: 'paste_status_changed',
+    PING: 'ping'
   };
 
   /**
@@ -46,20 +47,44 @@ class MessageUtils {
    * @param {number} tabId - 标签页ID
    * @param {string} type - 消息类型
    * @param {Object} data - 消息数据
+   * @param {Object} options - 选项配置
+   * @param {number} options.retries - 重试次数，默认2次
+   * @param {number} options.timeout - 超时时间，默认1000ms
+   * @param {boolean} options.silent - 静默模式，默认false
    * @returns {Promise} 响应Promise
    */
-  static async sendToContent(tabId, type, data = {}) {
-    try {
-      const message = {
-        type,
-        data,
-        timestamp: Date.now()
-      };
+  static async sendToContent(tabId, type, data = {}, options = {}) {
+    const { retries = 2, timeout = 1000, silent = false } = options;
+    
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      try {
+        // 首先检查标签页是否存在且活跃
+        const tab = await chrome.tabs.get(tabId).catch(() => null);
+        if (!tab || tab.discarded) {
+          throw new Error('Tab not available or discarded');
+        }
 
-      return await chrome.tabs.sendMessage(tabId, message);
-    } catch (error) {
-      console.error('Failed to send message to content script:', error);
-      throw error;
+        const message = {
+          type,
+          data,
+          timestamp: Date.now()
+        };
+
+        return await chrome.tabs.sendMessage(tabId, message);
+      } catch (error) {
+        const isLastAttempt = attempt === retries;
+        
+        if (isLastAttempt) {
+          if (!silent) {
+            console.warn(`Failed to send message to content script after ${retries + 1} attempts:`, error.message);
+          }
+          // 优雅降级：返回默认响应而不是抛出错误
+          return { success: false, error: 'Content script unavailable', degraded: true };
+        }
+        
+        // 等待后重试
+        await new Promise(resolve => setTimeout(resolve, timeout * (attempt + 1)));
+      }
     }
   }
 
@@ -123,6 +148,25 @@ class MessageUtils {
     } catch (error) {
       console.error('Failed to get current tab ID:', error);
       return null;
+    }
+  }
+
+  /**
+   * 检测Content Script是否可用
+   * @param {number} tabId - 标签页ID
+   * @returns {Promise<boolean>} 是否可用
+   */
+  static async isContentScriptAvailable(tabId) {
+    try {
+      const response = await this.sendToContent(
+        tabId, 
+        this.MESSAGE_TYPES.PING, 
+        {}, 
+        { retries: 0, timeout: 500, silent: true }
+      );
+      return !response?.degraded;
+    } catch {
+      return false;
     }
   }
 

@@ -321,12 +321,18 @@ class PopupManager {
         }
       }
 
-      // 发送消息到当前页面的content script
+      // 发送消息到当前页面的content script（使用优雅降级）
       if (this.currentTab) {
-        try {
-          await MessageUtils.sendToContent(this.currentTab.id, 'FORCE_MODE_CHANGED', { forceMode });
-        } catch (error) {
-          console.log('Content script not available');
+        const response = await MessageUtils.sendToContent(
+          this.currentTab.id, 
+          'FORCE_MODE_CHANGED', 
+          { forceMode },
+          { silent: true } // 静默模式，不显示错误日志
+        );
+        
+        // 检查是否为降级响应
+        if (response?.degraded) {
+          console.debug('Content script not available, but operation completed successfully');
         }
       }
 
@@ -355,8 +361,17 @@ class PopupManager {
           files: ['content/content.js']
         });
 
-        // 发送刷新检测消息
-        await MessageUtils.sendToContent(this.currentTab.id, 'REFRESH_DETECTION', {});
+        // 发送刷新检测消息（使用优雅降级）
+        const response = await MessageUtils.sendToContent(
+          this.currentTab.id, 
+          'REFRESH_DETECTION', 
+          {},
+          { silent: true }
+        );
+        
+        if (response?.degraded) {
+          console.debug('Content script not available for refresh detection');
+        }
 
         // 更新页面状态
         setTimeout(() => {
@@ -380,10 +395,17 @@ class PopupManager {
   async handleTestCopy() {
     try {
       if (this.currentTab) {
-        // 发送测试复制消息
-        const response = await MessageUtils.sendToContent(this.currentTab.id, 'TEST_COPY', {});
+        // 发送测试复制消息（使用优雅降级）
+        const response = await MessageUtils.sendToContent(
+          this.currentTab.id, 
+          'TEST_COPY', 
+          {},
+          { silent: true }
+        );
 
-        if (response && response.success) {
+        if (response?.degraded) {
+          this.showNotification('无法连接到页面脚本，请刷新页面后重试', 'warning');
+        } else if (response && response.success) {
           this.showNotification('复制功能正常', 'success');
         } else {
           this.showNotification('复制功能受限', 'warning');
