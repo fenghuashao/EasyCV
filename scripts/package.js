@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const archiver = require('archiver');
+const { execSync } = require('child_process');
+const os = require('os');
 
 /**
  * EasyCV 打包脚本
@@ -80,6 +82,43 @@ class Packager {
 
       archive.finalize();
     });
+  }
+
+  /**
+   * 自动解压ZIP文件（仅Windows环境）
+   */
+  async autoExtract(zipPath) {
+    // 检查是否为Windows环境
+    if (os.platform() !== 'win32') {
+      console.log('⚠️  自动解压功能仅支持Windows环境');
+      return null;
+    }
+
+    try {
+      const zipDir = path.dirname(zipPath);
+      const zipBaseName = path.basename(zipPath, '.zip');
+      const extractDir = path.join(zipDir, zipBaseName);
+
+      // 如果解压目录已存在，先删除
+      if (fs.existsSync(extractDir)) {
+        console.log(`🗑️  删除已存在的解压目录: ${path.basename(extractDir)}`);
+        fs.rmSync(extractDir, { recursive: true, force: true });
+      }
+
+      console.log(`📂 正在解压到: ${path.basename(extractDir)}`);
+      
+      // 使用PowerShell的Expand-Archive命令解压
+      const command = `powershell -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${extractDir}' -Force"`;
+      execSync(command, { stdio: 'pipe' });
+      
+      console.log(`✅ 解压完成: ${path.relative(this.sourceDir, extractDir)}`);
+      return extractDir;
+      
+    } catch (error) {
+      console.error('❌ 自动解压失败:', error.message);
+      console.log('💡 提示: 您可以手动解压ZIP文件');
+      return null;
+    }
   }
 
   /**
@@ -177,12 +216,18 @@ class Packager {
       // 生成发布说明
       const notesPath = this.generateReleaseNotes(versionInfo, packageInfo);
       
+      // 自动解压（仅Windows环境）
+      const extractDir = await this.autoExtract(packageInfo.path);
+      
       console.log('=' .repeat(50));
       console.log(`✅ 打包完成!`);
       console.log(`📦 版本: ${versionInfo.version}`);
       console.log(`📁 输出文件: ${path.relative(this.sourceDir, packageInfo.path)}`);
       console.log(`📝 发布说明: ${path.relative(this.sourceDir, notesPath)}`);
       console.log(`💾 文件大小: ${this.formatFileSize(packageInfo.size)}`);
+      if (extractDir) {
+        console.log(`📂 解压目录: ${path.relative(this.sourceDir, extractDir)}`);
+      }
       
       return packageInfo;
       

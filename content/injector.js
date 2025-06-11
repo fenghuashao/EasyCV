@@ -7,10 +7,10 @@
   'use strict';
   
   // 防止重复注入
-  if (window.easycvInjected) {
+  if (window.EasyCVInjected) {
     return;
   }
-  window.easycvInjected = true;
+  window.EasyCVInjected = true;
   
   console.log('EasyCV Injector script loaded');
   

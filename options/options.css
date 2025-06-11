@@ -457,7 +457,7 @@ input:checked + .slider:before {
 .whitelist-item {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   padding: 20px;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
@@ -502,6 +502,7 @@ input:checked + .slider:before {
   flex-direction: column;
   gap: 12px;
   flex: 1;
+  margin-right: 20px;
 }
 
 .domain-header {
@@ -564,13 +565,14 @@ input:checked + .slider:before {
 .whitelist-actions {
   display: flex;
   gap: 8px;
-  align-items: flex-start;
-  margin-top: 4px;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .action-btn-small {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   padding: 8px 12px;
   border: none;
@@ -580,6 +582,8 @@ input:checked + .slider:before {
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
+  min-width: 70px;
+  height: 36px;
 }
 
 .action-btn-small svg {
