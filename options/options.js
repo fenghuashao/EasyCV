@@ -347,7 +347,7 @@ class OptionsManager {
   }
   
   /**
-   * 添加白名单域名
+   * 添加自动解锁域名
    */
   async addWhitelistDomain(domain) {
     if (!domain) {
@@ -389,7 +389,7 @@ class OptionsManager {
       const editingDomain = isEditing ? input.getAttribute('data-editing') : null;
       
       this.whitelist.push(config);
-      await this.storageUtils.set({ [this.storageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: this.whitelist });
+      await StorageUtils.set({ [StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: this.whitelist });
       
       // 清空输入框和重置选项
       if (input) {
@@ -425,12 +425,12 @@ class OptionsManager {
   }
   
   /**
-   * 删除白名单域名
+   * 删除自动解锁域名
    */
   async removeWhitelistDomain(domain) {
     try {
       this.whitelist = this.whitelist.filter(item => item.domain !== domain);
-      await this.storageUtils.set({ [this.storageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: this.whitelist });
+      await StorageUtils.set({ [StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: this.whitelist });
       
       // 重新渲染列表
       this.renderWhitelist();
@@ -443,7 +443,7 @@ class OptionsManager {
   }
   
   /**
-   * 编辑白名单域名配置
+   * 编辑自动解锁域名
    */
   async editWhitelistDomain(domain) {
     const config = this.whitelist.find(item => item.domain === domain);
@@ -502,7 +502,7 @@ class OptionsManager {
           <svg class="empty-icon" viewBox="0 0 24 24">
             <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"/>
           </svg>
-          <p class="empty-text">暂无白名单网站</p>
+          <p class="empty-text">暂无自动解锁网站</p>
         </div>
       `;
       return;
@@ -702,7 +702,7 @@ class OptionsManager {
    */
   async loadStatistics() {
     try {
-      this.statistics = await this.storageUtils.getStatistics();
+      this.statistics = await StorageUtils.getStatistics();
       
       // 更新统计卡片
       const totalSitesElement = document.getElementById('totalSitesCount');

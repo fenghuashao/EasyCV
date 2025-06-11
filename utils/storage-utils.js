@@ -218,6 +218,15 @@ class StorageUtils {
   }
 
   /**
+   * 设置自动启用列表（实例方法）
+   * @param {Array<Object>} list - 域名配置列表
+   * @returns {Promise<void>}
+   */
+  async setAutoEnableList(list) {
+    await StorageUtils.set({ [StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: list });
+  }
+
+  /**
    * 获取用户设置
    * @returns {Promise<Object>} 用户设置对象
    */
