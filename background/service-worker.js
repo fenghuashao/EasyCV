@@ -6,8 +6,250 @@
 // 导入工具类（注意：在service worker中需要使用importScripts）
 importScripts('../utils/storage-utils.js', '../utils/message-utils.js');
 
+/**
+ * 状态管理器
+ * 统一管理插件的所有状态，提供原子性操作和一致性保证
+ */
+class StateManager {
+  constructor() {
+    this.stateCache = new Map();
+    this.pendingOperations = new Map();
+    this.listeners = new Set();
+    this.initialized = false;
+  }
+
+  /**
+   * 初始化状态管理器
+   */
+  async initialize() {
+    if (this.initialized) return;
+    
+    try {
+      // 预加载关键状态到缓存
+      await this.preloadStates();
+      
+      // 设置存储监听器
+      this.setupStorageListener();
+      
+      this.initialized = true;
+      console.log('StateManager initialized successfully');
+    } catch (error) {
+      console.error('Failed to initialize StateManager:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * 预加载关键状态
+   */
+  async preloadStates() {
+    const keys = [
+      StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED,
+      StorageUtils.STORAGE_KEYS.FORCE_MODE,
+      StorageUtils.STORAGE_KEYS.USER_SETTINGS,
+      StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST
+    ];
+    
+    const data = await StorageUtils.get(keys);
+    
+    // 缓存状态数据
+    this.stateCache.set('pluginEnabled', data[StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED] ?? StorageUtils.DEFAULT_SETTINGS.pluginEnabled);
+    this.stateCache.set('forceMode', data[StorageUtils.STORAGE_KEYS.FORCE_MODE] ?? StorageUtils.DEFAULT_SETTINGS.forceMode);
+    this.stateCache.set('userSettings', { ...StorageUtils.DEFAULT_SETTINGS, ...data[StorageUtils.STORAGE_KEYS.USER_SETTINGS] });
+    this.stateCache.set('autoEnableList', data[StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST] ?? StorageUtils.DEFAULT_SETTINGS.autoEnableList);
+  }
+
+  /**
+   * 设置存储监听器
+   */
+  setupStorageListener() {
+    StorageUtils.addStorageListener((changes, areaName) => {
+      // 更新缓存
+      for (const [key, change] of Object.entries(changes)) {
+        switch (key) {
+          case StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED:
+            this.stateCache.set('pluginEnabled', change.newValue);
+            break;
+          case StorageUtils.STORAGE_KEYS.FORCE_MODE:
+            this.stateCache.set('forceMode', change.newValue);
+            break;
+          case StorageUtils.STORAGE_KEYS.USER_SETTINGS:
+            this.stateCache.set('userSettings', change.newValue);
+            break;
+          case StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST:
+            this.stateCache.set('autoEnableList', change.newValue);
+            break;
+        }
+      }
+      
+      // 通知监听器
+      this.notifyListeners({ changes, areaName });
+    });
+  }
+
+  /**
+   * 获取插件状态（统一接口）
+   * @param {string} domain - 可选的域名，用于获取特定域名的状态
+   * @returns {Promise<Object>} 完整的插件状态
+   */
+  async getPluginState(domain = null) {
+    await this.ensureInitialized();
+    
+    const baseState = {
+      pluginEnabled: this.stateCache.get('pluginEnabled'),
+      forceMode: this.stateCache.get('forceMode'),
+      userSettings: this.stateCache.get('userSettings'),
+      timestamp: Date.now()
+    };
+    
+    // 如果指定了域名，获取该域名的特定配置
+    if (domain) {
+      const autoEnableList = this.stateCache.get('autoEnableList');
+      const domainConfig = autoEnableList.find(item => item.domain === domain);
+      
+      baseState.domainConfig = domainConfig || {
+        domain,
+        copyEnabled: baseState.userSettings.copyEnabled,
+        pasteEnabled: baseState.userSettings.pasteEnabled
+      };
+    }
+    
+    return baseState;
+  }
+
+  /**
+   * 原子性更新插件状态
+   * @param {Object} updates - 状态更新对象
+   * @param {string} operationId - 操作ID，用于防止重复操作
+   * @returns {Promise<Object>} 更新后的状态
+   */
+  async updatePluginState(updates, operationId = null) {
+    await this.ensureInitialized();
+    
+    // 防止重复操作
+    if (operationId && this.pendingOperations.has(operationId)) {
+      return await this.pendingOperations.get(operationId);
+    }
+    
+    const operation = this.performStateUpdate(updates);
+    
+    if (operationId) {
+      this.pendingOperations.set(operationId, operation);
+      
+      // 操作完成后清理
+      operation.finally(() => {
+        this.pendingOperations.delete(operationId);
+      });
+    }
+    
+    return await operation;
+  }
+
+  /**
+   * 执行状态更新
+   * @param {Object} updates - 状态更新对象
+   * @returns {Promise<Object>} 更新后的状态
+   */
+  async performStateUpdate(updates) {
+    const storageUpdates = {};
+    const cacheUpdates = new Map();
+    
+    // 处理各种状态更新
+    if (updates.hasOwnProperty('pluginEnabled')) {
+      storageUpdates[StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED] = updates.pluginEnabled;
+      cacheUpdates.set('pluginEnabled', updates.pluginEnabled);
+    }
+    
+    if (updates.hasOwnProperty('forceMode')) {
+      storageUpdates[StorageUtils.STORAGE_KEYS.FORCE_MODE] = updates.forceMode;
+      cacheUpdates.set('forceMode', updates.forceMode);
+    }
+    
+    if (updates.userSettings) {
+      const currentSettings = this.stateCache.get('userSettings');
+      const newSettings = { ...currentSettings, ...updates.userSettings };
+      storageUpdates[StorageUtils.STORAGE_KEYS.USER_SETTINGS] = newSettings;
+      cacheUpdates.set('userSettings', newSettings);
+    }
+    
+    if (updates.autoEnableList) {
+      storageUpdates[StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST] = updates.autoEnableList;
+      cacheUpdates.set('autoEnableList', updates.autoEnableList);
+    }
+    
+    // 原子性存储更新
+    if (Object.keys(storageUpdates).length > 0) {
+      await StorageUtils.set(storageUpdates);
+      
+      // 更新缓存
+      for (const [key, value] of cacheUpdates) {
+        this.stateCache.set(key, value);
+      }
+    }
+    
+    // 返回更新后的完整状态
+    return await this.getPluginState();
+  }
+
+  /**
+   * 添加状态变更监听器
+   * @param {Function} listener - 监听器函数
+   */
+  addStateListener(listener) {
+    if (typeof listener === 'function') {
+      this.listeners.add(listener);
+    }
+  }
+
+  /**
+   * 移除状态变更监听器
+   * @param {Function} listener - 监听器函数
+   */
+  removeStateListener(listener) {
+    this.listeners.delete(listener);
+  }
+
+  /**
+   * 通知所有监听器
+   * @param {Object} event - 事件对象
+   */
+  notifyListeners(event) {
+    for (const listener of this.listeners) {
+      try {
+        listener(event);
+      } catch (error) {
+        console.error('State listener error:', error);
+      }
+    }
+  }
+
+  /**
+   * 确保状态管理器已初始化
+   */
+  async ensureInitialized() {
+    if (!this.initialized) {
+      await this.initialize();
+    }
+  }
+
+  /**
+   * 获取状态缓存快照（用于调试）
+   * @returns {Object} 状态缓存快照
+   */
+  getStateSnapshot() {
+    const snapshot = {};
+    for (const [key, value] of this.stateCache) {
+      snapshot[key] = value;
+    }
+    return snapshot;
+  }
+}
+
 class BackgroundManager {
   constructor() {
+    // 创建状态管理器实例
+    this.stateManager = new StateManager();
+    
     this.initializeExtension();
     this.setupMessageHandlers();
     this.setupStorageSync();
@@ -20,16 +262,19 @@ class BackgroundManager {
   async initializeExtension() {
     console.log('EasyCV Background Service Worker initialized');
 
-    // 设置默认设置
     try {
-      const settings = await StorageUtils.getUserSettings();
-      console.log('Current settings:', settings);
+      // 初始化状态管理器
+      await this.stateManager.initialize();
+      
+      // 获取当前状态
+      const state = await this.stateManager.getPluginState();
+      console.log('Current plugin state:', state);
+      
+      // 更新图标状态
+      await this.updateIcon();
     } catch (error) {
-      console.error('Failed to load settings:', error);
+      console.error('Failed to initialize extension:', error);
     }
-
-    // 更新图标状态
-    await this.updateIcon();
   }
 
   /**
@@ -147,10 +392,16 @@ class BackgroundManager {
    * 处理插件开关切换
    */
   async handleTogglePlugin(data) {
-    const currentStatus = await StorageUtils.getPluginEnabled();
-    const newStatus = data?.enabled ?? !currentStatus;
+    const currentState = await this.stateManager.getPluginState();
+    const newStatus = data?.enabled ?? !currentState.pluginEnabled;
 
-    await StorageUtils.setPluginEnabled(newStatus);
+    // 使用StateManager进行原子性状态更新
+    const operationId = `toggle_${Date.now()}`;
+    const updatedState = await this.stateManager.updatePluginState(
+      { pluginEnabled: newStatus },
+      operationId
+    );
+
     await this.updateIcon();
 
     // 更新统计
@@ -162,23 +413,23 @@ class BackgroundManager {
       });
     }
 
-    return { enabled: newStatus };
+    return { enabled: updatedState.pluginEnabled, state: updatedState };
   }
 
   /**
    * 处理获取状态请求
    */
-  async handleGetStatus() {
-    const [enabled, forceMode, settings] = await Promise.all([
-      StorageUtils.getPluginEnabled(),
-      StorageUtils.getForceMode(),
-      StorageUtils.getUserSettings()
-    ]);
+  async handleGetStatus(data) {
+    // 使用StateManager获取统一状态
+    const domain = data?.domain || null;
+    const state = await this.stateManager.getPluginState(domain);
 
     return {
-      enabled,
-      forceMode,
-      settings
+      enabled: state.pluginEnabled,
+      forceMode: state.forceMode,
+      settings: state.userSettings,
+      domainConfig: state.domainConfig,
+      timestamp: state.timestamp
     };
   }
 
@@ -186,23 +437,38 @@ class BackgroundManager {
    * 处理状态更新
    */
   async handleUpdateStatus(data) {
+    const updates = {};
+    
     if (data.hasOwnProperty('enabled')) {
-      await StorageUtils.setPluginEnabled(data.enabled);
+      updates.pluginEnabled = data.enabled;
     }
 
     if (data.hasOwnProperty('forceMode')) {
-      await StorageUtils.setForceMode(data.forceMode);
+      updates.forceMode = data.forceMode;
+    }
+    
+    if (data.userSettings) {
+      updates.userSettings = data.userSettings;
     }
 
+    // 使用StateManager进行原子性更新
+    const operationId = `update_${Date.now()}`;
+    const updatedState = await this.stateManager.updatePluginState(updates, operationId);
+
     await this.updateIcon();
-    return { success: true };
+    return { success: true, state: updatedState };
   }
 
   /**
    * 处理启用强力模式
    */
   async handleEnableForceMode(data) {
-    await StorageUtils.setForceMode(true);
+    // 使用StateManager进行原子性状态更新
+    const operationId = `enable_force_${Date.now()}`;
+    const updatedState = await this.stateManager.updatePluginState(
+      { forceMode: true },
+      operationId
+    );
 
     // 如果指定了标签页，只对该标签页启用
     if (data?.tabId) {
@@ -224,35 +490,47 @@ class BackgroundManager {
       );
     }
 
-    return { forceMode: true };
+    return { forceMode: updatedState.forceMode, state: updatedState };
   }
 
   /**
    * 处理禁用强力模式
    */
   async handleDisableForceMode() {
-    await StorageUtils.setForceMode(false);
+    // 使用StateManager进行原子性状态更新
+    const operationId = `disable_force_${Date.now()}`;
+    const updatedState = await this.stateManager.updatePluginState(
+      { forceMode: false },
+      operationId
+    );
 
     await MessageUtils.broadcastToAllTabs(
       MessageUtils.MESSAGE_TYPES.DISABLE_FORCE_MODE
     );
 
-    return { forceMode: false };
+    return { forceMode: updatedState.forceMode, state: updatedState };
   }
 
   /**
    * 处理获取设置
    */
   async handleGetSettings() {
-    return await StorageUtils.getUserSettings();
+    const state = await this.stateManager.getPluginState();
+    return state.userSettings;
   }
 
   /**
    * 处理更新设置
    */
   async handleUpdateSettings(data) {
-    await StorageUtils.updateUserSettings(data);
-    return { success: true };
+    // 使用StateManager进行原子性设置更新
+    const operationId = `update_settings_${Date.now()}`;
+    const updatedState = await this.stateManager.updatePluginState(
+      { userSettings: data },
+      operationId
+    );
+    
+    return { success: true, settings: updatedState.userSettings };
   }
 
   /**
@@ -407,7 +685,8 @@ class BackgroundManager {
    */
   async updateIcon() {
     try {
-      const enabled = await StorageUtils.getPluginEnabled();
+      const state = await this.stateManager.getPluginState();
+      const enabled = state.pluginEnabled;
       const iconPrefix = enabled ? 'icon-active' : 'icon-default';
 
       await chrome.action.setIcon({
@@ -429,12 +708,13 @@ class BackgroundManager {
 }
 
 // 监听插件安装和启动
-chrome.runtime.onInstalled.addListener((details) => {
+chrome.runtime.onInstalled.addListener(async (details) => {
   console.log('EasyCV installed:', details);
 
   if (details.reason === 'install') {
     // 首次安装，设置默认值
-    StorageUtils.set({
+    // 注意：这里仍使用StorageUtils直接设置，因为StateManager可能还未初始化
+    await StorageUtils.set({
       [StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED]: true,
       [StorageUtils.STORAGE_KEYS.FORCE_MODE]: false,
       [StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: [],
@@ -448,18 +728,24 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.url) {
     try {
       const url = new URL(tab.url);
-      const autoEnableList = await StorageUtils.getAutoEnableList();
+      // 使用StateManager获取当前状态
+      const state = await backgroundManager.stateManager.getPluginState();
+      const autoEnableList = state.domainConfig || [];
 
       // 检查是否在自动启用列表中
       const config = autoEnableList.find(item => item.domain === url.hostname);
       if (config) {
         console.log(`Auto-enabling for ${url.hostname}:`, config);
 
-        // 更新插件设置以匹配自动开启配置
-        await StorageUtils.setPluginSettings({
-          copyEnabled: config.copyEnabled,
-          pasteEnabled: config.pasteEnabled
-        });
+        // 使用StateManager更新插件设置以匹配自动开启配置
+        const operationId = `auto_enable_${url.hostname}_${Date.now()}`;
+        await backgroundManager.stateManager.updatePluginState({
+          userSettings: {
+            ...state.userSettings,
+            copyEnabled: config.copyEnabled,
+            pasteEnabled: config.pasteEnabled
+          }
+        }, operationId);
 
         // 根据配置发送相应的启用消息
         if (config.copyEnabled) {

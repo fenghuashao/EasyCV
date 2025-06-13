@@ -1,349 +1,436 @@
 /**
- * EasyCV Popup 脚本
- * 处理弹窗界面的交互逻辑
+ * Popup页面管理器
+ * 负责处理插件弹窗的所有交互逻辑
  */
-
-// 导入工具类
-
 class PopupManager {
   constructor() {
     this.currentTab = null;
-    this.messageUtils = new MessageUtils();
-    this.storageUtils = new StorageUtils();
     this.updateInterval = null;
-    this.lastFailedOperation = null; // 记录最近的操作失败类型
-    this.autoCloseTimer = null; // 自动关闭定时器
-    this.userInteracted = false; // 用户是否已交互
-
-    this.init();
+    this.isUpdating = false;
+    
+    // 状态管理相关属性
+    this.currentState = null;
+    this.pendingOperations = new Map();
+    this.stateListeners = new Set();
+    this.syncTimeout = 5000; // 5秒超时
+    this.retryCount = 3;
+    this.isInitialized = false;
   }
 
   /**
-   * 初始化弹窗
+   * 初始化Popup管理器
    */
   async init() {
     try {
       // 获取当前标签页
-      await this.getCurrentTab();
-
+      this.currentTab = await this.getCurrentTab();
+      
+      // 从Background Script加载完整状态
+      await this.loadStateFromBackground();
+      
+      // 设置状态监听器
+      this.setupStateListeners();
+      
       // 初始化UI
-      await this.initializeUI();
-
+      this.initializeUI();
+      
       // 绑定事件监听器
       this.bindEventListeners();
-
+      
       // 加载数据
       await this.loadData();
-
-      // 检查并应用自动开启配置
+      
+      // 应用自动开启配置
       await this.applyAutoEnableConfig();
-
-      // 开始定期更新
+      
+      // 启动定期更新
       this.startPeriodicUpdate();
-
-      // 设置自动关闭定时器（如果用户无交互）
-      this.setAutoCloseTimer(10000); // 10秒后自动关闭
-
-      console.log('Popup initialized successfully');
+      
+      this.isInitialized = true;
+      
     } catch (error) {
       console.error('Failed to initialize popup:', error);
-      this.showNotification('初始化失败', 'error');
+      // 应用默认状态
+      await this.applyDefaultState();
+      this.isInitialized = true;
     }
   }
 
   /**
-   * 获取当前标签页
+   * 从Background Script加载完整状态
    */
-  async getCurrentTab() {
-    try {
-      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-      this.currentTab = tab;
-
-      // 更新页面URL显示
-      const urlElement = document.getElementById('currentUrl');
-      if (urlElement && tab) {
-        const url = new URL(tab.url);
-        urlElement.textContent = url.hostname;
-        urlElement.title = tab.url;
+  async loadStateFromBackground() {
+    let retryCount = 0;
+    
+    while (retryCount < this.retryCount) {
+      try {
+        const response = await MessageUtils.sendToBackground({
+          type: 'GET_COMPLETE_STATE'
+        });
+        
+        if (response && response.state) {
+          this.currentState = response.state;
+          console.log('State loaded from background:', this.currentState);
+          return;
+        }
+        
+        throw new Error('Invalid state response');
+        
+      } catch (error) {
+        retryCount++;
+        console.warn(`Failed to load state (attempt ${retryCount}):`, error);
+        
+        if (retryCount < this.retryCount) {
+          await new Promise(resolve => setTimeout(resolve, 1000 * retryCount));
+        }
       }
-    } catch (error) {
-      console.error('Failed to get current tab:', error);
+    }
+    
+    throw new Error('Failed to load state after multiple attempts');
+  }
+
+  /**
+   * 设置状态监听器
+   */
+  setupStateListeners() {
+    // 监听来自Background的状态广播
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+      if (message.type === 'STATE_BROADCAST') {
+        this.handleStateBroadcast(message.state, message.requestId);
+      }
+      return false;
+    });
+  }
+
+  /**
+   * 处理状态广播
+   */
+  handleStateBroadcast(newState, requestId) {
+    console.log('Received state broadcast:', newState, requestId);
+    
+    // 更新本地状态
+    this.currentState = newState;
+    
+    // 更新UI（如果不是来自当前popup的操作）
+    if (!this.pendingOperations.has(requestId)) {
+      this.updateUIFromState(newState);
+    }
+    
+    // 处理待确认的操作
+    if (requestId && this.pendingOperations.has(requestId)) {
+      const operation = this.pendingOperations.get(requestId);
+      operation.resolve(newState);
+    }
+    
+    // 通知状态监听器
+    this.notifyStateListeners(newState);
+  }
+
+  /**
+   * 初始化UI界面
+   */
+  initializeUI() {
+    if (this.currentState) {
+      this.updateUIFromState(this.currentState);
+    } else {
+      this.applyDefaultState();
     }
   }
 
   /**
-   * 初始化UI状态
+   * 根据状态更新UI
    */
-  async initializeUI() {
-    try {
-      // 加载插件设置
-      const settings = await this.storageUtils.getPluginSettings();
-
-      // 设置复制开关状态
-      const copyToggle = document.getElementById('copyToggle');
-      if (copyToggle) {
-        copyToggle.checked = settings.copyEnabled !== false; // 默认启用
-      }
-
-      // 设置粘贴开关状态
-      const pasteToggle = document.getElementById('pasteToggle');
-      if (pasteToggle) {
-        pasteToggle.checked = settings.pasteEnabled !== false; // 默认启用
-      }
-
-      // 设置强制模式状态
-      const forceMode = document.getElementById('forceMode');
-      if (forceMode) {
-        forceMode.checked = settings.forceMode;
-      }
-
-      // 更新页面状态
-      await this.updatePageStatus();
-
-    } catch (error) {
-      console.error('Failed to initialize UI:', error);
+  updateUIFromState(state) {
+    if (!state) return;
+    
+    // 更新复制开关
+    const copyToggle = document.getElementById('copyToggle');
+    if (copyToggle) {
+      copyToggle.checked = state.copyEnabled !== false;
     }
+    
+    // 更新粘贴开关
+    const pasteToggle = document.getElementById('pasteToggle');
+    if (pasteToggle) {
+      pasteToggle.checked = state.pasteEnabled !== false;
+    }
+    
+    // 更新强制模式开关
+    const forceMode = document.getElementById('forceMode');
+    if (forceMode) {
+      forceMode.checked = state.forceMode || false;
+    }
+    
+    // 更新插件启用状态
+    const pluginToggle = document.getElementById('pluginToggle');
+    if (pluginToggle) {
+      pluginToggle.checked = state.pluginEnabled !== false;
+    }
+    
+    console.log('UI updated from state:', state);
+  }
+
+  /**
+   * 更新UI状态（乐观更新）
+   */
+  updateUIState(changes) {
+    // 更新本地状态缓存
+    if (this.currentState) {
+      this.currentState = { ...this.currentState, ...changes };
+    } else {
+      this.currentState = { 
+        pluginEnabled: true,
+        copyEnabled: true,
+        pasteEnabled: true,
+        forceMode: false,
+        ...changes 
+      };
+    }
+    
+    // 更新UI
+    this.updateUIFromState(this.currentState);
+  }
+
+  /**
+   * 等待状态同步确认
+   */
+  async waitForStateSync(expectedState, requestId) {
+    return new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(() => {
+        this.pendingOperations.delete(requestId);
+        reject(new Error('状态同步超时'));
+      }, this.syncTimeout);
+      
+      // 存储待确认的操作
+      this.pendingOperations.set(requestId, {
+        expectedState,
+        resolve: (state) => {
+          clearTimeout(timeoutId);
+          this.pendingOperations.delete(requestId);
+          resolve(state);
+        },
+        reject: (error) => {
+          clearTimeout(timeoutId);
+          this.pendingOperations.delete(requestId);
+          reject(error);
+        }
+      });
+    });
+  }
+
+  /**
+   * 添加状态监听器
+   */
+  addStateListener(listener) {
+    this.stateListeners.add(listener);
+  }
+
+  /**
+   * 移除状态监听器
+   */
+  removeStateListener(listener) {
+    this.stateListeners.delete(listener);
+  }
+
+  /**
+   * 通知状态监听器
+   */
+  notifyStateListeners(state) {
+    this.stateListeners.forEach(listener => {
+      try {
+        listener(state);
+      } catch (error) {
+        console.error('State listener error:', error);
+      }
+    });
+  }
+
+  /**
+   * 应用默认状态
+   */
+  async applyDefaultState() {
+    const defaultState = {
+      pluginEnabled: true,
+      copyEnabled: true,
+      pasteEnabled: true,
+      forceMode: false,
+      timestamp: Date.now(),
+      version: '1.0.0'
+    };
+    
+    this.currentState = defaultState;
+    this.updateUIFromState(defaultState);
+    
+    console.log('Applied default state:', defaultState);
   }
 
   /**
    * 绑定事件监听器
    */
   bindEventListeners() {
-    // 添加用户交互检测
-    this.setupUserInteractionDetection();
-
     // 复制开关
     const copyToggle = document.getElementById('copyToggle');
     if (copyToggle) {
-      copyToggle.addEventListener('change', (e) => {
-        this.handleCopyToggle(e.target.checked);
-      });
+      copyToggle.addEventListener('change', () => this.handleCopyToggle());
     }
 
     // 粘贴开关
     const pasteToggle = document.getElementById('pasteToggle');
     if (pasteToggle) {
-      pasteToggle.addEventListener('change', (e) => {
-        this.handlePasteToggle(e.target.checked);
-      });
+      pasteToggle.addEventListener('change', () => this.handlePasteToggle());
     }
 
     // 强制模式开关
     const forceMode = document.getElementById('forceMode');
     if (forceMode) {
-      forceMode.addEventListener('change', (e) => {
-        this.handleForceModeToggle(e.target.checked);
-      });
+      forceMode.addEventListener('change', () => this.handleForceModeToggle());
     }
 
     // 刷新检测按钮
     const refreshBtn = document.getElementById('refreshBtn');
     if (refreshBtn) {
-      refreshBtn.addEventListener('click', () => {
-        this.handleRefreshDetection();
-      });
+      refreshBtn.addEventListener('click', () => this.handleRefreshDetection());
     }
 
     // 添加到自动开启按钮
     const addToAutoBtn = document.getElementById('addToAutoBtn');
     if (addToAutoBtn) {
-      addToAutoBtn.addEventListener('click', () => {
-        this.handleAddToAutoEnable();
-      });
+      addToAutoBtn.addEventListener('click', () => this.handleAddToAutoEnable());
     }
 
     // 测试复制按钮
     const testCopyBtn = document.getElementById('testCopyBtn');
     if (testCopyBtn) {
-      testCopyBtn.addEventListener('click', () => {
-        this.handleTestCopy();
-      });
+      testCopyBtn.addEventListener('click', () => this.handleTestCopy());
     }
 
     // 设置按钮
     const settingsBtn = document.getElementById('settingsBtn');
     if (settingsBtn) {
-      settingsBtn.addEventListener('click', () => {
-        this.openOptionsPage();
-      });
+      settingsBtn.addEventListener('click', () => this.handleSettings());
     }
 
     // 帮助按钮
     const helpBtn = document.getElementById('helpBtn');
     if (helpBtn) {
-      helpBtn.addEventListener('click', () => {
-        this.openHelpPage();
-      });
+      helpBtn.addEventListener('click', () => this.handleHelp());
     }
 
     // 反馈按钮
     const feedbackBtn = document.getElementById('feedbackBtn');
     if (feedbackBtn) {
-      feedbackBtn.addEventListener('click', () => {
-        this.openFeedbackPage();
-      });
+      feedbackBtn.addEventListener('click', () => this.openFeedbackPage());
     }
   }
 
   /**
    * 处理复制开关切换
    */
-  async handleCopyToggle(enabled) {
+  async handleCopyToggle() {
+    const copyToggle = document.getElementById('copyToggle');
+    const newCopyState = copyToggle.checked;
+    const requestId = `copy_${Date.now()}`;
+    
+    // 乐观更新UI
+    this.updateUIState({ copyEnabled: newCopyState });
+    
     try {
-      this.showLoading(true);
-
-      // 更新设置
-      await this.storageUtils.setPluginSettings({ copyEnabled: enabled });
-
-      // 发送消息到background script
+      // 发送状态变更请求到Background Script
       await MessageUtils.sendToBackground({
-        type: 'TOGGLE_COPY',
-        enabled: enabled
+        type: 'UPDATE_STATE',
+        changes: { copyEnabled: newCopyState },
+        requestId: requestId
       });
-
-      // 发送消息到当前页面的content script
-      if (this.currentTab) {
-        try {
-          await this.messageUtils.sendToContentScript(this.currentTab.id, {
-            type: 'COPY_STATUS_CHANGED',
-            enabled: enabled
-          });
-        } catch (error) {
-          console.log('Content script not available, will be injected when needed');
-        }
-      }
-
-      // 更新页面状态
-      await this.updatePageStatus();
-
-      this.showNotification(
-        enabled ? '复制功能已启用' : '复制功能已禁用',
-        'success'
-      );
-
+      
+      // 等待状态同步确认
+      await this.waitForStateSync({ copyEnabled: newCopyState }, requestId);
+      
+      // 显示成功通知
+      NotificationUtils.show(newCopyState ? '复制功能已开启' : '复制功能已关闭', 'success');
+      
     } catch (error) {
       console.error('Failed to toggle copy:', error);
-      this.showNotification('复制功能操作失败', 'error');
-
-      // 记录操作失败类型
-      await this.recordFailedOperation('复制失败');
-
-      // 恢复开关状态
-      const copyToggle = document.getElementById('copyToggle');
-      if (copyToggle) {
-        copyToggle.checked = !enabled;
-      }
-    } finally {
-      this.showLoading(false);
+      
+      // 回滚UI状态
+      this.updateUIState({ copyEnabled: !newCopyState });
+      copyToggle.checked = !newCopyState;
+      
+      // 显示错误通知
+      NotificationUtils.show('复制开关切换失败，请重试', 'error');
     }
   }
 
   /**
    * 处理粘贴开关切换
    */
-  async handlePasteToggle(enabled) {
+  async handlePasteToggle() {
+    const pasteToggle = document.getElementById('pasteToggle');
+    const newPasteState = pasteToggle.checked;
+    const requestId = `paste_${Date.now()}`;
+    
+    // 乐观更新UI
+    this.updateUIState({ pasteEnabled: newPasteState });
+    
     try {
-      this.showLoading(true);
-
-      // 更新设置
-      await this.storageUtils.setPluginSettings({ pasteEnabled: enabled });
-
-      // 发送消息到background script
+      // 发送状态变更请求到Background Script
       await MessageUtils.sendToBackground({
-        type: 'TOGGLE_PASTE',
-        enabled: enabled
+        type: 'UPDATE_STATE',
+        changes: { pasteEnabled: newPasteState },
+        requestId: requestId
       });
-
-      // 发送消息到当前页面的content script
-      if (this.currentTab) {
-        try {
-          await this.messageUtils.sendToContentScript(this.currentTab.id, {
-            type: 'PASTE_STATUS_CHANGED',
-            enabled: enabled
-          });
-        } catch (error) {
-          console.log('Content script not available, will be injected when needed');
-        }
-      }
-
-      // 更新页面状态
-      await this.updatePageStatus();
-
-      this.showNotification(
-        enabled ? '粘贴功能已启用' : '粘贴功能已禁用',
-        'success'
-      );
-
+      
+      // 等待状态同步确认
+      await this.waitForStateSync({ pasteEnabled: newPasteState }, requestId);
+      
+      // 显示成功通知
+      NotificationUtils.show(newPasteState ? '粘贴功能已开启' : '粘贴功能已关闭', 'success');
+      
     } catch (error) {
       console.error('Failed to toggle paste:', error);
-      this.showNotification('粘贴功能操作失败', 'error');
-
-      // 记录操作失败类型
-      await this.recordFailedOperation('粘贴失败');
-
-      // 恢复开关状态
-      const pasteToggle = document.getElementById('pasteToggle');
-      if (pasteToggle) {
-        pasteToggle.checked = !enabled;
-      }
-    } finally {
-      this.showLoading(false);
+      
+      // 回滚UI状态
+      this.updateUIState({ pasteEnabled: !newPasteState });
+      pasteToggle.checked = !newPasteState;
+      
+      // 显示错误通知
+      NotificationUtils.show('粘贴开关切换失败，请重试', 'error');
     }
   }
 
   /**
-   * 处理强制模式切换
+   * 处理强制模式开关切换
    */
-  async handleForceModeToggle(forceMode) {
+  async handleForceModeToggle() {
+    const forceMode = document.getElementById('forceMode');
+    const newForceMode = forceMode.checked;
+    const requestId = `force_${Date.now()}`;
+    
+    // 乐观更新UI
+    this.updateUIState({ forceMode: newForceMode });
+    
     try {
-      // 更新设置
-      await this.storageUtils.setPluginSettings({ forceMode });
-
-      // 发送消息到background script
-      await MessageUtils.sendToBackground('TOGGLE_FORCE_MODE', { forceMode });
-
-      // 如果启用强力模式，刷新当前页面
-      if (forceMode && this.currentTab) {
-        try {
-          // 刷新页面
-          await chrome.tabs.reload(this.currentTab.id);
-
-          // 显示刷新提示
-          this.showNotification('强力模式已启用，页面正在刷新...', 'success');
-
-          // 设置自动关闭定时器，用户交互可以取消
-          this.setAutoCloseTimer(1500);
-
-          return;
-        } catch (error) {
-          console.error('Failed to reload page:', error);
-          // 如果刷新失败，继续正常流程
-        }
-      }
-
-      // 发送消息到当前页面的content script（使用优雅降级）
-      if (this.currentTab) {
-        const response = await MessageUtils.sendToContent(
-          this.currentTab.id, 
-          'FORCE_MODE_CHANGED', 
-          { forceMode },
-          { silent: true } // 静默模式，不显示错误日志
-        );
-        
-        // 检查是否为降级响应
-        if (response?.degraded) {
-          console.debug('Content script not available, but operation completed successfully');
-        }
-      }
-
-      this.showNotification(
-        forceMode ? '强制模式已启用' : '强制模式已禁用',
-        'success'
-      );
-
+      // 发送状态变更请求到Background Script
+      await MessageUtils.sendToBackground({
+        type: 'UPDATE_STATE',
+        changes: { forceMode: newForceMode },
+        requestId: requestId
+      });
+      
+      // 等待状态同步确认
+      await this.waitForStateSync({ forceMode: newForceMode }, requestId);
+      
+      // 显示成功通知
+      NotificationUtils.show(newForceMode ? '强制模式已开启' : '强制模式已关闭', 'success');
+      
     } catch (error) {
       console.error('Failed to toggle force mode:', error);
-      this.showNotification('操作失败', 'error');
+      
+      // 回滚UI状态
+      this.updateUIState({ forceMode: !newForceMode });
+      forceMode.checked = !newForceMode;
+      
+      // 显示错误通知
+      NotificationUtils.show('强制模式切换失败，请重试', 'error');
     }
   }
 
@@ -353,37 +440,21 @@ class PopupManager {
   async handleRefreshDetection() {
     try {
       this.showLoading(true);
-
-      if (this.currentTab) {
-        // 重新注入content script
-        await chrome.scripting.executeScript({
-          target: { tabId: this.currentTab.id },
-          files: ['content/content.js']
-        });
-
-        // 发送刷新检测消息（使用优雅降级）
-        const response = await MessageUtils.sendToContent(
-          this.currentTab.id, 
-          'REFRESH_DETECTION', 
-          {},
-          { silent: true }
-        );
-        
-        if (response?.degraded) {
-          console.debug('Content script not available for refresh detection');
-        }
-
-        // 更新页面状态
-        setTimeout(() => {
-          this.updatePageStatus();
-        }, 1000);
-
-        this.showNotification('检测已刷新', 'success');
+      
+      // 发送刷新检测消息到content script
+      const response = await MessageUtils.sendToContentScript(this.currentTab.id, {
+        type: 'REFRESH_DETECTION'
+      });
+      
+      if (response && response.success) {
+        await this.updatePageStatus();
+        NotificationUtils.show('检测已刷新', 'success');
+      } else {
+        throw new Error('刷新检测失败');
       }
-
     } catch (error) {
-      console.error('Failed to refresh detection:', error);
-      this.showNotification('刷新失败', 'error');
+      console.error('刷新检测失败:', error);
+      NotificationUtils.show('刷新检测失败，请重试', 'error');
     } finally {
       this.showLoading(false);
     }
@@ -394,122 +465,107 @@ class PopupManager {
    */
   async handleTestCopy() {
     try {
-      if (this.currentTab) {
-        // 发送测试复制消息（使用优雅降级）
-        const response = await MessageUtils.sendToContent(
-          this.currentTab.id, 
-          'TEST_COPY', 
-          {},
-          { silent: true }
-        );
-
-        if (response?.degraded) {
-          this.showNotification('无法连接到页面脚本，请刷新页面后重试', 'warning');
-        } else if (response && response.success) {
-          this.showNotification('复制功能正常', 'success');
-        } else {
-          this.showNotification('复制功能受限', 'warning');
-        }
+      // 发送测试复制消息到content script
+      const response = await MessageUtils.sendToContentScript(this.currentTab.id, {
+        type: 'TEST_COPY'
+      });
+      
+      if (response && response.success) {
+        NotificationUtils.show('测试复制成功！', 'success');
+      } else {
+        throw new Error(response?.error || '测试复制失败');
       }
-
     } catch (error) {
-      console.error('Failed to test copy:', error);
-      this.showNotification('测试失败', 'error');
+      console.error('测试复制失败:', error);
+      NotificationUtils.show('测试复制失败，请检查页面是否支持', 'error');
     }
   }
 
   /**
-   * 处理添加到自动开启列表
+   * 处理添加到自动开启
    */
   async handleAddToAutoEnable() {
-    try {
-      if (!this.currentTab || !this.currentTab.url) {
-        this.showNotification('无法获取当前页面信息', 'error');
-        return;
-      }
+    if (!this.currentTab || !this.currentTab.url) {
+      NotificationUtils.show('无法获取当前页面信息', 'error');
+      return;
+    }
 
+    try {
       const url = new URL(this.currentTab.url);
       const domain = url.hostname;
-
-      // 检查是否已在列表中
-      const autoEnableList = await StorageUtils.getAutoEnableList();
-      if (autoEnableList.find(item => item.domain === domain)) {
-        this.showNotification('该网站已在自动开启列表中', 'info');
+      
+      // 检查是否已经在自动开启列表中
+      const autoEnableList = await storageUtils.getAutoEnableList();
+      if (autoEnableList.includes(domain)) {
+        NotificationUtils.show('该网站已在自动开启列表中', 'info');
         return;
       }
-
-      // 添加到自动开启列表（默认全部解锁）
-      await StorageUtils.addToAutoEnableList(domain, true, true);
-
-      this.showNotification(`已将 ${domain} 添加到自动开启列表`, 'success');
-
+      
+      // 添加到自动开启列表
+      autoEnableList.push(domain);
+      await storageUtils.setAutoEnableList(autoEnableList);
+      
       // 更新按钮状态
       this.updateAutoEnableButton();
-
+      
+      NotificationUtils.show(`已将 ${domain} 添加到自动开启列表`, 'success');
     } catch (error) {
-      console.error('Failed to add to auto enable list:', error);
-      this.showNotification('添加失败', 'error');
+      console.error('添加自动开启失败:', error);
+      NotificationUtils.show('添加失败，请重试', 'error');
     }
   }
 
   /**
-   * 更新页面状态
+   * 更新页面状态显示
    */
   async updatePageStatus() {
+    if (!this.currentTab) return;
+    
     try {
-      const statusIndicator = document.getElementById('statusIndicator');
-      const statusText = document.getElementById('statusText');
-
-      if (!statusIndicator || !statusText || !this.currentTab) {
-        return;
-      }
-
-      // 检查插件是否启用
-      const settings = await this.storageUtils.getPluginSettings();
-      if (!settings.enabled) {
-        statusIndicator.className = 'status-indicator';
-        statusText.textContent = '插件已禁用';
-        return;
-      }
-
+      // 获取插件设置
+      const settings = await storageUtils.getPluginSettings();
+      const isPluginEnabled = settings.pluginEnabled !== false;
+      
       // 检查是否为自动开启网站的首次交互
-      const autoEnableStatus = await this.checkAutoEnableFirstInteraction();
-      if (autoEnableStatus) {
-        statusIndicator.className = autoEnableStatus.className;
-        statusText.textContent = autoEnableStatus.text;
-        return;
-      }
-
+      const isFirstInteraction = await this.checkFirstInteraction();
+      
+      // 获取页面状态
+      let pageStatus = null;
       try {
-        // 发送状态检查消息到content script
-        const response = await this.messageUtils.sendToContentScript(this.currentTab.id, {
+        const response = await MessageUtils.sendToContentScript(this.currentTab.id, {
           type: 'GET_PAGE_STATUS'
         });
-
-        if (response) {
-          if (response.active) {
-            statusIndicator.className = 'status-indicator active';
-            statusText.textContent = '正在保护';
-          } else if (response.restrictions) {
+        pageStatus = response;
+      } catch (error) {
+        console.warn('无法获取页面状态:', error);
+      }
+      
+      // 更新状态指示器
+      const statusIndicator = document.getElementById('statusIndicator');
+      const statusText = document.getElementById('statusText');
+      
+      if (statusIndicator && statusText) {
+        if (!isPluginEnabled) {
+          statusIndicator.className = 'status-indicator disabled';
+          statusText.textContent = '插件已禁用';
+        } else if (isFirstInteraction) {
+          statusIndicator.className = 'status-indicator warning';
+          statusText.textContent = '首次访问，需要刷新页面';
+        } else if (pageStatus && pageStatus.isActive) {
+          if (pageStatus.hasRestrictions) {
             statusIndicator.className = 'status-indicator warning';
-            statusText.textContent = '检测到限制';
+            statusText.textContent = '已激活（检测到限制）';
           } else {
-            statusIndicator.className = 'status-indicator';
-            statusText.textContent = '无需处理';
+            statusIndicator.className = 'status-indicator active';
+            statusText.textContent = '已激活';
           }
         } else {
-          statusIndicator.className = 'status-indicator';
-          statusText.textContent = '未检测';
+          statusIndicator.className = 'status-indicator inactive';
+          statusText.textContent = '未激活';
         }
-
-      } catch (error) {
-        // Content script可能未注入
-        statusIndicator.className = 'status-indicator';
-        statusText.textContent = '等待检测';
       }
-
     } catch (error) {
-      console.error('Failed to update page status:', error);
+      console.error('更新页面状态失败:', error);
     }
   }
 
@@ -520,12 +576,11 @@ class PopupManager {
     try {
       // 加载统计数据
       await this.loadStatistics();
-
+      
       // 更新自动开启按钮状态
       await this.updateAutoEnableButton();
-
     } catch (error) {
-      console.error('Failed to load data:', error);
+      console.error('加载数据失败:', error);
     }
   }
 
@@ -534,44 +589,45 @@ class PopupManager {
    */
   async loadStatistics() {
     try {
-      const stats = await StorageUtils.getStatistics();
-
+      const stats = await storageUtils.getStatistics();
+      
       // 更新总网站数
       const totalSitesElement = document.getElementById('totalSites');
       if (totalSitesElement) {
         totalSitesElement.textContent = stats.totalSites || 0;
       }
-
+      
       // 更新今日使用次数
-      const todayCountElement = document.getElementById('todayCount');
-      if (todayCountElement) {
-        const today = new Date().toDateString();
-        const todayCount = stats.dailyUsage?.[today] || 0;
-        todayCountElement.textContent = todayCount;
+      const todayUsageElement = document.getElementById('todayUsage');
+      if (todayUsageElement) {
+        todayUsageElement.textContent = stats.todayUsage || 0;
       }
-
-      // 计算成功率
+      
+      // 更新成功率
       const successRateElement = document.getElementById('successRate');
       if (successRateElement) {
-        const total = stats.totalAttempts || 0;
-        const success = stats.successfulAttempts || 0;
-        const rate = total > 0 ? Math.round((success / total) * 100) : 0;
+        const rate = stats.totalAttempts > 0 ? 
+          Math.round((stats.successfulAttempts / stats.totalAttempts) * 100) : 0;
         successRateElement.textContent = `${rate}%`;
       }
-
     } catch (error) {
-      console.error('Failed to load statistics:', error);
+      console.error('加载统计数据失败:', error);
     }
   }
 
   /**
-   * 开始定期更新
+   * 启动定期更新
    */
   startPeriodicUpdate() {
-    // 每5秒更新一次页面状态
+    // 每30秒更新一次页面状态
     this.updateInterval = setInterval(() => {
-      this.updatePageStatus();
-    }, 5000);
+      if (!this.isUpdating) {
+        this.isUpdating = true;
+        this.updatePageStatus().finally(() => {
+          this.isUpdating = false;
+        });
+      }
+    }, 30000);
   }
 
   /**
@@ -585,170 +641,33 @@ class PopupManager {
   }
 
   /**
-   * 打开选项页面
+   * 获取当前标签页
    */
-  openOptionsPage() {
-    chrome.runtime.openOptionsPage();
-    window.close();
-  }
-
-  /**
-   * 打开帮助页面
-   */
-  openHelpPage() {
-    chrome.tabs.create({
-      url: 'https://github.com/your-username/easycv/wiki'
+  async getCurrentTab() {
+    return new Promise((resolve) => {
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        resolve(tabs[0]);
+      });
     });
-    window.close();
   }
 
   /**
-   * 打开反馈页面
+   * 检查是否为首次交互
    */
-  async openFeedbackPage() {
+  async checkFirstInteraction() {
+    if (!this.currentTab || !this.currentTab.url) return false;
+    
     try {
-      // 获取当前页面信息
-      const currentUrl = this.currentTab ? this.currentTab.url : 'unknown';
-
-      // 获取最近的操作失败类型（如果有的话）
-      const lastFailedOperation = await this.getLastFailedOperation();
-
-      // 构建反馈URL，包含页面信息
-      const feedbackData = {
-        url: currentUrl,
-        operation: lastFailedOperation || 'general',
-        timestamp: new Date().toISOString(),
-        userAgent: navigator.userAgent
-      };
-
-      // 将反馈数据发送到background script进行处理
-      await this.messageUtils.sendToBackground({
-        type: 'SUBMIT_FEEDBACK',
-        data: feedbackData
-      });
-
-      // 打开反馈页面
-      chrome.tabs.create({
-        url: `https://github.com/your-username/easycv/issues/new?title=问题反馈&body=页面URL: ${encodeURIComponent(currentUrl)}%0A操作类型: ${lastFailedOperation || '一般问题'}%0A时间: ${encodeURIComponent(new Date().toLocaleString())}`
-      });
-
-      window.close();
-    } catch (error) {
-      console.error('Failed to open feedback page:', error);
-      // 如果出错，仍然打开基本的反馈页面
-      chrome.tabs.create({
-        url: 'https://github.com/your-username/easycv/issues'
-      });
-      window.close();
-    }
-  }
-
-  /**
-   * 获取最近的操作失败类型
-   */
-  async getLastFailedOperation() {
-    try {
-      // 从存储中获取最近的失败操作记录
-      const result = await StorageUtils.get('lastFailedOperation');
-      return result.lastFailedOperation || this.lastFailedOperation;
-    } catch (error) {
-      console.error('Failed to get last failed operation:', error);
-      return this.lastFailedOperation;
-    }
-  }
-
-  /**
-   * 记录操作失败类型
-   */
-  async recordFailedOperation(operationType) {
-    try {
-      this.lastFailedOperation = operationType;
-      await StorageUtils.set({ lastFailedOperation: operationType });
-      console.log('Recorded failed operation:', operationType);
-    } catch (error) {
-      console.error('Failed to record failed operation:', error);
-    }
-  }
-
-  /**
-   * 显示加载状态
-   */
-  showLoading(show) {
-    const loadingOverlay = document.getElementById('loadingOverlay');
-    if (loadingOverlay) {
-      if (show) {
-        loadingOverlay.classList.add('show');
-      } else {
-        loadingOverlay.classList.remove('show');
-      }
-    }
-  }
-
-  /**
-   * 更新自动开启按钮状态
-   */
-  async updateAutoEnableButton() {
-    try {
-      const addToAutoBtn = document.getElementById('addToAutoBtn');
-      if (!addToAutoBtn || !this.currentTab) {
-        return;
-      }
-
       const url = new URL(this.currentTab.url);
       const domain = url.hostname;
-      const autoEnableList = await StorageUtils.getAutoEnableList();
-
-      const config = autoEnableList.find(item => item.domain === domain);
-
-      if (config) {
-        let statusText = '已在自动开启列表';
-        if (config.copyEnabled && config.pasteEnabled) {
-          statusText += '（全部解锁）';
-        } else if (config.copyEnabled) {
-          statusText += '（仅复制）';
-        } else if (config.pasteEnabled) {
-          statusText += '（仅粘贴）';
-        }
-
-        addToAutoBtn.textContent = statusText;
-        addToAutoBtn.disabled = true;
-        addToAutoBtn.classList.add('disabled');
-      } else {
-        addToAutoBtn.innerHTML = `
-          <svg class="btn-icon" viewBox="0 0 24 24">
-            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-          </svg>
-          添加到自动开启
-        `;
-        addToAutoBtn.disabled = false;
-        addToAutoBtn.classList.remove('disabled');
-      }
+      
+      const autoEnableList = await storageUtils.getAutoEnableList();
+      const interactionHistory = await storageUtils.getInteractionHistory();
+      
+      return autoEnableList.includes(domain) && !interactionHistory[domain];
     } catch (error) {
-      console.error('Failed to update auto enable button:', error);
-    }
-  }
-
-  /**
-   * 显示通知消息
-   */
-  showNotification(message, type = 'success') {
-    const notification = document.getElementById('notification');
-    const messageElement = notification?.querySelector('.notification-message');
-
-    if (notification && messageElement) {
-      // 设置消息内容
-      messageElement.textContent = message;
-
-      // 设置类型样式
-      notification.className = `notification ${type}`;
-
-      // 显示通知
-      notification.classList.add('show');
-
-      // 3秒后自动隐藏
-      setTimeout(() => {
-        notification.classList.remove('show');
-      }, 3000);
+      console.error('检查首次交互失败:', error);
+      return false;
     }
   }
 
@@ -756,141 +675,117 @@ class PopupManager {
    * 应用自动开启配置
    */
   async applyAutoEnableConfig() {
+    if (!this.currentTab || !this.currentTab.url) return;
+    
     try {
-      if (!this.currentTab) {
-        return;
-      }
-
       const url = new URL(this.currentTab.url);
       const domain = url.hostname;
-      const autoEnableList = await StorageUtils.getAutoEnableList();
-
-      // 检查是否在自动开启列表中
-      const config = autoEnableList.find(item => item.domain === domain);
-      if (config) {
-        console.log(`Applying auto-enable config for ${domain}:`, config);
-
-        // 更新插件设置以匹配自动开启配置
-        await StorageUtils.setPluginSettings({
-          copyEnabled: config.copyEnabled,
-          pasteEnabled: config.pasteEnabled
-        });
-
-        // 更新UI状态
-        await this.updateUIFromSettings();
-
-        // 发送消息到background script
-        await this.messageUtils.sendToBackground({
-          type: 'AUTO_ENABLE_APPLIED',
-          domain: domain,
-          config: config
-        });
-      }
-    } catch (error) {
-      console.error('Failed to apply auto enable config:', error);
-    }
-  }
-
-  /**
-   * 检查自动开启网站的首次交互状态
-   */
-  async checkAutoEnableFirstInteraction() {
-    try {
-      if (!this.currentTab) {
-        return null;
-      }
-
-      const url = new URL(this.currentTab.url);
-      const domain = url.hostname;
-      const autoEnableList = await StorageUtils.getAutoEnableList();
-
-      // 检查是否在自动开启列表中
-      const config = autoEnableList.find(item => item.domain === domain);
-      if (!config) {
-        return null;
-      }
-
-      // 获取当前插件设置
-      const settings = await this.storageUtils.getPluginSettings();
-
-      // 检查功能是否已按配置启用
-      const copyMatches = config.copyEnabled === settings.copyEnabled;
-      const pasteMatches = config.pasteEnabled === settings.pasteEnabled;
-
-      if (copyMatches && pasteMatches) {
-        // 功能已按自动开启配置激活
-        let statusText = '自动开启成功';
-        if (config.copyEnabled && config.pasteEnabled) {
-          statusText += '（全部解锁）';
-        } else if (config.copyEnabled) {
-          statusText += '（仅复制）';
-        } else if (config.pasteEnabled) {
-          statusText += '（仅粘贴）';
+      
+      const autoEnableList = await storageUtils.getAutoEnableList();
+      if (autoEnableList.includes(domain)) {
+        // 标记为已交互
+        const interactionHistory = await storageUtils.getInteractionHistory();
+        interactionHistory[domain] = Date.now();
+        await storageUtils.setInteractionHistory(interactionHistory);
+        
+        // 发送自动开启消息到content script
+        try {
+          await MessageUtils.sendToContentScript(this.currentTab.id, {
+            type: 'AUTO_ENABLE'
+          });
+        } catch (error) {
+          console.warn('自动开启失败:', error);
         }
-
-        return {
-          className: 'status-indicator active',
-          text: statusText
-        };
       }
-
-      return null;
     } catch (error) {
-      console.error('Failed to check auto enable first interaction:', error);
+      console.error('应用自动开启配置失败:', error);
+    }
+  }
+
+  /**
+   * 打开反馈页面
+   */
+  openFeedbackPage() {
+    const currentUrl = this.currentTab ? this.currentTab.url : '';
+    const lastFailedOp = this.getLastFailedOperation();
+    
+    const feedbackUrl = `https://github.com/your-repo/issues/new?` +
+      `title=用户反馈&` +
+      `body=**当前页面:** ${encodeURIComponent(currentUrl)}%0A` +
+      `**操作类型:** ${encodeURIComponent(lastFailedOp || '无')}%0A` +
+      `**问题描述:** %0A%0A` +
+      `**浏览器信息:** ${encodeURIComponent(navigator.userAgent)}%0A` +
+      `**时间:** ${encodeURIComponent(new Date().toISOString())}`;
+    
+    chrome.tabs.create({ url: feedbackUrl });
+  }
+
+  /**
+   * 获取最近失败的操作
+   */
+  getLastFailedOperation() {
+    try {
+      return localStorage.getItem('lastFailedOperation') || null;
+    } catch (error) {
       return null;
     }
   }
 
   /**
-   * 设置用户交互检测
+   * 记录失败的操作
    */
-  setupUserInteractionDetection() {
-    // 监听各种用户交互事件
-    const interactionEvents = ['click', 'keydown', 'mousedown', 'touchstart', 'scroll'];
+  recordFailedOperation(operation) {
+    try {
+      localStorage.setItem('lastFailedOperation', operation);
+    } catch (error) {
+      console.warn('无法记录失败操作:', error);
+    }
+  }
 
-    interactionEvents.forEach(eventType => {
-      document.addEventListener(eventType, () => {
-        this.markUserInteracted();
-      }, { passive: true });
+  /**
+   * 显示/隐藏加载状态
+   */
+  showLoading(show) {
+    const loadingElements = document.querySelectorAll('.loading');
+    loadingElements.forEach(element => {
+      element.style.display = show ? 'block' : 'none';
     });
   }
 
   /**
-   * 标记用户已交互
+   * 更新自动开启按钮状态
    */
-  markUserInteracted() {
-    if (!this.userInteracted) {
-      this.userInteracted = true;
-      // 取消自动关闭定时器
-      if (this.autoCloseTimer) {
-        clearTimeout(this.autoCloseTimer);
-        this.autoCloseTimer = null;
-        console.log('User interaction detected, auto-close timer cancelled');
-      }
+  async updateAutoEnableButton() {
+    const addToAutoBtn = document.getElementById('addToAutoBtn');
+    if (!addToAutoBtn || !this.currentTab || !this.currentTab.url) return;
+    
+    try {
+      const url = new URL(this.currentTab.url);
+      const domain = url.hostname;
+      
+      const autoEnableList = await storageUtils.getAutoEnableList();
+      const isInList = autoEnableList.includes(domain);
+      
+      addToAutoBtn.textContent = isInList ? '已在自动开启列表' : '添加到自动开启';
+      addToAutoBtn.disabled = isInList;
+      addToAutoBtn.className = isInList ? 'btn btn-secondary disabled' : 'btn btn-primary';
+    } catch (error) {
+      console.error('更新自动开启按钮失败:', error);
     }
   }
 
   /**
-   * 设置自动关闭定时器
+   * 处理设置按钮点击
    */
-  setAutoCloseTimer(delay = 5000) {
-    // 如果用户已经交互过，不设置自动关闭
-    if (this.userInteracted) {
-      return;
-    }
+  handleSettings() {
+    chrome.runtime.openOptionsPage();
+  }
 
-    // 清除现有定时器
-    if (this.autoCloseTimer) {
-      clearTimeout(this.autoCloseTimer);
-    }
-
-    // 设置新的自动关闭定时器
-    this.autoCloseTimer = setTimeout(() => {
-      if (!this.userInteracted) {
-        console.log('Auto-closing popup after', delay, 'ms');
-        window.close();
-      }
-    }, delay);
+  /**
+   * 处理帮助按钮点击
+   */
+  handleHelp() {
+    chrome.tabs.create({ url: 'https://github.com/your-repo/wiki' });
   }
 
   /**
@@ -898,19 +793,16 @@ class PopupManager {
    */
   cleanup() {
     this.stopPeriodicUpdate();
-
-    // 清理自动关闭定时器
-    if (this.autoCloseTimer) {
-      clearTimeout(this.autoCloseTimer);
-      this.autoCloseTimer = null;
-    }
+    this.stateListeners.clear();
+    this.pendingOperations.clear();
   }
 }
 
 // 页面加载完成后初始化
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const popupManager = new PopupManager();
-
+  await popupManager.init();
+  
   // 页面卸载时清理资源
   window.addEventListener('beforeunload', () => {
     popupManager.cleanup();

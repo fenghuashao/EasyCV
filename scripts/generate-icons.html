@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图标生成器 - CopyUtil</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .icon-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            background: #fafafa;
+        }
+        .icon-preview {
+            margin-bottom: 15px;
+        }
+        .icon-label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .download-btn {
+            background: #007cba;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 2px;
+        }
+        .download-btn:hover {
+            background: #005a87;
+        }
+        .batch-download {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .batch-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+        .batch-btn:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CopyUtil 图标生成器</h1>
+        <p>为任务2.1生成新的图标资源：icon-partial 和 icon-inactive 系列</p>
+        
+        <div class="icon-grid" id="iconGrid"></div>
+        
+        <div class="batch-download">
+            <button class="batch-btn" onclick="downloadAllPartial()">下载所有 Partial 图标</button>
+            <button class="batch-btn" onclick="downloadAllInactive()">下载所有 Inactive 图标</button>
+        </div>
+    </div>
+
+    <script>
+        // 图标SVG定义
+        const iconData = {
+            'partial': {
+                '16': `<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="partialGrad16" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#8BC34A;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#CDDC39;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="16" height="16" rx="3" fill="url(#partialGrad16)"/>
+                    <path d="M4 8h8M8 4v8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="12" cy="4" r="2" fill="#FF9800"/>
+                </svg>`,
+                '32': `<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="partialGrad32" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#8BC34A;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#CDDC39;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="32" height="32" rx="6" fill="url(#partialGrad32)"/>
+                    <path d="M8 16h16M16 8v16" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="24" cy="8" r="4" fill="#FF9800"/>
+                    <text x="24" y="12" text-anchor="middle" fill="white" font-size="8" font-weight="bold">!</text>
+                </svg>`,
+                '48': `<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="partialGrad48" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#8BC34A;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#CDDC39;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="48" height="48" rx="9" fill="url(#partialGrad48)"/>
+                    <path d="M12 24h24M24 12v24" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="36" cy="12" r="6" fill="#FF9800"/>
+                    <text x="36" y="16" text-anchor="middle" fill="white" font-size="10" font-weight="bold">!</text>
+                </svg>`,
+                '128': `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="partialGrad128" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#8BC34A;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#CDDC39;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="128" height="128" rx="24" fill="url(#partialGrad128)"/>
+                    <path d="M32 64h64M64 32v64" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                    <circle cx="96" cy="32" r="16" fill="#FF9800"/>
+                    <text x="96" y="40" text-anchor="middle" fill="white" font-size="20" font-weight="bold">!</text>
+                </svg>`
+            },
+            'inactive': {
+                '16': `<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="inactiveGrad16" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#9E9E9E;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#757575;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="16" height="16" rx="3" fill="url(#inactiveGrad16)"/>
+                    <path d="M4 8h8M8 4v8" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+                    <path d="M3 3l10 10" stroke="#F44336" stroke-width="2" stroke-linecap="round"/>
+                </svg>`,
+                '32': `<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="inactiveGrad32" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#9E9E9E;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#757575;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="32" height="32" rx="6" fill="url(#inactiveGrad32)"/>
+                    <path d="M8 16h16M16 8v16" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+                    <path d="M6 6l20 20" stroke="#F44336" stroke-width="3" stroke-linecap="round"/>
+                </svg>`,
+                '48': `<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="inactiveGrad48" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#9E9E9E;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#757575;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="48" height="48" rx="9" fill="url(#inactiveGrad48)"/>
+                    <path d="M12 24h24M24 12v24" stroke="white" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+                    <path d="M9 9l30 30" stroke="#F44336" stroke-width="4" stroke-linecap="round"/>
+                </svg>`,
+                '128': `<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="inactiveGrad128" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#9E9E9E;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#757575;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="128" height="128" rx="24" fill="url(#inactiveGrad128)"/>
+                    <path d="M32 64h64M64 32v64" stroke="white" stroke-width="8" stroke-linecap="round" opacity="0.5"/>
+                    <path d="M24 24l80 80" stroke="#F44336" stroke-width="8" stroke-linecap="round"/>
+                </svg>`
+            }
+        };
+
+        // 下载文件函数
+        function downloadFile(dataUrl, filename) {
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // SVG转PNG函数
+        function svgToPng(svgString, size, callback) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            canvas.width = size;
+            canvas.height = size;
+            
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0, size, size);
+                const dataUrl = canvas.toDataURL('image/png');
+                callback(dataUrl);
+            };
+            
+            const blob = new Blob([svgString], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            img.src = url;
+        }
+
+        // 下载单个图标
+        function downloadIcon(state, size) {
+            const svgString = iconData[state][size];
+            svgToPng(svgString, parseInt(size), (dataUrl) => {
+                downloadFile(dataUrl, `icon-${state}-${size}.png`);
+            });
+        }
+
+        // 批量下载
+        function downloadAllPartial() {
+            ['16', '32', '48', '128'].forEach((size, index) => {
+                setTimeout(() => downloadIcon('partial', size), 100 * index);
+            });
+        }
+
+        function downloadAllInactive() {
+            ['16', '32', '48', '128'].forEach((size, index) => {
+                setTimeout(() => downloadIcon('inactive', size), 100 * index);
+            });
+        }
+
+        // 生成图标网格
+        function generateIconGrid() {
+            const grid = document.getElementById('iconGrid');
+            
+            ['partial', 'inactive'].forEach(state => {
+                ['16', '32', '48', '128'].forEach(size => {
+                    const item = document.createElement('div');
+                    item.className = 'icon-item';
+                    
+                    const preview = document.createElement('div');
+                    preview.className = 'icon-preview';
+                    preview.innerHTML = iconData[state][size];
+                    
+                    const label = document.createElement('div');
+                    label.className = 'icon-label';
+                    label.textContent = `icon-${state}-${size}.png`;
+                    
+                    const button = document.createElement('button');
+                    button.className = 'download-btn';
+                    button.textContent = '下载 PNG';
+                    button.onclick = () => downloadIcon(state, size);
+                    
+                    item.appendChild(preview);
+                    item.appendChild(label);
+                    item.appendChild(button);
+                    grid.appendChild(item);
+                });
+            });
+        }
+
+        // 页面加载完成后生成图标网格
+        window.onload = generateIconGrid;
+    </script>
+</body>
+</html>

@@ -26,6 +26,16 @@ class CopyPasteManager {
       averageTime: 0
     };
 
+    // 状态同步相关
+    this.stateUpdateQueue = [];
+    this.isProcessingQueue = false;
+    this.stateLoadRetryCount = 0;
+    this.maxRetryCount = 3;
+    this.retryDelay = 1000;
+    this.stateLoadTimeout = 5000;
+    this.lastKnownState = null;
+    this.stateListeners = new Set();
+
     this.initializeManager();
   }
 
@@ -34,48 +44,119 @@ class CopyPasteManager {
    */
   async initializeManager() {
     try {
-      // 获取初始状态
-      await this.loadSettings();
+      // 优化的状态加载流程
+      await this.loadSettingsWithRetry();
 
       // 设置消息监听
       this.setupMessageListeners();
 
+      // 设置状态监听器
+      this.setupStateListeners();
+
       // 检测页面限制
       this.detectRestrictions();
 
-      // 如果启用，开始处理
-      if (this.isEnabled) {
-        this.enableCopyPaste();
-      }
+      // 应用当前状态
+      await this.applyCurrentState();
 
       // 监听DOM变化
       this.setupDOMObserver();
 
-      console.log('EasyCV Content Script initialized');
+      console.log('EasyCV Content Script initialized with state management');
     } catch (error) {
       console.error('Failed to initialize CopyPasteManager:', error);
       this.reportError(error);
+      // 使用默认状态继续运行
+      await this.applyDefaultState();
     }
   }
 
   /**
-   * 加载设置
+   * 加载设置（带重试机制）
    */
-  async loadSettings() {
-    try {
-      const response = await MessageUtils.sendToBackground(
-        MessageUtils.MESSAGE_TYPES.GET_STATUS
-      );
+  async loadSettingsWithRetry() {
+    for (let attempt = 0; attempt <= this.maxRetryCount; attempt++) {
+      try {
+        const response = await Promise.race([
+          MessageUtils.sendToBackground(MessageUtils.MESSAGE_TYPES.GET_STATUS),
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Timeout')), this.stateLoadTimeout)
+          )
+        ]);
 
-      if (response?.success) {
-        this.isEnabled = response.data.enabled;
-        this.copyEnabled = response.data.copyEnabled !== false;
-        this.pasteEnabled = response.data.pasteEnabled !== false;
-        this.forceMode = response.data.forceMode;
+        if (response?.success) {
+          const newState = {
+            isEnabled: response.data.enabled,
+            copyEnabled: response.data.copyEnabled !== false,
+            pasteEnabled: response.data.pasteEnabled !== false,
+            forceMode: response.data.forceMode
+          };
+
+          // 验证状态
+          if (this.validateState(newState)) {
+            this.updateLocalState(newState);
+            this.lastKnownState = { ...newState };
+            console.log('State loaded successfully:', newState);
+            return;
+          } else {
+            throw new Error('Invalid state received');
+          }
+        } else {
+          throw new Error('Failed to get valid response');
+        }
+      } catch (error) {
+        console.warn(`State load attempt ${attempt + 1} failed:`, error.message);
+        
+        if (attempt < this.maxRetryCount) {
+          await new Promise(resolve => setTimeout(resolve, this.retryDelay * (attempt + 1)));
+        } else {
+          console.error('All state load attempts failed, using last known state or defaults');
+          if (this.lastKnownState) {
+            this.updateLocalState(this.lastKnownState);
+          }
+          throw error;
+        }
       }
-    } catch (error) {
-      console.error('Failed to load settings:', error);
     }
+  }
+
+  /**
+   * 验证状态对象
+   */
+  validateState(state) {
+    return (
+      typeof state === 'object' &&
+      typeof state.isEnabled === 'boolean' &&
+      typeof state.copyEnabled === 'boolean' &&
+      typeof state.pasteEnabled === 'boolean' &&
+      typeof state.forceMode === 'boolean'
+    );
+  }
+
+  /**
+   * 更新本地状态
+   */
+  updateLocalState(state) {
+    this.isEnabled = state.isEnabled;
+    this.copyEnabled = state.copyEnabled;
+    this.pasteEnabled = state.pasteEnabled;
+    this.forceMode = state.forceMode;
+  }
+
+  /**
+   * 应用默认状态
+   */
+  async applyDefaultState() {
+    const defaultState = {
+      isEnabled: false,
+      copyEnabled: true,
+      pasteEnabled: true,
+      forceMode: false
+    };
+    
+    this.updateLocalState(defaultState);
+    await this.applyCurrentState();
+    console.log('Applied default state due to initialization failure');
   }
 
   /**
@@ -88,22 +169,25 @@ class CopyPasteManager {
       try {
         switch (type) {
           case MessageUtils.MESSAGE_TYPES.TOGGLE_PLUGIN:
-            return await this.handleTogglePlugin(data);
+            return await this.queueStateUpdate('TOGGLE_PLUGIN', data);
 
           case 'COPY_STATUS_CHANGED':
-            return await this.handleCopyToggle(data);
+            return await this.queueStateUpdate('COPY_TOGGLE', data);
 
           case 'PASTE_STATUS_CHANGED':
-            return await this.handlePasteToggle(data);
+            return await this.queueStateUpdate('PASTE_TOGGLE', data);
 
           case MessageUtils.MESSAGE_TYPES.ENABLE_FORCE_MODE:
-            return await this.handleEnableForceMode();
+            return await this.queueStateUpdate('FORCE_MODE_ENABLE', {});
 
           case MessageUtils.MESSAGE_TYPES.DISABLE_FORCE_MODE:
-            return await this.handleDisableForceMode();
+            return await this.queueStateUpdate('FORCE_MODE_DISABLE', {});
 
           case MessageUtils.MESSAGE_TYPES.UPDATE_STATUS:
-            return await this.handleUpdateStatus(data);
+            return await this.queueStateUpdate('UPDATE_STATUS', data);
+
+          case 'STATE_BROADCAST':
+            return await this.handleStateBroadcast(data);
 
           case MessageUtils.MESSAGE_TYPES.PING:
             return { success: true, message: 'Content script is available' };
@@ -455,11 +539,8 @@ class CopyPasteManager {
     const newState = data?.enabled ?? !this.isEnabled;
     this.isEnabled = newState;
 
-    if (this.isEnabled) {
-      this.enableCopyPaste();
-    } else {
-      this.disableCopyPaste();
-    }
+    await this.applyCurrentState();
+    this.notifyStateListeners();
 
     return { success: true, enabled: this.isEnabled };
   }
@@ -472,7 +553,8 @@ class CopyPasteManager {
     this.copyEnabled = newState;
 
     // 重新应用设置
-    this.updateCopyPasteSettings();
+    await this.applyCurrentState();
+    this.notifyStateListeners();
 
     return { success: true, copyEnabled: this.copyEnabled };
   }
@@ -485,7 +567,8 @@ class CopyPasteManager {
     this.pasteEnabled = newState;
 
     // 重新应用设置
-    this.updateCopyPasteSettings();
+    await this.applyCurrentState();
+    this.notifyStateListeners();
 
     return { success: true, pasteEnabled: this.pasteEnabled };
   }
@@ -506,19 +589,10 @@ class CopyPasteManager {
   async handleEnableForceMode() {
     this.forceMode = true;
 
-    if (this.isEnabled) {
-      // 重新处理所有元素，应用强力模式
-      const allElements = document.querySelectorAll('*');
-      allElements.forEach(element => {
-        this.processElement(element);
-      });
-      
-      // 重新注入自定义脚本以确保强力模式生效
-      this.injectCustomScript();
-      
-      console.log('Force mode enabled and applied to all elements');
-    }
-
+    await this.applyCurrentState();
+    this.notifyStateListeners();
+    
+    console.log('Force mode enabled');
     return { success: true, forceMode: true };
   }
 
@@ -527,6 +601,11 @@ class CopyPasteManager {
    */
   async handleDisableForceMode() {
     this.forceMode = false;
+    
+    await this.applyCurrentState();
+    this.notifyStateListeners();
+    
+    console.log('Force mode disabled');
     return { success: true, forceMode: false };
   }
 
@@ -537,23 +616,193 @@ class CopyPasteManager {
     if (data.changes) {
       // 处理存储变化
       const changes = data.changes;
+      let stateChanged = false;
 
       if (changes[StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED]) {
         this.isEnabled = changes[StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED].newValue;
-
-        if (this.isEnabled) {
-          this.enableCopyPaste();
-        } else {
-          this.disableCopyPaste();
-        }
+        stateChanged = true;
       }
 
       if (changes[StorageUtils.STORAGE_KEYS.FORCE_MODE]) {
         this.forceMode = changes[StorageUtils.STORAGE_KEYS.FORCE_MODE].newValue;
+        stateChanged = true;
+      }
+
+      if (stateChanged) {
+        await this.applyCurrentState();
+        this.notifyStateListeners();
       }
     }
 
     return { success: true };
+  }
+
+  /**
+   * 状态更新队列处理
+   */
+  async queueStateUpdate(type, data) {
+    return new Promise((resolve, reject) => {
+      this.stateUpdateQueue.push({
+        type,
+        data,
+        resolve,
+        reject,
+        timestamp: Date.now()
+      });
+
+      this.processStateQueue();
+    });
+  }
+
+  /**
+   * 处理状态更新队列
+   */
+  async processStateQueue() {
+    if (this.isProcessingQueue || this.stateUpdateQueue.length === 0) {
+      return;
+    }
+
+    this.isProcessingQueue = true;
+
+    try {
+      while (this.stateUpdateQueue.length > 0) {
+        const update = this.stateUpdateQueue.shift();
+        
+        try {
+          let result;
+          switch (update.type) {
+            case 'UPDATE_STATUS':
+              result = await this.handleUpdateStatus(update.data);
+              break;
+            case 'TOGGLE_PLUGIN':
+              result = await this.handleTogglePlugin(update.data);
+              break;
+            case 'COPY_TOGGLE':
+              result = await this.handleCopyToggle(update.data);
+              break;
+            case 'PASTE_TOGGLE':
+              result = await this.handlePasteToggle(update.data);
+              break;
+            case 'FORCE_MODE_ENABLE':
+              result = await this.handleEnableForceMode();
+              break;
+            case 'FORCE_MODE_DISABLE':
+              result = await this.handleDisableForceMode();
+              break;
+            default:
+              throw new Error(`Unknown update type: ${update.type}`);
+          }
+          
+          update.resolve(result);
+        } catch (error) {
+          console.error(`Failed to process state update ${update.type}:`, error);
+          update.reject(error);
+        }
+      }
+    } finally {
+      this.isProcessingQueue = false;
+    }
+  }
+
+  /**
+   * 应用当前状态
+   */
+  async applyCurrentState() {
+    try {
+      if (this.isEnabled) {
+        this.enableCopyPaste();
+      } else {
+        this.disableCopyPaste();
+      }
+      
+      console.log('Current state applied:', {
+        isEnabled: this.isEnabled,
+        copyEnabled: this.copyEnabled,
+        pasteEnabled: this.pasteEnabled,
+        forceMode: this.forceMode
+      });
+    } catch (error) {
+      console.error('Failed to apply current state:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * 设置状态监听器
+   */
+  setupStateListeners() {
+    // 监听来自Background的状态广播
+    this.addStateListener((state) => {
+      console.log('State change detected:', state);
+    });
+  }
+
+  /**
+   * 添加状态监听器
+   */
+  addStateListener(listener) {
+    this.stateListeners.add(listener);
+  }
+
+  /**
+   * 移除状态监听器
+   */
+  removeStateListener(listener) {
+    this.stateListeners.delete(listener);
+  }
+
+  /**
+   * 通知状态监听器
+   */
+  notifyStateListeners() {
+    const currentState = {
+      isEnabled: this.isEnabled,
+      copyEnabled: this.copyEnabled,
+      pasteEnabled: this.pasteEnabled,
+      forceMode: this.forceMode,
+      timestamp: Date.now()
+    };
+
+    this.stateListeners.forEach(listener => {
+      try {
+        listener(currentState);
+      } catch (error) {
+        console.error('State listener error:', error);
+      }
+    });
+  }
+
+  /**
+   * 处理状态广播
+   */
+  async handleStateBroadcast(data) {
+    try {
+      if (data && this.validateState(data)) {
+        const oldState = {
+          isEnabled: this.isEnabled,
+          copyEnabled: this.copyEnabled,
+          pasteEnabled: this.pasteEnabled,
+          forceMode: this.forceMode
+        };
+
+        this.updateLocalState(data);
+        
+        // 只在状态真正改变时应用
+        if (JSON.stringify(oldState) !== JSON.stringify(data)) {
+          await this.applyCurrentState();
+          this.notifyStateListeners();
+          console.log('State updated from broadcast:', data);
+        }
+        
+        return { success: true };
+      } else {
+        console.warn('Invalid state broadcast received:', data);
+        return { success: false, error: 'Invalid state data' };
+      }
+    } catch (error) {
+      console.error('Failed to handle state broadcast:', error);
+      return { success: false, error: error.message };
+    }
   }
 
   /**
@@ -729,7 +978,23 @@ class CopyPasteManager {
       this.observer.disconnect();
     }
 
+    // 清理状态更新队列
+    this.stateUpdateQueue.forEach(update => {
+      update.reject(new Error('Manager is being cleaned up'));
+    });
+    this.stateUpdateQueue = [];
+    
+    // 清理状态监听器
+    this.stateListeners.clear();
+    
+    // 清理定时器
+    if (this.processingTimer) {
+      clearTimeout(this.processingTimer);
+    }
+
     this.disableCopyPaste();
+    
+    console.log('CopyPasteManager cleaned up');
   }
 }
 
