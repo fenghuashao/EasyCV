@@ -40,9 +40,6 @@ class PopupManager {
       // 加载数据
       await this.loadData();
       
-      // 应用自动开启配置
-      await this.applyAutoEnableConfig();
-      
       // 启动定期更新
       this.startPeriodicUpdate();
       
@@ -219,6 +216,51 @@ class PopupManager {
   }
 
   /**
+   * 使用增强确认机制更新状态
+   * @param {Object} updates - 状态更新
+   * @param {Object} options - 选项
+   * @returns {Promise<Object>} 确认结果
+   */
+  async updateStateWithConfirmation(updates, options = {}) {
+    const requestId = options.requestId || this.generateRequestId();
+    
+    try {
+      // 发送带确认的状态更新请求
+      const response = await chrome.runtime.sendMessage({
+        type: 'UPDATE_PLUGIN_STATE_WITH_CONFIRMATION',
+        updates,
+        options: {
+          ...options,
+          requestId,
+          operation: options.operation || 'popup_update',
+          timeout: options.timeout || 5000,
+          autoRetry: options.autoRetry !== false
+        }
+      });
+      
+      if (!response.success) {
+        throw new Error(response.error || '状态更新失败');
+      }
+      
+      return response;
+      
+    } catch (error) {
+      console.error('状态确认更新失败:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * 生成请求ID
+   * @returns {string} 请求ID
+   */
+  generateRequestId() {
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).substr(2, 9);
+    return `popup_${timestamp}_${random}`;
+  }
+
+  /**
    * 添加状态监听器
    */
   addStateListener(listener) {
@@ -335,18 +377,22 @@ class PopupManager {
     this.updateUIState({ copyEnabled: newCopyState });
     
     try {
-      // 发送状态变更请求到Background Script
-      await MessageUtils.sendToBackground({
-        type: 'UPDATE_STATE',
-        changes: { copyEnabled: newCopyState },
-        requestId: requestId
-      });
+      // 使用新的确认机制更新状态
+      const result = await this.updateStateWithConfirmation(
+        { copyEnabled: newCopyState },
+        {
+          operation: 'toggle_copy',
+          timeout: 5000,
+          autoRetry: true
+        }
+      );
       
-      // 等待状态同步确认
-      await this.waitForStateSync({ copyEnabled: newCopyState }, requestId);
-      
-      // 显示成功通知
-      NotificationUtils.show(newCopyState ? '复制功能已开启' : '复制功能已关闭', 'success');
+      if (result.success) {
+        // 显示成功通知
+        NotificationUtils.show(newCopyState ? '复制功能已开启' : '复制功能已关闭', 'success');
+      } else {
+        throw new Error(result.error || '状态更新失败');
+      }
       
     } catch (error) {
       console.error('Failed to toggle copy:', error);
@@ -372,18 +418,22 @@ class PopupManager {
     this.updateUIState({ pasteEnabled: newPasteState });
     
     try {
-      // 发送状态变更请求到Background Script
-      await MessageUtils.sendToBackground({
-        type: 'UPDATE_STATE',
-        changes: { pasteEnabled: newPasteState },
-        requestId: requestId
-      });
+      // 使用新的确认机制更新状态
+      const result = await this.updateStateWithConfirmation(
+        { pasteEnabled: newPasteState },
+        {
+          operation: 'toggle_paste',
+          timeout: 5000,
+          autoRetry: true
+        }
+      );
       
-      // 等待状态同步确认
-      await this.waitForStateSync({ pasteEnabled: newPasteState }, requestId);
-      
-      // 显示成功通知
-      NotificationUtils.show(newPasteState ? '粘贴功能已开启' : '粘贴功能已关闭', 'success');
+      if (result.success) {
+        // 显示成功通知
+        NotificationUtils.show(newPasteState ? '粘贴功能已开启' : '粘贴功能已关闭', 'success');
+      } else {
+        throw new Error(result.error || '状态更新失败');
+      }
       
     } catch (error) {
       console.error('Failed to toggle paste:', error);
@@ -409,18 +459,22 @@ class PopupManager {
     this.updateUIState({ forceMode: newForceMode });
     
     try {
-      // 发送状态变更请求到Background Script
-      await MessageUtils.sendToBackground({
-        type: 'UPDATE_STATE',
-        changes: { forceMode: newForceMode },
-        requestId: requestId
-      });
+      // 使用新的确认机制更新状态
+      const result = await this.updateStateWithConfirmation(
+        { forceMode: newForceMode },
+        {
+          operation: 'toggle_force_mode',
+          timeout: 5000,
+          autoRetry: true
+        }
+      );
       
-      // 等待状态同步确认
-      await this.waitForStateSync({ forceMode: newForceMode }, requestId);
-      
-      // 显示成功通知
-      NotificationUtils.show(newForceMode ? '强制模式已开启' : '强制模式已关闭', 'success');
+      if (result.success) {
+        // 显示成功通知
+        NotificationUtils.show(newForceMode ? '强制模式已开启' : '强制模式已关闭', 'success');
+      } else {
+        throw new Error(result.error || '状态更新失败');
+      }
       
     } catch (error) {
       console.error('Failed to toggle force mode:', error);
@@ -671,36 +725,7 @@ class PopupManager {
     }
   }
 
-  /**
-   * 应用自动开启配置
-   */
-  async applyAutoEnableConfig() {
-    if (!this.currentTab || !this.currentTab.url) return;
-    
-    try {
-      const url = new URL(this.currentTab.url);
-      const domain = url.hostname;
-      
-      const autoEnableList = await storageUtils.getAutoEnableList();
-      if (autoEnableList.includes(domain)) {
-        // 标记为已交互
-        const interactionHistory = await storageUtils.getInteractionHistory();
-        interactionHistory[domain] = Date.now();
-        await storageUtils.setInteractionHistory(interactionHistory);
-        
-        // 发送自动开启消息到content script
-        try {
-          await MessageUtils.sendToContentScript(this.currentTab.id, {
-            type: 'AUTO_ENABLE'
-          });
-        } catch (error) {
-          console.warn('自动开启失败:', error);
-        }
-      }
-    } catch (error) {
-      console.error('应用自动开启配置失败:', error);
-    }
-  }
+  // 自动启用逻辑已移至统一的AutoEnableManager处理
 
   /**
    * 打开反馈页面

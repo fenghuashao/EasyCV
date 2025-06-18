@@ -18,6 +18,7 @@ class MessageUtils {
     PAGE_ANALYZED: 'page_analyzed',
     COPY_STATUS_CHANGED: 'copy_status_changed',
     PASTE_STATUS_CHANGED: 'paste_status_changed',
+    STATE_UPDATED: 'state_updated',
     PING: 'ping'
   };
 
