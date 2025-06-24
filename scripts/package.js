@@ -85,12 +85,14 @@ class Packager {
   }
 
   /**
-   * 自动解压ZIP文件（仅Windows环境）
+   * 自动解压ZIP文件（支持Windows和macOS环境）
    */
   async autoExtract(zipPath) {
-    // 检查是否为Windows环境
-    if (os.platform() !== 'win32') {
-      console.log('⚠️  自动解压功能仅支持Windows环境');
+    const platform = os.platform();
+    
+    // 检查是否为支持的环境
+    if (platform !== 'win32' && platform !== 'darwin') {
+      console.log('⚠️  自动解压功能仅支持Windows和macOS环境');
       return null;
     }
 
@@ -107,8 +109,17 @@ class Packager {
 
       console.log(`📂 正在解压到: ${path.basename(extractDir)}`);
       
-      // 使用PowerShell的Expand-Archive命令解压
-      const command = `powershell -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${extractDir}' -Force"`;
+      let command;
+      if (platform === 'win32') {
+        // Windows环境：使用PowerShell的Expand-Archive命令解压
+        command = `powershell -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${extractDir}' -Force"`;
+      } else if (platform === 'darwin') {
+        // macOS环境：使用内置的unzip命令解压
+        // 先创建目标目录
+        fs.mkdirSync(extractDir, { recursive: true });
+        command = `unzip -q "${zipPath}" -d "${extractDir}"`;
+      }
+      
       execSync(command, { stdio: 'pipe' });
       
       console.log(`✅ 解压完成: ${path.relative(this.sourceDir, extractDir)}`);
