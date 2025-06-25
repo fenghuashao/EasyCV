@@ -341,6 +341,10 @@ class MonitoringManager {
 // 导出类
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = MonitoringManager;
-} else {
+} else if (typeof self !== 'undefined') {
+  // Service Worker 环境
+  self.MonitoringManager = MonitoringManager;
+} else if (typeof window !== 'undefined') {
+  // 浏览器环境
   window.MonitoringManager = MonitoringManager;
 }

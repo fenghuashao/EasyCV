@@ -30,9 +30,9 @@ class CopyPasteManager {
     this.stateUpdateQueue = [];
     this.isProcessingQueue = false;
     this.stateLoadRetryCount = 0;
-    this.maxRetryCount = 3;
-    this.retryDelay = 1000;
-    this.stateLoadTimeout = 5000;
+    this.maxRetryCount = 5; // 增加重试次数
+    this.retryDelay = 1500; // 增加重试延迟
+    this.stateLoadTimeout = 10000; // 增加超时时间到10秒
     this.lastKnownState = null;
     this.stateListeners = new Set();
 
@@ -44,30 +44,56 @@ class CopyPasteManager {
    */
   async initializeManager() {
     try {
-      // 优化的状态加载流程
+      console.log('Initializing CopyPasteManager...');
+      console.log('Current URL:', window.location.href);
+      console.log('Document readyState:', document.readyState);
+      
+      // 优化的状态加载流程（现在不会抛出错误）
+      console.log('Loading settings with retry...');
       await this.loadSettingsWithRetry();
+      console.log('Settings loaded successfully');
 
       // 设置消息监听
+      console.log('Setting up message listeners...');
       this.setupMessageListeners();
 
       // 设置状态监听器
+      console.log('Setting up state listeners...');
       this.setupStateListeners();
 
       // 检测页面限制
+      console.log('Detecting page restrictions...');
       this.detectRestrictions();
 
       // 应用当前状态
+      console.log('Applying current state...');
       await this.applyCurrentState();
+      console.log('Current state applied successfully');
 
       // 监听DOM变化
+      console.log('Setting up DOM observer...');
       this.setupDOMObserver();
 
       console.log('EasyCV Content Script initialized with state management');
+      console.log('Final state:', {
+        isEnabled: this.isEnabled,
+        copyEnabled: this.copyEnabled,
+        pasteEnabled: this.pasteEnabled,
+        forceMode: this.forceMode,
+        initialized: true
+      });
     } catch (error) {
       console.error('Failed to initialize CopyPasteManager:', error);
+      console.error('Error stack:', error.stack);
       this.reportError(error);
       // 使用默认状态继续运行
-      await this.applyDefaultState();
+      try {
+        console.log('Attempting to apply default state...');
+        await this.applyDefaultState();
+        console.log('Default state applied successfully');
+      } catch (applyError) {
+        console.error('Failed to apply default state:', applyError);
+      }
     }
   }
 
@@ -84,13 +110,17 @@ class CopyPasteManager {
           )
         ]);
 
-        if (response?.success) {
+        if (response?.success && response.data) {
           const newState = {
-            isEnabled: response.data.enabled,
-            copyEnabled: response.data.copyEnabled !== false,
-            pasteEnabled: response.data.pasteEnabled !== false,
-            forceMode: response.data.forceMode
+            isEnabled: Boolean(response.data.enabled),
+            copyEnabled: Boolean(response.data.copyEnabled !== false),
+            pasteEnabled: Boolean(response.data.pasteEnabled !== false),
+            forceMode: Boolean(response.data.forceMode)
           };
+
+          // 添加调试日志
+          console.log('Received response from background:', response);
+          console.log('Constructed newState:', newState);
 
           // 验证状态
           if (this.validateState(newState)) {
@@ -99,9 +129,20 @@ class CopyPasteManager {
             console.log('State loaded successfully:', newState);
             return;
           } else {
+            console.error('State validation failed:', {
+              newState,
+              validation: {
+                isObject: typeof newState === 'object',
+                hasIsEnabled: typeof newState.isEnabled === 'boolean',
+                hasCopyEnabled: typeof newState.copyEnabled === 'boolean',
+                hasPasteEnabled: typeof newState.pasteEnabled === 'boolean',
+                hasForceMode: typeof newState.forceMode === 'boolean'
+              }
+            });
             throw new Error('Invalid state received');
           }
         } else {
+          console.error('Invalid response from background:', response);
           throw new Error('Failed to get valid response');
         }
       } catch (error) {
@@ -111,10 +152,24 @@ class CopyPasteManager {
           await new Promise(resolve => setTimeout(resolve, this.retryDelay * (attempt + 1)));
         } else {
           console.error('All state load attempts failed, using last known state or defaults');
+          // 优雅降级：使用最后已知状态或默认状态
           if (this.lastKnownState) {
             this.updateLocalState(this.lastKnownState);
+            console.log('Using last known state:', this.lastKnownState);
+          } else {
+            // 使用默认状态
+            const defaultState = {
+              isEnabled: true,
+              copyEnabled: true,
+              pasteEnabled: true,
+              forceMode: false
+            };
+            this.updateLocalState(defaultState);
+            this.lastKnownState = { ...defaultState };
+            console.log('Using default state:', defaultState);
           }
-          throw error;
+          // 不再抛出错误，而是继续执行
+          return;
         }
       }
     }
@@ -238,21 +293,39 @@ class CopyPasteManager {
   enableCopyPaste() {
     try {
       console.log('启用复制粘贴功能');
+      console.log('Current state before enabling:', {
+        isEnabled: this.isEnabled,
+        copyEnabled: this.copyEnabled,
+        pasteEnabled: this.pasteEnabled,
+        forceMode: this.forceMode
+      });
       
       // 清理之前的性能数据
       this.clearPerformanceData();
       
       // 移除全局限制
+      console.log('Removing global restrictions...');
       this.removeGlobalRestrictions();
 
       // 批量处理页面中的所有元素
+      console.log('Processing all elements...');
       const allElements = document.querySelectorAll('*');
       this.scheduleElementProcessing(Array.from(allElements));
 
       // 注入自定义脚本（用于处理更深层的限制）
+      console.log('Injecting custom script...');
       this.injectCustomScript();
 
       console.log('Copy-paste restrictions removed');
+      
+      // 验证注入是否成功
+      setTimeout(() => {
+        if (window.EasyCVInjected) {
+          console.log('✓ Custom script injection verified successfully');
+        } else {
+          console.warn('⚠ Custom script injection may have failed - EasyCVInjected flag not found');
+        }
+      }, 100);
     } catch (error) {
       console.error('Failed to enable copy-paste:', error);
       this.reportError(error);
@@ -470,10 +543,49 @@ class CopyPasteManager {
    * 注入自定义脚本
    */
   injectCustomScript() {
-    const script = document.createElement('script');
-    script.src = chrome.runtime.getURL('content/injector.js');
-    script.onload = () => script.remove();
-    (document.head || document.documentElement).appendChild(script);
+    try {
+      console.log('Creating injector script element...');
+      const script = document.createElement('script');
+      
+      const injectorUrl = chrome.runtime.getURL('content/injector.js');
+      console.log('Injector URL:', injectorUrl);
+      
+      script.src = injectorUrl;
+      script.type = 'text/javascript';
+      
+      script.onload = () => {
+        console.log('✓ Injector script loaded successfully');
+        script.remove();
+        
+        // 验证注入是否成功
+        setTimeout(() => {
+          if (window.EasyCVInjected) {
+            console.log('✓ EasyCVInjected flag confirmed');
+          } else {
+            console.error('✗ EasyCVInjected flag not found after injection');
+          }
+        }, 50);
+      };
+      
+      script.onerror = (error) => {
+        console.error('✗ Failed to load injector script:', error);
+        console.error('Script src:', script.src);
+      };
+      
+      const targetElement = document.head || document.documentElement;
+      console.log('Appending script to:', targetElement.tagName);
+      
+      if (targetElement) {
+        targetElement.appendChild(script);
+        console.log('✓ Injector script element appended to DOM');
+      } else {
+        console.error('✗ No suitable parent element found for script injection');
+      }
+      
+    } catch (error) {
+      console.error('✗ Error in injectCustomScript:', error);
+      console.error('Error stack:', error.stack);
+    }
   }
 
   /**

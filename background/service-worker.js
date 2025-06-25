@@ -774,17 +774,46 @@ class BackgroundManager {
    * 处理获取状态请求
    */
   async handleGetStatus(data) {
-    // 使用StateManager获取统一状态
-    const domain = data?.domain || null;
-    const state = await this.stateManager.getPluginState(domain);
+    try {
+      // 使用StateManager获取统一状态
+      const domain = data?.domain || null;
+      const state = await this.stateManager.getPluginState(domain);
 
-    return {
-      enabled: state.pluginEnabled,
-      forceMode: state.forceMode,
-      settings: state.userSettings,
-      domainConfig: state.domainConfig,
-      timestamp: state.timestamp
-    };
+      // 确保所有必需的字段都有有效值
+      const responseData = {
+        enabled: Boolean(state.pluginEnabled),
+        copyEnabled: Boolean(state.userSettings?.copyEnabled !== false),
+        pasteEnabled: Boolean(state.userSettings?.pasteEnabled !== false),
+        forceMode: Boolean(state.forceMode),
+        settings: state.userSettings || {},
+        domainConfig: state.domainConfig || null,
+        timestamp: state.timestamp || Date.now()
+      };
+
+      // 添加调试日志
+      console.log('handleGetStatus response data:', responseData);
+
+      return {
+        success: true,
+        data: responseData
+      };
+    } catch (error) {
+      console.error('Failed to get status:', error);
+      
+      // 返回默认状态而不是null
+      return {
+        success: true,
+        data: {
+          enabled: true,
+          copyEnabled: true,
+          pasteEnabled: true,
+          forceMode: false,
+          settings: {},
+          domainConfig: null,
+          timestamp: Date.now()
+        }
+      };
+    }
   }
 
   /**
