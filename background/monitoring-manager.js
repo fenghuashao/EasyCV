@@ -3,7 +3,8 @@
  * 负责状态变更日志记录、性能监控和健康检查
  */
 class MonitoringManager {
-  constructor() {
+  constructor(stateManager = null) {
+    this.stateManager = stateManager;
     // 日志配置
     this.maxLogEntries = 1000; // 最大日志条目数
     this.logRotationSize = 500; // 日志轮转大小
@@ -189,8 +190,8 @@ class MonitoringManager {
     }
 
     // 检查内存使用（如果有StateManager实例）
-    if (window.stateManager) {
-      const memoryUsage = window.stateManager.getMemoryUsage();
+    if (this.stateManager) {
+      const memoryUsage = this.stateManager.getMemoryUsage();
       const memoryKB = parseFloat(memoryUsage.estimatedKB);
       
       if (memoryKB > 1024) { // 超过1MB
@@ -316,8 +317,9 @@ class MonitoringManager {
    * @returns {boolean} 是否为调试模式
    */
   isDebugMode() {
-    // 可以通过环境变量或存储设置来控制
-    return localStorage.getItem('easycv_debug') === 'true';
+    // Service Worker环境不支持localStorage，使用默认配置
+    // 可以通过manifest.json或其他配置方式来控制
+    return process.env.NODE_ENV === 'development' || false;
   }
 
   /**

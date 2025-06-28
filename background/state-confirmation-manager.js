@@ -306,10 +306,15 @@ class StateConfirmationManager {
     console.error('State update failed:', {
       requestId: failureInfo.requestId,
       operation: failureInfo.operation,
-      error: failureInfo.error,
+      error: failureInfo.error || 'Unknown error',
       retryCount: failureInfo.retryCount,
       duration: failureInfo.duration
     });
+    
+    // 如果有错误堆栈，也输出详细信息
+    if (failureInfo.errorStack) {
+      console.error('Error stack:', failureInfo.errorStack);
+    }
     
     // 可以在这里添加更多告警机制
     // 例如：发送到错误监控服务、显示用户通知等

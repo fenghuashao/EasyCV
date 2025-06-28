@@ -19,6 +19,8 @@ class MessageUtils {
     COPY_STATUS_CHANGED: 'copy_status_changed',
     PASTE_STATUS_CHANGED: 'paste_status_changed',
     STATE_UPDATED: 'state_updated',
+    GET_COMPLETE_STATE: 'get_complete_state',
+    UPDATE_PLUGIN_STATE_WITH_CONFIRMATION: 'UPDATE_PLUGIN_STATE_WITH_CONFIRMATION',
     PING: 'ping'
   };
 
@@ -248,5 +250,16 @@ class MessageUtils {
     promise
       .then(data => sendResponse(this.createResponse(true, data)))
       .catch(error => sendResponse(this.createResponse(false, null, error.message)));
+  }
+
+  /**
+   * 发送消息到内容脚本（sendToContent的别名）
+   * @param {number} tabId - 标签页ID
+   * @param {Object} message - 消息对象
+   * @param {Object} options - 选项配置
+   * @returns {Promise} 响应Promise
+   */
+  static async sendToContentScript(tabId, message, options = {}) {
+    return await this.sendToContent(tabId, message.type, message.data || {}, options);
   }
 }

@@ -28,8 +28,8 @@ class StateManager {
     // 防抖机制
     this.debouncedOperations = new Map();
     
-    // 监控和日志管理
-    this.monitoringManager = new MonitoringManager();
+    // 监控和日志管理（传递this作为stateManager引用）
+    this.monitoringManager = new MonitoringManager(this);
   }
 
   /**
@@ -317,6 +317,32 @@ class StateManager {
           oldValue: this.stateCache.get('forceMode'),
           newValue: updates.forceMode
         });
+      }
+
+      // 处理copyEnabled和pasteEnabled更新
+      if (updates.hasOwnProperty('copyEnabled') || updates.hasOwnProperty('pasteEnabled')) {
+        const currentSettings = this.stateCache.get('userSettings') || {};
+        const settingsUpdates = {};
+        
+        if (updates.hasOwnProperty('copyEnabled')) {
+          settingsUpdates.copyEnabled = updates.copyEnabled;
+          this.monitoringManager.logStateChange('copy_enabled_changed', {
+            oldValue: currentSettings.copyEnabled,
+            newValue: updates.copyEnabled
+          });
+        }
+        
+        if (updates.hasOwnProperty('pasteEnabled')) {
+          settingsUpdates.pasteEnabled = updates.pasteEnabled;
+          this.monitoringManager.logStateChange('paste_enabled_changed', {
+            oldValue: currentSettings.pasteEnabled,
+            newValue: updates.pasteEnabled
+          });
+        }
+        
+        const newSettings = { ...currentSettings, ...settingsUpdates };
+        storageUpdates[StorageUtils.STORAGE_KEYS.USER_SETTINGS] = newSettings;
+        cacheUpdates.set('userSettings', newSettings);
       }
 
       if (updates.userSettings) {
@@ -653,7 +679,10 @@ class BackgroundManager {
             return await this.handlePasteStatusChanged(data);
 
           case 'UPDATE_PLUGIN_STATE_WITH_CONFIRMATION':
-            return await this.handleUpdatePluginStateWithConfirmation(data);
+            return await this.handleUpdatePluginStateWithConfirmation(message);
+
+          case MessageUtils.MESSAGE_TYPES.GET_COMPLETE_STATE:
+            return await this.handleGetCompleteState(data);
 
           // 监控和性能相关消息
           case 'GET_PERFORMANCE_METRICS':
@@ -895,6 +924,28 @@ class BackgroundManager {
   }
 
   /**
+   * 处理获取完整状态
+   */
+  async handleGetCompleteState(data) {
+    try {
+      const state = await this.stateManager.getPluginState();
+      return {
+        state: {
+          isEnabled: state.pluginEnabled,
+          copyEnabled: state.userSettings?.copyEnabled ?? true,
+          pasteEnabled: state.userSettings?.pasteEnabled ?? true,
+          forceMode: state.forceMode,
+          userSettings: state.userSettings,
+          timestamp: Date.now()
+        }
+      };
+    } catch (error) {
+      console.error('Failed to get complete state:', error);
+      throw error; // 让addMessageListener处理错误包装
+    }
+  }
+
+  /**
    * 处理获取设置
    */
   async handleGetSettings() {
@@ -1066,9 +1117,9 @@ class BackgroundManager {
   /**
    * 处理带确认机制的状态更新
    */
-  async handleUpdatePluginStateWithConfirmation(data) {
+  async handleUpdatePluginStateWithConfirmation(message) {
     try {
-      const { updates, options } = data;
+      const { updates, options } = message;
       
       // 使用StateManager的带确认更新方法
       const result = await this.stateManager.updatePluginStateWithConfirmation(updates, options);
@@ -1095,7 +1146,7 @@ class BackgroundManager {
       return {
         success: false,
         error: error.message,
-        requestId: data.options?.requestId
+        requestId: message.options?.requestId
       };
     }
   }

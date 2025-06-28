@@ -61,12 +61,13 @@ class PopupManager {
     
     while (retryCount < this.retryCount) {
       try {
-        const response = await MessageUtils.sendToBackground({
-          type: 'GET_COMPLETE_STATE'
-        });
+        const response = await MessageUtils.sendToBackground(
+          MessageUtils.MESSAGE_TYPES.GET_COMPLETE_STATE,
+          {}
+        );
         
-        if (response && response.state) {
-          this.currentState = response.state;
+        if (response && response.success && response.data && response.data.state) {
+          this.currentState = response.data.state;
           console.log('State loaded from background:', this.currentState);
           return;
         }
@@ -549,7 +550,7 @@ class PopupManager {
       const domain = url.hostname;
       
       // 检查是否已经在自动开启列表中
-      const autoEnableList = await storageUtils.getAutoEnableList();
+      const autoEnableList = await StorageUtils.getAutoEnableList();
       if (autoEnableList.includes(domain)) {
         NotificationUtils.show('该网站已在自动开启列表中', 'info');
         return;
@@ -557,7 +558,7 @@ class PopupManager {
       
       // 添加到自动开启列表
       autoEnableList.push(domain);
-      await storageUtils.setAutoEnableList(autoEnableList);
+      await StorageUtils.setAutoEnableList(autoEnableList);
       
       // 更新按钮状态
       this.updateAutoEnableButton();
@@ -577,7 +578,7 @@ class PopupManager {
     
     try {
       // 获取插件设置
-      const settings = await storageUtils.getPluginSettings();
+      const settings = await StorageUtils.getPluginSettings();
       const isPluginEnabled = settings.pluginEnabled !== false;
       
       // 检查是否为自动开启网站的首次交互
@@ -643,7 +644,7 @@ class PopupManager {
    */
   async loadStatistics() {
     try {
-      const stats = await storageUtils.getStatistics();
+      const stats = await StorageUtils.getStatistics();
       
       // 更新总网站数
       const totalSitesElement = document.getElementById('totalSites');
@@ -715,8 +716,8 @@ class PopupManager {
       const url = new URL(this.currentTab.url);
       const domain = url.hostname;
       
-      const autoEnableList = await storageUtils.getAutoEnableList();
-      const interactionHistory = await storageUtils.getInteractionHistory();
+      const autoEnableList = await StorageUtils.getAutoEnableList();
+    const interactionHistory = await StorageUtils.getInteractionHistory();
       
       return autoEnableList.includes(domain) && !interactionHistory[domain];
     } catch (error) {
@@ -788,7 +789,7 @@ class PopupManager {
       const url = new URL(this.currentTab.url);
       const domain = url.hostname;
       
-      const autoEnableList = await storageUtils.getAutoEnableList();
+      const autoEnableList = await StorageUtils.getAutoEnableList();
       const isInList = autoEnableList.includes(domain);
       
       addToAutoBtn.textContent = isInList ? '已在自动开启列表' : '添加到自动开启';

@@ -7,7 +7,6 @@
 
 class OptionsManager {
   constructor() {
-    this.storageUtils = new StorageUtils();
     this.messageUtils = new MessageUtils();
     this.currentTab = 'general';
     this.settings = {};
@@ -282,7 +281,7 @@ class OptionsManager {
   async loadAllData() {
     try {
       // 加载设置
-      this.settings = await this.storageUtils.getPluginSettings();
+      this.settings = await StorageUtils.getPluginSettings();
       
       // 加载白名单
       this.whitelist = await StorageUtils.getAutoEnableList();
@@ -349,7 +348,7 @@ class OptionsManager {
   async updateSetting(key, value) {
     try {
       this.settings[key] = value;
-      await this.storageUtils.setPluginSettings(this.settings);
+      await StorageUtils.setPluginSettings(this.settings);
       
       // 通知background script设置已更改
       await this.messageUtils.sendToBackground({
@@ -672,11 +671,11 @@ class OptionsManager {
       
       // 导入设置
       this.settings = { ...this.settings, ...data.settings };
-      await this.storageUtils.setPluginSettings(this.settings);
+      await StorageUtils.setPluginSettings(this.settings);
       
       // 导入白名单
       this.whitelist = data.whitelist;
-      await this.storageUtils.setAutoEnableList(this.whitelist);
+      await StorageUtils.setAutoEnableList(this.whitelist);
       
       // 更新UI
       this.updateFormValues();
@@ -710,7 +709,7 @@ class OptionsManager {
         performanceMonitoring: false
       };
       
-      await this.storageUtils.setPluginSettings(this.settings);
+      await StorageUtils.setPluginSettings(this.settings);
       
       // 更新UI
       this.updateFormValues();

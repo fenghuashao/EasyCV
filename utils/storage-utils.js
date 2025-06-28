@@ -12,7 +12,8 @@ class StorageUtils {
     AUTO_ENABLE_LIST: 'auto_enable_list',
     USER_SETTINGS: 'user_settings',
     STATISTICS: 'statistics',
-    LAST_UPDATE: 'last_update'
+    LAST_UPDATE: 'last_update',
+    INTERACTION_HISTORY: 'interaction_history'
   };
 
   /**
@@ -322,14 +323,14 @@ class StorageUtils {
   }
 
   /**
-   * 获取插件设置（实例方法）
+   * 获取插件设置（静态方法）
    * @returns {Promise<Object>} 插件设置对象
    */
-  async getPluginSettings() {
+  static async getPluginSettings() {
     const [enabled, forceMode, userSettings] = await Promise.all([
-      StorageUtils.getPluginEnabled(),
-      StorageUtils.getForceMode(),
-      StorageUtils.getUserSettings()
+      this.getPluginEnabled(),
+      this.getForceMode(),
+      this.getUserSettings()
     ]);
 
     return {
@@ -372,5 +373,35 @@ class StorageUtils {
     }
 
     await Promise.all(updates);
+  }
+
+  /**
+   * 获取交互历史记录
+   * @returns {Promise<Object>} 交互历史记录
+   */
+  static async getInteractionHistory() {
+    try {
+      const result = await StorageUtils.get(StorageUtils.STORAGE_KEYS.INTERACTION_HISTORY);
+      return result[StorageUtils.STORAGE_KEYS.INTERACTION_HISTORY] || {};
+    } catch (error) {
+      console.error('Failed to get interaction history:', error);
+      return {};
+    }
+  }
+
+  /**
+   * 设置交互历史记录
+   * @param {Object} history - 交互历史记录
+   * @returns {Promise<void>}
+   */
+  static async setInteractionHistory(history) {
+    try {
+      await StorageUtils.set({
+        [StorageUtils.STORAGE_KEYS.INTERACTION_HISTORY]: history
+      });
+    } catch (error) {
+      console.error('Failed to set interaction history:', error);
+      throw error;
+    }
   }
 }

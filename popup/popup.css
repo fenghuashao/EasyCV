@@ -145,7 +145,8 @@ body {
 }
 
 .control-item:hover {
-  background: #f5f5f5;
+  background: var(--background-secondary);
+  border-color: var(--primary-color);
 }
 
 .control-label {
@@ -632,5 +633,14 @@ input:checked+.slider:before {
 
   .notification {
     background: var(--background-secondary);
+  }
+
+  .control-item {
+    background: var(--background-secondary);
+  }
+
+  .control-item:hover {
+    background: #3c4043;
+    border-color: var(--primary-color);
   }
 }

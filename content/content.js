@@ -256,6 +256,9 @@ class CopyPasteManager {
           case 'TEST_COPY':
             return await this.handleTestCopy(data);
 
+          case 'GET_PAGE_STATUS':
+            return await this.handleGetPageStatus(data);
+
           default:
             return { success: false, error: 'Unknown message type' };
         }
@@ -1078,6 +1081,33 @@ class CopyPasteManager {
       };
     } catch (error) {
       console.error('Failed to handle test copy:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * 处理获取页面状态
+   */
+  async handleGetPageStatus(data) {
+    try {
+      // 检测当前页面限制
+      const restrictions = this.detectRestrictions();
+      
+      return {
+        success: true,
+        status: {
+          isEnabled: this.isEnabled,
+          copyEnabled: this.copyEnabled,
+          pasteEnabled: this.pasteEnabled,
+          forceMode: this.forceMode,
+          restrictions,
+          url: window.location.href,
+          domain: window.location.hostname,
+          timestamp: Date.now()
+        }
+      };
+    } catch (error) {
+      console.error('Failed to get page status:', error);
       return { success: false, error: error.message };
     }
   }
