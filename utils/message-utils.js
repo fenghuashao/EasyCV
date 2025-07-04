@@ -18,6 +18,9 @@ class MessageUtils {
     PAGE_ANALYZED: 'page_analyzed',
     COPY_STATUS_CHANGED: 'copy_status_changed',
     PASTE_STATUS_CHANGED: 'paste_status_changed',
+    STATE_UPDATED: 'state_updated',
+    GET_COMPLETE_STATE: 'get_complete_state',
+    UPDATE_PLUGIN_STATE_WITH_CONFIRMATION: 'UPDATE_PLUGIN_STATE_WITH_CONFIRMATION',
     PING: 'ping'
   };
 
@@ -25,20 +28,51 @@ class MessageUtils {
    * 发送消息到后台脚本
    * @param {string} type - 消息类型
    * @param {Object} data - 消息数据
+   * @param {Object} options - 选项配置
    * @returns {Promise} 响应Promise
    */
-  static async sendToBackground(type, data = {}) {
-    try {
-      const message = {
-        type,
-        data,
-        timestamp: Date.now()
-      };
+  static async sendToBackground(type, data = {}, options = {}) {
+    const { retries = 2, timeout = 5000 } = options;
+    
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      try {
+        const message = {
+          type,
+          data,
+          timestamp: Date.now()
+        };
 
-      return await chrome.runtime.sendMessage(message);
-    } catch (error) {
-      console.error('Failed to send message to background:', error);
-      throw error;
+        // 检查runtime是否可用
+        if (!chrome.runtime || !chrome.runtime.sendMessage) {
+          throw new Error('Chrome runtime not available');
+        }
+
+        // 添加超时控制
+        const response = await Promise.race([
+          chrome.runtime.sendMessage(message),
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Background script timeout')), timeout)
+          )
+        ]);
+
+        return response;
+      } catch (error) {
+        const isLastAttempt = attempt === retries;
+        
+        // 检查是否是扩展上下文失效
+        if (error.message.includes('Extension context invalidated')) {
+          console.warn('Extension context invalidated, cannot send message');
+          throw error;
+        }
+        
+        if (isLastAttempt) {
+          console.error(`Failed to send message to background after ${retries + 1} attempts:`, error);
+          throw error;
+        }
+        
+        // 等待后重试
+        await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
+      }
     }
   }
 
@@ -216,5 +250,16 @@ class MessageUtils {
     promise
       .then(data => sendResponse(this.createResponse(true, data)))
       .catch(error => sendResponse(this.createResponse(false, null, error.message)));
+  }
+
+  /**
+   * 发送消息到内容脚本（sendToContent的别名）
+   * @param {number} tabId - 标签页ID
+   * @param {Object} message - 消息对象
+   * @param {Object} options - 选项配置
+   * @returns {Promise} 响应Promise
+   */
+  static async sendToContentScript(tabId, message, options = {}) {
+    return await this.sendToContent(tabId, message.type, message.data || {}, options);
   }
 }

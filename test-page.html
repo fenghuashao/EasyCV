@@ -123,13 +123,44 @@
         function checkPluginStatus() {
             const statusElement = document.getElementById('plugin-status');
             
-            // 检测是否有EasyCV注入的标记
-            if (window.EasyCVInjected) {
-                statusElement.textContent = '状态：EasyCV插件已激活';
+            // 详细的插件检测
+            const detectionResults = {
+                easyCVInjected: !!window.EasyCVInjected,
+                copyPasteManager: !!window.copyPasteManager,
+                chromeRuntime: !!window.chrome?.runtime,
+                extensionContext: !!document.querySelector('script[src*="extension://"]')
+            };
+            
+            console.log('Plugin detection results:', detectionResults);
+            
+            if (detectionResults.easyCVInjected) {
+                statusElement.innerHTML = `状态：EasyCV插件已激活<br>
+                    <small>注入器: ✓ | 管理器: ${detectionResults.copyPasteManager ? '✓' : '✗'} | 
+                    Chrome API: ${detectionResults.chromeRuntime ? '✓' : '✗'}</small>`;
                 statusElement.className = 'status success';
-            } else {
-                statusElement.textContent = '状态：EasyCV插件未检测到';
+            } else if (detectionResults.copyPasteManager) {
+                statusElement.innerHTML = `状态：Content Script已加载，但注入器未激活<br>
+                    <small>可能原因：插件未启用或状态加载失败</small>`;
                 statusElement.className = 'status error';
+            } else {
+                statusElement.innerHTML = `状态：EasyCV插件未检测到<br>
+                    <small>请检查插件是否已安装并启用</small>`;
+                statusElement.className = 'status error';
+            }
+            
+            // 尝试通过Content Script获取状态
+            if (window.copyPasteManager) {
+                try {
+                    const manager = window.copyPasteManager;
+                    console.log('CopyPasteManager state:', {
+                        isEnabled: manager.isEnabled,
+                        copyEnabled: manager.copyEnabled,
+                        pasteEnabled: manager.pasteEnabled,
+                        forceMode: manager.forceMode
+                    });
+                } catch (error) {
+                    console.error('Error accessing CopyPasteManager:', error);
+                }
             }
         }
         

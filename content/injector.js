@@ -8,15 +8,22 @@
   
   // 防止重复注入
   if (window.EasyCVInjected) {
+    console.log('EasyCV Injector already loaded, skipping...');
     return;
   }
-  window.EasyCVInjected = true;
   
+  console.log('Starting EasyCV Injector initialization...');
+  console.log('Current URL:', window.location.href);
+  console.log('Document readyState:', document.readyState);
+  
+  window.EasyCVInjected = true;
+  console.log('✓ EasyCVInjected flag set to true');
   console.log('EasyCV Injector script loaded');
   
   /**
    * 保存原始函数引用
    */
+  console.log('Saving original function references...');
   const originalFunctions = {
     addEventListener: EventTarget.prototype.addEventListener,
     removeEventListener: EventTarget.prototype.removeEventListener,
@@ -24,6 +31,7 @@
     stopPropagation: Event.prototype.stopPropagation,
     stopImmediatePropagation: Event.prototype.stopImmediatePropagation
   };
+  console.log('✓ Original functions saved');
   
   /**
    * 需要拦截的事件类型
@@ -467,5 +475,9 @@
     reinitialize: initializeInjector,
     interceptedListeners: interceptedListeners
   };
+  
+  console.log('✓ EasyCV Injector initialization completed successfully');
+  console.log('✓ All event interceptors are active');
+  console.log('✓ Global easycvInjector object available for debugging');
   
 })();
