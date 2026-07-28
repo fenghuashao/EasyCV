@@ -38,10 +38,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-org/EasyCV.git"
+    "url": "https://github.com/fenghuashao/EasyCV.git"
   },
   "bugs": {
-    "url": "https://github.com/your-org/EasyCV/issues"
+    "url": "https://github.com/fenghuashao/EasyCV/issues"
   },
-  "homepage": "https://github.com/your-org/EasyCV#readme"
+  "homepage": "https://github.com/fenghuashao/EasyCV#readme"
 }
