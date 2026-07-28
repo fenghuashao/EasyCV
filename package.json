@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "echo 'Development mode - Load extension in Chrome'",
     "build": "node scripts/build.js",
+    "docs:check": "node scripts/check-docs.js",
     "test": "echo 'Running tests...'",
     "test:coverage": "echo 'Running coverage tests...'",
     "lint": "echo 'Linting code...'",
