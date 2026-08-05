@@ -28,8 +28,8 @@
 | [AI开发助手指南](./AI开发助手指南.md) | Governance Document | active | 本文档 | 开发/AI助手 | AI 执行流程、检查清单、质量门禁发生变化 |
 | [项目开发计划](./项目开发计划.md) | Working Document | active | EasyCV插件功能需求文档 | 开发/产品 | 里程碑、阶段目标、风险与优先级发生变化 |
 | [待修复任务清单](./待修复任务清单.md) | Working Document | active | 项目开发计划 | 开发/测试 | 新增任务、任务状态变化、优先级调整 |
-| [测试计划](./测试计划.md) | Source Document | active | 本文档 | 测试/开发 | 测试策略、质量门槛、覆盖范围发生变化 |
-| [测试用例](./测试用例.md) | Source Document | active | 本文档 | 测试/开发 | 功能变更、新增功能、回归范围变化 |
+| [测试计划](./测试计划.md) | Source Document | active | 本文档 | 测试/开发 | 测试策略、浏览器支持范围、执行方式、发布前门槛发生变化 |
+| [测试用例](./测试用例.md) | Source Document | active | 测试计划 | 测试/开发 | 功能变更、新增功能、回归范围变化 |
 | [功能验证指南](./功能验证指南.md) | Reference Document | active | 测试计划 | 测试/开发 | 验证步骤、关键流程或测试环境发生变化 |
 | [测试报告-第三阶段](./测试报告-第三阶段.md) | Evidence Document | archive | 测试计划 | 测试/维护者 | 仅在补录历史证据或复盘时更新 |
 | [部署文档](./部署文档.md) | Source Document | active | 本文档 | 开发/发布 | 构建、打包、发布流程或脚本入口发生变化 |
