@@ -1,10 +1,5 @@
 {
   "suppressions": [
-    { "type": "path", "file": "docs/技术架构文档.md", "value": "assets/" },
-    { "type": "path", "file": "docs/技术架构文档.md", "value": "background/state-confirmation-manager.js" },
-    { "type": "path", "file": "docs/技术架构文档.md", "value": "background/auto-enable-manager.js" },
-    { "type": "path", "file": "docs/技术架构文档.md", "value": "background/icon-manager.js" },
-    { "type": "path", "file": "docs/技术架构文档.md", "value": "background/monitoring-manager.js" },
     { "type": "path", "file": "docs/代码规范文档.md", "value": "assets/" },
     { "type": "path", "file": "docs/代码规范文档.md", "value": "src/utils/dom-utils.js" },
     { "type": "path", "file": "docs/代码规范文档.md", "value": "tests/unit/dom-utils.test.js" },
