@@ -102,7 +102,7 @@ class AutoEnableManager {
     try {
       // 从StateManager获取配置
       const state = await this.stateManager.getPluginState();
-      const autoEnableList = state.domainConfig || [];
+      const autoEnableList = state.autoEnableList || [];
       
       // 查找匹配的域名配置
       const config = autoEnableList.find(item => {
@@ -225,7 +225,7 @@ class AutoEnableManager {
       
       // 通过StateManager更新配置
       const state = await this.stateManager.getPluginState();
-      const autoEnableList = state.domainConfig || [];
+      const autoEnableList = state.autoEnableList || [];
       
       const existingIndex = autoEnableList.findIndex(item => item.domain === domain);
       if (existingIndex >= 0) {
@@ -235,7 +235,7 @@ class AutoEnableManager {
       }
       
       await this.stateManager.updatePluginState({
-        domainConfig: autoEnableList
+        autoEnableList: autoEnableList
       });
       
       return true;
@@ -256,12 +256,12 @@ class AutoEnableManager {
       
       // 通过StateManager移除配置
       const state = await this.stateManager.getPluginState();
-      const autoEnableList = state.domainConfig || [];
+      const autoEnableList = state.autoEnableList || [];
       
       const filteredList = autoEnableList.filter(item => item.domain !== domain);
       
       await this.stateManager.updatePluginState({
-        domainConfig: filteredList
+        autoEnableList: filteredList
       });
       
       return true;

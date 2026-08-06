@@ -644,3 +644,97 @@ input:checked+.slider:before {
     border-color: var(--primary-color);
   }
 }
+/* ===== 主解锁按钮与高级折叠区（单按钮 UX） ===== */
+.main-unlock-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: var(--background-secondary);
+  border-radius: var(--border-radius);
+}
+
+.main-unlock-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: var(--border-radius);
+  background: var(--primary-color);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.main-unlock-btn:hover {
+  background: var(--primary-hover);
+}
+
+.main-unlock-btn.active {
+  background: var(--success-color);
+}
+
+.main-unlock-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.main-unlock-icon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.main-unlock-section .page-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.main-unlock-section .page-url {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.advanced-section {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.advanced-summary {
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+  background: var(--background-secondary);
+}
+
+.advanced-summary:hover {
+  color: var(--text-primary);
+}
+
+.advanced-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px;
+}
+
+.force-mode-item {
+  align-items: flex-start;
+}
+
+.force-mode-item .force-description {
+  margin-top: 2px;
+}

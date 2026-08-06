@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EasyCV - 复制粘贴助手</title>
+  <title data-i18n="popup_title">EasyCV - 复制粘贴助手</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 
@@ -16,104 +16,103 @@
         <img src="../icons/icon-default-48.png" alt="EasyCV" class="logo">
         <div class="title-section">
           <h1 class="title">EasyCV</h1>
-          <p class="subtitle">复制粘贴助手</p>
+          <p class="subtitle" data-i18n="header_subtitle">复制粘贴助手</p>
         </div>
       </div>
-      <div class="version">v1.0.0</div>
+      <div class="version" id="versionBadge">v1.0.0</div>
     </header>
 
     <!-- 主要控制区域 -->
     <main class="popup-main">
-      <!-- 独立控制按钮 -->
-      <div class="control-buttons-section">
-        <div class="control-info">
-          <h2 class="control-title">功能控制</h2>
-          <p class="control-description">独立控制复制和粘贴功能</p>
+      <!-- 主解锁按钮 -->
+      <div class="main-unlock-section">
+        <button class="main-unlock-btn" id="mainUnlockBtn">
+          <svg class="main-unlock-icon" viewBox="0 0 24 24">
+            <path
+              d="M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10A2,2 0 0,1 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6H15A3,3 0 0,0 12,3A3,3 0 0,0 9,6V8H18M12,17A2,2 0 0,0 14,15A2,2 0 0,0 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17Z" />
+          </svg>
+          <span class="main-unlock-text" id="mainUnlockText" data-i18n="main_unlock">一键解锁当前页面</span>
+        </button>
+        <div class="page-status">
+          <span class="status-indicator" id="statusIndicator"></span>
+          <span class="status-text" id="statusText" data-i18n="status_detecting">检测中...</span>
         </div>
-        <div class="control-buttons">
+        <p class="page-url" id="currentUrl" data-i18n="url_loading">正在获取...</p>
+      </div>
+
+      <!-- 高级选项（折叠区） -->
+      <details class="advanced-section" id="advancedSection">
+        <summary class="advanced-summary" data-i18n="advanced_options">高级选项</summary>
+        <div class="advanced-content">
           <div class="control-item">
-            <label class="control-label">解锁复制</label>
+            <label class="control-label" data-i18n="unlock_copy">解锁复制</label>
             <label class="toggle-switch">
               <input type="checkbox" id="copyToggle" checked>
               <span class="slider"></span>
             </label>
           </div>
           <div class="control-item">
-            <label class="control-label">解锁粘贴</label>
+            <label class="control-label" data-i18n="unlock_paste">解锁粘贴</label>
             <label class="toggle-switch">
               <input type="checkbox" id="pasteToggle" checked>
               <span class="slider"></span>
             </label>
           </div>
-        </div>
-      </div>
-
-      <!-- 当前页面状态 -->
-      <div class="current-page-section">
-        <div class="page-info">
-          <h3 class="page-title">当前页面</h3>
-          <p class="page-url" id="currentUrl">正在获取...</p>
-          <div class="page-status">
-            <span class="status-indicator" id="statusIndicator"></span>
-            <span class="status-text" id="statusText">检测中...</span>
+          <div class="control-item force-mode-item">
+            <div class="force-info">
+              <label for="forceMode" class="control-label" data-i18n="force_mode">强制模式</label>
+              <p class="force-description" data-i18n="force_mode_desc">对顽固限制使用更强力的解除方法</p>
+            </div>
+            <label class="toggle-switch small">
+              <input type="checkbox" id="forceMode">
+              <span class="slider"></span>
+            </label>
           </div>
         </div>
-
-        <!-- 强制模式开关 -->
-        <div class="force-mode-section">
-          <div class="force-info">
-            <label for="forceMode" class="force-label">强制模式</label>
-            <p class="force-description">对顽固限制使用更强力的解除方法</p>
-          </div>
-          <label class="toggle-switch small">
-            <input type="checkbox" id="forceMode">
-            <span class="slider"></span>
-          </label>
-        </div>
-      </div>
+      </details>
 
       <!-- 快速操作 -->
       <div class="quick-actions">
-        <h3 class="section-title">快速操作</h3>
+        <h3 class="section-title" data-i18n="quick_actions">快速操作</h3>
         <div class="action-buttons">
           <button class="action-btn" id="refreshBtn">
             <svg class="btn-icon" viewBox="0 0 24 24">
               <path
                 d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
             </svg>
-            刷新检测
+            <span data-i18n="refresh_detection">刷新检测</span>
           </button>
           <button class="action-btn" id="addToAutoBtn">
             <svg class="btn-icon" viewBox="0 0 24 24">
               <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
             </svg>
-            添加到自动开启
+            <span data-i18n="add_to_auto" id="addToAutoBtnText">添加到自动开启</span>
           </button>
           <button class="action-btn" id="testCopyBtn">
             <svg class="btn-icon" viewBox="0 0 24 24">
               <path
                 d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
             </svg>
-            测试复制
+            <span data-i18n="test_copy">测试复制</span>
           </button>
         </div>
       </div>
 
       <!-- 统计信息 -->
       <div class="stats-section">
-        <h3 class="section-title">使用统计</h3>
+        <h3 class="section-title" data-i18n="usage_stats">使用统计</h3>
         <div class="stats-grid">
           <div class="stat-item">
             <span class="stat-number" id="totalSites">0</span>
-            <span class="stat-label">已处理网站</span>
+            <span class="stat-label" data-i18n="total_sites">已处理网站</span>
           </div>
           <div class="stat-item">
             <span class="stat-number" id="todayCount">0</span>
-            <span class="stat-label">今日使用</span>
+            <span class="stat-label" data-i18n="today_usage">今日使用</span>
           </div>
           <div class="stat-item">
             <span class="stat-number" id="successRate">0%</span>
-            <span class="stat-label">成功率</span>
+            <span class="stat-label" data-i18n="success_rate">成功率</span>
           </div>
         </div>
       </div>
@@ -127,21 +126,21 @@
             <path
               d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
           </svg>
-          设置
+          <span data-i18n="settings">设置</span>
         </button>
         <button class="footer-btn" id="helpBtn">
           <svg class="btn-icon" viewBox="0 0 24 24">
             <path
               d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M13,19h-2v-2h2V19z M15.07,11.25l-0.9,0.92 C13.45,12.9,13,13.5,13,15h-2v-0.5c0-1.1,0.45-2.1,1.17-2.83l1.24-1.26c0.37-0.36,0.59-0.86,0.59-1.41c0-1.1-0.9-2-2-2 s-2,0.9-2,2H8c0-2.21,1.79-4,4-4s4,1.79,4,4C16,9.89,15.64,10.67,15.07,11.25z" />
           </svg>
-          帮助
+          <span data-i18n="help">帮助</span>
         </button>
         <button class="footer-btn" id="feedbackBtn">
           <svg class="btn-icon" viewBox="0 0 24 24">
             <path
               d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z" />
           </svg>
-          反馈
+          <span data-i18n="feedback">反馈</span>
         </button>
       </div>
     </footer>
@@ -150,7 +149,7 @@
   <!-- 加载指示器 -->
   <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-spinner"></div>
-    <p class="loading-text">正在处理...</p>
+    <p class="loading-text" data-i18n="main_unlock_processing">正在处理...</p>
   </div>
 
   <!-- 通知消息 -->
@@ -164,6 +163,7 @@
   <script src="../utils/message-utils.js"></script>
   <script src="../utils/storage-utils.js"></script>
   <script src="../utils/notification-utils.js"></script>
+  <script src="../utils/i18n-utils.js"></script>
   <script src="popup.js"></script>
 </body>
 

@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "EasyCV - 解除网页复制粘贴限制",
-  "version": "1.0.0",
-  "description": "一键解除网页复制粘贴限制，提升工作效率的浏览器插件",
+  "name": "__MSG_extension_name__",
+  "version": "1.1.0",
+  "description": "__MSG_extension_description__",
+  "default_locale": "zh_CN",
   "permissions": [
     "activeTab",
     "storage",
@@ -33,7 +34,7 @@
   ],
   "action": {
     "default_popup": "popup/popup.html",
-    "default_title": "EasyCV - 解除网页复制粘贴限制",
+    "default_title": "__MSG_extension_name__",
     "default_icon": {
       "16": "icons/icon-default-16.png",
       "32": "icons/icon-default-32.png",

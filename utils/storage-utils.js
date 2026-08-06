@@ -356,8 +356,12 @@ class StorageUtils {
       updates.push(StorageUtils.setForceMode(settings.forceMode));
     }
 
-    // 处理其他用户设置，包括新的复制粘贴控制选项
-    const userSettingsKeys = ['showNotifications', 'enableStatistics', 'theme', 'copyEnabled', 'pasteEnabled'];
+    // 处理其他用户设置，包括复制粘贴控制与检测/调试选项
+    const userSettingsKeys = [
+      'showNotifications', 'enableStatistics', 'theme', 'copyEnabled', 'pasteEnabled',
+      'autoDetect', 'detectionDelay', 'maxRetries', 'debugMode', 'performanceMonitoring',
+      'autoAddToWhitelist'
+    ];
     const userSettingsUpdate = {};
     let hasUserSettings = false;
 

@@ -3,6 +3,10 @@
  * 负责页面DOM操作、复制粘贴限制检测与解除
  */
 
+// 复制/粘贴各自关联的限制性事件（启用时注册捕获阶段放行处理器，禁用时移除）
+const COPY_EVENTS = ['selectstart', 'contextmenu', 'dragstart', 'copy'];
+const PASTE_EVENTS = ['paste'];
+
 class CopyPasteManager {
   constructor() {
     this.isEnabled = false;
@@ -35,6 +39,10 @@ class CopyPasteManager {
     this.stateLoadTimeout = 10000; // 增加超时时间到10秒
     this.lastKnownState = null;
     this.stateListeners = new Set();
+
+    // SPA 路由感知相关
+    this.lastKnownUrl = location.href;
+    this.spaCheckTimer = null;
 
     this.initializeManager();
   }
@@ -73,6 +81,9 @@ class CopyPasteManager {
       // 监听DOM变化
       console.log('Setting up DOM observer...');
       this.setupDOMObserver();
+
+      // 监听 SPA 路由变化
+      this.setupSPAListener();
 
       console.log('EasyCV Content Script initialized with state management');
       console.log('Final state:', {
@@ -315,9 +326,20 @@ class CopyPasteManager {
       const allElements = document.querySelectorAll('*');
       this.scheduleElementProcessing(Array.from(allElements));
 
+      // 恢复 DOM 观察器（disableCopyPaste 会将其销毁，重新启用时必须重建）
+      if (!this.observer) {
+        this.setupDOMObserver();
+      }
+
       // 注入自定义脚本（用于处理更深层的限制）
       console.log('Injecting custom script...');
-      this.injectCustomScript();
+      if (document.documentElement.dataset.easycvInjected) {
+        // injector 已在 main world 中，重新注入会被其防重复守卫跳过，
+        // 必须经 postMessage 通知其恢复原型重写与动态保护
+        window.postMessage({ type: 'EASYCV_ENABLE' }, '*');
+      } else {
+        this.injectCustomScript();
+      }
 
       console.log('Copy-paste restrictions removed');
       
@@ -340,12 +362,21 @@ class CopyPasteManager {
    */
   disableCopyPaste() {
     console.log('禁用复制粘贴功能');
-    
+
+    // 通知 main world 的 injector 恢复原始函数（启停协议由 content script 单向触发，
+    // 否则禁用后 main world 的原型重写与强制样式仍然残留）
+    window.postMessage({ type: 'EASYCV_DISABLE' }, '*');
+
     // 停止DOM观察器
     if (this.observer) {
       this.observer.disconnect();
       this.observer = null;
     }
+
+    // 移除启用时注册的捕获阶段放行处理器
+    COPY_EVENTS.concat(PASTE_EVENTS).forEach(eventType => {
+      document.removeEventListener(eventType, this.allowDefaultHandler, true);
+    });
     
     // 清理性能数据和待处理队列
     this.clearPerformanceData();
@@ -385,18 +416,15 @@ class CopyPasteManager {
     });
 
     // 根据独立设置移除全局事件监听器
-    const copyEvents = ['selectstart', 'contextmenu', 'dragstart', 'copy'];
-    const pasteEvents = ['paste'];
-    
     if (this.copyEnabled) {
-      copyEvents.forEach(eventType => {
+      COPY_EVENTS.forEach(eventType => {
         document.removeEventListener(eventType, this.preventDefaultHandler, true);
         document.addEventListener(eventType, this.allowDefaultHandler, true);
       });
     }
-    
+
     if (this.pasteEnabled) {
-      pasteEvents.forEach(eventType => {
+      PASTE_EVENTS.forEach(eventType => {
         document.removeEventListener(eventType, this.preventDefaultHandler, true);
         document.addEventListener(eventType, this.allowDefaultHandler, true);
       });
@@ -628,6 +656,41 @@ class CopyPasteManager {
       characterData: false,
       characterDataOldValue: false
     });
+  }
+
+  /**
+   * 监听 SPA 路由变化：软跳转不触发页面重载，
+   * 重新渲染的组件可能恢复已解除的限制，需要在 URL 变化后重放解锁流程
+   */
+  setupSPAListener() {
+    window.addEventListener('popstate', () => this.handleSPANavigation());
+
+    // content script 无法直接拦截 history.pushState，通过 DOM 变化间接感知 URL 变更
+    const urlCheckObserver = new MutationObserver(() => {
+      if (location.href !== this.lastKnownUrl) {
+        this.handleSPANavigation();
+      }
+    });
+    urlCheckObserver.observe(document, { subtree: true, childList: true });
+  }
+
+  /**
+   * SPA 导航处理：去抖后重放解锁（路由变化常伴随大规模 DOM 重建，合并短时多次触发）
+   */
+  handleSPANavigation() {
+    const currentUrl = location.href;
+    if (currentUrl === this.lastKnownUrl) return;
+    this.lastKnownUrl = currentUrl;
+
+    if (!this.isEnabled) return;
+
+    clearTimeout(this.spaCheckTimer);
+    this.spaCheckTimer = setTimeout(() => {
+      console.log('SPA navigation detected, re-applying unlock:', currentUrl);
+      // SPA 重渲染可能在已处理过的元素上重挂限制，清空去重缓存以允许重新处理
+      this.processedElements = new WeakSet();
+      this.enableCopyPaste();
+    }, 300);
   }
 
   /**

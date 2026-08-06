@@ -27,6 +27,7 @@
 | [文档维护指南](./文档维护指南.md) | Governance Document | active | 本文档 | 开发/测试/维护者 | 文档分类、维护流程、质量门禁发生变化 |
 | [AI开发助手指南](./AI开发助手指南.md) | Governance Document | active | 本文档 | 开发/AI助手 | AI 执行流程、检查清单、质量门禁发生变化 |
 | [项目开发计划](./项目开发计划.md) | Working Document | active | EasyCV插件功能需求文档 | 开发/产品 | 里程碑、阶段目标、风险与优先级发生变化 |
+| [ADR-001 合并 t1 重写版](./decisions/ADR-001-合并t1重写版.md) | Governance Document | active | 本文档 | 开发/维护者 | 合并范围或移植选型被重新决策 |
 | [待修复任务清单](./待修复任务清单.md) | Working Document | active | 项目开发计划 | 开发/测试 | 新增任务、任务状态变化、优先级调整 |
 | [测试计划](./测试计划.md) | Source Document | active | 本文档 | 测试/开发 | 测试策略、浏览器支持范围、执行方式、发布前门槛发生变化 |
 | [测试用例](./测试用例.md) | Source Document | active | 测试计划 | 测试/开发 | 功能变更、新增功能、回归范围变化 |

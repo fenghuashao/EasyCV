@@ -4,7 +4,7 @@
  */
 
 // 导入工具类（注意：在service worker中需要使用importScripts）
-importScripts('../utils/storage-utils.js', '../utils/message-utils.js', 'icon-manager.js', 'auto-enable-manager.js', 'state-confirmation-manager.js', 'monitoring-manager.js');
+importScripts('../utils/storage-utils.js', '../utils/message-utils.js', '../utils/i18n-utils.js', 'icon-manager.js', 'auto-enable-manager.js', 'state-confirmation-manager.js', 'monitoring-manager.js');
 
 /**
  * 状态管理器
@@ -116,6 +116,7 @@ class StateManager {
       pluginEnabled: this.stateCache.get('pluginEnabled'),
       forceMode: this.stateCache.get('forceMode'),
       userSettings: this.stateCache.get('userSettings'),
+      autoEnableList: this.stateCache.get('autoEnableList'),
       timestamp: Date.now()
     };
 
@@ -666,7 +667,7 @@ class BackgroundManager {
           case MessageUtils.MESSAGE_TYPES.REPORT_ERROR:
             return await this.handleReportError(data, sender);
 
-          case 'SUBMIT_FEEDBACK':
+          case MessageUtils.MESSAGE_TYPES.SUBMIT_FEEDBACK:
             return await this.handleSubmitFeedback(data, sender);
 
           case MessageUtils.MESSAGE_TYPES.PAGE_ANALYZED:
@@ -678,30 +679,30 @@ class BackgroundManager {
           case MessageUtils.MESSAGE_TYPES.PASTE_STATUS_CHANGED:
             return await this.handlePasteStatusChanged(data);
 
-          case 'UPDATE_PLUGIN_STATE_WITH_CONFIRMATION':
+          case MessageUtils.MESSAGE_TYPES.UPDATE_PLUGIN_STATE_WITH_CONFIRMATION:
             return await this.handleUpdatePluginStateWithConfirmation(message);
 
           case MessageUtils.MESSAGE_TYPES.GET_COMPLETE_STATE:
             return await this.handleGetCompleteState(data);
 
           // 监控和性能相关消息
-          case 'GET_PERFORMANCE_METRICS':
+          case MessageUtils.MESSAGE_TYPES.GET_PERFORMANCE_METRICS:
             const metrics = this.stateManager.getComprehensiveMetrics();
             return { success: true, data: metrics };
 
-          case 'GET_MONITORING_DATA':
+          case MessageUtils.MESSAGE_TYPES.GET_MONITORING_DATA:
             const monitoringData = this.stateManager.getMonitoringData(data?.filters);
             return { success: true, data: monitoringData };
 
-          case 'PERFORM_HEALTH_CHECK':
+          case MessageUtils.MESSAGE_TYPES.PERFORM_HEALTH_CHECK:
             const healthReport = await this.stateManager.performHealthCheck();
             return { success: true, data: healthReport };
 
-          case 'EXPORT_MONITORING_LOGS':
+          case MessageUtils.MESSAGE_TYPES.EXPORT_MONITORING_LOGS:
             const exportData = this.stateManager.exportMonitoringLogs(data?.options);
             return { success: true, data: exportData };
 
-          case 'RESET_MONITORING_METRICS':
+          case MessageUtils.MESSAGE_TYPES.RESET_MONITORING_METRICS:
             this.stateManager.resetMonitoringMetrics();
             return { success: true, message: 'Metrics reset successfully' };
 
@@ -746,19 +747,19 @@ class BackgroundManager {
       // 创建主菜单
       chrome.contextMenus.create({
         id: 'easycv-toggle',
-        title: '启用/禁用 EasyCV',
+        title: I18nUtils.t('context_toggle', undefined, '启用/禁用 EasyCV'),
         contexts: ['page', 'selection']
       });
 
       chrome.contextMenus.create({
         id: 'easycv-force-mode',
-        title: '启用强力模式',
+        title: I18nUtils.t('context_force_mode', undefined, '启用强力模式'),
         contexts: ['page', 'selection']
       });
 
       chrome.contextMenus.create({
         id: 'easycv-add-to-auto',
-        title: '添加到自动启用列表',
+        title: I18nUtils.t('context_add_to_auto', undefined, '添加到自动启用列表'),
         contexts: ['page']
       });
 
@@ -790,8 +791,12 @@ class BackgroundManager {
     // 更新统计
     if (newStatus) {
       const stats = await StorageUtils.getStatistics();
+      const today = new Date().toDateString();
       await StorageUtils.updateStatistics({
         totalActivations: stats.totalActivations + 1,
+        // 按自然日滚动的今日使用计数
+        todayUsage: stats.lastUsedDate === today ? (stats.todayUsage || 0) + 1 : 1,
+        lastUsedDate: today,
         lastUsed: new Date().toISOString()
       });
     }
@@ -1084,9 +1089,11 @@ class BackgroundManager {
    * 处理复制状态变更
    */
   async handleCopyStatusChanged(data) {
-    const settings = await StorageUtils.getPluginSettings();
-    settings.copyEnabled = data.enabled;
-    await StorageUtils.setPluginSettings(settings);
+    // 统一走StateManager路径，避免与performStateUpdate的缓存产生双写竞争
+    await this.stateManager.updatePluginState(
+      { copyEnabled: data.enabled },
+      `copy_status_${Date.now()}`
+    );
 
     // 广播到所有标签页
     await MessageUtils.broadcastToAllTabs(
@@ -1101,9 +1108,11 @@ class BackgroundManager {
    * 处理粘贴状态变更
    */
   async handlePasteStatusChanged(data) {
-    const settings = await StorageUtils.getPluginSettings();
-    settings.pasteEnabled = data.enabled;
-    await StorageUtils.setPluginSettings(settings);
+    // 统一走StateManager路径，避免与performStateUpdate的缓存产生双写竞争
+    await this.stateManager.updatePluginState(
+      { pasteEnabled: data.enabled },
+      `paste_status_${Date.now()}`
+    );
 
     // 广播到所有标签页
     await MessageUtils.broadcastToAllTabs(

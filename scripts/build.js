@@ -17,7 +17,8 @@ class Builder {
       'popup/',
       'options/',
       'utils/',
-      'icons/'
+      'icons/',
+      '_locales/'
     ];
   }
 

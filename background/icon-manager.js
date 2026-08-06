@@ -88,41 +88,36 @@ class IconManager {
 
   /**
    * 获取图标标题
+   * 使用完整消息模板而非字符串拼接：拼接文案的语序在其他语言中可能不成立
    * @param {string} iconState - 图标状态
    * @param {Object} pluginState - 插件状态
    * @returns {string} 图标标题
    */
   getIconTitle(iconState, pluginState) {
-    const { pluginEnabled, forceMode, userSettings, domainConfig } = pluginState;
-    
-    let title = 'EasyCV';
-    
+    const { forceMode, userSettings, domainConfig } = pluginState;
+
     switch (iconState) {
       case this.ICON_STATES.ACTIVE:
-        title += ' - 已启用';
-        if (forceMode) {
-          title += ' (强力模式)';
-        }
-        break;
-      case this.ICON_STATES.PARTIAL:
-        title += ' - 部分启用';
+        return forceMode
+          ? I18nUtils.t('icon_title_active_force', undefined, 'EasyCV - 已启用（强力模式）')
+          : I18nUtils.t('icon_title_active', undefined, 'EasyCV - 已启用');
+      case this.ICON_STATES.PARTIAL: {
         const copyEnabled = domainConfig?.copyEnabled ?? userSettings?.copyEnabled ?? true;
         const pasteEnabled = domainConfig?.pasteEnabled ?? userSettings?.pasteEnabled ?? true;
         if (copyEnabled && !pasteEnabled) {
-          title += ' (仅复制)';
-        } else if (!copyEnabled && pasteEnabled) {
-          title += ' (仅粘贴)';
+          return I18nUtils.t('icon_title_partial_copy', undefined, 'EasyCV - 部分启用（仅复制）');
         }
-        break;
+        if (!copyEnabled && pasteEnabled) {
+          return I18nUtils.t('icon_title_partial_paste', undefined, 'EasyCV - 部分启用（仅粘贴）');
+        }
+        return I18nUtils.t('icon_title_partial', undefined, 'EasyCV - 部分启用');
+      }
       case this.ICON_STATES.INACTIVE:
-        title += ' - 已禁用';
-        break;
+        return I18nUtils.t('icon_title_inactive', undefined, 'EasyCV - 已禁用');
       case this.ICON_STATES.DEFAULT:
-        title += ' - 待激活';
-        break;
+      default:
+        return I18nUtils.t('icon_title_default', undefined, 'EasyCV - 待激活');
     }
-    
-    return title;
   }
 
   /**

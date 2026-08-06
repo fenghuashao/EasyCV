@@ -7,13 +7,11 @@
 
 class OptionsManager {
   constructor() {
-    // MessageUtils 为纯静态工具类（无任何实例方法），实例化后调用 sendToBackground 必抛 TypeError
-    this.messageUtils = MessageUtils;
     this.currentTab = 'general';
     this.settings = {};
     this.whitelist = [];
     this.statistics = {};
-    
+
     this.init();
   }
   
@@ -22,6 +20,15 @@ class OptionsManager {
    */
   async init() {
     try {
+      // 应用本地化文案（保留 HTML 内嵌文案作为兜底）
+      I18nUtils.applyToPage();
+
+      // 关于页版本号取自 manifest，避免硬编码过期
+      const aboutVersion = document.getElementById('aboutVersion');
+      if (aboutVersion) {
+        aboutVersion.textContent = I18nUtils.t('version_label', chrome.runtime.getManifest().version);
+      }
+
       // 绑定事件监听器
       this.bindEventListeners();
       
@@ -34,7 +41,7 @@ class OptionsManager {
       console.log('Options page initialized successfully');
     } catch (error) {
       console.error('Failed to initialize options page:', error);
-      this.showNotification('初始化失败', 'error');
+      this.showNotification(I18nUtils.t('init_failed'), 'error');
     }
   }
   
@@ -130,6 +137,14 @@ class OptionsManager {
     if (showNotifications) {
       showNotifications.addEventListener('change', (e) => {
         this.updateSetting('showNotifications', e.target.checked);
+      });
+    }
+
+    // 解锁成功后自动加入自动启用列表
+    const autoAddToWhitelist = document.getElementById('autoAddToWhitelist');
+    if (autoAddToWhitelist) {
+      autoAddToWhitelist.addEventListener('change', (e) => {
+        this.updateSetting('autoAddToWhitelist', e.target.checked);
       });
     }
     
@@ -328,6 +343,9 @@ class OptionsManager {
     
     const showNotifications = document.getElementById('showNotifications');
     if (showNotifications) showNotifications.checked = this.settings.showNotifications ?? true;
+
+    const autoAddToWhitelist = document.getElementById('autoAddToWhitelist');
+    if (autoAddToWhitelist) autoAddToWhitelist.checked = this.settings.autoAddToWhitelist ?? false;
     
     const detectionDelay = document.getElementById('detectionDelay');
     if (detectionDelay) detectionDelay.value = this.settings.detectionDelay ?? 1000;
@@ -350,17 +368,13 @@ class OptionsManager {
     try {
       this.settings[key] = value;
       await StorageUtils.setPluginSettings(this.settings);
-      
-      // 通知background script设置已更改
-      await this.messageUtils.sendToBackground({
-        type: 'SETTINGS_UPDATED',
-        settings: this.settings
-      });
-      
-      this.showNotification('设置已保存', 'success');
+
+      // 无需显式通知 background：StateManager 的 storage 监听器会自动同步缓存
+
+      this.showNotification(I18nUtils.t('settings_saved'), 'success');
     } catch (error) {
       console.error('Failed to update setting:', error);
-      this.showNotification('保存失败', 'error');
+      this.showNotification(I18nUtils.t('save_failed'), 'error');
     }
   }
   
@@ -369,28 +383,28 @@ class OptionsManager {
    */
   async addWhitelistDomain(domain) {
     if (!domain) {
-      this.showNotification('请输入有效的域名', 'warning');
+      this.showNotification(I18nUtils.t('invalid_domain_empty'), 'warning');
       return;
     }
-    
+
     // 验证域名格式
     if (!this.isValidDomain(domain)) {
-      this.showNotification('域名格式不正确', 'warning');
+      this.showNotification(I18nUtils.t('invalid_domain_format'), 'warning');
       return;
     }
-    
+
     // 检查是否已存在
     if (this.whitelist.find(item => item.domain === domain)) {
-      this.showNotification('域名已存在', 'warning');
+      this.showNotification(I18nUtils.t('domain_exists'), 'warning');
       return;
     }
-    
+
     // 获取精细化控制选项
     const copyEnabled = document.getElementById('enableCopyOption').checked;
     const pasteEnabled = document.getElementById('enablePasteOption').checked;
-    
+
     if (!copyEnabled && !pasteEnabled) {
-      this.showNotification('请至少选择一个功能', 'warning');
+      this.showNotification(I18nUtils.t('select_at_least_one'), 'warning');
       return;
     }
     
@@ -420,25 +434,25 @@ class OptionsManager {
       // 重置按钮状态
       const addBtn = document.getElementById('addWhitelistBtn');
       if (addBtn) {
-        addBtn.textContent = '添加';
+        addBtn.textContent = I18nUtils.t('add_btn');
         addBtn.classList.remove('updating');
       }
-      
+
       // 移除编辑高亮
       const editingItems = document.querySelectorAll('.whitelist-item.editing');
       editingItems.forEach(item => item.classList.remove('editing'));
-      
+
       // 重新渲染列表
       this.renderWhitelist();
-      
+
       if (isEditing && editingDomain) {
-        this.showNotification(`${editingDomain} 的配置已更新`, 'success');
+        this.showNotification(I18nUtils.t('config_updated', editingDomain), 'success');
       } else {
-        this.showNotification('域名已添加', 'success');
+        this.showNotification(I18nUtils.t('domain_added'), 'success');
       }
     } catch (error) {
       console.error('Failed to add whitelist domain:', error);
-      this.showNotification(isEditing ? '更新失败' : '添加失败', 'error');
+      this.showNotification(I18nUtils.t(isEditing ? 'update_failed' : 'add_failed'), 'error');
     }
   }
   
@@ -452,11 +466,11 @@ class OptionsManager {
       
       // 重新渲染列表
       this.renderWhitelist();
-      
-      this.showNotification('域名已删除', 'success');
+
+      this.showNotification(I18nUtils.t('domain_deleted'), 'success');
     } catch (error) {
       console.error('Failed to remove whitelist domain:', error);
-      this.showNotification('删除失败', 'error');
+      this.showNotification(I18nUtils.t('delete_failed'), 'error');
     }
   }
   
@@ -486,12 +500,12 @@ class OptionsManager {
     if (copyOption) copyOption.checked = config.copyEnabled;
     if (pasteOption) pasteOption.checked = config.pasteEnabled;
     if (addBtn) {
-      addBtn.textContent = '更新配置';
+      addBtn.textContent = I18nUtils.t('update_config_btn');
       addBtn.classList.add('updating');
     }
-    
+
     // 显示编辑提示
-    this.showNotification(`正在编辑 ${domain} 的配置`, 'info');
+    this.showNotification(I18nUtils.t('editing_config', domain), 'info');
     
     // 先删除原配置
     await this.removeWhitelistDomain(domain);
@@ -520,33 +534,33 @@ class OptionsManager {
           <svg class="empty-icon" viewBox="0 0 24 24">
             <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"/>
           </svg>
-          <p class="empty-text">暂无自动解锁网站</p>
+          <p class="empty-text">${I18nUtils.t('empty_whitelist')}</p>
         </div>
       `;
       return;
     }
-    
+
     const html = this.whitelist.map(config => {
       const { domain, copyEnabled, pasteEnabled } = config;
       let statusTags = '';
       let statusIcon = '';
-      
+
       if (copyEnabled && pasteEnabled) {
-        statusTags = '<span class="status-tag all">全部解锁</span>';
+        statusTags = `<span class="status-tag all">${I18nUtils.t('tag_all_unlocked')}</span>`;
         statusIcon = '<svg class="status-icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M11,16.5L18,9.5L16.5,8L11,13.5L7.5,10L6,11.5L11,16.5Z"/></svg>';
       } else if (copyEnabled) {
-        statusTags = '<span class="status-tag copy">仅解锁复制</span>';
+        statusTags = `<span class="status-tag copy">${I18nUtils.t('tag_copy_only')}</span>`;
         statusIcon = '<svg class="status-icon" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/></svg>';
       } else if (pasteEnabled) {
-        statusTags = '<span class="status-tag paste">仅解锁粘贴</span>';
+        statusTags = `<span class="status-tag paste">${I18nUtils.t('tag_paste_only')}</span>`;
         statusIcon = '<svg class="status-icon" viewBox="0 0 24 24"><path d="M19,20H5V4H7V7H17V4H19M12,2A1,1 0 0,1 13,3A1,1 0 0,1 12,4A1,1 0 0,1 11,3A1,1 0 0,1 12,2M19,2H14.82C14.4,0.84 13.3,0 12,0C10.7,0 9.6,0.84 9.18,2H5A2,2 0 0,0 3,4V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V4A2,2 0 0,0 19,2Z"/></svg>';
       }
-      
+
       const featureList = [];
-      if (copyEnabled) featureList.push('复制');
-      if (pasteEnabled) featureList.push('粘贴');
-      const featureText = featureList.join(' + ');
-      
+      if (copyEnabled) featureList.push(I18nUtils.t('feature_copy'));
+      if (pasteEnabled) featureList.push(I18nUtils.t('feature_paste'));
+      const featureText = I18nUtils.t('enabled_features', featureList.join(' + '));
+
       return `
         <div class="whitelist-item" data-domain="${domain}">
           <div class="whitelist-info">
@@ -556,17 +570,17 @@ class OptionsManager {
             </div>
             <div class="whitelist-status">
               ${statusTags}
-              <span class="feature-summary">启用功能: ${featureText}</span>
+              <span class="feature-summary">${featureText}</span>
             </div>
           </div>
           <div class="whitelist-actions">
-            <button class="action-btn-small edit" data-domain="${domain}" title="编辑配置">
+            <button class="action-btn-small edit" data-domain="${domain}" title="${I18nUtils.t('edit_title')}">
               <svg viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/></svg>
-              编辑
+              ${I18nUtils.t('edit_btn')}
             </button>
-            <button class="action-btn-small delete" data-domain="${domain}" title="删除网站">
+            <button class="action-btn-small delete" data-domain="${domain}" title="${I18nUtils.t('delete_title')}">
               <svg viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
-              删除
+              ${I18nUtils.t('delete_btn')}
             </button>
           </div>
         </div>
@@ -637,11 +651,11 @@ class OptionsManager {
       a.click();
       
       URL.revokeObjectURL(url);
-      
-      this.showNotification('设置已导出', 'success');
+
+      this.showNotification(I18nUtils.t('settings_exported'), 'success');
     } catch (error) {
       console.error('Failed to export settings:', error);
-      this.showNotification('导出失败', 'error');
+      this.showNotification(I18nUtils.t('export_failed'), 'error');
     }
   }
   
@@ -682,10 +696,10 @@ class OptionsManager {
       this.updateFormValues();
       this.renderWhitelist();
       
-      this.showNotification('设置已导入', 'success');
+      this.showNotification(I18nUtils.t('settings_imported'), 'success');
     } catch (error) {
       console.error('Failed to import settings:', error);
-      this.showNotification('导入失败，请检查文件格式', 'error');
+      this.showNotification(I18nUtils.t('import_failed'), 'error');
     }
   }
   
@@ -693,32 +707,35 @@ class OptionsManager {
    * 重置设置
    */
   async resetSettings() {
-    if (!confirm('确定要重置所有设置吗？此操作不可撤销。')) {
+    if (!confirm(I18nUtils.t('confirm_reset'))) {
       return;
     }
-    
+
     try {
       // 重置为默认设置
       this.settings = {
         enabled: true,
+        copyEnabled: true,
+        pasteEnabled: true,
         autoDetect: true,
         forceMode: false,
         showNotifications: true,
+        autoAddToWhitelist: false,
         detectionDelay: 1000,
         maxRetries: 3,
         debugMode: false,
         performanceMonitoring: false
       };
-      
+
       await StorageUtils.setPluginSettings(this.settings);
-      
+
       // 更新UI
       this.updateFormValues();
-      
-      this.showNotification('设置已重置', 'success');
+
+      this.showNotification(I18nUtils.t('settings_reset'), 'success');
     } catch (error) {
       console.error('Failed to reset settings:', error);
-      this.showNotification('重置失败', 'error');
+      this.showNotification(I18nUtils.t('reset_failed'), 'error');
     }
   }
   
@@ -726,22 +743,22 @@ class OptionsManager {
    * 清除所有数据
    */
   async clearAllData() {
-    if (!confirm('确定要清除所有数据吗？包括设置、白名单和统计数据。此操作不可撤销。')) {
+    if (!confirm(I18nUtils.t('confirm_clear'))) {
       return;
     }
-    
+
     try {
       await chrome.storage.sync.clear();
       await chrome.storage.local.clear();
-      
+
       // 重新加载数据
       await this.loadAllData();
       this.initializeUI();
-      
-      this.showNotification('所有数据已清除', 'success');
+
+      this.showNotification(I18nUtils.t('data_cleared'), 'success');
     } catch (error) {
       console.error('Failed to clear data:', error);
-      this.showNotification('清除失败', 'error');
+      this.showNotification(I18nUtils.t('clear_failed'), 'error');
     }
   }
   
@@ -751,24 +768,25 @@ class OptionsManager {
   async loadStatistics() {
     try {
       this.statistics = await StorageUtils.getStatistics();
-      
-      // 更新统计卡片
+
+      // 更新统计卡片（statistics 中真实存在的字段：sitesUnlocked / totalActivations）
       const totalSitesElement = document.getElementById('totalSitesCount');
       if (totalSitesElement) {
-        totalSitesElement.textContent = this.statistics.totalSites || 0;
+        totalSitesElement.textContent = (this.statistics.sitesUnlocked || []).length;
       }
-      
+
       const successfulElement = document.getElementById('successfulCount');
       if (successfulElement) {
-        successfulElement.textContent = this.statistics.successfulAttempts || 0;
+        successfulElement.textContent = this.statistics.totalActivations || 0;
       }
-      
+
+      // 成功率暂无数据来源（未追踪尝试次数），显示占位符而非误导性的 0%
       const successRateElement = document.getElementById('successRate');
       if (successRateElement) {
         const total = this.statistics.totalAttempts || 0;
-        const success = this.statistics.successfulAttempts || 0;
-        const rate = total > 0 ? Math.round((success / total) * 100) : 0;
-        successRateElement.textContent = `${rate}%`;
+        successRateElement.textContent = total > 0
+          ? `${Math.round((this.statistics.successfulAttempts / total) * 100)}%`
+          : '—';
       }
       
       // 更新详细统计表格
@@ -790,7 +808,7 @@ class OptionsManager {
     const sites = Object.keys(siteStats);
     
     if (sites.length === 0) {
-      tbody.innerHTML = '<tr class="empty-row"><td colspan="5">暂无统计数据</td></tr>';
+      tbody.innerHTML = `<tr class="empty-row"><td colspan="5">${I18nUtils.t('empty_stats')}</td></tr>`;
       return;
     }
     

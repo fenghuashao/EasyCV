@@ -21,6 +21,12 @@ class MessageUtils {
     STATE_UPDATED: 'state_updated',
     GET_COMPLETE_STATE: 'get_complete_state',
     UPDATE_PLUGIN_STATE_WITH_CONFIRMATION: 'UPDATE_PLUGIN_STATE_WITH_CONFIRMATION',
+    SUBMIT_FEEDBACK: 'submit_feedback',
+    GET_PERFORMANCE_METRICS: 'get_performance_metrics',
+    GET_MONITORING_DATA: 'get_monitoring_data',
+    PERFORM_HEALTH_CHECK: 'perform_health_check',
+    EXPORT_MONITORING_LOGS: 'export_monitoring_logs',
+    RESET_MONITORING_METRICS: 'reset_monitoring_metrics',
     PING: 'ping'
   };
 
@@ -172,10 +178,10 @@ class MessageUtils {
    * @returns {boolean} 是否有效
    */
   static isValidMessage(message) {
-    return message &&
+    return Boolean(message &&
       typeof message === 'object' &&
       typeof message.type === 'string' &&
-      Object.values(this.MESSAGE_TYPES).includes(message.type);
+      Object.values(this.MESSAGE_TYPES).includes(message.type));
   }
 
   /**

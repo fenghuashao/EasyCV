@@ -88,7 +88,31 @@
         </div>
         <div class="status success" id="test5-status">状态：正常</div>
     </div>
-    
+
+    <div class="test-section">
+        <div class="test-title">测试6: Shadow DOM 限制</div>
+        <div id="declarative-shadow-host">
+            <template shadowrootmode="open">
+                <p style="user-select: none;" oncopy="event.preventDefault(); return false;">
+                    这段文字位于声明式 Shadow DOM 内（parser 创建，不经过 attachShadow 调用），
+                    user-select 为 none 且 oncopy 被阻止。启用 EasyCV 后应该可以选择和复制。
+                </p>
+            </template>
+        </div>
+        <div id="shadow-host"></div>
+        <button id="create-shadow-btn" type="button">动态创建带限制的 Shadow DOM</button>
+        <div class="status" id="test6-status">状态：等待测试</div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">测试7: SPA 路由切换重放</div>
+        <div id="spa-content">
+            <p>点击下方按钮模拟 SPA 路由切换，内容区域将被重新渲染并恢复限制。</p>
+        </div>
+        <button id="spa-nav-btn" type="button">模拟 SPA 跳转</button>
+        <div class="status" id="test7-status">状态：等待测试</div>
+    </div>
+
     <div class="test-section">
         <div class="test-title">插件状态检测</div>
         <button onclick="checkPluginStatus()">检测插件状态</button>
@@ -194,9 +218,91 @@
             }, 100);
         });
         
+        // 测试6: Shadow DOM —— 声明式（上方 template）与 JS 创建两种路径
+        function createRestrictedShadow(host) {
+            const root = host.attachShadow({ mode: 'open' });
+            root.innerHTML = `
+                <p style="user-select: none;" oncopy="event.preventDefault(); return false;">
+                    这段文字位于 JS 动态创建的 Shadow DOM 内，user-select 为 none 且 oncopy 被阻止。
+                    启用 EasyCV 后应该可以选择和复制。
+                </p>`;
+            return root;
+        }
+
+        // 页面加载即创建一个（模拟插件注入前已存在的 shadow root）
+        createRestrictedShadow(document.getElementById('shadow-host'));
+
+        function checkShadowRootSelectable(host) {
+            const p = host.shadowRoot && host.shadowRoot.querySelector('p');
+            if (!p) return null;
+            return getComputedStyle(p).userSelect !== 'none' && !p.getAttribute('oncopy');
+        }
+
+        document.getElementById('create-shadow-btn').addEventListener('click', function() {
+            const host = document.createElement('div');
+            document.getElementById('shadow-host').appendChild(host);
+            // 动态创建：验证 attachShadow 包装在插件激活后仍然生效
+            createRestrictedShadow(host);
+            setTimeout(() => {
+                const statusEl = document.getElementById('test6-status');
+                if (checkShadowRootSelectable(host)) {
+                    statusEl.textContent = '状态：动态 Shadow DOM 限制已解除（插件生效）';
+                    statusEl.className = 'status success';
+                } else {
+                    statusEl.textContent = '状态：动态 Shadow DOM 限制未解除';
+                    statusEl.className = 'status error';
+                }
+            }, 300);
+        });
+
+        // 测试7: SPA 路由切换
+        let spaCounter = 0;
+        document.getElementById('spa-nav-btn').addEventListener('click', function() {
+            spaCounter++;
+            history.pushState({}, '', `#/page-${spaCounter}`);
+            // 模拟 SPA 框架重渲染：新内容重新带上限制
+            document.getElementById('spa-content').innerHTML = `
+                <p class="no-select" oncopy="event.preventDefault(); return false;">
+                    SPA 第 ${spaCounter} 页内容：这段文字重渲染后恢复了 user-select:none 与 oncopy 限制。
+                    插件若支持 SPA 感知，约 1 秒后此处应恢复可选择。
+                </p>`;
+            const statusEl = document.getElementById('test7-status');
+            statusEl.textContent = '状态：已跳转，等待插件重放...';
+            statusEl.className = 'status';
+
+            // 给插件的去抖与重放留出时间后再检测
+            setTimeout(() => {
+                const p = document.querySelector('#spa-content p');
+                if (p && getComputedStyle(p).userSelect !== 'none') {
+                    statusEl.textContent = '状态：SPA 重渲染后限制已再次解除（插件生效）';
+                    statusEl.className = 'status success';
+                } else {
+                    statusEl.textContent = '状态：SPA 重渲染后限制未解除';
+                    statusEl.className = 'status error';
+                }
+            }, 1200);
+        });
+
         // 页面加载完成后的初始检测
         window.addEventListener('load', function() {
             setTimeout(checkPluginStatus, 1000);
+
+            // 检测两个"注入前已存在"的 shadow root（声明式 + JS 预创建）
+            setTimeout(() => {
+                const initialHosts = [
+                    document.getElementById('declarative-shadow-host'),
+                    document.getElementById('shadow-host')
+                ];
+                const results = initialHosts.map(checkShadowRootSelectable);
+                const statusEl = document.getElementById('test6-status');
+                if (results.every(r => r === true)) {
+                    statusEl.textContent = '状态：初始 Shadow DOM 限制已解除（插件生效）';
+                    statusEl.className = 'status success';
+                } else if (statusEl.textContent.includes('等待')) {
+                    statusEl.textContent = '状态：初始 Shadow DOM 限制未解除（或插件未启用）';
+                    statusEl.className = 'status error';
+                }
+            }, 1500);
         });
     </script>
 </body>

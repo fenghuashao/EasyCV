@@ -22,6 +22,15 @@ class PopupManager {
    */
   async init() {
     try {
+      // 应用本地化文案（保留 HTML 内嵌文案作为兜底）
+      I18nUtils.applyToPage();
+
+      // 版本号取自 manifest，避免硬编码过期
+      const versionBadge = document.getElementById('versionBadge');
+      if (versionBadge) {
+        versionBadge.textContent = `v${chrome.runtime.getManifest().version}`;
+      }
+
       // 获取当前标签页
       this.currentTab = await this.getCurrentTab();
       
@@ -140,31 +149,34 @@ class PopupManager {
    */
   updateUIFromState(state) {
     if (!state) return;
-    
+
     // 更新复制开关
     const copyToggle = document.getElementById('copyToggle');
     if (copyToggle) {
       copyToggle.checked = state.copyEnabled !== false;
     }
-    
+
     // 更新粘贴开关
     const pasteToggle = document.getElementById('pasteToggle');
     if (pasteToggle) {
       pasteToggle.checked = state.pasteEnabled !== false;
     }
-    
+
     // 更新强制模式开关
     const forceMode = document.getElementById('forceMode');
     if (forceMode) {
       forceMode.checked = state.forceMode || false;
     }
-    
-    // 更新插件启用状态
-    const pluginToggle = document.getElementById('pluginToggle');
-    if (pluginToggle) {
-      pluginToggle.checked = state.pluginEnabled !== false;
+
+    // 更新主按钮：复制与粘贴全开时视为"已解锁"
+    const bothEnabled = state.copyEnabled !== false && state.pasteEnabled !== false;
+    const mainUnlockBtn = document.getElementById('mainUnlockBtn');
+    const mainUnlockText = document.getElementById('mainUnlockText');
+    if (mainUnlockBtn && mainUnlockText) {
+      mainUnlockBtn.classList.toggle('active', bothEnabled);
+      mainUnlockText.textContent = I18nUtils.t(bothEnabled ? 'main_lock_off' : 'main_unlock');
     }
-    
+
     console.log('UI updated from state:', state);
   }
 
@@ -311,6 +323,12 @@ class PopupManager {
    * 绑定事件监听器
    */
   bindEventListeners() {
+    // 主解锁按钮
+    const mainUnlockBtn = document.getElementById('mainUnlockBtn');
+    if (mainUnlockBtn) {
+      mainUnlockBtn.addEventListener('click', () => this.handleMainToggle());
+    }
+
     // 复制开关
     const copyToggle = document.getElementById('copyToggle');
     if (copyToggle) {
@@ -367,6 +385,58 @@ class PopupManager {
   }
 
   /**
+   * 处理主按钮切换：一键同时开启/关闭复制与粘贴解锁
+   */
+  async handleMainToggle() {
+    const mainUnlockBtn = document.getElementById('mainUnlockBtn');
+    const bothEnabled = this.currentState?.copyEnabled !== false && this.currentState?.pasteEnabled !== false;
+    const target = !bothEnabled;
+
+    // 乐观更新UI
+    this.updateUIState({ copyEnabled: target, pasteEnabled: target });
+    if (mainUnlockBtn) mainUnlockBtn.disabled = true;
+
+    try {
+      const result = await this.updateStateWithConfirmation(
+        { copyEnabled: target, pasteEnabled: target },
+        {
+          operation: 'main_unlock_toggle',
+          timeout: 5000,
+          autoRetry: true
+        }
+      );
+
+      if (result.success) {
+        NotificationUtils.show(I18nUtils.t(target ? 'unlock_active' : 'unlock_closed'), 'success');
+
+        // 开启"自动加入"设置时，手动解锁成功的站点直接进入自动启用列表
+        if (target && this.currentTab?.url) {
+          try {
+            const settings = await StorageUtils.getUserSettings();
+            if (settings.autoAddToWhitelist) {
+              const domain = new URL(this.currentTab.url).hostname;
+              await StorageUtils.addToAutoEnableList(domain);
+              this.updateAutoEnableButton();
+            }
+          } catch (error) {
+            console.warn('自动加入自动启用列表失败:', error);
+          }
+        }
+      } else {
+        throw new Error(result.error || '状态更新失败');
+      }
+    } catch (error) {
+      console.error('Failed to toggle main unlock:', error);
+
+      // 回滚UI状态
+      this.updateUIState({ copyEnabled: !target, pasteEnabled: !target });
+      NotificationUtils.show(I18nUtils.t('unlock_toggle_failed'), 'error');
+    } finally {
+      if (mainUnlockBtn) mainUnlockBtn.disabled = false;
+    }
+  }
+
+  /**
    * 处理复制开关切换
    */
   async handleCopyToggle() {
@@ -390,7 +460,7 @@ class PopupManager {
       
       if (result.success) {
         // 显示成功通知
-        NotificationUtils.show(newCopyState ? '复制功能已开启' : '复制功能已关闭', 'success');
+        NotificationUtils.show(I18nUtils.t(newCopyState ? 'copy_enabled' : 'copy_disabled'), 'success');
       } else {
         throw new Error(result.error || '状态更新失败');
       }
@@ -403,7 +473,7 @@ class PopupManager {
       copyToggle.checked = !newCopyState;
       
       // 显示错误通知
-      NotificationUtils.show('复制开关切换失败，请重试', 'error');
+      NotificationUtils.show(I18nUtils.t('copy_toggle_failed'), 'error');
     }
   }
 
@@ -431,7 +501,7 @@ class PopupManager {
       
       if (result.success) {
         // 显示成功通知
-        NotificationUtils.show(newPasteState ? '粘贴功能已开启' : '粘贴功能已关闭', 'success');
+        NotificationUtils.show(I18nUtils.t(newPasteState ? 'paste_enabled' : 'paste_disabled'), 'success');
       } else {
         throw new Error(result.error || '状态更新失败');
       }
@@ -444,7 +514,7 @@ class PopupManager {
       pasteToggle.checked = !newPasteState;
       
       // 显示错误通知
-      NotificationUtils.show('粘贴开关切换失败，请重试', 'error');
+      NotificationUtils.show(I18nUtils.t('paste_toggle_failed'), 'error');
     }
   }
 
@@ -472,7 +542,7 @@ class PopupManager {
       
       if (result.success) {
         // 显示成功通知
-        NotificationUtils.show(newForceMode ? '强制模式已开启' : '强制模式已关闭', 'success');
+        NotificationUtils.show(I18nUtils.t(newForceMode ? 'force_mode_enabled' : 'force_mode_disabled'), 'success');
       } else {
         throw new Error(result.error || '状态更新失败');
       }
@@ -485,7 +555,7 @@ class PopupManager {
       forceMode.checked = !newForceMode;
       
       // 显示错误通知
-      NotificationUtils.show('强制模式切换失败，请重试', 'error');
+      NotificationUtils.show(I18nUtils.t('force_toggle_failed'), 'error');
     }
   }
 
@@ -503,13 +573,13 @@ class PopupManager {
       
       if (response && response.success) {
         await this.updatePageStatus();
-        NotificationUtils.show('检测已刷新', 'success');
+        NotificationUtils.show(I18nUtils.t('refresh_success'), 'success');
       } else {
         throw new Error('刷新检测失败');
       }
     } catch (error) {
       console.error('刷新检测失败:', error);
-      NotificationUtils.show('刷新检测失败，请重试', 'error');
+      NotificationUtils.show(I18nUtils.t('refresh_failed'), 'error');
     } finally {
       this.showLoading(false);
     }
@@ -526,13 +596,13 @@ class PopupManager {
       });
       
       if (response && response.success) {
-        NotificationUtils.show('测试复制成功！', 'success');
+        NotificationUtils.show(I18nUtils.t('test_copy_success'), 'success');
       } else {
         throw new Error(response?.error || '测试复制失败');
       }
     } catch (error) {
       console.error('测试复制失败:', error);
-      NotificationUtils.show('测试复制失败，请检查页面是否支持', 'error');
+      NotificationUtils.show(I18nUtils.t('test_copy_failed'), 'error');
     }
   }
 
@@ -541,32 +611,30 @@ class PopupManager {
    */
   async handleAddToAutoEnable() {
     if (!this.currentTab || !this.currentTab.url) {
-      NotificationUtils.show('无法获取当前页面信息', 'error');
+      NotificationUtils.show(I18nUtils.t('cannot_get_page_info'), 'error');
       return;
     }
 
     try {
       const url = new URL(this.currentTab.url);
       const domain = url.hostname;
-      
-      // 检查是否已经在自动开启列表中
-      const autoEnableList = await StorageUtils.getAutoEnableList();
-      if (autoEnableList.includes(domain)) {
-        NotificationUtils.show('该网站已在自动开启列表中', 'info');
+
+      // 自动启用列表元素为 {domain, copyEnabled, pasteEnabled} 对象，须按对象查询
+      const existingConfig = await StorageUtils.getAutoEnableConfig(domain);
+      if (existingConfig) {
+        NotificationUtils.show(I18nUtils.t('already_in_auto_list'), 'info');
         return;
       }
-      
-      // 添加到自动开启列表
-      autoEnableList.push(domain);
-      await StorageUtils.setAutoEnableList(autoEnableList);
-      
+
+      await StorageUtils.addToAutoEnableList(domain);
+
       // 更新按钮状态
       this.updateAutoEnableButton();
-      
-      NotificationUtils.show(`已将 ${domain} 添加到自动开启列表`, 'success');
+
+      NotificationUtils.show(I18nUtils.t('added_to_auto_list', domain), 'success');
     } catch (error) {
       console.error('添加自动开启失败:', error);
-      NotificationUtils.show('添加失败，请重试', 'error');
+      NotificationUtils.show(I18nUtils.t('add_failed'), 'error');
     }
   }
 
@@ -577,9 +645,9 @@ class PopupManager {
     if (!this.currentTab) return;
     
     try {
-      // 获取插件设置
+      // 获取插件设置（getPluginSettings 返回的主开关字段为 enabled）
       const settings = await StorageUtils.getPluginSettings();
-      const isPluginEnabled = settings.pluginEnabled !== false;
+      const isPluginEnabled = settings.enabled !== false;
       
       // 检查是否为自动开启网站的首次交互
       const isFirstInteraction = await this.checkFirstInteraction();
@@ -602,21 +670,21 @@ class PopupManager {
       if (statusIndicator && statusText) {
         if (!isPluginEnabled) {
           statusIndicator.className = 'status-indicator disabled';
-          statusText.textContent = '插件已禁用';
+          statusText.textContent = I18nUtils.t('status_plugin_disabled');
         } else if (isFirstInteraction) {
           statusIndicator.className = 'status-indicator warning';
-          statusText.textContent = '首次访问，需要刷新页面';
+          statusText.textContent = I18nUtils.t('status_first_visit');
         } else if (pageStatus && pageStatus.isActive) {
           if (pageStatus.hasRestrictions) {
             statusIndicator.className = 'status-indicator warning';
-            statusText.textContent = '已激活（检测到限制）';
+            statusText.textContent = I18nUtils.t('status_active_restricted');
           } else {
             statusIndicator.className = 'status-indicator active';
-            statusText.textContent = '已激活';
+            statusText.textContent = I18nUtils.t('status_active');
           }
         } else {
           statusIndicator.className = 'status-indicator inactive';
-          statusText.textContent = '未激活';
+          statusText.textContent = I18nUtils.t('status_inactive');
         }
       }
     } catch (error) {
@@ -646,16 +714,16 @@ class PopupManager {
     try {
       const stats = await StorageUtils.getStatistics();
       
-      // 更新总网站数
+      // 更新总网站数（statistics 中以 sitesUnlocked 数组记录）
       const totalSitesElement = document.getElementById('totalSites');
       if (totalSitesElement) {
-        totalSitesElement.textContent = stats.totalSites || 0;
+        totalSitesElement.textContent = (stats.sitesUnlocked || []).length;
       }
-      
-      // 更新今日使用次数
-      const todayUsageElement = document.getElementById('todayUsage');
-      if (todayUsageElement) {
-        todayUsageElement.textContent = stats.todayUsage || 0;
+
+      // 更新今日使用次数（对应 HTML 中的 #todayCount）
+      const todayCountElement = document.getElementById('todayCount');
+      if (todayCountElement) {
+        todayCountElement.textContent = stats.todayUsage || 0;
       }
       
       // 更新成功率
@@ -715,11 +783,11 @@ class PopupManager {
     try {
       const url = new URL(this.currentTab.url);
       const domain = url.hostname;
-      
-      const autoEnableList = await StorageUtils.getAutoEnableList();
-    const interactionHistory = await StorageUtils.getInteractionHistory();
-      
-      return autoEnableList.includes(domain) && !interactionHistory[domain];
+
+      const existingConfig = await StorageUtils.getAutoEnableConfig(domain);
+      const interactionHistory = await StorageUtils.getInteractionHistory();
+
+      return !!existingConfig && !interactionHistory[domain];
     } catch (error) {
       console.error('检查首次交互失败:', error);
       return false;
@@ -772,10 +840,11 @@ class PopupManager {
    * 显示/隐藏加载状态
    */
   showLoading(show) {
-    const loadingElements = document.querySelectorAll('.loading');
-    loadingElements.forEach(element => {
-      element.style.display = show ? 'block' : 'none';
-    });
+    // CSS 约定：.loading-overlay 默认 display:none，加 .show 后 display:flex
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    if (loadingOverlay) {
+      loadingOverlay.classList.toggle('show', show);
+    }
   }
 
   /**
@@ -783,18 +852,21 @@ class PopupManager {
    */
   async updateAutoEnableButton() {
     const addToAutoBtn = document.getElementById('addToAutoBtn');
+    const addToAutoBtnText = document.getElementById('addToAutoBtnText');
     if (!addToAutoBtn || !this.currentTab || !this.currentTab.url) return;
-    
+
     try {
       const url = new URL(this.currentTab.url);
       const domain = url.hostname;
-      
-      const autoEnableList = await StorageUtils.getAutoEnableList();
-      const isInList = autoEnableList.includes(domain);
-      
-      addToAutoBtn.textContent = isInList ? '已在自动开启列表' : '添加到自动开启';
+
+      const existingConfig = await StorageUtils.getAutoEnableConfig(domain);
+      const isInList = !!existingConfig;
+
+      if (addToAutoBtnText) {
+        addToAutoBtnText.textContent = I18nUtils.t(isInList ? 'btn_in_auto_list' : 'add_to_auto');
+      }
       addToAutoBtn.disabled = isInList;
-      addToAutoBtn.className = isInList ? 'btn btn-secondary disabled' : 'btn btn-primary';
+      addToAutoBtn.classList.toggle('disabled', isInList);
     } catch (error) {
       console.error('更新自动开启按钮失败:', error);
     }
