@@ -12,6 +12,7 @@
     "test:coverage": "node --test test/unit/",
     "lint": "node scripts/lint.js",
     "lint:fix": "node scripts/lint.js",
+    "icons": "node scripts/generate-icons.js",
     "package": "npm run build && npm run zip",
     "zip": "node scripts/package.js",
     "clean": "node scripts/clean.js",
