@@ -7,7 +7,8 @@
 
 class OptionsManager {
   constructor() {
-    this.messageUtils = new MessageUtils();
+    // MessageUtils 为纯静态工具类（无任何实例方法），实例化后调用 sendToBackground 必抛 TypeError
+    this.messageUtils = MessageUtils;
     this.currentTab = 'general';
     this.settings = {};
     this.whitelist = [];

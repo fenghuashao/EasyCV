@@ -101,6 +101,67 @@ class Builder {
   }
 
   /**
+   * 验证扩展入口及其脚本依赖均存在。
+   * 构建复制所有目录时不会察觉缺失文件，因此在清理旧产物前提前失败。
+   */
+  validateFileReferences(manifest) {
+    const missing = new Set();
+    const check = (relativePath, source) => {
+      const normalizedPath = path.normalize(relativePath);
+      if (!fs.existsSync(path.join(this.sourceDir, normalizedPath))) {
+        missing.add(`${normalizedPath} (referenced by ${source})`);
+      }
+    };
+    const checkRelative = (sourceFile, reference, source) => {
+      if (!reference || /^(https?:|data:|chrome-extension:)/.test(reference)) return;
+      check(path.join(path.dirname(sourceFile), reference), source);
+    };
+
+    if (manifest.background?.service_worker) {
+      check(manifest.background.service_worker, 'manifest.background.service_worker');
+    }
+    for (const contentScript of manifest.content_scripts || []) {
+      for (const script of contentScript.js || []) check(script, 'manifest.content_scripts');
+    }
+    if (manifest.action?.default_popup) check(manifest.action.default_popup, 'manifest.action.default_popup');
+    if (manifest.options_page) check(manifest.options_page, 'manifest.options_page');
+    for (const icon of Object.values(manifest.icons || {})) check(icon, 'manifest.icons');
+    for (const icon of Object.values(manifest.action?.default_icon || {})) check(icon, 'manifest.action.default_icon');
+
+    const sourceFiles = [];
+    const collectFiles = directory => {
+      for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+        const entryPath = path.join(directory, entry.name);
+        if (entry.isDirectory()) collectFiles(entryPath);
+        else if (entry.isFile() && /\.(html|js)$/.test(entry.name)) sourceFiles.push(entryPath);
+      }
+    };
+    for (const directory of ['background', 'content', 'popup', 'options', 'utils']) {
+      const directoryPath = path.join(this.sourceDir, directory);
+      if (fs.existsSync(directoryPath)) collectFiles(directoryPath);
+    }
+
+    for (const absolutePath of sourceFiles) {
+      const relativeSource = path.relative(this.sourceDir, absolutePath);
+      const content = fs.readFileSync(absolutePath, 'utf8');
+      if (absolutePath.endsWith('.html')) {
+        for (const match of content.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["']/gi)) {
+          checkRelative(relativeSource, match[1], relativeSource);
+        }
+      }
+      for (const importCall of content.matchAll(/importScripts\(([\s\S]*?)\)/g)) {
+        for (const script of importCall[1].matchAll(/["']([^"']+)["']/g)) {
+          checkRelative(relativeSource, script[1], relativeSource);
+        }
+      }
+    }
+
+    if (missing.size > 0) {
+      throw new Error(`缺少扩展依赖文件:\n${[...missing].join('\n')}`);
+    }
+    console.log('✅ 扩展文件引用验证通过');
+  }
+  /**
    * 构建项目
    */
   async build() {
@@ -110,6 +171,7 @@ class Builder {
     try {
       // 验证manifest
       const manifest = this.validateManifest();
+      this.validateFileReferences(manifest);
       
       // 清理旧的构建文件
       this.clean();

@@ -145,7 +145,14 @@ class MessageUtils {
         // 如果返回Promise，保持连接开放
         if (result instanceof Promise) {
           result
-            .then(response => sendResponse({ success: true, data: response }))
+            // 处理器返回值自带 success 字段时按原样透传：
+            // 统一包装会把业务失败（如带确认的状态更新协议返回 success:false）
+            // 再包一层为 success:true，导致调用方把失败误判为成功
+            .then(response => sendResponse(
+              response && typeof response === 'object' && 'success' in response
+                ? response
+                : { success: true, data: response }
+            ))
             .catch(error => sendResponse({ success: false, error: error.message }));
           return true; // 保持消息通道开放
         }

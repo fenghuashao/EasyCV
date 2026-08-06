@@ -17,6 +17,9 @@
   console.log('Document readyState:', document.readyState);
   
   window.EasyCVInjected = true;
+  // content script 运行在 isolated world，与本 main world 的 window 互相隔离，
+  // 跨 world 的注入成功信号必须走两边共享的 DOM；window flag 保留供防重复注入与页面侧检测使用
+  document.documentElement.dataset.easycvInjected = 'true';
   console.log('✓ EasyCVInjected flag set to true');
   console.log('EasyCV Injector script loaded');
   

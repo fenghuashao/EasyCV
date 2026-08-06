@@ -321,9 +321,9 @@ class CopyPasteManager {
 
       console.log('Copy-paste restrictions removed');
       
-      // 验证注入是否成功
+      // 验证注入是否成功（跨 world 信号走共享 DOM 的 dataset，理由同上）
       setTimeout(() => {
-        if (window.EasyCVInjected) {
+        if (document.documentElement.dataset.easycvInjected) {
           console.log('✓ Custom script injection verified successfully');
         } else {
           console.warn('⚠ Custom script injection may have failed - EasyCVInjected flag not found');
@@ -560,9 +560,10 @@ class CopyPasteManager {
         console.log('✓ Injector script loaded successfully');
         script.remove();
         
-        // 验证注入是否成功
+        // 验证注入是否成功（injector 在 main world 执行，与本 isolated world 的 window 隔离，
+        // 注入成功信号经共享 DOM 的 dataset 传递）
         setTimeout(() => {
-          if (window.EasyCVInjected) {
+          if (document.documentElement.dataset.easycvInjected) {
             console.log('✓ EasyCVInjected flag confirmed');
           } else {
             console.error('✗ EasyCVInjected flag not found after injection');

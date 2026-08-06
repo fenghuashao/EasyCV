@@ -203,3 +203,6 @@ dev-temp/
 
 # 自动生成的文档
 auto-docs/
+
+# Playwright CLI 缓存
+.playwright-cli/

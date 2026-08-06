@@ -219,11 +219,11 @@ class StorageUtils {
   }
 
   /**
-   * 设置自动启用列表（实例方法）
+   * 设置自动启用列表（静态方法）
    * @param {Array<Object>} list - 域名配置列表
    * @returns {Promise<void>}
    */
-  async setAutoEnableList(list) {
+  static async setAutoEnableList(list) {
     await StorageUtils.set({ [StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: list });
   }
 
@@ -341,11 +341,11 @@ class StorageUtils {
   }
 
   /**
-   * 设置插件配置（实例方法）
+   * 设置插件配置（静态方法）
    * @param {Object} settings - 插件设置对象
    * @returns {Promise<void>}
    */
-  async setPluginSettings(settings) {
+  static async setPluginSettings(settings) {
     const updates = [];
 
     if (settings.hasOwnProperty('enabled')) {
