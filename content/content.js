@@ -697,8 +697,14 @@ class CopyPasteManager {
    * 允许默认行为的事件处理器
    */
   allowDefaultHandler = (event) => {
-    // 不阻止默认行为
-    event.stopPropagation();
+    // 仅 contextmenu 维持捕获阻断：注入前已注册的站点定制菜单处理器若执行，
+    // 其 preventDefault 会被 injector 中和，导致定制菜单与原生菜单双弹；
+    // 阻断传播可保证原生菜单唯一弹出（代价是 B站类定制菜单失效，待站点排除列表兜底）。
+    // 其余事件不再阻断传播——preventDefault 中和由 injector 运行时重写负责，
+    // 此处阻断与 injector 冗余，且会让事件到不了站点目标阶段处理器（B站实测误伤）
+    if (event.type === 'contextmenu') {
+      event.stopPropagation();
+    }
     return true;
   };
 

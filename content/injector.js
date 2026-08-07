@@ -38,20 +38,58 @@
   console.log('✓ Original functions saved');
   
   /**
-   * 需要拦截的事件类型
+   * 注册吞没名单：命中源码正则的监听器直接不予注册，破坏性最强，只保留纯限制向事件。
+   * B站实测 keydown/mousedown 类吞没是播放器快捷键等功能的主要死因，故退出本名单；
+   * mouseup 无主流站点用于复制限制，整体移除
    */
-  const interceptedEvents = [
+  const swallowEvents = [
     'selectstart',
     'contextmenu',
     'dragstart',
     'copy',
     'cut',
-    'paste',
-    'mousedown',
-    'mouseup',
-    'keydown',
-    'keyup'
+    'paste'
   ];
+
+  /**
+   * 运行时中和名单：preventDefault/stopPropagation 失效化，非破坏性（监听器照常执行）。
+   * 比吞没名单多 mousedown/keydown/keyup，用于击穿运行时才生效的限制
+   * （mousedown 级选择封锁、Ctrl+C/V/X 快捷键封锁）
+   */
+  const neutralizeEvents = [...swallowEvents, 'mousedown', 'keydown', 'keyup'];
+
+  // on* 内联事件属性选择器与名称列表（供 querySelectorAll 与 MutationObserver attributeFilter）
+  const onAttributeSelector = swallowEvents.map(event => `[on${event}]`).join(',');
+  const onAttributeNames = swallowEvents.map(event => `on${event}`);
+
+  /**
+   * 判断事件是否应被运行时中和。该判断运行在页面事件分发栈内，必须零异常（fail-open）
+   */
+  function shouldNeutralize(event) {
+    try {
+      const type = String(event.type).toLowerCase();
+      if (!neutralizeEvents.includes(type)) return false;
+
+      // keydown/keyup 仅在组合键时中和：精准击穿 Ctrl+C/V/X 封锁（文库类），
+      // 放行播放器空格/方向键等单键 preventDefault（B站实测误伤来源）
+      if (type === 'keydown' || type === 'keyup') {
+        return Boolean(event.ctrlKey || event.metaKey);
+      }
+
+      // mousedown 中和用于击穿 mousedown 级选择封锁；目标在输入域内时不中和，
+      // 保护输入框与富文本编辑器工具栏的焦点保持（toolbar 靠 mousedown preventDefault 防失焦）
+      if (type === 'mousedown') {
+        const target = event.target;
+        return !(target && typeof target.closest === 'function'
+          && target.closest('input, textarea, [contenteditable]'));
+      }
+
+      return true;
+    } catch (error) {
+      console.warn('EasyCV: Error in neutralize check, failing open:', error);
+      return false;
+    }
+  }
   
   /**
    * 内建集合构造容错：页面可能把全局 Map/Set 替换为非原生实现
@@ -85,7 +123,7 @@
   const overriddenAddEventListener = function(type, listener, options) {
     // String() coercion 与原生 WebIDL 行为一致（原生会把 null 等转为字符串），
     // 避免拦截判断本身比原生方法先抛错
-    if (interceptedEvents.includes(String(type).toLowerCase())) {
+    if (swallowEvents.includes(String(type).toLowerCase())) {
       // 检查监听器是否可能是限制性的
       if (isRestrictiveListener(listener)) {
         console.log(`EasyCV: Intercepted restrictive ${type} listener`);
@@ -164,33 +202,32 @@
    * 重写Event.preventDefault以在特定情况下忽略
    */
   const overriddenPreventDefault = function() {
-    // 如果是我们关心的事件类型，检查是否应该允许
-    if (interceptedEvents.includes(this.type.toLowerCase())) {
+    if (shouldNeutralize(this)) {
       console.log(`EasyCV: Prevented preventDefault on ${this.type} event`);
       return; // 不执行preventDefault
     }
-    
+
     // 对其他事件正常执行
     return originalFunctions.preventDefault.call(this);
   };
-  
+
   /**
    * 重写stopPropagation以在特定情况下忽略
    */
   const overriddenStopPropagation = function() {
-    if (interceptedEvents.includes(this.type.toLowerCase())) {
+    if (shouldNeutralize(this)) {
       console.log(`EasyCV: Prevented stopPropagation on ${this.type} event`);
       return;
     }
-    
+
     return originalFunctions.stopPropagation.call(this);
   };
-  
+
   /**
    * 重写stopImmediatePropagation
    */
   const overriddenStopImmediatePropagation = function() {
-    if (interceptedEvents.includes(this.type.toLowerCase())) {
+    if (shouldNeutralize(this)) {
       console.log(`EasyCV: Prevented stopImmediatePropagation on ${this.type} event`);
       return;
     }
@@ -241,7 +278,7 @@
           elements.forEach(element => {
             if (!element || !element.nodeType) return;
             
-            interceptedEvents.forEach(eventType => {
+            swallowEvents.forEach(eventType => {
               try {
                 const handlerProperty = `on${eventType}`;
                 const inlineHandler = element[handlerProperty];
@@ -305,15 +342,12 @@
       configurable: true
     });
   }
-  
-  // on* 内联事件属性选择器（供 querySelectorAll 批量查找）
-  const onAttributeSelector = interceptedEvents.map(event => `[on${event}]`).join(',');
 
   /**
    * 清理单个元素上的限制性 on* 属性/属性值
    */
   function cleanElementRestrictiveAttributes(el) {
-    interceptedEvents.forEach(eventType => {
+    swallowEvents.forEach(eventType => {
       const attrName = `on${eventType}`;
       try {
         if (el.hasAttribute && el.hasAttribute(attrName)) {
@@ -386,7 +420,7 @@
           childList: true,
           subtree: true,
           attributes: true,
-          attributeFilter: interceptedEvents.map(event => `on${event}`)
+          attributeFilter: onAttributeNames
         });
       } else {
         // 如果body还不存在，等待DOM加载
@@ -396,7 +430,7 @@
               childList: true,
               subtree: true,
               attributes: true,
-              attributeFilter: interceptedEvents.map(event => `on${event}`)
+              attributeFilter: onAttributeNames
             });
           }
         });
@@ -497,7 +531,7 @@
         childList: true,
         subtree: true,
         attributes: true,
-        attributeFilter: interceptedEvents.map(event => `on${event}`)
+        attributeFilter: onAttributeNames
       });
       if (shadowObservers) shadowObservers.set(root, observer);
     } catch (error) {
