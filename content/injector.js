@@ -54,9 +54,27 @@
   ];
   
   /**
-   * 被拦截的事件监听器存储
+   * 内建集合构造容错：页面可能把全局 Map/Set 替换为非原生实现
+   * （道客巴巴实测：构造可用但 .has/.set 抛 TypeError；更激进的实现构造即抛错）。
+   * 失败降级为 null，相关记录功能在使用处判空跳过——绝不让异常穿透进页面调用栈
    */
-  const interceptedListeners = new Map();
+  function tryConstruct(Ctor, label) {
+    try {
+      return new Ctor();
+    } catch (error) {
+      console.warn(`EasyCV: ${label} unavailable, related bookkeeping disabled:`, error);
+      return null;
+    }
+  }
+
+  /**
+   * 被拦截的事件监听器存储（仅调试用途：禁用时清理、经 window.easycvInjector 暴露）。
+   * 存取失败只丢调试信息，拦截决策本身绝不抛错
+   */
+  const interceptedListeners = tryConstruct(Map, 'Map');
+
+  // isRestrictiveListener 的 fail-open 计数（避免页面篡改内建对象时重复刷屏）
+  let restrictiveCheckErrorCount = 0;
   
   // 注入即视为激活；EASYCV_DISABLE / EASYCV_ENABLE 消息翻转此标志
   let injectorActive = true;
@@ -65,18 +83,27 @@
    * 重写addEventListener以拦截限制性事件监听器
    */
   const overriddenAddEventListener = function(type, listener, options) {
-    // 如果是我们要拦截的事件类型
-    if (interceptedEvents.includes(type.toLowerCase())) {
+    // String() coercion 与原生 WebIDL 行为一致（原生会把 null 等转为字符串），
+    // 避免拦截判断本身比原生方法先抛错
+    if (interceptedEvents.includes(String(type).toLowerCase())) {
       // 检查监听器是否可能是限制性的
       if (isRestrictiveListener(listener)) {
         console.log(`EasyCV: Intercepted restrictive ${type} listener`);
-        
-        // 存储被拦截的监听器
-        if (!interceptedListeners.has(this)) {
-          interceptedListeners.set(this, new Map());
+
+        // 存储被拦截的监听器（仅调试记录）。页面篡改 Map 时此处的 TypeError 若穿透进
+        // 页面自身 addEventListener 调用栈，会炸断页面脚本块（道客巴巴 P0 实证），
+        // 因此整个存储块容错：记录失败不影响吞没决策
+        try {
+          if (interceptedListeners) {
+            if (!interceptedListeners.has(this)) {
+              interceptedListeners.set(this, new Map());
+            }
+            interceptedListeners.get(this).set(type, { listener, options });
+          }
+        } catch (error) {
+          console.warn('EasyCV: Failed to record intercepted listener (swallow still applied):', error);
         }
-        interceptedListeners.get(this).set(type, { listener, options });
-        
+
         // 不添加限制性监听器
         return;
       }
@@ -121,9 +148,13 @@
         return restrictivePatterns.some(pattern => pattern.test(listener));
       }
     } catch (error) {
-      console.warn('EasyCV: Error checking listener restrictiveness:', error);
-      // 出错时保守处理，认为是限制性的
-      return true;
+      // fail-open：出错不吞。运行时中和（preventDefault/stopPropagation 重写）对该监听器
+      // 仍兜底其限制行为，误吞的代价（页面功能丢失）大于漏吞
+      restrictiveCheckErrorCount++;
+      if (restrictiveCheckErrorCount === 1) {
+        console.warn('EasyCV: Error checking listener restrictiveness, failing open (further errors counted silently):', error);
+      }
+      return false;
     }
     
     return false;
@@ -428,17 +459,21 @@
   }
   
   /**
-   * Shadow DOM 穿透：已处理的 root 保留强引用，以便禁用时统一清理
+   * Shadow DOM 穿透：已处理的 root 保留强引用，以便禁用时统一清理。
+   * 内建集合经容错构造（见 tryConstruct），记录不可用时 shadow 解锁本身不受影响
    */
-  const processedShadowRoots = new Set();
-  const shadowObservers = new Map();
-  const shadowSheets = new Map();
+  const processedShadowRoots = tryConstruct(Set, 'Set');
+  const shadowObservers = tryConstruct(Map, 'Map');
+  const shadowSheets = tryConstruct(Map, 'Map');
 
   function unlockShadowRoot(root) {
-    if (!root || processedShadowRoots.has(root)) return;
-    processedShadowRoots.add(root);
+    if (!root) return;
 
     try {
+      if (processedShadowRoots) {
+        if (processedShadowRoots.has(root)) return;
+        processedShadowRoots.add(root);
+      }
       // 全局样式穿不透 shadow 边界，必须在 root 内部注入。
       // 用 adoptedStyleSheets 而非 <style> 子元素：root.innerHTML 赋值会清空全部
       // 子节点（包括注入的 style），但 adoptedStyleSheets 不受其影响
@@ -451,7 +486,7 @@
         }
       `);
       root.adoptedStyleSheets = [...root.adoptedStyleSheets, sheet];
-      shadowSheets.set(root, sheet);
+      if (shadowSheets) shadowSheets.set(root, sheet);
 
       // 清理已有的内联限制属性，并对 shadow 树挂动态保护
       if (root.querySelectorAll) {
@@ -464,7 +499,7 @@
         attributes: true,
         attributeFilter: interceptedEvents.map(event => `on${event}`)
       });
-      shadowObservers.set(root, observer);
+      if (shadowObservers) shadowObservers.set(root, observer);
     } catch (error) {
       console.warn('EasyCV: Failed to unlock shadow root:', error);
     }
@@ -529,21 +564,30 @@
         Element.prototype.attachShadow = originalFunctions.attachShadow;
       }
 
-      // 清理 shadow root 内的注入样式与观察器
-      shadowObservers.forEach(observer => observer.disconnect());
-      shadowObservers.clear();
-      processedShadowRoots.forEach(root => {
-        try {
-          const sheet = shadowSheets.get(root);
-          if (sheet) {
-            root.adoptedStyleSheets = root.adoptedStyleSheets.filter(s => s !== sheet);
-          }
-        } catch (error) {
-          console.warn('EasyCV: Error cleaning shadow root:', error);
+      // 清理 shadow root 内的注入样式与观察器（内建集合可能被页面篡改或为 null，
+      // 独立容错避免中断后续的 document.on* 解除与注入样式移除）
+      try {
+        if (shadowObservers) {
+          shadowObservers.forEach(observer => observer.disconnect());
+          shadowObservers.clear();
         }
-      });
-      shadowSheets.clear();
-      processedShadowRoots.clear();
+        if (processedShadowRoots) {
+          processedShadowRoots.forEach(root => {
+            try {
+              const sheet = shadowSheets && shadowSheets.get(root);
+              if (sheet) {
+                root.adoptedStyleSheets = root.adoptedStyleSheets.filter(s => s !== sheet);
+              }
+            } catch (error) {
+              console.warn('EasyCV: Error cleaning shadow root:', error);
+            }
+          });
+          processedShadowRoots.clear();
+        }
+        if (shadowSheets) shadowSheets.clear();
+      } catch (error) {
+        console.warn('EasyCV: Error cleaning shadow bookkeeping:', error);
+      }
 
       // 解除 document.on* 属性劫持（这些以 own property 形式定义在 document 上，
       // delete 后原型链上的原始描述符自然生效）
@@ -551,8 +595,10 @@
         try { delete document[prop]; } catch (e) { /* 属性不可删除时忽略 */ }
       });
       
-      // 清理拦截的监听器映射
-      interceptedListeners.clear();
+      // 清理拦截的监听器映射（页面可能篡改 Map，单独容错以免中断后续样式清理）
+      if (interceptedListeners) {
+        try { interceptedListeners.clear(); } catch (e) { /* 调试记录丢弃即可 */ }
+      }
       
       // 移除注入的样式
       const injectedStyles = document.querySelectorAll('style[data-easycv-injected]');
