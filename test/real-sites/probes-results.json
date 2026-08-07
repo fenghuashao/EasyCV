@@ -2,14 +2,9 @@
   {
     "site": "bilibili",
     "withExt": true,
-    "url": "https://www.bilibili.com/video/BV1R53R6rE7a/",
+    "url": "https://www.bilibili.com/video/BV12rM96pE6t/",
     "swallowed": {
-      "mousedown": 11,
-      "keydown": 2,
-      "contextmenu": 2,
-      "paste": 1,
-      "dragstart": 1,
-      "keyup": 1
+      "contextmenu": 2
     },
     "consoleErrors": [],
     "pageErrors": [],
@@ -35,7 +30,7 @@
         "seeks": true
       },
       "arrowLeft": {
-        "delta": -4.45,
+        "delta": -4.46,
         "seeks": true
       }
     },
@@ -93,7 +88,7 @@
   {
     "site": "bilibili",
     "withExt": false,
-    "url": "https://www.bilibili.com/video/BV1R53R6rE7a/",
+    "url": "https://www.bilibili.com/video/BV12rM96pE6t/",
     "swallowed": {},
     "consoleErrors": [],
     "pageErrors": [],
@@ -101,7 +96,7 @@
     "playback": {
       "attempts": {
         "clickVideoCenter": {
-          "before": true,
+          "before": false,
           "after": true
         },
         "clickPlayButton": {
@@ -119,11 +114,11 @@
         "toggled": true
       },
       "arrowRight": {
-        "delta": 5,
+        "delta": 5.56,
         "seeks": true
       },
       "arrowLeft": {
-        "delta": -4.91,
+        "delta": -4.44,
         "seeks": true
       }
     },

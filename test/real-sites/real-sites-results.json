@@ -10,7 +10,9 @@
       "injected": true,
       "swallowProbes": {
         "registrationSwallow": true,
+        "keydownPassThrough": true,
         "runtimeNeutralize": true,
+        "plainKeyPreserved": true,
         "addEventListenerWrapped": false,
         "preventDefaultWrapped": true
       },
@@ -36,7 +38,7 @@
       }
     },
     "errors": [],
-    "easycvLogs": 17,
+    "easycvLogs": 12,
     "consoleErrors": [],
     "pageErrors": []
   },
@@ -50,7 +52,9 @@
     "checks": {
       "swallowProbes": {
         "registrationSwallow": false,
+        "keydownPassThrough": true,
         "runtimeNeutralize": false,
+        "plainKeyPreserved": true,
         "addEventListenerWrapped": false,
         "preventDefaultWrapped": false
       },
@@ -81,9 +85,13 @@
       "Failed to load resource: the server responded with a status of 521 ()",
       "Failed to load resource: the server responded with a status of 521 ()",
       "Failed to load resource: the server responded with a status of 521 ()",
+      "Failed to load resource: the server responded with a status of 521 ()",
       "Failed to load resource: the server responded with a status of 521 ()"
     ],
-    "pageErrors": []
+    "pageErrors": [
+      "Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'data')",
+      "Uncaught (in promise) Error: 521 "
+    ]
   },
   {
     "site": "zhihu",

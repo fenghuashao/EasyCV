@@ -7,11 +7,13 @@
  *  3. 双上下文对照：同一站点分别跑「带扩展」与「无扩展基线」，
  *     用差值归因——扩展上下文失败而基线通过的项才是误伤
  *
- * 诊断探针（直接验证 DEBT-03 机制在真实站点上的表现）：
- *  - registrationSwallow: 注册一个源码含 preventDefault 的 keydown 监听器，
- *    带扩展时会被 injector 按源码正则吞掉（不触发）
+ * 诊断探针（直接验证 DEBT-03 机制在真实站点上的表现；语义已按 R2 名单拆分更新）：
+ *  - registrationSwallow: 源码含 preventDefault 的 copy 监听器（吞没名单内）应被吞掉
+ *  - keydownPassThrough: 同款 keydown 监听器（已退出吞没名单）应正常触发
  *  - runtimeNeutralize: object-form(handleEvent) 监听器绕得过源码过滤，
- *    但其 preventDefault() 调用会被运行时重写中和
+ *    但其 ctrl+keydown 的 preventDefault() 调用会被运行时重写中和
+ *  - plainKeyPreserved: 无修饰键 keydown 的 preventDefault() 应保持有效
+ *    （组合键门控放行播放器单键快捷键）
  *
  * 运行：node real-sites-regression.mjs [--sites=zhihu,wenku,...]
  * 输出：real-sites-results.json（每站增量写入）+ shots/ 截图
@@ -121,32 +123,51 @@ function wireConsoleTaps(page, bucket) {
 // 通用检查
 // ---------------------------------------------------------------------------
 
-// DEBT-03 机制探针：注册吞没 + 运行时中和
+// DEBT-03 机制探针：注册吞没 + 运行时中和（探针语义按 R2 名单拆分设计）
 async function swallowProbes(page) {
   return page.evaluate(() => {
-    const out = { registrationSwallow: null, runtimeNeutralize: null };
+    const out = {
+      registrationSwallow: null,
+      keydownPassThrough: null,
+      runtimeNeutralize: null,
+      plainKeyPreserved: null
+    };
 
-    // 探针1：源码含 preventDefault 的 keydown 监听器
-    let fired = false;
+    // 探针1a：源码含 preventDefault 的 copy 监听器（仍在吞没名单内）
+    let copyFired = false;
+    const copyListener = function (e) { e.preventDefault(); copyFired = true; };
+    document.addEventListener('copy', copyListener);
+    document.dispatchEvent(new Event('copy', { cancelable: true, bubbles: true }));
+    document.removeEventListener('copy', copyListener);
+    out.registrationSwallow = !copyFired; // true = 被吞（吞没机制生效）
+
+    // 探针1b：同款 keydown 监听器（R2 后已退出吞没名单，应正常触发）
+    let keyFired = false;
     const fnListener = function (e) {
-      if (e.key === 'F24') { e.preventDefault(); fired = true; }
+      if (e.key === 'F24') { e.preventDefault(); keyFired = true; }
     };
     document.addEventListener('keydown', fnListener);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'F24', cancelable: true, bubbles: true }));
     document.removeEventListener('keydown', fnListener);
-    out.registrationSwallow = !fired; // true = 被吞（扩展生效）
+    out.keydownPassThrough = keyFired; // true = keydown 不再被吞
 
-    // 探针2：object-form 监听器（源码过滤只看 function/string，对象绕过），
-    // 观察其 preventDefault() 是否在运行时被中和
-    let handled = false;
-    const objListener = {
-      handleEvent(e) { if (e.key === 'F24') { handled = true; e.preventDefault(); } },
+    // 探针2：object-form(handleEvent) 监听器（源码过滤只看 function/string，对象绕过），
+    // 分别观察组合键与无修饰键 keydown 的 preventDefault() 中和情况
+    const probeNeutralize = (withCtrl) => {
+      let handled = false;
+      const objListener = {
+        handleEvent(e) { if (e.key === 'F24') { handled = true; e.preventDefault(); } },
+      };
+      const ev = new KeyboardEvent('keydown', { key: 'F24', ctrlKey: withCtrl, cancelable: true, bubbles: true });
+      document.addEventListener('keydown', objListener);
+      document.dispatchEvent(ev);
+      document.removeEventListener('keydown', objListener);
+      return { handled, defaultPrevented: ev.defaultPrevented };
     };
-    const ev = new KeyboardEvent('keydown', { key: 'F24', cancelable: true, bubbles: true });
-    document.addEventListener('keydown', objListener);
-    document.dispatchEvent(ev);
-    document.removeEventListener('keydown', objListener);
-    out.runtimeNeutralize = handled && !ev.defaultPrevented; // true = 被中和
+    const ctrl = probeNeutralize(true);
+    out.runtimeNeutralize = ctrl.handled && !ctrl.defaultPrevented; // true = 组合键被中和
+    const plain = probeNeutralize(false);
+    out.plainKeyPreserved = plain.handled && plain.defaultPrevented; // true = 单键 preventDefault 保留
 
     out.addEventListenerWrapped = EventTarget.prototype.addEventListener
       .toString().includes('originalFunctions');
