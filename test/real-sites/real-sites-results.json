@@ -1,0 +1,565 @@
+[
+  {
+    "site": "csdn",
+    "name": "CSDN",
+    "kind": "restricted",
+    "withExt": true,
+    "url": "https://blog.csdn.net/blogdevteam/article/details/126135357",
+    "reachable": true,
+    "checks": {
+      "injected": true,
+      "swallowProbes": {
+        "registrationSwallow": true,
+        "runtimeNeutralize": true,
+        "addEventListenerWrapped": false,
+        "preventDefaultWrapped": true
+      },
+      "unlock": {
+        "injected": true,
+        "userSelect": "text",
+        "found": true,
+        "contextmenu": {
+          "notCanceled": true
+        }
+      },
+      "copy": {
+        "attempted": true,
+        "selected": true,
+        "selectMethod": "drag",
+        "selLen": 84,
+        "selSample": "为保障北京创新乐知网络技术有限公司及其关联公司（以下简称“CSDN”）业务健康可持续发展，维护CSDN正常运营秩序，规范",
+        "clipboardRead": true,
+        "clipboardLen": 84,
+        "clipboardMatchesSelection": true,
+        "clipboardTail": "为保障北京创新乐知网络技术有限公司及其关联公司（以下简称“CSDN”）业务健康可持续发展，维护CSDN正常运营秩序，规范CSDN帐号的使用者（以下简称“用户”）行为，保",
+        "hasCopyAppend": false
+      }
+    },
+    "errors": [],
+    "easycvLogs": 17,
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "site": "csdn",
+    "name": "CSDN",
+    "kind": "restricted",
+    "withExt": false,
+    "url": "https://blog.csdn.net/blogdevteam/article/details/126135357",
+    "reachable": true,
+    "checks": {
+      "swallowProbes": {
+        "registrationSwallow": false,
+        "runtimeNeutralize": false,
+        "addEventListenerWrapped": false,
+        "preventDefaultWrapped": false
+      },
+      "unlock": {
+        "injected": false,
+        "userSelect": "auto",
+        "found": true,
+        "contextmenu": {
+          "notCanceled": true
+        }
+      },
+      "copy": {
+        "attempted": true,
+        "selected": true,
+        "selectMethod": "drag",
+        "selLen": 84,
+        "selSample": "为保障北京创新乐知网络技术有限公司及其关联公司（以下简称“CSDN”）业务健康可持续发展，维护CSDN正常运营秩序，规范",
+        "clipboardRead": true,
+        "clipboardLen": 84,
+        "clipboardMatchesSelection": true,
+        "clipboardTail": "为保障北京创新乐知网络技术有限公司及其关联公司（以下简称“CSDN”）业务健康可持续发展，维护CSDN正常运营秩序，规范CSDN帐号的使用者（以下简称“用户”）行为，保",
+        "hasCopyAppend": false
+      }
+    },
+    "errors": [],
+    "easycvLogs": 0,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 521 ()",
+      "Failed to load resource: the server responded with a status of 521 ()",
+      "Failed to load resource: the server responded with a status of 521 ()",
+      "Failed to load resource: the server responded with a status of 521 ()"
+    ],
+    "pageErrors": []
+  },
+  {
+    "site": "zhihu",
+    "name": "知乎",
+    "kind": "restricted",
+    "withExt": true,
+    "url": "https://www.zhihu.com/signin?next=%2Fhot",
+    "reachable": true,
+    "checks": {
+      "injected": true,
+      "swallowProbes": {
+        "registrationSwallow": true,
+        "runtimeNeutralize": true,
+        "addEventListenerWrapped": true,
+        "preventDefaultWrapped": true
+      },
+      "unlock": {
+        "injected": true,
+        "userSelect": "text",
+        "found": false,
+        "contextmenu": {
+          "notCanceled": true
+        }
+      },
+      "copy": {
+        "attempted": true,
+        "selected": true,
+        "selectMethod": "drag",
+        "selLen": 9,
+        "selSample": "验证码登录密码登录",
+        "clipboardRead": true,
+        "clipboardLen": 9,
+        "clipboardMatchesSelection": true,
+        "clipboardTail": "验证码登录密码登录",
+        "hasCopyAppend": false
+      }
+    },
+    "errors": [
+      "内容页发现失败: 热榜第一条问题"
+    ],
+    "easycvLogs": 14,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 403 ()",
+      "Access to XMLHttpRequest at 'https://118.89.204.198/resolv?host=www.zhihu.com&os_type=web' from origin 'https://www.zhihu.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header ",
+      "Failed to load resource: net::ERR_FAILED",
+      "Mixed Content: The page at 'https://www.zhihu.com/signin?next=%2Fhot' was loaded over HTTPS, but requested an insecure resource 'http://local.adspower.net:50325/'. This request has been blocked; the c"
+    ],
+    "pageErrors": []
+  },
+  {
+    "site": "zhihu",
+    "name": "知乎",
+    "kind": "restricted",
+    "withExt": false,
+    "url": "https://www.zhihu.com/signin?next=%2Fhot",
+    "reachable": true,
+    "checks": {
+      "swallowProbes": {
+        "registrationSwallow": false,
+        "runtimeNeutralize": false,
+        "addEventListenerWrapped": false,
+        "preventDefaultWrapped": false
+      },
+      "unlock": {
+        "injected": false,
+        "userSelect": "auto",
+        "found": false,
+        "contextmenu": {
+          "notCanceled": true
+        }
+      },
+      "copy": {
+        "attempted": true,
+        "selected": true,
+        "selectMethod": "drag",
+        "selLen": 9,
+        "selSample": "验证码登录密码登录",
+        "clipboardRead": true,
+        "clipboardLen": 9,
+        "clipboardMatchesSelection": true,
+        "clipboardTail": "验证码登录密码登录",
+        "hasCopyAppend": false
+      }
+    },
+    "errors": [
+      "内容页发现失败: 热榜第一条问题"
+    ],
+    "easycvLogs": 0,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 403 ()",
+      "Access to XMLHttpRequest at 'https://118.89.204.198/resolv?host=www.zhihu.com&os_type=web' from origin 'https://www.zhihu.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header ",
+      "Failed to load resource: net::ERR_FAILED",
+      "Mixed Content: The page at 'https://www.zhihu.com/signin?next=%2Fhot' was loaded over HTTPS, but requested an insecure resource 'http://local.adspower.net:50325/'. This request has been blocked; the c"
+    ],
+    "pageErrors": []
+  },
+  {
+    "site": "wenku",
+    "name": "百度文库",
+    "kind": "restricted",
+    "withExt": true,
+    "url": "https://wenku.baidu.com/?_wkts_=1786018466166",
+    "reachable": true,
+    "checks": {
+      "injected": true,
+      "swallowProbes": {
+        "registrationSwallow": true,
+        "runtimeNeutralize": true,
+        "addEventListenerWrapped": true,
+        "preventDefaultWrapped": true
+      },
+      "unlock": {
+        "injected": true,
+        "userSelect": "text",
+        "found": false,
+        "contextmenu": {
+          "notCanceled": true
+        }
+      },
+      "copy": {
+        "attempted": true,
+        "selected": false,
+        "selLen": 0,
+        "paraText": "创建文档\n             文档 演示文稿 表格 自由画布  新建  上"
+      }
+    },
+    "errors": [
+      "内容页发现失败: 首页第一个文档"
+    ],
+    "easycvLogs": 13,
+    "consoleErrors": [],
+    "pageErrors": [
+      "Object"
+    ]
+  },
+  {
+    "site": "wenku",
+    "name": "百度文库",
+    "kind": "restricted",
+    "withExt": false,
+    "url": "https://wenku.baidu.com/?_wkts_=1786018509209",
+    "reachable": true,
+    "checks": {
+      "swallowProbes": {
+        "registrationSwallow": false,
+        "runtimeNeutralize": false,
+        "addEventListenerWrapped": false,
+        "preventDefaultWrapped": false
+      },
+      "unlock": {
+        "injected": false,
+        "userSelect": "auto",
+        "found": false,
+        "contextmenu": {
+          "notCanceled": true
+        }
+      },
+      "copy": {
+        "attempted": true,
+        "selected": false,
+        "selLen": 0,
+        "paraText": "创建文档\n             文档 演示文稿 表格 自由画布  新建  上"
+      }
+    },
+    "errors": [
+      "内容页发现失败: 首页第一个文档"
+    ],
+    "easycvLogs": 0,
+    "consoleErrors": [],
+    "pageErrors": [
+      "Object"
+    ]
+  },
+  {
+    "site": "doc88",
+    "name": "道客巴巴",
+    "kind": "restricted",
+    "withExt": true,
+    "url": "https://www.doc88.com/p-69091550288.html",
+    "reachable": true,
+    "checks": {
+      "injected": false,
+      "swallowProbes": {
+        "error": "page.evaluate: TypeError: interceptedListeners.has is not a function\n    at HTMLDocument.overriddenAddEventListener [as "
+      },
+      "unlock": {},
+      "copy": {
+        "attempted": false,
+        "reason": "未找到含文本的段落（可能是图片渲染型文档）"
+      }
+    },
+    "errors": [],
+    "easycvLogs": 33,
+    "consoleErrors": [
+      "Framing 'https://stat.doc88.com/' violates the following report-only Content Security Policy directive: \"frame-ancestors 'self'\". The violation has been logged, but no further action has been taken.\n",
+      "The Content Security Policy directive 'upgrade-insecure-requests' is ignored when delivered in a report-only policy."
+    ],
+    "pageErrors": []
+  },
+  {
+    "site": "doc88",
+    "name": "道客巴巴",
+    "kind": "restricted",
+    "withExt": false,
+    "url": "https://www.doc88.com/p-5061385651992.html",
+    "reachable": true,
+    "checks": {
+      "unlock": {},
+      "copy": {
+        "attempted": false,
+        "reason": "未找到含文本的段落（可能是图片渲染型文档）"
+      }
+    },
+    "errors": [],
+    "easycvLogs": 0,
+    "consoleErrors": [
+      "Framing 'https://stat.doc88.com/' violates the following report-only Content Security Policy directive: \"frame-ancestors 'self'\". The violation has been logged, but no further action has been taken.\n",
+      "The Content Security Policy directive 'upgrade-insecure-requests' is ignored when delivered in a report-only policy."
+    ],
+    "pageErrors": []
+  },
+  {
+    "site": "docin",
+    "name": "豆丁",
+    "kind": "restricted",
+    "withExt": true,
+    "url": "https://www.docin.com/p-5021301871.html",
+    "reachable": true,
+    "checks": {
+      "injected": true,
+      "swallowProbes": {
+        "registrationSwallow": true,
+        "runtimeNeutralize": true,
+        "addEventListenerWrapped": true,
+        "preventDefaultWrapped": true
+      },
+      "unlock": {
+        "injected": true,
+        "userSelect": "text",
+        "found": true,
+        "contextmenu": {
+          "notCanceled": true
+        }
+      },
+      "copy": {
+        "attempted": false,
+        "reason": "未找到含文本的段落（可能是图片渲染型文档）"
+      }
+    },
+    "errors": [],
+    "easycvLogs": 134,
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "site": "docin",
+    "name": "豆丁",
+    "kind": "restricted",
+    "withExt": false,
+    "url": "https://www.docin.com/p-5021301871.html",
+    "reachable": true,
+    "checks": {
+      "swallowProbes": {
+        "registrationSwallow": false,
+        "runtimeNeutralize": false,
+        "addEventListenerWrapped": false,
+        "preventDefaultWrapped": false
+      },
+      "unlock": {
+        "injected": false,
+        "userSelect": "auto",
+        "found": true,
+        "contextmenu": {
+          "notCanceled": true
+        }
+      },
+      "copy": {
+        "attempted": false,
+        "reason": "未找到含文本的段落（可能是图片渲染型文档）"
+      }
+    },
+    "errors": [],
+    "easycvLogs": 0,
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "site": "bilibili",
+    "name": "B站视频",
+    "kind": "control",
+    "withExt": true,
+    "url": "https://www.bilibili.com/video/BV1R53R6rE7a/",
+    "reachable": true,
+    "checks": {
+      "injected": true,
+      "swallowProbes": {
+        "registrationSwallow": true,
+        "runtimeNeutralize": true,
+        "addEventListenerWrapped": true,
+        "preventDefaultWrapped": true
+      },
+      "inputTyping": {
+        "attempted": false,
+        "reason": "无可见输入框"
+      },
+      "player": {
+        "videoFound": true,
+        "canPlay": false,
+        "reason": "视频无法进入播放状态（可能登录墙/地区限制）"
+      },
+      "loginPhoneFilter": {
+        "attempted": false,
+        "reason": "未找到登录入口"
+      }
+    },
+    "errors": [],
+    "easycvLogs": 63,
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "site": "bilibili",
+    "name": "B站视频",
+    "kind": "control",
+    "withExt": false,
+    "url": "https://www.bilibili.com/video/BV1R53R6rE7a/",
+    "reachable": true,
+    "checks": {
+      "swallowProbes": {
+        "registrationSwallow": false,
+        "runtimeNeutralize": false,
+        "addEventListenerWrapped": false,
+        "preventDefaultWrapped": false
+      },
+      "inputTyping": {
+        "attempted": true,
+        "typed": "easycv",
+        "value": "easycv",
+        "ok": true
+      },
+      "player": {
+        "videoFound": true,
+        "canPlay": true,
+        "spacePauses": false,
+        "spaceScrollSideEffect": false,
+        "arrowRightSeekDelta": 0.62,
+        "arrowRightSeeks": false
+      },
+      "loginPhoneFilter": {
+        "attempted": false,
+        "reason": "未找到手机号输入框"
+      }
+    },
+    "errors": [],
+    "easycvLogs": 0,
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "site": "youtube",
+    "name": "YouTube",
+    "kind": "control",
+    "withExt": true,
+    "url": "https://www.youtube.com/",
+    "reachable": true,
+    "checks": {
+      "injected": true,
+      "swallowProbes": {
+        "registrationSwallow": true,
+        "runtimeNeutralize": true,
+        "addEventListenerWrapped": true,
+        "preventDefaultWrapped": true
+      },
+      "inputTyping": {
+        "attempted": true,
+        "typed": "easycv",
+        "value": "easycv",
+        "ok": true
+      },
+      "player": {
+        "videoFound": true,
+        "canPlay": false,
+        "reason": "视频无法进入播放状态（可能登录墙/地区限制）"
+      }
+    },
+    "errors": [],
+    "easycvLogs": 25,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 401 ()"
+    ],
+    "pageErrors": []
+  },
+  {
+    "site": "youtube",
+    "name": "YouTube",
+    "kind": "control",
+    "withExt": false,
+    "url": "https://www.youtube.com/",
+    "reachable": true,
+    "checks": {
+      "swallowProbes": {
+        "registrationSwallow": false,
+        "runtimeNeutralize": false,
+        "addEventListenerWrapped": false,
+        "preventDefaultWrapped": false
+      },
+      "inputTyping": {
+        "attempted": true,
+        "typed": "easycv",
+        "value": "easycv",
+        "ok": true
+      },
+      "player": {
+        "videoFound": true,
+        "canPlay": false,
+        "reason": "视频无法进入播放状态（可能登录墙/地区限制）"
+      }
+    },
+    "errors": [],
+    "easycvLogs": 0,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 401 ()"
+    ],
+    "pageErrors": []
+  },
+  {
+    "site": "gdocs",
+    "name": "Google Docs",
+    "kind": "control",
+    "withExt": true,
+    "url": "https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fdocs.google.com%2F&dsh=S1829463790%3A1786018667431470&emr=1&followup=https%3A%2F%2Fdocs.google.com%2F&osid=1&passive=1209600&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=Ac50bxvL-6PfvYS2fq54kjt1DP5Pa8fBnA7lpznvC-wbsn60Et3Rvd2BN2Z8qY3kx_KhsON1jB3FmQ",
+    "reachable": true,
+    "checks": {
+      "injected": true,
+      "swallowProbes": {
+        "registrationSwallow": true,
+        "runtimeNeutralize": true,
+        "addEventListenerWrapped": true,
+        "preventDefaultWrapped": true
+      },
+      "inputTyping": {
+        "attempted": true,
+        "typed": "easycv",
+        "value": "easycv",
+        "ok": true
+      }
+    },
+    "errors": [],
+    "easycvLogs": 18,
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "site": "gdocs",
+    "name": "Google Docs",
+    "kind": "control",
+    "withExt": false,
+    "url": "https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fdocs.google.com%2F&dsh=S-769512951%3A1786018675709803&emr=1&followup=https%3A%2F%2Fdocs.google.com%2F&osid=1&passive=1209600&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=Ac50bxuB3eRXXcxn1uF6SJbkEFWN6f9XPtAfZronu37JZuEDYlwk-4awNMDJpOv10uOeugtqfRmGHQ",
+    "reachable": true,
+    "checks": {
+      "swallowProbes": {
+        "registrationSwallow": false,
+        "runtimeNeutralize": false,
+        "addEventListenerWrapped": false,
+        "preventDefaultWrapped": false
+      },
+      "inputTyping": {
+        "attempted": true,
+        "typed": "easycv",
+        "value": "easycv",
+        "ok": true
+      }
+    },
+    "errors": [],
+    "easycvLogs": 0,
+    "consoleErrors": [],
+    "pageErrors": []
+  }
+]

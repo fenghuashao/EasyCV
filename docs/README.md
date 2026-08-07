@@ -33,6 +33,7 @@
 | [测试用例](./测试用例.md) | Source Document | active | 测试计划 | 测试/开发 | 功能变更、新增功能、回归范围变化 |
 | [功能验证指南](./功能验证指南.md) | Reference Document | active | 测试计划 | 测试/开发 | 验证步骤、关键流程或测试环境发生变化 |
 | [测试报告-第三阶段](./测试报告-第三阶段.md) | Evidence Document | archive | 测试计划 | 测试/维护者 | 仅在补录历史证据或复盘时更新 |
+| [测试报告-真实站点回归-2026-08](./测试报告-真实站点回归-2026-08.md) | Evidence Document | active | 测试计划 | 测试/开发/维护者 | 真实站点复测结论或 DEBT-03 系列收敛状态变化 |
 | [部署文档](./部署文档.md) | Source Document | active | 本文档 | 开发/发布 | 构建、打包、发布流程或脚本入口发生变化 |
 | [自动化打包配置说明](./自动化打包配置说明.md) | Reference Document | active | 部署文档 | 开发/发布 | scripts 或 npm 命令发生变化 |
 | [用户使用手册](./用户使用手册.md) | Source Document | active | 本文档 | 用户/产品/开发 | 用户功能、隐私与权限说明、交互流程发生变化 |

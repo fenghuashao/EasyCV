@@ -1,0 +1,297 @@
+[
+  {
+    "site": "bilibili",
+    "withExt": true,
+    "url": "https://www.bilibili.com/video/BV1R53R6rE7a/",
+    "swallowed": {
+      "mousedown": 11,
+      "keydown": 2,
+      "contextmenu": 2,
+      "paste": 1,
+      "dragstart": 1,
+      "keyup": 1
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "errors": [],
+    "playback": {
+      "attempts": {
+        "clickVideoCenter": {
+          "before": false,
+          "after": false
+        },
+        "playingVia": "clickVideoCenter"
+      },
+      "playing": true
+    },
+    "shortcuts": {
+      "space": {
+        "before": false,
+        "after": true,
+        "toggled": true
+      },
+      "arrowRight": {
+        "delta": 5.54,
+        "seeks": true
+      },
+      "arrowLeft": {
+        "delta": -4.45,
+        "seeks": true
+      }
+    },
+    "inputDiagnostics": [
+      {
+        "type": "text",
+        "id": "",
+        "cls": "nav-search-input",
+        "visible": true
+      },
+      {
+        "type": "text",
+        "id": "",
+        "cls": "bpx-player-ctrl-time-seek",
+        "visible": false
+      },
+      {
+        "type": "checkbox",
+        "id": "",
+        "cls": "bui-checkbox-input",
+        "visible": false
+      },
+      {
+        "type": "checkbox",
+        "id": "",
+        "cls": "bui-checkbox-input",
+        "visible": false
+      },
+      {
+        "type": "checkbox",
+        "id": "",
+        "cls": "bui-switch-input",
+        "visible": false
+      },
+      {
+        "type": "checkbox",
+        "id": "",
+        "cls": "bui-switch-input",
+        "visible": false
+      },
+      {
+        "type": "checkbox",
+        "id": "",
+        "cls": "bui-switch-input",
+        "visible": false
+      },
+      {
+        "type": "radio",
+        "id": "",
+        "cls": "bui-radio-input",
+        "visible": false
+      }
+    ]
+  },
+  {
+    "site": "bilibili",
+    "withExt": false,
+    "url": "https://www.bilibili.com/video/BV1R53R6rE7a/",
+    "swallowed": {},
+    "consoleErrors": [],
+    "pageErrors": [],
+    "errors": [],
+    "playback": {
+      "attempts": {
+        "clickVideoCenter": {
+          "before": true,
+          "after": true
+        },
+        "clickPlayButton": {
+          "before": true,
+          "after": false
+        },
+        "playingVia": "clickPlayButton"
+      },
+      "playing": true
+    },
+    "shortcuts": {
+      "space": {
+        "before": false,
+        "after": true,
+        "toggled": true
+      },
+      "arrowRight": {
+        "delta": 5,
+        "seeks": true
+      },
+      "arrowLeft": {
+        "delta": -4.91,
+        "seeks": true
+      }
+    },
+    "inputDiagnostics": [
+      {
+        "type": "text",
+        "id": "",
+        "cls": "nav-search-input",
+        "visible": true
+      },
+      {
+        "type": "text",
+        "id": "",
+        "cls": "bpx-player-ctrl-time-seek",
+        "visible": false
+      },
+      {
+        "type": "checkbox",
+        "id": "",
+        "cls": "bui-checkbox-input",
+        "visible": false
+      },
+      {
+        "type": "checkbox",
+        "id": "",
+        "cls": "bui-checkbox-input",
+        "visible": false
+      },
+      {
+        "type": "checkbox",
+        "id": "",
+        "cls": "bui-switch-input",
+        "visible": false
+      },
+      {
+        "type": "checkbox",
+        "id": "",
+        "cls": "bui-switch-input",
+        "visible": false
+      },
+      {
+        "type": "checkbox",
+        "id": "",
+        "cls": "bui-switch-input",
+        "visible": false
+      },
+      {
+        "type": "radio",
+        "id": "",
+        "cls": "bui-radio-input",
+        "visible": false
+      }
+    ]
+  },
+  {
+    "site": "youtube",
+    "withExt": true,
+    "url": null,
+    "swallowed": {},
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 401 ()"
+    ],
+    "pageErrors": [],
+    "errors": [
+      "未找到视频链接"
+    ]
+  },
+  {
+    "site": "youtube",
+    "withExt": false,
+    "url": null,
+    "swallowed": {},
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 401 ()",
+      "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+      "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    ],
+    "pageErrors": [],
+    "errors": [
+      "未找到视频链接"
+    ]
+  },
+  {
+    "site": "doc88",
+    "withExt": true,
+    "url": "https://www.doc88.com/p-9975606523898.html",
+    "swallowed": {},
+    "consoleErrors": [
+      "Framing 'https://stat.doc88.com/' violates the following report-only Content Security Policy directive: \"frame-ancestors 'self'\". The violation has been logged, but no further action has been taken.\n",
+      "The Content Security Policy directive 'upgrade-insecure-requests' is ignored when delivered in a report-only policy."
+    ],
+    "pageErrors": [],
+    "errors": []
+  },
+  {
+    "site": "doc88",
+    "withExt": false,
+    "url": "https://www.doc88.com/p-6466686328846.html",
+    "swallowed": {},
+    "consoleErrors": [
+      "Framing 'https://stat.doc88.com/' violates the following report-only Content Security Policy directive: \"frame-ancestors 'self'\". The violation has been logged, but no further action has been taken.\n",
+      "The Content Security Policy directive 'upgrade-insecure-requests' is ignored when delivered in a report-only policy."
+    ],
+    "pageErrors": [],
+    "errors": []
+  },
+  {
+    "site": "zhihu",
+    "withExt": true,
+    "url": "https://www.zhihu.com/question/19550225",
+    "swallowed": {},
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 403 ()",
+      "Failed to load resource: the server responded with a status of 403 ()"
+    ],
+    "pageErrors": [],
+    "errors": [
+      "未找到正文段落"
+    ]
+  },
+  {
+    "site": "zhihu",
+    "withExt": false,
+    "url": "https://www.zhihu.com/question/19550225",
+    "swallowed": {},
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 403 ()",
+      "Failed to load resource: the server responded with a status of 403 ()"
+    ],
+    "pageErrors": [],
+    "errors": [
+      "未找到正文段落"
+    ]
+  },
+  {
+    "site": "wenku",
+    "withExt": true,
+    "url": "https://wenku.baidu.com/?_wkts_=1786019116691",
+    "swallowed": {},
+    "consoleErrors": [
+      "Access to XMLHttpRequest at 'https://eduad.baidu.com/bidding/wenku_post_json' from origin 'https://wenku.baidu.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+      "Failed to load resource: net::ERR_FAILED",
+      "Access to XMLHttpRequest at 'https://eduad.baidu.com/bidding/wenku_post_json' from origin 'https://wenku.baidu.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+      "Failed to load resource: net::ERR_FAILED"
+    ],
+    "pageErrors": [
+      "Object"
+    ],
+    "errors": [
+      "未发现 /view/ 文档链接"
+    ]
+  },
+  {
+    "site": "wenku",
+    "withExt": false,
+    "url": "https://wenku.baidu.com/?_wkts_=1786019140171",
+    "swallowed": {},
+    "consoleErrors": [
+      "Access to XMLHttpRequest at 'https://eduad.baidu.com/bidding/wenku_post_json' from origin 'https://wenku.baidu.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+      "Failed to load resource: net::ERR_FAILED",
+      "Access to XMLHttpRequest at 'https://eduad.baidu.com/bidding/wenku_post_json' from origin 'https://wenku.baidu.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+      "Failed to load resource: net::ERR_FAILED"
+    ],
+    "pageErrors": [
+      "Object"
+    ],
+    "errors": [
+      "未发现 /view/ 文档链接"
+    ]
+  }
+]
