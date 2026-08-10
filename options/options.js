@@ -5,6 +5,17 @@
 
 // 导入工具类
 
+/**
+ * 项目支持链接配置
+ * 仓库迁移或更名时仅需修改 REPO_BASE_URL，三个链接自动派生
+ */
+const REPO_BASE_URL = 'https://github.com/fenghuashao/EasyCV';
+const SUPPORT_LINKS = {
+  repo: REPO_BASE_URL,
+  issues: `${REPO_BASE_URL}/issues`,
+  docs: `${REPO_BASE_URL}/wiki`,
+};
+
 class OptionsManager {
   constructor() {
     this.currentTab = 'general';
@@ -287,21 +298,21 @@ class OptionsManager {
     if (githubLink) {
       githubLink.addEventListener('click', (e) => {
         e.preventDefault();
-        chrome.tabs.create({ url: 'https://github.com/your-username/easycv' });
+        chrome.tabs.create({ url: SUPPORT_LINKS.repo });
       });
     }
-    
+
     if (issuesLink) {
       issuesLink.addEventListener('click', (e) => {
         e.preventDefault();
-        chrome.tabs.create({ url: 'https://github.com/your-username/easycv/issues' });
+        chrome.tabs.create({ url: SUPPORT_LINKS.issues });
       });
     }
-    
+
     if (wikiLink) {
       wikiLink.addEventListener('click', (e) => {
         e.preventDefault();
-        chrome.tabs.create({ url: 'https://github.com/your-username/easycv/wiki' });
+        chrome.tabs.create({ url: SUPPORT_LINKS.docs });
       });
     }
   }

@@ -4,7 +4,13 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)。
 
-## [1.1.0] - 2026-08-06
+## [Unreleased]
+
+### ✨ 新功能
+- 关于页「技术支持」三个链接（GitHub 仓库 / 问题反馈 / 使用文档）指向真实仓库并抽为配置项：`options/options.js` 顶部 `REPO_BASE_URL`，仓库迁移或更名仅需改一处
+- 仓库转为公开并启用 GitHub Wiki 作为对外使用文档入口（Home + 使用文档两页，由 `docs/用户使用手册.md` 提炼同步）
+
+## [1.1.0] - 2026-08-10
 
 ### ✨ 新功能
 - 站点排除列表（DEBT-08）：设置页新增「站点排除」管理，被排除站点完全休眠（优先级高于全局开关、自动启用与强力模式），是误伤场景的用户逃生通道；匹配支持子域覆盖（排除 bilibili.com 即覆盖 www.bilibili.com）；内置 accounts.google.com / login.live.com / appleid.apple.com 敏感账号域名默认排除（解除脚本不在账号登录页运行）；纳入设置导入导出

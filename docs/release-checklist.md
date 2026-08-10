@@ -1,7 +1,8 @@
 # 发布核验清单 — 1.1.0
 
-> 生成时间：2026-08-10 ｜ 基准分支：worktree-debt08-site-exclusion（含 be2c818，基于 master 529af9c）
+> 生成时间：2026-08-10 ｜ 基准：master 78d3ca8（worktree-debt08-site-exclusion 已合并）
 > 本清单按 release-readiness 流程产出，上架前逐项确认。
+> 复核记录：2026-08-10 合并后 master 态复核通过（验证链复跑全绿，结果与 §2 一致）。
 
 ## 1. 需求完成
 
@@ -10,7 +11,7 @@
 | DEBT-03 拦截策略收敛（R1–R3） | ✅ 已合入 master | 9e78001 / a7f299e / 529af9c；[测试报告-真实站点回归-2026-08](./测试报告-真实站点回归-2026-08.md) |
 | DEBT-04 图标补齐 | ✅ 已合入 master | ec86b3d |
 | 移除 management 权限 | ✅ 已合入 master | 2e03739；manifest.json 权限仅 activeTab/storage/scripting/contextMenus |
-| DEBT-08 站点排除列表 | ✅ 分支已提交，待合并 | be2c818；options 新 tab + storage + background 裁决 + content 消费 + 敏感域名默认排除 |
+| DEBT-08 站点排除列表 | ✅ 已合入 master | be2c818；options 新 tab + storage + background 裁决 + content 消费 + 敏感域名默认排除 |
 | CHANGELOG 1.1.0 条目 | ✅ 已补全（本分支） | CHANGELOG.md |
 
 ## 2. 测试
@@ -52,12 +53,12 @@
 - 截图 5 张：`screenshots-v1.1.0/`（options 常规 1280x800、站点排除 1280x800、popup 640x400、解锁生效对比 2 张 1280x800）
 - 描述文案：`store-description-zh.md` / `store-description-en.md`（含简短说明与详细描述）
 - 隐私实践：`privacy-practices.md`（控制台填写指引 + PRIVACY.md 政策文本草稿；已核实全仓零网络调用）
-- 待用户决定：PRIVACY.md 是否入库（商店后台需填隐私政策链接）
+- ~~待用户决定：PRIVACY.md 是否入库~~ ✅ 已决定入库（仓库根 `PRIVACY.md`，2026-08-10；商店后台填 GitHub 链接，push 后生效）
 
 ## 7. 发布步骤（用户手动执行）
 
-1. 合并 `worktree-debt08-site-exclusion` → master
-2. 全量验证：`npm run lint && npm test && npm run docs:check && npm run build`
-3. 打 tag：`git tag v1.1.0`（manifest/package.json 版本已是 1.1.0；CHANGELOG 日期 2026-08-06 可按实际上架日调整）
+1. ~~合并 `worktree-debt08-site-exclusion` → master~~ ✅（2026-08-10，ff 至 78d3ca8）
+2. ~~全量验证：`npm run lint && npm test && npm run docs:check && npm run build`~~ ✅（master 态复跑全绿：lint 36 / 单测 33 / docs:check / build 1.1.0）
+3. 打 tag：`git tag v1.1.0`（manifest/package.json 版本已是 1.1.0；CHANGELOG 日期已定为 2026-08-10）
 4. 打包：`npm run package`（产物 releases/，dist 仅含运行时目录）
 5. 开发者控制台上传 zip + 填写商店资料（截图/描述/隐私实践见 store-assets/）
