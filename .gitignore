@@ -206,3 +206,6 @@ auto-docs/
 
 # Playwright CLI 缓存
 .playwright-cli/
+
+# AI 工具本地目录（含 worktree 注册，误 add 会产生 gitlink）
+.claude/
