@@ -10,6 +10,7 @@ class StorageUtils {
     PLUGIN_ENABLED: 'plugin_enabled',
     FORCE_MODE: 'force_mode',
     AUTO_ENABLE_LIST: 'auto_enable_list',
+    EXCLUDED_LIST: 'excluded_list',
     USER_SETTINGS: 'user_settings',
     STATISTICS: 'statistics',
     LAST_UPDATE: 'last_update',
@@ -23,6 +24,9 @@ class StorageUtils {
     pluginEnabled: true,
     forceMode: false,
     autoEnableList: [],
+    // 敏感账号登录页默认排除：injector 的原型重写暴露面不应覆盖高价值账号页
+    // （依据 docs/测试报告-真实站点回归-2026-08.md R5）
+    excludedList: ['accounts.google.com', 'login.live.com', 'appleid.apple.com'],
     showNotifications: true,
     enableStatistics: true,
     theme: 'auto',
@@ -225,6 +229,70 @@ class StorageUtils {
    */
   static async setAutoEnableList(list) {
     await StorageUtils.set({ [StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: list });
+  }
+
+  /**
+   * 获取站点排除列表
+   * 键缺席时回落到默认敏感域名；用户清空（存入空数组）则尊重用户选择
+   * @returns {Promise<Array<string>>} 域名列表
+   */
+  static async getExcludedList() {
+    const result = await this.get(this.STORAGE_KEYS.EXCLUDED_LIST);
+    const list = result[this.STORAGE_KEYS.EXCLUDED_LIST] ?? this.DEFAULT_SETTINGS.excludedList;
+    return Array.isArray(list) ? list : [];
+  }
+
+  /**
+   * 添加域名到站点排除列表
+   * @param {string} domain - 域名
+   * @returns {Promise<void>}
+   */
+  static async addToExcludedList(domain) {
+    const list = await this.getExcludedList();
+    if (!list.includes(domain)) {
+      list.push(domain);
+      await this.set({ [this.STORAGE_KEYS.EXCLUDED_LIST]: list });
+    }
+  }
+
+  /**
+   * 从站点排除列表移除域名
+   * @param {string} domain - 域名
+   * @returns {Promise<void>}
+   */
+  static async removeFromExcludedList(domain) {
+    const list = await this.getExcludedList();
+    const index = list.indexOf(domain);
+    if (index > -1) {
+      list.splice(index, 1);
+      await this.set({ [this.STORAGE_KEYS.EXCLUDED_LIST]: list });
+    }
+  }
+
+  /**
+   * 设置站点排除列表
+   * @param {Array<string>} list - 域名列表
+   * @returns {Promise<void>}
+   */
+  static async setExcludedList(list) {
+    await this.set({ [this.STORAGE_KEYS.EXCLUDED_LIST]: list });
+  }
+
+  /**
+   * 判断主机名是否被排除列表命中（纯函数，供 background/content 共用判定语义）
+   * 精确匹配或子域后缀匹配：排除 bilibili.com 即覆盖 www.bilibili.com；
+   * 按点分段拼接避免误伤相似域名（排除 google.com 不覆盖 notgoogle.com）
+   * @param {string} hostname - 主机名
+   * @param {Array<string>} excludedList - 排除域名列表
+   * @returns {boolean} 是否被排除
+   */
+  static isDomainExcluded(hostname, excludedList) {
+    if (!hostname || !Array.isArray(excludedList)) return false;
+    const host = String(hostname).toLowerCase();
+    return excludedList.some(entry => {
+      const domain = String(entry).toLowerCase();
+      return host === domain || host.endsWith('.' + domain);
+    });
   }
 
   /**

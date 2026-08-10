@@ -115,8 +115,10 @@ class CopyPasteManager {
     for (let attempt = 0; attempt <= this.maxRetryCount; attempt++) {
       try {
         const response = await Promise.race([
-          MessageUtils.sendToBackground(MessageUtils.MESSAGE_TYPES.GET_STATUS),
-          new Promise((_, reject) => 
+          // 携带域名供 background 做排除列表裁决（DEBT-08）：被排除站点收到 enabled=false，
+          // 本页完全休眠、injector 不注入
+          MessageUtils.sendToBackground(MessageUtils.MESSAGE_TYPES.GET_STATUS, { domain: window.location.hostname }),
+          new Promise((_, reject) =>
             setTimeout(() => reject(new Error('Timeout')), this.stateLoadTimeout)
           )
         ]);
@@ -802,6 +804,16 @@ class CopyPasteManager {
       // 处理存储变化
       const changes = data.changes;
       let stateChanged = false;
+
+      // 排除列表（DEBT-08）变更会翻转本站启用裁决：重走 GET_STATUS 全量加载，
+      // 复用 background 的排除判定，避免 content 侧重复实现域名匹配逻辑；
+      // 全量加载同时覆盖同事务里的其他键变更，故提前返回
+      if (changes[StorageUtils.STORAGE_KEYS.EXCLUDED_LIST]) {
+        await this.loadSettingsWithRetry();
+        await this.applyCurrentState();
+        this.notifyStateListeners();
+        return { success: true };
+      }
 
       if (changes[StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED]) {
         this.isEnabled = changes[StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED].newValue;

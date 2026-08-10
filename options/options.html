@@ -33,6 +33,13 @@
           </svg>
           <span data-i18n="nav_whitelist">自动解锁管理</span>
         </li>
+        <li class="menu-item" data-tab="excluded">
+          <svg class="menu-icon" viewBox="0 0 24 24">
+            <path
+              d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z" />
+          </svg>
+          <span data-i18n="nav_excluded">站点排除</span>
+        </li>
         <li class="menu-item" data-tab="advanced">
           <svg class="menu-icon" viewBox="0 0 24 24">
             <path
@@ -216,6 +223,43 @@
                     d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" />
                 </svg>
                 <p class="empty-text" data-i18n="empty_whitelist">暂无自动解锁网站</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 站点排除 -->
+      <div class="tab-content" id="excluded">
+        <div class="content-header">
+          <h2 class="content-title" data-i18n="nav_excluded">站点排除</h2>
+          <p class="content-description" data-i18n="excluded_description">管理完全停用 EasyCV 的网站（优先级高于自动启用与强力模式）</p>
+        </div>
+
+        <div class="whitelist-section">
+          <div class="add-whitelist">
+            <h3 class="section-title" data-i18n="add_website">添加网站</h3>
+            <div class="add-form">
+              <input type="text" id="excludedInput" data-i18n-placeholder="excluded_placeholder" placeholder="输入要排除的域名，如：bilibili.com">
+              <button class="btn btn-primary" id="addExcludedBtn" data-i18n="add_btn">添加</button>
+            </div>
+          </div>
+
+          <div class="whitelist-list">
+            <h3 class="section-title" data-i18n="excluded_sites_title">已排除的网站</h3>
+            <div class="option-hint">
+              <svg class="hint-icon" viewBox="0 0 24 24">
+                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17A1.5,1.5 0 0,1 10.5,15.5A1.5,1.5 0 0,1 12,14A1.5,1.5 0 0,1 13.5,15.5A1.5,1.5 0 0,1 12,17M12,10.5A1.5,1.5 0 0,1 10.5,9A1.5,1.5 0 0,1 12,7.5A1.5,1.5 0 0,1 13.5,9A1.5,1.5 0 0,1 12,10.5Z"/>
+              </svg>
+              <span data-i18n="excluded_hint">排除后该网站将完全停用 EasyCV，遭遇误伤（如站点定制右键菜单失效）时可将该站加入此处；列表已内置常见账号登录页，可自行删减</span>
+            </div>
+            <div class="list-container" id="excludedContainer">
+              <div class="empty-state">
+                <svg class="empty-icon" viewBox="0 0 24 24">
+                  <path
+                    d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z" />
+                </svg>
+                <p class="empty-text" data-i18n="empty_excluded">暂无排除网站</p>
               </div>
             </div>
           </div>

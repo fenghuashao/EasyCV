@@ -36,7 +36,15 @@ class AutoEnableManager {
 
       const urlObj = new URL(url);
       const domain = urlObj.hostname;
-      
+
+      // 排除列表（DEBT-08）优先级高于自动启用名单：命中即跳过，
+      // 避免用户刚把误伤站点排除又被自动启用配置拉回启用态
+      const state = await this.stateManager.getPluginState(domain);
+      if (state.excluded) {
+        console.debug(`AutoEnableManager: ${domain} is in excluded list, skip auto-enable`);
+        return false;
+      }
+
       // 防抖处理
       if (!skipDebounce && !force) {
         const lastTime = this.lastProcessTime.get(tabId);

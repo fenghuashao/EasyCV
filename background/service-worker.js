@@ -61,7 +61,8 @@ class StateManager {
       StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED,
       StorageUtils.STORAGE_KEYS.FORCE_MODE,
       StorageUtils.STORAGE_KEYS.USER_SETTINGS,
-      StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST
+      StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST,
+      StorageUtils.STORAGE_KEYS.EXCLUDED_LIST
     ];
 
     const data = await StorageUtils.get(keys);
@@ -71,6 +72,7 @@ class StateManager {
     this.stateCache.set('forceMode', data[StorageUtils.STORAGE_KEYS.FORCE_MODE] ?? StorageUtils.DEFAULT_SETTINGS.forceMode);
     this.stateCache.set('userSettings', { ...StorageUtils.DEFAULT_SETTINGS, ...data[StorageUtils.STORAGE_KEYS.USER_SETTINGS] });
     this.stateCache.set('autoEnableList', data[StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST] ?? StorageUtils.DEFAULT_SETTINGS.autoEnableList);
+    this.stateCache.set('excludedList', data[StorageUtils.STORAGE_KEYS.EXCLUDED_LIST] ?? StorageUtils.DEFAULT_SETTINGS.excludedList);
   }
 
   /**
@@ -92,6 +94,10 @@ class StateManager {
             break;
           case StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST:
             this.stateCache.set('autoEnableList', change.newValue);
+            break;
+          case StorageUtils.STORAGE_KEYS.EXCLUDED_LIST:
+            // 键被移除（如清空数据）时回落默认敏感域名，保持账号页保护不裸奔
+            this.stateCache.set('excludedList', change.newValue ?? StorageUtils.DEFAULT_SETTINGS.excludedList);
             break;
         }
       }
@@ -130,6 +136,9 @@ class StateManager {
         copyEnabled: baseState.userSettings.copyEnabled,
         pasteEnabled: baseState.userSettings.pasteEnabled
       };
+
+      // 排除列表（DEBT-08）：命中即本站休眠，优先级高于全局开关与自动启用
+      baseState.excluded = StorageUtils.isDomainExcluded(domain, this.stateCache.get('excludedList'));
     }
 
     return baseState;
@@ -813,14 +822,15 @@ class BackgroundManager {
       const domain = data?.domain || null;
       const state = await this.stateManager.getPluginState(domain);
 
-      // 确保所有必需的字段都有有效值
+      // 确保所有必需的字段都有有效值；排除站点强制 enabled=false（DEBT-08 逃生通道）
       const responseData = {
-        enabled: Boolean(state.pluginEnabled),
+        enabled: Boolean(state.pluginEnabled) && !state.excluded,
         copyEnabled: Boolean(state.userSettings?.copyEnabled !== false),
         pasteEnabled: Boolean(state.userSettings?.pasteEnabled !== false),
         forceMode: Boolean(state.forceMode),
         settings: state.userSettings || {},
         domainConfig: state.domainConfig || null,
+        excluded: Boolean(state.excluded),
         timestamp: state.timestamp || Date.now()
       };
 
@@ -1198,8 +1208,17 @@ chrome.runtime.onInstalled.addListener(async (details) => {
       [StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED]: true,
       [StorageUtils.STORAGE_KEYS.FORCE_MODE]: false,
       [StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: [],
+      [StorageUtils.STORAGE_KEYS.EXCLUDED_LIST]: StorageUtils.DEFAULT_SETTINGS.excludedList,
       [StorageUtils.STORAGE_KEYS.USER_SETTINGS]: StorageUtils.DEFAULT_SETTINGS
     });
+  } else if (details.reason === 'update') {
+    // 老版本升级：仅在排除列表键缺席时种子默认敏感域名，不覆盖用户已有列表
+    const existing = await StorageUtils.get(StorageUtils.STORAGE_KEYS.EXCLUDED_LIST);
+    if (existing[StorageUtils.STORAGE_KEYS.EXCLUDED_LIST] === undefined) {
+      await StorageUtils.set({
+        [StorageUtils.STORAGE_KEYS.EXCLUDED_LIST]: StorageUtils.DEFAULT_SETTINGS.excludedList
+      });
+    }
   }
 });
 

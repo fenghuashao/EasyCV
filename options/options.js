@@ -10,6 +10,7 @@ class OptionsManager {
     this.currentTab = 'general';
     this.settings = {};
     this.whitelist = [];
+    this.excludedList = [];
     this.statistics = {};
 
     this.init();
@@ -57,6 +58,9 @@ class OptionsManager {
     
     // 白名单管理
     this.bindWhitelistEvents();
+
+    // 站点排除管理
+    this.bindExcludedEvents();
     
     // 高级设置
     this.bindAdvancedSettingsEvents();
@@ -187,6 +191,41 @@ class OptionsManager {
   }
   
   /**
+   * 绑定站点排除事件
+   */
+  bindExcludedEvents() {
+    const addBtn = document.getElementById('addExcludedBtn');
+    const input = document.getElementById('excludedInput');
+
+    if (addBtn && input) {
+      addBtn.addEventListener('click', () => {
+        this.addExcludedDomain(input.value.trim());
+      });
+
+      input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          this.addExcludedDomain(input.value.trim());
+        }
+      });
+    }
+
+    // 删除按钮走事件委托且只绑定一次（renderExcludedList 每次渲染都会重建子节点，
+    // 若随渲染重复绑定会让一次点击触发多次删除）
+    const container = document.getElementById('excludedContainer');
+    if (container) {
+      container.addEventListener('click', (e) => {
+        const deleteBtn = e.target.closest('.action-btn-small.delete');
+        if (deleteBtn) {
+          const domain = deleteBtn.getAttribute('data-domain');
+          if (domain) {
+            this.removeExcludedDomain(domain);
+          }
+        }
+      });
+    }
+  }
+
+  /**
    * 绑定高级设置事件
    */
   bindAdvancedSettingsEvents() {
@@ -301,6 +340,9 @@ class OptionsManager {
       
       // 加载白名单
       this.whitelist = await StorageUtils.getAutoEnableList();
+
+      // 加载站点排除列表
+      this.excludedList = await StorageUtils.getExcludedList();
       
       // 加载统计数据
       this.statistics = await StorageUtils.getStatistics();
@@ -319,6 +361,9 @@ class OptionsManager {
     
     // 渲染白名单
     this.renderWhitelist();
+
+    // 渲染站点排除列表
+    this.renderExcludedList();
     
     // 加载统计数据
     this.loadStatistics();
@@ -621,6 +666,92 @@ class OptionsManager {
   }
   
   /**
+   * 添加排除域名
+   */
+  async addExcludedDomain(domain) {
+    if (!domain) {
+      this.showNotification(I18nUtils.t('invalid_domain_empty'), 'warning');
+      return;
+    }
+
+    if (!this.isValidDomain(domain)) {
+      this.showNotification(I18nUtils.t('invalid_domain_format'), 'warning');
+      return;
+    }
+
+    if (this.excludedList.includes(domain)) {
+      this.showNotification(I18nUtils.t('domain_exists'), 'warning');
+      return;
+    }
+
+    try {
+      this.excludedList.push(domain);
+      await StorageUtils.setExcludedList(this.excludedList);
+
+      const input = document.getElementById('excludedInput');
+      if (input) input.value = '';
+
+      this.renderExcludedList();
+      this.showNotification(I18nUtils.t('domain_added'), 'success');
+    } catch (error) {
+      console.error('Failed to add excluded domain:', error);
+      this.showNotification(I18nUtils.t('add_failed'), 'error');
+    }
+  }
+
+  /**
+   * 删除排除域名
+   */
+  async removeExcludedDomain(domain) {
+    try {
+      this.excludedList = this.excludedList.filter(item => item !== domain);
+      await StorageUtils.setExcludedList(this.excludedList);
+
+      this.renderExcludedList();
+      this.showNotification(I18nUtils.t('domain_deleted'), 'success');
+    } catch (error) {
+      console.error('Failed to remove excluded domain:', error);
+      this.showNotification(I18nUtils.t('delete_failed'), 'error');
+    }
+  }
+
+  /**
+   * 渲染站点排除列表
+   */
+  renderExcludedList() {
+    const container = document.getElementById('excludedContainer');
+    if (!container) return;
+
+    if (this.excludedList.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <svg class="empty-icon" viewBox="0 0 24 24">
+            <path d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z"/>
+          </svg>
+          <p class="empty-text">${I18nUtils.t('empty_excluded')}</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = this.excludedList.map(domain => `
+      <div class="whitelist-item" data-domain="${domain}">
+        <div class="whitelist-info">
+          <div class="domain-header">
+            <span class="whitelist-domain">${domain}</span>
+          </div>
+        </div>
+        <div class="whitelist-actions">
+          <button class="action-btn-small delete" data-domain="${domain}" title="${I18nUtils.t('delete_title')}">
+            <svg viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+            ${I18nUtils.t('delete_btn')}
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  /**
    * 验证域名格式
    */
   isValidDomain(domain) {
@@ -636,6 +767,7 @@ class OptionsManager {
       const data = {
         settings: this.settings,
         whitelist: this.whitelist,
+        excludedList: this.excludedList,
         exportDate: new Date().toISOString(),
         version: '1.0.0'
       };
@@ -691,10 +823,17 @@ class OptionsManager {
       // 导入白名单
       this.whitelist = data.whitelist;
       await StorageUtils.setAutoEnableList(this.whitelist);
-      
+
+      // 导入站点排除列表（旧版导出文件无此字段时跳过，保留现状）
+      if (Array.isArray(data.excludedList)) {
+        this.excludedList = data.excludedList;
+        await StorageUtils.setExcludedList(this.excludedList);
+      }
+
       // 更新UI
       this.updateFormValues();
       this.renderWhitelist();
+      this.renderExcludedList();
       
       this.showNotification(I18nUtils.t('settings_imported'), 'success');
     } catch (error) {
