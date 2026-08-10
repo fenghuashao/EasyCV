@@ -363,7 +363,7 @@ class StorageUtils {
     return {
       ...data,
       exportTime: new Date().toISOString(),
-      version: '1.0.0'
+      version: '1.1.0'
     };
   }
 

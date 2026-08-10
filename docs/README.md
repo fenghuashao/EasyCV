@@ -29,6 +29,7 @@
 | [项目开发计划](./项目开发计划.md) | Working Document | active | EasyCV插件功能需求文档 | 开发/产品 | 里程碑、阶段目标、风险与优先级发生变化 |
 | [ADR-001 合并 t1 重写版](./decisions/ADR-001-合并t1重写版.md) | Governance Document | active | 本文档 | 开发/维护者 | 合并范围或移植选型被重新决策 |
 | [待修复任务清单](./待修复任务清单.md) | Working Document | active | 项目开发计划 | 开发/测试 | 新增任务、任务状态变化、优先级调整 |
+| [发布核验清单](./release-checklist.md) | Working Document | active | 测试计划 | 开发/发布 | 每次发布前按 release-readiness 流程刷新 |
 | [测试计划](./测试计划.md) | Source Document | active | 本文档 | 测试/开发 | 测试策略、浏览器支持范围、执行方式、发布前门槛发生变化 |
 | [测试用例](./测试用例.md) | Source Document | active | 测试计划 | 测试/开发 | 功能变更、新增功能、回归范围变化 |
 | [功能验证指南](./功能验证指南.md) | Reference Document | active | 测试计划 | 测试/开发 | 验证步骤、关键流程或测试环境发生变化 |

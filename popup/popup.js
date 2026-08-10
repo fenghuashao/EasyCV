@@ -310,7 +310,7 @@ class PopupManager {
       pasteEnabled: true,
       forceMode: false,
       timestamp: Date.now(),
-      version: '1.0.0'
+      version: '1.1.0'
     };
     
     this.currentState = defaultState;

@@ -463,7 +463,7 @@ const MESSAGE_TYPES = {
 {
   type: 'get_status',
   data: {
-    tabId: number
+    domain?: string  // content.js 携带当前页主机名，供排除列表裁决（DEBT-08）
   }
 }
 
@@ -471,10 +471,14 @@ const MESSAGE_TYPES = {
 {
   success: boolean,
   data: {
-    isEnabled: boolean,
+    enabled: boolean,        // 命中排除列表的站点恒为 false（优先级高于全局开关）
+    copyEnabled: boolean,
+    pasteEnabled: boolean,
     forceMode: boolean,
-    domain: string,
-    restrictions: Array<string>
+    settings: Object,        // 用户设置快照
+    domainConfig: Object|null, // 当前域名在自动启用名单中的配置（未配置为默认）
+    excluded: boolean,       // 本站是否命中排除列表（DEBT-08）
+    timestamp: number
   }
 }
 ```
