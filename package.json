@@ -14,6 +14,7 @@
     "lint:fix": "node scripts/lint.js",
     "icons": "node scripts/generate-icons.js",
     "package": "npm run build && npm run zip",
+    "package:quick": "node scripts/quick-package.js",
     "zip": "node scripts/package.js",
     "clean": "node scripts/clean.js",
     "bump:patch": "node scripts/bump-version.js patch",
