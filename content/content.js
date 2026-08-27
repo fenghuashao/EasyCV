@@ -44,7 +44,18 @@ class CopyPasteManager {
     this.lastKnownUrl = location.href;
     this.spaCheckTimer = null;
 
+    // 日志静音（DEBT-05）：仅当用户设置 debugMode=true 时输出调试日志；
+    // 设置加载前默认静音（页面控制台噪音即 B站实测 67 条/页的来源）
+    this.debugMode = false;
+
     this.initializeManager();
+  }
+
+  /**
+   * 受 debugMode 门控的调试日志（替代裸 console.log，warn/error 不受控）
+   */
+  debugLog(...args) {
+    if (this.debugMode) console.log(...args);
   }
 
   /**
@@ -52,41 +63,41 @@ class CopyPasteManager {
    */
   async initializeManager() {
     try {
-      console.log('Initializing CopyPasteManager...');
-      console.log('Current URL:', window.location.href);
-      console.log('Document readyState:', document.readyState);
+      this.debugLog('Initializing CopyPasteManager...');
+      this.debugLog('Current URL:', window.location.href);
+      this.debugLog('Document readyState:', document.readyState);
       
       // 优化的状态加载流程（现在不会抛出错误）
-      console.log('Loading settings with retry...');
+      this.debugLog('Loading settings with retry...');
       await this.loadSettingsWithRetry();
-      console.log('Settings loaded successfully');
+      this.debugLog('Settings loaded successfully');
 
       // 设置消息监听
-      console.log('Setting up message listeners...');
+      this.debugLog('Setting up message listeners...');
       this.setupMessageListeners();
 
       // 设置状态监听器
-      console.log('Setting up state listeners...');
+      this.debugLog('Setting up state listeners...');
       this.setupStateListeners();
 
       // 检测页面限制
-      console.log('Detecting page restrictions...');
+      this.debugLog('Detecting page restrictions...');
       this.detectRestrictions();
 
       // 应用当前状态
-      console.log('Applying current state...');
+      this.debugLog('Applying current state...');
       await this.applyCurrentState();
-      console.log('Current state applied successfully');
+      this.debugLog('Current state applied successfully');
 
       // 监听DOM变化
-      console.log('Setting up DOM observer...');
+      this.debugLog('Setting up DOM observer...');
       this.setupDOMObserver();
 
       // 监听 SPA 路由变化
       this.setupSPAListener();
 
-      console.log('EasyCV Content Script initialized with state management');
-      console.log('Final state:', {
+      this.debugLog('EasyCV Content Script initialized with state management');
+      this.debugLog('Final state:', {
         isEnabled: this.isEnabled,
         copyEnabled: this.copyEnabled,
         pasteEnabled: this.pasteEnabled,
@@ -99,9 +110,9 @@ class CopyPasteManager {
       this.reportError(error);
       // 使用默认状态继续运行
       try {
-        console.log('Attempting to apply default state...');
+        this.debugLog('Attempting to apply default state...');
         await this.applyDefaultState();
-        console.log('Default state applied successfully');
+        this.debugLog('Default state applied successfully');
       } catch (applyError) {
         console.error('Failed to apply default state:', applyError);
       }
@@ -132,14 +143,18 @@ class CopyPasteManager {
           };
 
           // 添加调试日志
-          console.log('Received response from background:', response);
-          console.log('Constructed newState:', newState);
+          this.debugLog('Received response from background:', response);
+          this.debugLog('Constructed newState:', newState);
+
+          // 日志静音开关（DEBT-05）：同步用户 debugMode 设置，同时作为
+          // main world injector 的门控标志源（见 injectInjectorScript）
+          this.debugMode = response?.data?.settings?.debugMode === true;
 
           // 验证状态
           if (this.validateState(newState)) {
             this.updateLocalState(newState);
             this.lastKnownState = { ...newState };
-            console.log('State loaded successfully:', newState);
+            this.debugLog('State loaded successfully:', newState);
             return;
           } else {
             console.error('State validation failed:', {
@@ -168,7 +183,7 @@ class CopyPasteManager {
           // 优雅降级：使用最后已知状态或默认状态
           if (this.lastKnownState) {
             this.updateLocalState(this.lastKnownState);
-            console.log('Using last known state:', this.lastKnownState);
+            this.debugLog('Using last known state:', this.lastKnownState);
           } else {
             // 使用默认状态
             const defaultState = {
@@ -179,7 +194,7 @@ class CopyPasteManager {
             };
             this.updateLocalState(defaultState);
             this.lastKnownState = { ...defaultState };
-            console.log('Using default state:', defaultState);
+            this.debugLog('Using default state:', defaultState);
           }
           // 不再抛出错误，而是继续执行
           return;
@@ -224,7 +239,7 @@ class CopyPasteManager {
     
     this.updateLocalState(defaultState);
     await this.applyCurrentState();
-    console.log('Applied default state due to initialization failure');
+    this.debugLog('Applied default state due to initialization failure');
   }
 
   /**
@@ -308,8 +323,8 @@ class CopyPasteManager {
    */
   enableCopyPaste() {
     try {
-      console.log('启用复制粘贴功能');
-      console.log('Current state before enabling:', {
+      this.debugLog('启用复制粘贴功能');
+      this.debugLog('Current state before enabling:', {
         isEnabled: this.isEnabled,
         copyEnabled: this.copyEnabled,
         pasteEnabled: this.pasteEnabled,
@@ -320,11 +335,11 @@ class CopyPasteManager {
       this.clearPerformanceData();
       
       // 移除全局限制
-      console.log('Removing global restrictions...');
+      this.debugLog('Removing global restrictions...');
       this.removeGlobalRestrictions();
 
       // 批量处理页面中的所有元素
-      console.log('Processing all elements...');
+      this.debugLog('Processing all elements...');
       const allElements = document.querySelectorAll('*');
       this.scheduleElementProcessing(Array.from(allElements));
 
@@ -334,7 +349,7 @@ class CopyPasteManager {
       }
 
       // 注入自定义脚本（用于处理更深层的限制）
-      console.log('Injecting custom script...');
+      this.debugLog('Injecting custom script...');
       if (document.documentElement.dataset.easycvInjected) {
         // injector 已在 main world 中，重新注入会被其防重复守卫跳过，
         // 必须经 postMessage 通知其恢复原型重写与动态保护
@@ -343,12 +358,12 @@ class CopyPasteManager {
         this.injectCustomScript();
       }
 
-      console.log('Copy-paste restrictions removed');
+      this.debugLog('Copy-paste restrictions removed');
       
       // 验证注入是否成功（跨 world 信号走共享 DOM 的 dataset，理由同上）
       setTimeout(() => {
         if (document.documentElement.dataset.easycvInjected) {
-          console.log('✓ Custom script injection verified successfully');
+          this.debugLog('✓ Custom script injection verified successfully');
         } else {
           console.warn('⚠ Custom script injection may have failed - EasyCVInjected flag not found');
         }
@@ -363,7 +378,7 @@ class CopyPasteManager {
    * 禁用复制粘贴功能
    */
   disableCopyPaste() {
-    console.log('禁用复制粘贴功能');
+    this.debugLog('禁用复制粘贴功能');
 
     // 通知 main world 的 injector 恢复原始函数（启停协议由 content script 单向触发，
     // 否则禁用后 main world 的原型重写与强制样式仍然残留）
@@ -577,24 +592,31 @@ class CopyPasteManager {
    */
   injectCustomScript() {
     try {
-      console.log('Creating injector script element...');
+      this.debugLog('Creating injector script element...');
+      // injector 运行在 main world，读不到扩展存储；经 dataset 下发日志门控
+      // （DEBT-05）。标志保留不清理：SPA 重注入与 injector 内部初始化均需读取
+      if (this.debugMode) {
+        document.documentElement.dataset.easycvDebug = '1';
+      } else {
+        delete document.documentElement.dataset.easycvDebug;
+      }
       const script = document.createElement('script');
       
       const injectorUrl = chrome.runtime.getURL('content/injector.js');
-      console.log('Injector URL:', injectorUrl);
+      this.debugLog('Injector URL:', injectorUrl);
       
       script.src = injectorUrl;
       script.type = 'text/javascript';
       
       script.onload = () => {
-        console.log('✓ Injector script loaded successfully');
+        this.debugLog('✓ Injector script loaded successfully');
         script.remove();
         
         // 验证注入是否成功（injector 在 main world 执行，与本 isolated world 的 window 隔离，
         // 注入成功信号经共享 DOM 的 dataset 传递）
         setTimeout(() => {
           if (document.documentElement.dataset.easycvInjected) {
-            console.log('✓ EasyCVInjected flag confirmed');
+            this.debugLog('✓ EasyCVInjected flag confirmed');
           } else {
             console.error('✗ EasyCVInjected flag not found after injection');
           }
@@ -607,11 +629,11 @@ class CopyPasteManager {
       };
       
       const targetElement = document.head || document.documentElement;
-      console.log('Appending script to:', targetElement.tagName);
+      this.debugLog('Appending script to:', targetElement.tagName);
       
       if (targetElement) {
         targetElement.appendChild(script);
-        console.log('✓ Injector script element appended to DOM');
+        this.debugLog('✓ Injector script element appended to DOM');
       } else {
         console.error('✗ No suitable parent element found for script injection');
       }
@@ -688,7 +710,7 @@ class CopyPasteManager {
 
     clearTimeout(this.spaCheckTimer);
     this.spaCheckTimer = setTimeout(() => {
-      console.log('SPA navigation detected, re-applying unlock:', currentUrl);
+      this.debugLog('SPA navigation detected, re-applying unlock:', currentUrl);
       // SPA 重渲染可能在已处理过的元素上重挂限制，清空去重缓存以允许重新处理
       this.processedElements = new WeakSet();
       this.enableCopyPaste();
@@ -779,7 +801,7 @@ class CopyPasteManager {
     await this.applyCurrentState();
     this.notifyStateListeners();
     
-    console.log('Force mode enabled');
+    this.debugLog('Force mode enabled');
     return { success: true, forceMode: true };
   }
 
@@ -792,7 +814,7 @@ class CopyPasteManager {
     await this.applyCurrentState();
     this.notifyStateListeners();
     
-    console.log('Force mode disabled');
+    this.debugLog('Force mode disabled');
     return { success: true, forceMode: false };
   }
 
@@ -912,7 +934,7 @@ class CopyPasteManager {
         this.disableCopyPaste();
       }
       
-      console.log('Current state applied:', {
+      this.debugLog('Current state applied:', {
         isEnabled: this.isEnabled,
         copyEnabled: this.copyEnabled,
         pasteEnabled: this.pasteEnabled,
@@ -930,7 +952,7 @@ class CopyPasteManager {
   setupStateListeners() {
     // 监听来自Background的状态广播
     this.addStateListener((state) => {
-      console.log('State change detected:', state);
+      this.debugLog('State change detected:', state);
     });
   }
 
@@ -988,7 +1010,7 @@ class CopyPasteManager {
         if (JSON.stringify(oldState) !== JSON.stringify(data)) {
           await this.applyCurrentState();
           this.notifyStateListeners();
-          console.log('State updated from broadcast:', data);
+          this.debugLog('State updated from broadcast:', data);
         }
         
         return { success: true };
@@ -1218,7 +1240,7 @@ class CopyPasteManager {
 
     this.disableCopyPaste();
     
-    console.log('CopyPasteManager cleaned up');
+    this.debugLog('CopyPasteManager cleaned up');
   }
 }
 

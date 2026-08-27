@@ -373,17 +373,15 @@
         "preventDefaultWrapped": true
       },
       "inputTyping": {
-        "attempted": true,
-        "typed": "easycv",
-        "value": "easycv",
-        "ok": true
+        "attempted": false,
+        "reason": "无可见输入框"
       },
       "player": {
         "videoFound": true,
         "canPlay": true,
         "spacePauses": true,
         "spaceScrollSideEffect": false,
-        "arrowRightSeekDelta": 5.54,
+        "arrowRightSeekDelta": 5.56,
         "arrowRightSeeks": true
       },
       "loginPhoneFilter": {
@@ -392,7 +390,7 @@
       }
     },
     "errors": [],
-    "easycvLogs": 67,
+    "easycvLogs": 1,
     "consoleErrors": [],
     "pageErrors": []
   },

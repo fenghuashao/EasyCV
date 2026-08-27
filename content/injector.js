@@ -5,28 +5,36 @@
 
 (function() {
   'use strict';
-  
+
+  // 日志静音（DEBT-05）：由 content script 在注入前经 dataset 下发开关，
+  // 仅 debugMode=true 时输出调试日志；调用时动态读取以兼容脚本执行时序
+  function debugLog(...args) {
+    if (document.documentElement?.dataset?.easycvDebug === '1') {
+      console.log(...args);
+    }
+  }
+
   // 防止重复注入
   if (window.EasyCVInjected) {
-    console.log('EasyCV Injector already loaded, skipping...');
+    debugLog('EasyCV Injector already loaded, skipping...');
     return;
   }
   
-  console.log('Starting EasyCV Injector initialization...');
-  console.log('Current URL:', window.location.href);
-  console.log('Document readyState:', document.readyState);
+  debugLog('Starting EasyCV Injector initialization...');
+  debugLog('Current URL:', window.location.href);
+  debugLog('Document readyState:', document.readyState);
   
   window.EasyCVInjected = true;
   // content script 运行在 isolated world，与本 main world 的 window 互相隔离，
   // 跨 world 的注入成功信号必须走两边共享的 DOM；window flag 保留供防重复注入与页面侧检测使用
   document.documentElement.dataset.easycvInjected = 'true';
-  console.log('✓ EasyCVInjected flag set to true');
-  console.log('EasyCV Injector script loaded');
+  debugLog('✓ EasyCVInjected flag set to true');
+  debugLog('EasyCV Injector script loaded');
   
   /**
    * 保存原始函数引用
    */
-  console.log('Saving original function references...');
+  debugLog('Saving original function references...');
   const originalFunctions = {
     addEventListener: EventTarget.prototype.addEventListener,
     removeEventListener: EventTarget.prototype.removeEventListener,
@@ -35,7 +43,7 @@
     stopImmediatePropagation: Event.prototype.stopImmediatePropagation,
     attachShadow: Element.prototype.attachShadow
   };
-  console.log('✓ Original functions saved');
+  debugLog('✓ Original functions saved');
   
   /**
    * 注册吞没名单：命中源码正则的监听器直接不予注册，破坏性最强，只保留纯限制向事件。
@@ -126,7 +134,7 @@
     if (swallowEvents.includes(String(type).toLowerCase())) {
       // 检查监听器是否可能是限制性的
       if (isRestrictiveListener(listener)) {
-        console.log(`EasyCV: Intercepted restrictive ${type} listener`);
+        debugLog(`EasyCV: Intercepted restrictive ${type} listener`);
 
         // 存储被拦截的监听器（仅调试记录）。页面篡改 Map 时此处的 TypeError 若穿透进
         // 页面自身 addEventListener 调用栈，会炸断页面脚本块（道客巴巴 P0 实证），
@@ -203,7 +211,7 @@
    */
   const overriddenPreventDefault = function() {
     if (shouldNeutralize(this)) {
-      console.log(`EasyCV: Prevented preventDefault on ${this.type} event`);
+      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);
       return; // 不执行preventDefault
     }
 
@@ -216,7 +224,7 @@
    */
   const overriddenStopPropagation = function() {
     if (shouldNeutralize(this)) {
-      console.log(`EasyCV: Prevented stopPropagation on ${this.type} event`);
+      debugLog(`EasyCV: Prevented stopPropagation on ${this.type} event`);
       return;
     }
 
@@ -228,7 +236,7 @@
    */
   const overriddenStopImmediatePropagation = function() {
     if (shouldNeutralize(this)) {
-      console.log(`EasyCV: Prevented stopImmediatePropagation on ${this.type} event`);
+      debugLog(`EasyCV: Prevented stopImmediatePropagation on ${this.type} event`);
       return;
     }
 
@@ -284,7 +292,7 @@
                 const inlineHandler = element[handlerProperty];
                 
                 if (inlineHandler && isRestrictiveListener(inlineHandler)) {
-                  console.log(`EasyCV: Removed restrictive inline ${eventType} handler`);
+                  debugLog(`EasyCV: Removed restrictive inline ${eventType} handler`);
                   element[handlerProperty] = null;
                 }
                 
@@ -292,7 +300,7 @@
                 if (element.hasAttribute(handlerProperty)) {
                   const attrHandler = element.getAttribute(handlerProperty);
                   if (attrHandler && isRestrictiveListener(attrHandler)) {
-                    console.log(`EasyCV: Removed restrictive ${handlerProperty} attribute`);
+                    debugLog(`EasyCV: Removed restrictive ${handlerProperty} attribute`);
                     element.removeAttribute(handlerProperty);
                   }
                 }
@@ -318,7 +326,7 @@
     Object.defineProperty(document, 'onselectstart', {
       get: function() { return null; },
       set: function(value) {
-        console.log('EasyCV: Blocked attempt to set document.onselectstart');
+        debugLog('EasyCV: Blocked attempt to set document.onselectstart');
         // 不设置限制性处理器
       },
       configurable: true
@@ -328,7 +336,7 @@
     Object.defineProperty(document, 'oncontextmenu', {
       get: function() { return null; },
       set: function(value) {
-        console.log('EasyCV: Blocked attempt to set document.oncontextmenu');
+        debugLog('EasyCV: Blocked attempt to set document.oncontextmenu');
       },
       configurable: true
     });
@@ -337,7 +345,7 @@
     Object.defineProperty(document, 'ondragstart', {
       get: function() { return null; },
       set: function(value) {
-        console.log('EasyCV: Blocked attempt to set document.ondragstart');
+        debugLog('EasyCV: Blocked attempt to set document.ondragstart');
       },
       configurable: true
     });
@@ -485,7 +493,7 @@
       const target = document.head || document.documentElement;
       if (target) {
         target.appendChild(style);
-        console.log('EasyCV: Text selection styles injected');
+        debugLog('EasyCV: Text selection styles injected');
       }
     } catch (error) {
       console.error('EasyCV: Error injecting text selection styles:', error);
@@ -644,7 +652,7 @@
         }
       });
       
-      console.log('EasyCV: Original functions restored and cleanup completed');
+      debugLog('EasyCV: Original functions restored and cleanup completed');
     } catch (error) {
       console.error('EasyCV: Error restoring original functions:', error);
     }
@@ -673,7 +681,7 @@
       // 设置动态保护
       setupDynamicProtection();
       
-      console.log('EasyCV: Injector initialized successfully');
+      debugLog('EasyCV: Injector initialized successfully');
     } catch (error) {
       console.error('EasyCV: Injector initialization failed:', error);
     }
@@ -686,10 +694,10 @@
     if (event.source !== window) return;
     
     if (event.data.type === 'EASYCV_DISABLE') {
-      console.log('EasyCV: Disabling injector');
+      debugLog('EasyCV: Disabling injector');
       restoreOriginalFunctions();
     } else if (event.data.type === 'EASYCV_ENABLE') {
-      console.log('EasyCV: Re-enabling injector');
+      debugLog('EasyCV: Re-enabling injector');
       // 禁用后重新启用时，原型重写已被 restoreOriginalFunctions 还原，需要重新应用
       if (!injectorActive) {
         injectorActive = true;
@@ -713,8 +721,8 @@
     interceptedListeners: interceptedListeners
   };
   
-  console.log('✓ EasyCV Injector initialization completed successfully');
-  console.log('✓ All event interceptors are active');
-  console.log('✓ Global easycvInjector object available for debugging');
+  debugLog('✓ EasyCV Injector initialization completed successfully');
+  debugLog('✓ All event interceptors are active');
+  debugLog('✓ Global easycvInjector object available for debugging');
   
 })();
