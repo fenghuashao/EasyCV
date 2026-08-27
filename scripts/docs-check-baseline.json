@@ -1,11 +1,3 @@
 {
-  "suppressions": [
-    { "type": "path", "file": "docs/代码规范文档.md", "value": "assets/" },
-    { "type": "path", "file": "docs/代码规范文档.md", "value": "src/utils/dom-utils.js" },
-    { "type": "path", "file": "docs/代码规范文档.md", "value": "tests/unit/dom-utils.test.js" },
-    { "type": "path", "file": "docs/文档维护指南.md", "value": "scripts/check-links.js" },
-    { "type": "path", "file": "docs/文档维护指南.md", "value": "scripts/check-docs-sync.sh" },
-    { "type": "path", "file": "docs/文档维护指南.md", "value": "./package.json" },
-    { "type": "path", "file": "docs/文档维护指南.md", "value": "./manifest.json" }
-  ]
+  "suppressions": []
 }
