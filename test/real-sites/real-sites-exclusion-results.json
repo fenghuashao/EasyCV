@@ -1,0 +1,49 @@
+{
+  "timestamp": "2026-08-27T03:40:07.285Z",
+  "steps": [
+    {
+      "name": "扩展加载（service worker 就绪）",
+      "pass": true,
+      "detail": "pobjcedffenhdhiogagpgfbmpaagejnn"
+    },
+    {
+      "name": "基线：未排除站点正常注入",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "options UI 添加 example.org",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "存储层写入确认（chrome.storage.sync）",
+      "pass": true,
+      "detail": "共 4 项：accounts.google.com, login.live.com, appleid.apple.com, example.org"
+    },
+    {
+      "name": "排除后站点完全停用（不再注入）",
+      "pass": true,
+      "detail": "注入已停；页面 EasyCV 日志 1 条，如：「EasyCV Content Script initialized with state management」"
+    },
+    {
+      "name": "存储层移除确认",
+      "pass": true,
+      "detail": "剩余 3 项"
+    },
+    {
+      "name": "移除后站点恢复注入",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "收尾：排除列表恢复至初始快照",
+      "pass": true,
+      "detail": "最终列表(3项): accounts.google.com, login.live.com, appleid.apple.com"
+    }
+  ],
+  "pass": true,
+  "isolationLogsSample": [
+    "EasyCV Content Script initialized with state management"
+  ]
+}

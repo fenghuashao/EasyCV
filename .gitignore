@@ -153,6 +153,9 @@ store-assets/
 screenshots/
 promo-images/
 
+# 真实站点测试持久化 profile（含真实登录态 cookie，严禁入库）
+test/real-sites/.profile/
+
 # ===========================================
 # 备份文件
 # ===========================================

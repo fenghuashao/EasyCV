@@ -21,28 +21,31 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createRequire } from 'node:module';
+import {
+  REAL_SITES_DIR, SHOTS_DIR,
+  makeContext, detectLoginState,
+} from './lib/context.mjs';
 
-const require = createRequire(import.meta.url);
-const { chromium } = require(process.env.PLAYWRIGHT_PATH
-  || 'C:/Program Files/nodejs/node_modules/@playwright/cli/node_modules/playwright');
-
-const OUT_DIR = path.dirname(fileURLToPath(import.meta.url));
-const SHOTS_DIR = path.join(OUT_DIR, 'shots');
+const RESULTS_FILE = path.join(REAL_SITES_DIR, 'real-sites-results.json');
 fs.mkdirSync(SHOTS_DIR, { recursive: true });
-const RESULTS_FILE = path.join(OUT_DIR, 'real-sites-results.json');
-
-// 扩展构建产物默认取仓库根 dist/，可用 EASYCV_EXT_PATH 覆盖（如验证其他 worktree 的构建）
-const EXT_PATH = process.env.EASYCV_EXT_PATH || path.resolve(OUT_DIR, '../../dist');
-const CHROME = process.env.CHROMIUM_PATH
-  || path.join(process.env.LOCALAPPDATA, 'ms-playwright/chromium-1228/chrome-win64/chrome.exe');
 
 const NAV_TIMEOUT = 40000;
 const SETTLE_MS = 4000;
 
+// 文库文档直链可经环境变量人工指定（自动化入口已被百度验证码墙阻断，
+// 见 real-sites-results.json wenku 条目）；未提供时走搜索引擎发现链
+const WENKU_ENTRIES = [
+  ...(process.env.WENKU_DOC_URL ? [process.env.WENKU_DOC_URL] : []),
+  'https://www.baidu.com/s?wd=site%3Awenku.baidu.com%20%E4%BD%9C%E6%96%87%20800%E5%AD%97',
+  'https://www.bing.com/search?q=site%3Awenku.baidu.com+%E4%BD%9C%E6%96%87',
+  'https://wenku.baidu.com/search?word=作文+800字',
+  'https://wenku.baidu.com/',
+];
+
 // ---------------------------------------------------------------------------
 // 站点配置
 // discover: 从入口页运行时抓取内容页链接（固定 URL 容易失效），pattern 为 href 正则
+// entry 支持数组：按序尝试，第一个可用的入口胜出
 // ---------------------------------------------------------------------------
 const SITES = [
   // ---- 限制类：验证解锁 ----
@@ -55,8 +58,8 @@ const SITES = [
   },
   {
     key: 'wenku', kind: 'restricted', name: '百度文库',
-    entry: 'https://wenku.baidu.com/',
-    discover: { pattern: /\/view\/[0-9a-f]+\.html/, note: '首页第一个文档' },
+    entry: WENKU_ENTRIES,
+    discover: { pattern: /\/view\/[0-9a-f]+\.html/, note: '搜索引擎SERP/站内第一个文档直链' },
     contentSelector: '.doc-content, #doc, .reader-wrap, p',
   },
   {
@@ -76,8 +79,12 @@ const SITES = [
   },
   {
     key: 'csdn', kind: 'restricted', name: 'CSDN',
-    entry: 'https://blog.csdn.net/',
-    discover: { pattern: /\/article\/details\/\d+/, note: '首页第一篇文章' },
+    entry: [
+      // 首页新版为信息流聚合，未必输出文章直链；站内搜索页稳定列出文章链接
+      'https://so.csdn.net/so/search?q=python+教程&t=all',
+      'https://blog.csdn.net/',
+    ],
+    discover: { pattern: /\/article\/details\/\d+/, note: '搜索结果第一篇文章' },
     contentSelector: '#article_content, .article_content, article',
     copyAppendMarker: '版权声明',
   },
@@ -88,27 +95,20 @@ const SITES = [
     discover: { pattern: /\/video\/BV[0-9A-Za-z]+/, note: '热门第一个视频' },
     player: true,
   },
-  { key: 'youtube', kind: 'control', name: 'YouTube', entry: 'https://www.youtube.com/', player: true, reachOnlyOnFail: true },
+  { key: 'youtube', kind: 'control', name: 'YouTube', entry: [
+      // 匿名首页常呈空态且受表单恢复污染（见 shots/youtube-ext.png），
+      // 搜索结果页锚点稳定输出 /watch?v= 直链
+      'https://www.youtube.com/results?search_query=nasa',
+      'https://www.youtube.com/',
+    ],
+    discover: { pattern: /\/watch\?v=/, note: '搜索结果第一个视频' },
+    player: true },
   { key: 'gdocs', kind: 'control', name: 'Google Docs', entry: 'https://docs.google.com/', reachOnlyOnFail: true },
 ];
 
 // ---------------------------------------------------------------------------
-// 浏览器上下文
+// 浏览器上下文：共享持久化 profile（见 lib/context.mjs）
 // ---------------------------------------------------------------------------
-async function makeContext(withExt) {
-  const args = withExt
-    ? [`--load-extension=${EXT_PATH}`, `--disable-extensions-except=${EXT_PATH}`]
-    : [];
-  const ctx = await chromium.launchPersistentContext('', {
-    executablePath: CHROME,
-    headless: false, // MV3 必须有头
-    viewport: { width: 1440, height: 900 },
-    args,
-  });
-  // 剪贴板端到端验证需要读取权限；全局授权避免各站 origin 差异
-  await ctx.grantPermissions(['clipboard-read', 'clipboard-write']).catch(() => {});
-  return ctx;
-}
 
 function wireConsoleTaps(page, bucket) {
   page.on('console', (msg) => {
@@ -194,7 +194,16 @@ async function pickTextParagraph(page, selector) {
 
 // 鼠标拖拽选择 + 真实 Ctrl+C + 读剪贴板（端到端复制验证）
 async function copyEndToEnd(page, selector) {
-  const paraText = await pickTextParagraph(page, selector);
+  // 预滚动触发回答区虚拟列表挂载（知乎等长页面的正文在滚动后才渲染进 DOM）
+  let paraText = null;
+  for (const dy of [0, 400, 900, 1400]) {
+    if (dy) {
+      await page.evaluate((y) => window.scrollTo(0, y), dy).catch(() => {});
+      await page.waitForTimeout(800).catch(() => {});
+    }
+    paraText = await pickTextParagraph(page, selector);
+    if (paraText) break;
+  }
   if (!paraText) return { attempted: false, reason: '未找到含文本的段落（可能是图片渲染型文档）' };
 
   const target = await page.$('[data-easycv-copy-target="1"]');
@@ -318,6 +327,13 @@ async function playerChecks(page) {
   r.canPlay = s && !s.paused;
   if (!r.canPlay) return { ...r, reason: '视频无法进入播放状态（可能登录墙/地区限制）' };
 
+  // 快捷键测量前置：悬停播放器并失焦输入框——B站/YouTube 的快捷键
+  // 只在播放器获得“焦点上下文”时响应，否则基线也会全部失败无法归因
+  const vb = await video.boundingBox();
+  if (vb) await page.mouse.move(vb.x + vb.width / 2, vb.y + vb.height / 2);
+  await page.evaluate(() => { if (document.activeElement) document.activeElement.blur(); });
+  await page.waitForTimeout(300);
+
   // 空格暂停：快捷键被吞则不暂停；页面滚动为 preventDefault 被中和的副作用
   const before = await getState();
   await page.keyboard.press('Space');
@@ -371,7 +387,7 @@ async function runSite(site, withExt) {
   const label = `${site.key}(${withExt ? '扩展' : '基线'})`;
   const result = {
     site: site.key, name: site.name, kind: site.kind, withExt,
-    url: null, reachable: false, checks: {}, errors: [],
+    loginState: null, url: null, reachable: false, checks: {}, errors: [],
     easycvLogs: 0, consoleErrors: [], pageErrors: [],
   };
 
@@ -380,19 +396,33 @@ async function runSite(site, withExt) {
     const page = await context.newPage();
     wireConsoleTaps(page, result);
 
-    // 入口页导航
-    await page.goto(site.entry, { waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT });
+    // 入口页导航（entry 可为数组，按序尝试）
+    const entries = Array.isArray(site.entry) ? site.entry : [site.entry];
+    let lastNavError = null;
+    for (const entry of entries) {
+      try {
+        await page.goto(entry, { waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT });
+        lastNavError = null;
+        break;
+      } catch (e) {
+        lastNavError = e;
+      }
+    }
+    if (lastNavError) throw lastNavError;
     result.reachable = true;
+    result.loginState = await detectLoginState(context, site.key);
 
-    // 运行时发现内容页
+    // 运行时发现内容页（轮询等待，站点信息流常为 JS 延迟渲染，固定 2.5s 不够）
     let targetUrl = site.entry;
     if (site.discover) {
-      await page.waitForTimeout(2500);
-      const href = await page.evaluate((patternSrc) => {
-        const re = new RegExp(patternSrc);
-        const a = Array.from(document.querySelectorAll('a[href]')).find((x) => re.test(x.getAttribute('href')));
-        return a ? a.href : null;
-      }, site.discover.pattern.source);
+      const href = await page
+        .waitForFunction((patternSrc) => {
+          const re = new RegExp(patternSrc);
+          const a = Array.from(document.querySelectorAll('a[href]')).find((x) => re.test(x.getAttribute('href')));
+          return a ? a.href : null;
+        }, site.discover.pattern.source, { timeout: 10000, polling: 800 })
+        .then((h) => h.jsonValue())
+        .catch(() => null);
       if (!href) {
         result.errors.push(`内容页发现失败: ${site.discover.note}`);
       } else {
@@ -443,12 +473,12 @@ async function runSite(site, withExt) {
   }
 
   result.easycvLogs = result.easycvLogs || 0;
-  console.log(`[done] ${label} reachable=${result.reachable} errors=${result.errors.length}`);
+  console.log(`[done] ${label} reachable=${result.reachable} login=${result.loginState} errors=${result.errors.length}`);
   return result;
 }
 
 // ---------------------------------------------------------------------------
-// 主流程：串行跑（剪贴板/焦点敏感，不并行）
+// 主流程：串行跑（剪贴板/焦点敏感，不并行；同一 profile 不可并发）
 // ---------------------------------------------------------------------------
 const onlyArg = (process.argv.find((a) => a.startsWith('--sites=')) || '').slice(8);
 const siteList = onlyArg ? SITES.filter((s) => onlyArg.split(',').includes(s.key)) : SITES;
@@ -467,4 +497,13 @@ for (const site of siteList) {
   }
 }
 
+// 汇总登录态覆盖情况，提示结论置信度
+const covered = new Set(allResults.map((r) => r.site));
+const summary = siteList.map((s) => {
+  if (!covered.has(s.key)) return `${s.key}: 未执行`;
+  const withExtRun = allResults.find((r) => r.site === s.key && r.withExt === true);
+  const st = withExtRun ? withExtRun.loginState : null;
+  return `${s.key}: ${st ?? 'n/a'}`;
+}).join('\n  ');
 console.log(`\n全部完成，结果写入 ${RESULTS_FILE}`);
+console.log(`登录态汇总（logged-in 结论可直接采信；anonymous 仅作参考）:\n  ${summary}`);

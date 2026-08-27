@@ -1,7 +1,7 @@
 /**
- * R3 回归：allowDefaultHandler 仅对 contextmenu 阻断传播（防双菜单取舍，
- * 见 docs/测试报告-真实站点回归-2026-08.md R3）；其余事件必须放行到站点
- * 目标阶段处理器——全量阻断曾误伤 B站快捷键等正常交互。
+ * R3 回归：allowDefaultHandler 仅对 contextmenu 阻断传播（防双菜单取舍）；
+ * 其余事件必须放行到站点目标阶段处理器——全量阻断曾误伤 B站快捷键等正常
+ * 交互（结论以 test/real-sites/ 复测为准，原 2026-08 实测报告已作废清除）。
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';

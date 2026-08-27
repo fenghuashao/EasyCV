@@ -8,7 +8,7 @@
 
 | 项 | 状态 | 证据 |
 | :--- | :--- | :--- |
-| DEBT-03 拦截策略收敛（R1–R3） | ✅ 已合入 master | 9e78001 / a7f299e / 529af9c；[测试报告-真实站点回归-2026-08](./测试报告-真实站点回归-2026-08.md) |
+| DEBT-03 拦截策略收敛（R1–R3） | ✅ 已合入 master（复测通过） | 9e78001 / a7f299e / 529af9c；[测试报告-真实站点回归-2026-08-v2](./测试报告-真实站点回归-2026-08-v2.md)（机制四探针全过、B站快捷键误伤排除、doc88 旧 P0 翻案为站点固有行为） |
 | DEBT-04 图标补齐 | ✅ 已合入 master | ec86b3d |
 | 移除 management 权限 | ✅ 已合入 master | 2e03739；manifest.json 权限仅 activeTab/storage/scripting/contextMenus |
 | DEBT-08 站点排除列表 | ✅ 已合入 master | be2c818；options 新 tab + storage + background 裁决 + content 消费 + 敏感域名默认排除 |

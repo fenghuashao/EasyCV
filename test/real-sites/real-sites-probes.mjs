@@ -16,37 +16,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createRequire } from 'node:module';
+import { REAL_SITES_DIR, SHOTS_DIR, makeContext } from './lib/context.mjs';
 
-const require = createRequire(import.meta.url);
-const { chromium } = require(process.env.PLAYWRIGHT_PATH
-  || 'C:/Program Files/nodejs/node_modules/@playwright/cli/node_modules/playwright');
-
-const OUT_DIR = path.dirname(fileURLToPath(import.meta.url));
-const SHOTS_DIR = path.join(OUT_DIR, 'shots');
-fs.mkdirSync(SHOTS_DIR, { recursive: true });
-const RESULTS_FILE = path.join(OUT_DIR, 'probes-results.json');
-
-// 扩展构建产物默认取仓库根 dist/，可用 EASYCV_EXT_PATH 覆盖（如验证其他 worktree 的构建）
-const EXT_PATH = process.env.EASYCV_EXT_PATH || path.resolve(OUT_DIR, '../../dist');
-const CHROME = process.env.CHROMIUM_PATH
-  || path.join(process.env.LOCALAPPDATA, 'ms-playwright/chromium-1228/chrome-win64/chrome.exe');
+const RESULTS_FILE = path.join(REAL_SITES_DIR, 'probes-results.json');
 
 const NAV_TIMEOUT = 40000;
-
-async function makeContext(withExt) {
-  const args = withExt
-    ? [`--load-extension=${EXT_PATH}`, `--disable-extensions-except=${EXT_PATH}`]
-    : [];
-  const ctx = await chromium.launchPersistentContext('', {
-    executablePath: CHROME,
-    headless: false,
-    viewport: { width: 1440, height: 900 },
-    args,
-  });
-  await ctx.grantPermissions(['clipboard-read', 'clipboard-write']).catch(() => {});
-  return ctx;
-}
+// 浏览器上下文使用共享持久化 profile（见 lib/context.mjs）
 
 // 逐事件类型统计 injector 吞没日志（DEBT-03 误伤归因的关键证据）
 function wireTaps(page, bucket) {

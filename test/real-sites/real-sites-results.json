@@ -4,7 +4,8 @@
     "name": "CSDN",
     "kind": "restricted",
     "withExt": true,
-    "url": "https://blog.csdn.net/blogdevteam/article/details/126135357",
+    "loginState": "n/a",
+    "url": "https://blog.csdn.net/xxue345678/article/details/135306291?ops_request_misc=elastic_search_misc&request_id=a5c3f8287b9f5b410247d6c8cdd5095f&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~baidu_landing_v2~default-2-135306291-null-null.142^v102^pc_search_result_base8&utm_term=python%2B%E6%95%99%E7%A8%8B",
     "reachable": true,
     "checks": {
       "injected": true,
@@ -13,13 +14,13 @@
         "keydownPassThrough": true,
         "runtimeNeutralize": true,
         "plainKeyPreserved": true,
-        "addEventListenerWrapped": false,
+        "addEventListenerWrapped": true,
         "preventDefaultWrapped": true
       },
       "unlock": {
         "injected": true,
         "userSelect": "text",
-        "found": true,
+        "found": false,
         "contextmenu": {
           "notCanceled": true
         }
@@ -27,19 +28,22 @@
       "copy": {
         "attempted": true,
         "selected": true,
-        "selectMethod": "drag",
-        "selLen": 84,
-        "selSample": "为保障北京创新乐知网络技术有限公司及其关联公司（以下简称“CSDN”）业务健康可持续发展，维护CSDN正常运营秩序，规范",
+        "selectMethod": "programmatic",
+        "selLen": 21,
+        "selSample": "很抱歉，您访问的网站已开启安全防御，请完成",
         "clipboardRead": true,
-        "clipboardLen": 84,
+        "clipboardLen": 21,
         "clipboardMatchesSelection": true,
-        "clipboardTail": "为保障北京创新乐知网络技术有限公司及其关联公司（以下简称“CSDN”）业务健康可持续发展，维护CSDN正常运营秩序，规范CSDN帐号的使用者（以下简称“用户”）行为，保",
+        "clipboardTail": "很抱歉，您访问的网站已开启安全防御，请完成",
         "hasCopyAppend": false
       }
     },
     "errors": [],
-    "easycvLogs": 12,
-    "consoleErrors": [],
+    "easycvLogs": 14,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 521 ()",
+      "Failed to load resource: the server responded with a status of 521 ()"
+    ],
     "pageErrors": []
   },
   {
@@ -47,7 +51,8 @@
     "name": "CSDN",
     "kind": "restricted",
     "withExt": false,
-    "url": "https://blog.csdn.net/blogdevteam/article/details/126135357",
+    "loginState": "n/a",
+    "url": "https://blog.csdn.net/xxue345678/article/details/135306291?ops_request_misc=elastic_search_misc&request_id=a5c3f8287b9f5b410247d6c8cdd5095f&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~baidu_landing_v2~default-2-135306291-null-null.142^v102^pc_search_result_base8&utm_term=python%2B%E6%95%99%E7%A8%8B",
     "reachable": true,
     "checks": {
       "swallowProbes": {
@@ -68,43 +73,33 @@
       },
       "copy": {
         "attempted": true,
-        "selected": true,
-        "selectMethod": "drag",
-        "selLen": 84,
-        "selSample": "为保障北京创新乐知网络技术有限公司及其关联公司（以下简称“CSDN”）业务健康可持续发展，维护CSDN正常运营秩序，规范",
-        "clipboardRead": true,
-        "clipboardLen": 84,
-        "clipboardMatchesSelection": true,
-        "clipboardTail": "为保障北京创新乐知网络技术有限公司及其关联公司（以下简称“CSDN”）业务健康可持续发展，维护CSDN正常运营秩序，规范CSDN帐号的使用者（以下简称“用户”）行为，保",
-        "hasCopyAppend": false
+        "selected": false,
+        "selLen": 0,
+        "paraText": "1.基础运算符2.比较运算符3.赋值运算符4.布尔运算符5.位运算符6.输入函数"
       }
     },
     "errors": [],
     "easycvLogs": 0,
     "consoleErrors": [
-      "Failed to load resource: the server responded with a status of 521 ()",
-      "Failed to load resource: the server responded with a status of 521 ()",
-      "Failed to load resource: the server responded with a status of 521 ()",
-      "Failed to load resource: the server responded with a status of 521 ()",
       "Failed to load resource: the server responded with a status of 521 ()"
     ],
-    "pageErrors": [
-      "Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'data')",
-      "Uncaught (in promise) Error: 521 "
-    ]
+    "pageErrors": []
   },
   {
     "site": "zhihu",
     "name": "知乎",
     "kind": "restricted",
     "withExt": true,
-    "url": "https://www.zhihu.com/signin?next=%2Fhot",
+    "loginState": "logged-in",
+    "url": "https://www.zhihu.com/question/2076250768051548268",
     "reachable": true,
     "checks": {
       "injected": true,
       "swallowProbes": {
         "registrationSwallow": true,
+        "keydownPassThrough": true,
         "runtimeNeutralize": true,
+        "plainKeyPreserved": true,
         "addEventListenerWrapped": true,
         "preventDefaultWrapped": true
       },
@@ -117,27 +112,14 @@
         }
       },
       "copy": {
-        "attempted": true,
-        "selected": true,
-        "selectMethod": "drag",
-        "selLen": 9,
-        "selSample": "验证码登录密码登录",
-        "clipboardRead": true,
-        "clipboardLen": 9,
-        "clipboardMatchesSelection": true,
-        "clipboardTail": "验证码登录密码登录",
-        "hasCopyAppend": false
+        "attempted": false,
+        "reason": "未找到含文本的段落（可能是图片渲染型文档）"
       }
     },
-    "errors": [
-      "内容页发现失败: 热榜第一条问题"
-    ],
-    "easycvLogs": 14,
+    "errors": [],
+    "easycvLogs": 18,
     "consoleErrors": [
-      "Failed to load resource: the server responded with a status of 403 ()",
-      "Access to XMLHttpRequest at 'https://118.89.204.198/resolv?host=www.zhihu.com&os_type=web' from origin 'https://www.zhihu.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header ",
-      "Failed to load resource: net::ERR_FAILED",
-      "Mixed Content: The page at 'https://www.zhihu.com/signin?next=%2Fhot' was loaded over HTTPS, but requested an insecure resource 'http://local.adspower.net:50325/'. This request has been blocked; the c"
+      "Failed to load resource: the server responded with a status of 403 ()"
     ],
     "pageErrors": []
   },
@@ -146,12 +128,15 @@
     "name": "知乎",
     "kind": "restricted",
     "withExt": false,
-    "url": "https://www.zhihu.com/signin?next=%2Fhot",
+    "loginState": "logged-in",
+    "url": "https://www.zhihu.com/question/2076250768051548268",
     "reachable": true,
     "checks": {
       "swallowProbes": {
         "registrationSwallow": false,
+        "keydownPassThrough": true,
         "runtimeNeutralize": false,
+        "plainKeyPreserved": true,
         "addEventListenerWrapped": false,
         "preventDefaultWrapped": false
       },
@@ -164,27 +149,14 @@
         }
       },
       "copy": {
-        "attempted": true,
-        "selected": true,
-        "selectMethod": "drag",
-        "selLen": 9,
-        "selSample": "验证码登录密码登录",
-        "clipboardRead": true,
-        "clipboardLen": 9,
-        "clipboardMatchesSelection": true,
-        "clipboardTail": "验证码登录密码登录",
-        "hasCopyAppend": false
+        "attempted": false,
+        "reason": "未找到含文本的段落（可能是图片渲染型文档）"
       }
     },
-    "errors": [
-      "内容页发现失败: 热榜第一条问题"
-    ],
+    "errors": [],
     "easycvLogs": 0,
     "consoleErrors": [
-      "Failed to load resource: the server responded with a status of 403 ()",
-      "Access to XMLHttpRequest at 'https://118.89.204.198/resolv?host=www.zhihu.com&os_type=web' from origin 'https://www.zhihu.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header ",
-      "Failed to load resource: net::ERR_FAILED",
-      "Mixed Content: The page at 'https://www.zhihu.com/signin?next=%2Fhot' was loaded over HTTPS, but requested an insecure resource 'http://local.adspower.net:50325/'. This request has been blocked; the c"
+      "Failed to load resource: the server responded with a status of 403 ()"
     ],
     "pageErrors": []
   },
@@ -193,90 +165,86 @@
     "name": "百度文库",
     "kind": "restricted",
     "withExt": true,
-    "url": "https://wenku.baidu.com/?_wkts_=1786018466166",
+    "loginState": "n/a",
+    "url": "https://www.baidu.com/s?wd=site%3Awenku.baidu.com%20%E4%BD%9C%E6%96%87%20800%E5%AD%97",
     "reachable": true,
     "checks": {
       "injected": true,
       "swallowProbes": {
         "registrationSwallow": true,
+        "keydownPassThrough": true,
         "runtimeNeutralize": true,
+        "plainKeyPreserved": true,
         "addEventListenerWrapped": true,
         "preventDefaultWrapped": true
       },
       "unlock": {
         "injected": true,
         "userSelect": "text",
-        "found": false,
+        "found": true,
         "contextmenu": {
           "notCanceled": true
         }
       },
       "copy": {
-        "attempted": true,
-        "selected": false,
-        "selLen": 0,
-        "paraText": "创建文档\n             文档 演示文稿 表格 自由画布  新建  上"
+        "attempted": false,
+        "reason": "未找到含文本的段落（可能是图片渲染型文档）"
       }
     },
     "errors": [
-      "内容页发现失败: 首页第一个文档"
+      "内容页发现失败: 必应SERP/站内第一个文档直链"
     ],
     "easycvLogs": 13,
     "consoleErrors": [],
-    "pageErrors": [
-      "Object"
-    ]
+    "pageErrors": []
   },
   {
     "site": "wenku",
     "name": "百度文库",
     "kind": "restricted",
     "withExt": false,
-    "url": "https://wenku.baidu.com/?_wkts_=1786018509209",
+    "loginState": "n/a",
+    "url": "https://wappass.baidu.com/static/captcha/tuxing_v2.html?&logid=8909597145275696375&ak=c27bbc89afca0463650ac9bde68ebe06&backurl=https%3A%2F%2Fwww.baidu.com%2Fs%3Fwd%3Dsite%253Awenku.baidu.com%2520%25E4%25BD%259C%25E6%2596%2587%2520800%25E5%25AD%2597&ext=x9G9QDmMXq%2FNo87gjGO0PyQ%2BX5ReFr%2BG74HJ3EXb01yxS4CEhQa12Q7nS%2FbwHL39g1T9i%2F9aWxTqDk%2BHyX%2BPs1mteGto00nQ%2BjbYfU0bTlNIIB7URDciwb4Wfa7oJDxfSCAe1EQ3IsG%2BFn2u6CQ8X0ggHtRENyLBvhZ9rugkPF9IIB7URDciwb4Wfa7oJDxfSCAe1EQ3IsG%2BFn2u6CQ8X8sGkcT84Wmw7BKtMPMab9I%3D&signature=0ad643f9341ba438f9e98da90578ce57&timestamp=1787806302",
     "reachable": true,
     "checks": {
       "swallowProbes": {
         "registrationSwallow": false,
+        "keydownPassThrough": true,
         "runtimeNeutralize": false,
+        "plainKeyPreserved": true,
         "addEventListenerWrapped": false,
         "preventDefaultWrapped": false
       },
       "unlock": {
         "injected": false,
         "userSelect": "auto",
-        "found": false,
+        "found": true,
         "contextmenu": {
           "notCanceled": true
         }
       },
       "copy": {
-        "attempted": true,
-        "selected": false,
-        "selLen": 0,
-        "paraText": "创建文档\n             文档 演示文稿 表格 自由画布  新建  上"
+        "attempted": false,
+        "reason": "未找到含文本的段落（可能是图片渲染型文档）"
       }
     },
     "errors": [
-      "内容页发现失败: 首页第一个文档"
+      "内容页发现失败: 必应SERP/站内第一个文档直链"
     ],
     "easycvLogs": 0,
     "consoleErrors": [],
-    "pageErrors": [
-      "Object"
-    ]
+    "pageErrors": []
   },
   {
     "site": "doc88",
     "name": "道客巴巴",
     "kind": "restricted",
     "withExt": true,
-    "url": "https://www.doc88.com/p-69091550288.html",
+    "loginState": "n/a",
+    "url": "https://www.doc88.com/p-9933770527889.html",
     "reachable": true,
     "checks": {
       "injected": false,
-      "swallowProbes": {
-        "error": "page.evaluate: TypeError: interceptedListeners.has is not a function\n    at HTMLDocument.overriddenAddEventListener [as "
-      },
       "unlock": {},
       "copy": {
         "attempted": false,
@@ -284,8 +252,9 @@
       }
     },
     "errors": [],
-    "easycvLogs": 33,
+    "easycvLogs": 31,
     "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)",
       "Framing 'https://stat.doc88.com/' violates the following report-only Content Security Policy directive: \"frame-ancestors 'self'\". The violation has been logged, but no further action has been taken.\n",
       "The Content Security Policy directive 'upgrade-insecure-requests' is ignored when delivered in a report-only policy."
     ],
@@ -296,7 +265,8 @@
     "name": "道客巴巴",
     "kind": "restricted",
     "withExt": false,
-    "url": "https://www.doc88.com/p-5061385651992.html",
+    "loginState": "n/a",
+    "url": "https://www.doc88.com/p-6791565187935.html",
     "reachable": true,
     "checks": {
       "unlock": {},
@@ -318,13 +288,16 @@
     "name": "豆丁",
     "kind": "restricted",
     "withExt": true,
+    "loginState": "n/a",
     "url": "https://www.docin.com/p-5021301871.html",
     "reachable": true,
     "checks": {
       "injected": true,
       "swallowProbes": {
         "registrationSwallow": true,
+        "keydownPassThrough": true,
         "runtimeNeutralize": true,
+        "plainKeyPreserved": true,
         "addEventListenerWrapped": true,
         "preventDefaultWrapped": true
       },
@@ -342,7 +315,7 @@
       }
     },
     "errors": [],
-    "easycvLogs": 134,
+    "easycvLogs": 128,
     "consoleErrors": [],
     "pageErrors": []
   },
@@ -351,12 +324,15 @@
     "name": "豆丁",
     "kind": "restricted",
     "withExt": false,
+    "loginState": "n/a",
     "url": "https://www.docin.com/p-5021301871.html",
     "reachable": true,
     "checks": {
       "swallowProbes": {
         "registrationSwallow": false,
+        "keydownPassThrough": true,
         "runtimeNeutralize": false,
+        "plainKeyPreserved": true,
         "addEventListenerWrapped": false,
         "preventDefaultWrapped": false
       },
@@ -383,24 +359,32 @@
     "name": "B站视频",
     "kind": "control",
     "withExt": true,
-    "url": "https://www.bilibili.com/video/BV1R53R6rE7a/",
+    "loginState": "logged-in",
+    "url": "https://www.bilibili.com/video/BV1Xx411c7cH/",
     "reachable": true,
     "checks": {
       "injected": true,
       "swallowProbes": {
         "registrationSwallow": true,
+        "keydownPassThrough": true,
         "runtimeNeutralize": true,
+        "plainKeyPreserved": true,
         "addEventListenerWrapped": true,
         "preventDefaultWrapped": true
       },
       "inputTyping": {
-        "attempted": false,
-        "reason": "无可见输入框"
+        "attempted": true,
+        "typed": "easycv",
+        "value": "easycv",
+        "ok": true
       },
       "player": {
         "videoFound": true,
-        "canPlay": false,
-        "reason": "视频无法进入播放状态（可能登录墙/地区限制）"
+        "canPlay": true,
+        "spacePauses": true,
+        "spaceScrollSideEffect": false,
+        "arrowRightSeekDelta": 5.54,
+        "arrowRightSeeks": true
       },
       "loginPhoneFilter": {
         "attempted": false,
@@ -408,7 +392,7 @@
       }
     },
     "errors": [],
-    "easycvLogs": 63,
+    "easycvLogs": 67,
     "consoleErrors": [],
     "pageErrors": []
   },
@@ -417,12 +401,15 @@
     "name": "B站视频",
     "kind": "control",
     "withExt": false,
-    "url": "https://www.bilibili.com/video/BV1R53R6rE7a/",
+    "loginState": "logged-in",
+    "url": "https://www.bilibili.com/video/BV1Xx411c7cH/",
     "reachable": true,
     "checks": {
       "swallowProbes": {
         "registrationSwallow": false,
+        "keydownPassThrough": true,
         "runtimeNeutralize": false,
+        "plainKeyPreserved": true,
         "addEventListenerWrapped": false,
         "preventDefaultWrapped": false
       },
@@ -435,14 +422,14 @@
       "player": {
         "videoFound": true,
         "canPlay": true,
-        "spacePauses": false,
+        "spacePauses": true,
         "spaceScrollSideEffect": false,
-        "arrowRightSeekDelta": 0.62,
-        "arrowRightSeeks": false
+        "arrowRightSeekDelta": 5.58,
+        "arrowRightSeeks": true
       },
       "loginPhoneFilter": {
         "attempted": false,
-        "reason": "未找到手机号输入框"
+        "reason": "未找到登录入口"
       }
     },
     "errors": [],
@@ -455,13 +442,16 @@
     "name": "YouTube",
     "kind": "control",
     "withExt": true,
-    "url": "https://www.youtube.com/",
+    "loginState": "n/a",
+    "url": "https://www.youtube.com/watch?v=l5OJk1FuEKg&pp=ygUEbmFzYQ%3D%3D",
     "reachable": true,
     "checks": {
       "injected": true,
       "swallowProbes": {
         "registrationSwallow": true,
+        "keydownPassThrough": true,
         "runtimeNeutralize": true,
+        "plainKeyPreserved": true,
         "addEventListenerWrapped": true,
         "preventDefaultWrapped": true
       },
@@ -478,10 +468,8 @@
       }
     },
     "errors": [],
-    "easycvLogs": 25,
-    "consoleErrors": [
-      "Failed to load resource: the server responded with a status of 401 ()"
-    ],
+    "easycvLogs": 21,
+    "consoleErrors": [],
     "pageErrors": []
   },
   {
@@ -489,12 +477,15 @@
     "name": "YouTube",
     "kind": "control",
     "withExt": false,
-    "url": "https://www.youtube.com/",
+    "loginState": "n/a",
+    "url": "https://www.youtube.com/watch?v=l5OJk1FuEKg&pp=ygUEbmFzYQ%3D%3D",
     "reachable": true,
     "checks": {
       "swallowProbes": {
         "registrationSwallow": false,
+        "keydownPassThrough": true,
         "runtimeNeutralize": false,
+        "plainKeyPreserved": true,
         "addEventListenerWrapped": false,
         "preventDefaultWrapped": false
       },
@@ -513,7 +504,9 @@
     "errors": [],
     "easycvLogs": 0,
     "consoleErrors": [
-      "Failed to load resource: the server responded with a status of 401 ()"
+      "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+      "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+      "Failed to load resource: the server responded with a status of 403 (Forbidden)"
     ],
     "pageErrors": []
   },
@@ -522,15 +515,18 @@
     "name": "Google Docs",
     "kind": "control",
     "withExt": true,
-    "url": "https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fdocs.google.com%2F&dsh=S1829463790%3A1786018667431470&emr=1&followup=https%3A%2F%2Fdocs.google.com%2F&osid=1&passive=1209600&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=Ac50bxvL-6PfvYS2fq54kjt1DP5Pa8fBnA7lpznvC-wbsn60Et3Rvd2BN2Z8qY3kx_KhsON1jB3FmQ",
+    "loginState": "n/a",
+    "url": "https://accounts.google.com/v3/signin/identifier?continue=https://docs.google.com/&emr=1&followup=https://docs.google.com/&osid=1&passive=1209600&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-956235115:1787803759762570",
     "reachable": true,
     "checks": {
-      "injected": true,
+      "injected": false,
       "swallowProbes": {
-        "registrationSwallow": true,
-        "runtimeNeutralize": true,
-        "addEventListenerWrapped": true,
-        "preventDefaultWrapped": true
+        "registrationSwallow": false,
+        "keydownPassThrough": true,
+        "runtimeNeutralize": false,
+        "plainKeyPreserved": true,
+        "addEventListenerWrapped": false,
+        "preventDefaultWrapped": false
       },
       "inputTyping": {
         "attempted": true,
@@ -540,7 +536,7 @@
       }
     },
     "errors": [],
-    "easycvLogs": 18,
+    "easycvLogs": 2,
     "consoleErrors": [],
     "pageErrors": []
   },
@@ -549,12 +545,15 @@
     "name": "Google Docs",
     "kind": "control",
     "withExt": false,
-    "url": "https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fdocs.google.com%2F&dsh=S-769512951%3A1786018675709803&emr=1&followup=https%3A%2F%2Fdocs.google.com%2F&osid=1&passive=1209600&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=Ac50bxuB3eRXXcxn1uF6SJbkEFWN6f9XPtAfZronu37JZuEDYlwk-4awNMDJpOv10uOeugtqfRmGHQ",
+    "loginState": "n/a",
+    "url": "https://accounts.google.com/v3/signin/identifier?continue=https://docs.google.com/&emr=1&followup=https://docs.google.com/&osid=1&passive=1209600&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-687463649:1787803780609557",
     "reachable": true,
     "checks": {
       "swallowProbes": {
         "registrationSwallow": false,
+        "keydownPassThrough": true,
         "runtimeNeutralize": false,
+        "plainKeyPreserved": true,
         "addEventListenerWrapped": false,
         "preventDefaultWrapped": false
       },
