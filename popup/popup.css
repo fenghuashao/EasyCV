@@ -326,6 +326,7 @@ input:checked+.slider:before {
 .action-btn {
   flex: 1;
   min-width: 120px;
+  white-space: nowrap;
   padding: 8px 12px;
   background: var(--background-secondary);
   border: 1px solid var(--border-color);

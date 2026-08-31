@@ -51,7 +51,10 @@ class PopupManager {
       
       // 启动定期更新
       this.startPeriodicUpdate();
-      
+
+      // 立即刷新一次页面状态，避免首次打开停留在「检测中」直至下个 30 秒周期
+      await this.updatePageStatus();
+
       this.isInitialized = true;
       
     } catch (error) {
@@ -310,7 +313,7 @@ class PopupManager {
       pasteEnabled: true,
       forceMode: false,
       timestamp: Date.now(),
-      version: '1.1.0'
+      version: chrome.runtime.getManifest().version
     };
     
     this.currentState = defaultState;
@@ -666,7 +669,23 @@ class PopupManager {
       // 更新状态指示器
       const statusIndicator = document.getElementById('statusIndicator');
       const statusText = document.getElementById('statusText');
-      
+
+      // 展示当前站点域名；扩展页等非 http(s) 场景隐藏该行（原缺陷：该行从未被赋值，永远显示「正在获取...」）
+      const currentUrlElement = document.getElementById('currentUrl');
+      if (currentUrlElement) {
+        try {
+          const url = new URL(this.currentTab.url || '');
+          if (url.protocol === 'http:' || url.protocol === 'https:') {
+            currentUrlElement.textContent = url.hostname;
+            currentUrlElement.style.display = '';
+          } else {
+            currentUrlElement.style.display = 'none';
+          }
+        } catch (urlError) {
+          currentUrlElement.style.display = 'none';
+        }
+      }
+
       if (statusIndicator && statusText) {
         if (!isPluginEnabled) {
           statusIndicator.className = 'status-indicator disabled';
