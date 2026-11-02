@@ -1,0 +1,53 @@
+Window: "", App: Google Chrome for Testing.
+0 窗口 Secondary Actions: Raise
+	1 container
+		2 HTML 内容 EasyCV - 复制粘贴助手, URL: chrome-extension://ggchllgdneckbbjcmchbjfelkomcekpj/popup/popup.html
+			3 container
+				4 图像 EasyCV
+				5 标题 EasyCV, Value: 1
+					6 文本 EasyCV
+				7 text 复制粘贴助手 v1.1.2
+			8 container
+				9 按钮 关闭解锁
+					10 图像
+					11 文本 关闭解锁
+				12 text 未激活 easycv.localhost
+				13 开合三角标记 高级选项
+					14 文本 高级选项
+				15 标题 快速操作, Value: 3
+					16 文本 快速操作
+				17 按钮 刷新检测
+					18 图像
+					19 文本 刷新检测
+				20 按钮 添加到自动开启
+					21 图像
+					22 文本 添加到自动开启
+				23 按钮 测试复制
+					24 图像
+					25 文本 测试复制
+				26 标题 使用统计, Value: 3
+					27 文本 使用统计
+				28 text 1 已处理网站 0 今日使用 0% 成功率
+			29 container
+				30 按钮 设置
+					31 图像
+					32 文本 设置
+				33 按钮 帮助
+					34 图像
+					35 文本 帮助
+				36 按钮 反馈
+					37 图像
+					38 文本 反馈
+39 menu bar
+	40 Google Chrome for Testing
+	41 文件
+	42 编辑
+	43 显示
+	44 历史记录
+	45 书签
+	46 个人资料
+	47 标签页
+	48 窗口
+	49 帮助
+
+The focused UI element is 2 HTML 内容 EasyCV - 复制粘贴助手, URL: chrome-extension://ggchllgdneckbbjcmchbjfelkomcekpj/popup/popup.html

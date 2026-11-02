@@ -1,0 +1,92 @@
+{
+  "evidenceChecksPassed": true,
+  "verified": [
+    {
+      "version": "1.1.1",
+      "checks": [
+        "all 16 scenarios recorded without top-level harness errors",
+        "disabled inline paste blocked",
+        "default enabled inline paste works",
+        "actual POPUP context",
+        "Popup observes target domain",
+        "Popup UI enabled",
+        "storage enabled but content stale",
+        "inline remains and trusted paste fails",
+        "background state_updated rejected by content",
+        "force updates without repairing paste flag",
+        "refresh_force_on",
+        "refresh_force_off",
+        "mechanism-specific results",
+        "actual trusted paste events observed",
+        "all mechanisms pass after refresh",
+        "natural Popup off/reload/on reproduces",
+        "renaming alone fails validator",
+        "nested payload invalid",
+        "flat state application restores paste",
+        "existing reload/apply path restores paste",
+        "removing only inline handler restores paste with stale content",
+        "UI disable does not promptly disable loaded content",
+        "targeted reenable rerun completed",
+        "browser-disabled document blocks paste",
+        "reenable before reload has no content receiver",
+        "reenable after reload has live content and trusted paste"
+      ],
+      "checkCount": 26,
+      "mechanismResults": {
+        "plain": true,
+        "listener": true,
+        "keyboard": true,
+        "inline": false,
+        "input": false,
+        "editable": true
+      }
+    },
+    {
+      "version": "1.1.2",
+      "checks": [
+        "all 16 scenarios recorded without top-level harness errors",
+        "disabled inline paste blocked",
+        "default enabled inline paste works",
+        "actual POPUP context",
+        "Popup observes target domain",
+        "Popup UI enabled",
+        "storage enabled but content stale",
+        "inline remains and trusted paste fails",
+        "background state_updated rejected by content",
+        "force updates without repairing paste flag",
+        "refresh_force_on",
+        "refresh_force_off",
+        "mechanism-specific results",
+        "actual trusted paste events observed",
+        "all mechanisms pass after refresh",
+        "natural Popup off/reload/on reproduces",
+        "renaming alone fails validator",
+        "nested payload invalid",
+        "flat state application restores paste",
+        "existing reload/apply path restores paste",
+        "removing only inline handler restores paste with stale content",
+        "UI disable does not promptly disable loaded content",
+        "targeted reenable rerun completed",
+        "browser-disabled document blocks paste",
+        "reenable before reload has no content receiver",
+        "reenable after reload has live content and trusted paste"
+      ],
+      "checkCount": 26,
+      "mechanismResults": {
+        "plain": true,
+        "listener": true,
+        "keyboard": true,
+        "inline": false,
+        "input": false,
+        "editable": true
+      }
+    }
+  ],
+  "scenarioParity": "MATCH",
+  "POPUP_PASTE_ROOT_CAUSE": "STATE_SYNC_CONTRACT_AND_USER_SETTINGS_CONSUMPTION",
+  "BASELINE_DEFECT_CONFIRMED": "YES_REPOSITORY_1.1.1",
+  "NEW_PERMISSION_REGRESSION": "NOT_DETECTED_IN_TESTED_SCOPE",
+  "REAL_CHROME_REPRODUCTION": "YES_CHROME_156_ACTION_POPUP_CDP",
+  "USER_IMPACT_SEVERITY": "P2_MODERATE_PROPOSED",
+  "HOTFIX_RELEASE_READY": "CONDITIONAL_POPUP_NONBLOCKER_OTHER_RELEASE_GATES_OPEN"
+}

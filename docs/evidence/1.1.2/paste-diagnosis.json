@@ -1,0 +1,30 @@
+{
+  "state": {
+    "plugin_enabled": true,
+    "user_settings": {
+      "autoEnableList": [],
+      "copyEnabled": true,
+      "enableStatistics": true,
+      "excludedList": [
+        "accounts.google.com",
+        "login.live.com",
+        "appleid.apple.com"
+      ],
+      "forceMode": false,
+      "pasteEnabled": true,
+      "pluginEnabled": true,
+      "showNotifications": true,
+      "theme": "auto"
+    }
+  },
+  "before": {
+    "html": "<textarea id=\"pasteTarget\" data-easycv-processed=\"true\" style=\"user-select: text !important; pointer-events: auto !important;\"></textarea>",
+    "property": "null",
+    "canceled": false,
+    "preventDefault": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }"
+  },
+  "after": {
+    "canceled": false,
+    "html": "<textarea id=\"pasteTarget\" data-easycv-processed=\"true\" style=\"user-select: text !important; pointer-events: auto !important;\"></textarea>"
+  }
+}

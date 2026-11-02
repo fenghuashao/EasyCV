@@ -1,3 +1,9 @@
+# 1.1.2 权限整改候选（2026-11-01）
+
+当前 Gate、原始证据与人工步骤以 [EASYCV-1.1.2-PERMISSION-FIX](../EASYCV-1.1.2-PERMISSION-FIX.md) 为准。本轮不 commit/push/提交商店；下方保留的 1.1.0 清单仅为历史记录，不能验证 1.1.2。
+
+---
+
 # 发布核验清单 — 1.1.0
 
 > 生成时间：2026-08-10 ｜ 基准：master 78d3ca8（worktree-debt08-site-exclusion 已合并）

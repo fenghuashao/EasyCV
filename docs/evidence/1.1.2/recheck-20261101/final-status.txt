@@ -1,0 +1,76 @@
+## master...origin/master
+ M CHANGELOG.md
+ M PRIVACY.md
+ M docs/README.md
+ M docs/release-checklist.md
+ M "docs/\346\212\200\346\234\257\346\236\266\346\236\204\346\226\207\346\241\243.md"
+ M "docs/\346\265\213\350\257\225\347\224\250\344\276\213.md"
+ M "docs/\346\265\213\350\257\225\350\256\241\345\210\222.md"
+ M "docs/\347\224\250\346\210\267\344\275\277\347\224\250\346\211\213\345\206\214.md"
+ M "docs/\350\207\252\345\212\250\345\214\226\346\211\223\345\214\205\351\205\215\347\275\256\350\257\264\346\230\216.md"
+ M "docs/\351\203\250\347\275\262\346\226\207\346\241\243.md"
+ M "docs/\351\241\271\347\233\256\345\274\200\345\217\221\350\256\241\345\210\222.md"
+ M manifest.json
+ M package-lock.json
+ M package.json
+ M scripts/package.js
+?? EASYCV-1.1.2-PERMISSION-FIX.md
+?? docs/evidence/1.1.2/acceptance.json
+?? docs/evidence/1.1.2/baseline-build.txt
+?? docs/evidence/1.1.2/baseline-docs-check.txt
+?? docs/evidence/1.1.2/baseline-e2e.txt
+?? docs/evidence/1.1.2/baseline-permission-regression.json
+?? docs/evidence/1.1.2/baseline-permission-regression.txt
+?? docs/evidence/1.1.2/baseline-permission-search.txt
+?? docs/evidence/1.1.2/baseline-sha.txt
+?? docs/evidence/1.1.2/baseline-unit.txt
+?? docs/evidence/1.1.2/check-results.json
+?? docs/evidence/1.1.2/diff-check.txt
+?? docs/evidence/1.1.2/docs-check.txt
+?? docs/evidence/1.1.2/e2e.txt
+?? docs/evidence/1.1.2/final-permission-search.txt
+?? docs/evidence/1.1.2/final-status.txt
+?? docs/evidence/1.1.2/initial-status.txt
+?? docs/evidence/1.1.2/lint.txt
+?? docs/evidence/1.1.2/package-check.txt
+?? docs/evidence/1.1.2/package-verification.json
+?? docs/evidence/1.1.2/package.txt
+?? docs/evidence/1.1.2/paste-diagnosis.json
+?? docs/evidence/1.1.2/permission-regression.json
+?? docs/evidence/1.1.2/permission-regression.txt
+?? docs/evidence/1.1.2/recheck-20261101/acceptance.json
+?? docs/evidence/1.1.2/recheck-20261101/baseline-build.txt
+?? docs/evidence/1.1.2/recheck-20261101/baseline-docs-check.txt
+?? docs/evidence/1.1.2/recheck-20261101/baseline-e2e.txt
+?? docs/evidence/1.1.2/recheck-20261101/baseline-permission-regression.json
+?? docs/evidence/1.1.2/recheck-20261101/baseline-permission-regression.txt
+?? docs/evidence/1.1.2/recheck-20261101/baseline-sha.txt
+?? docs/evidence/1.1.2/recheck-20261101/baseline-unit.txt
+?? docs/evidence/1.1.2/recheck-20261101/build.txt
+?? docs/evidence/1.1.2/recheck-20261101/check-results.json
+?? docs/evidence/1.1.2/recheck-20261101/diff-check-final.txt
+?? docs/evidence/1.1.2/recheck-20261101/diff-check.txt
+?? docs/evidence/1.1.2/recheck-20261101/docs-check-final.txt
+?? docs/evidence/1.1.2/recheck-20261101/docs-check.txt
+?? docs/evidence/1.1.2/recheck-20261101/e2e.txt
+?? docs/evidence/1.1.2/recheck-20261101/environment.json
+?? docs/evidence/1.1.2/recheck-20261101/initial-diff.patch
+?? docs/evidence/1.1.2/recheck-20261101/initial-status.txt
+?? docs/evidence/1.1.2/recheck-20261101/lint.txt
+?? docs/evidence/1.1.2/recheck-20261101/local-archives.json
+?? docs/evidence/1.1.2/recheck-20261101/package-check.txt
+?? docs/evidence/1.1.2/recheck-20261101/package-verification.json
+?? docs/evidence/1.1.2/recheck-20261101/package.txt
+?? docs/evidence/1.1.2/recheck-20261101/permission-regression.json
+?? docs/evidence/1.1.2/recheck-20261101/permission-regression.txt
+?? docs/evidence/1.1.2/recheck-20261101/permission-search-command.json
+?? docs/evidence/1.1.2/recheck-20261101/permission-search.txt
+?? docs/evidence/1.1.2/recheck-20261101/preexisting-files.json
+?? docs/evidence/1.1.2/recheck-20261101/preservation.json
+?? docs/evidence/1.1.2/recheck-20261101/runtime-unchanged.json
+?? docs/evidence/1.1.2/recheck-20261101/server.txt
+?? docs/evidence/1.1.2/recheck-20261101/unit.txt
+?? docs/evidence/1.1.2/unit.txt
+?? test/fixtures/permission-fix.html
+?? test/permission-regression.mjs
+?? test/verify-permission-package.py

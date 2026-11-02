@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "preexistingFiles": 43,
+  "modifiedPreexistingFiles": [
+    "EASYCV-1.1.2-PERMISSION-FIX.md"
+  ],
+  "missingPreexistingFiles": [],
+  "otherPreexistingFilesByteUnchanged": 42,
+  "oldZIPByteUnchanged": true,
+  "headUnchanged": "bbd6300ecd7f3a23dd1f3a9ca2f74e517ffa1d09",
+  "indexEmpty": true,
+  "reportLocalLinksExist": true
+}

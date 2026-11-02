@@ -1,0 +1,18 @@
+{
+  "archives": [
+    {
+      "path": "releases/EasyCV-v1.1.2-20261031.zip",
+      "sha256": "06a59c7504efaa1c277d029ec3c5bd9366687d4742b018631868eb80e92d86df",
+      "bytes": 132475,
+      "manifestVersion": "1.1.2"
+    },
+    {
+      "path": "releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031.zip",
+      "sha256": "6a2f2478e847ff06d6b7a35dbe01b543d2cd00ab52df7f96d2763d758e77782a",
+      "bytes": 132475,
+      "manifestVersion": "1.1.2"
+    }
+  ],
+  "storeOriginalAvailable": "NOT_VERIFIED",
+  "scope": "repository release/build directories; original store provenance unavailable"
+}

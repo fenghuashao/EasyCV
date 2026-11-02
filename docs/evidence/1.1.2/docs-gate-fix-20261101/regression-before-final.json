@@ -1,0 +1,7 @@
+{
+  "checker": "HEAD:scripts/check-docs.js (matches pre-edit hash)",
+  "exitCode": 1,
+  "tests": 14,
+  "pass": 11,
+  "fail": 3
+}

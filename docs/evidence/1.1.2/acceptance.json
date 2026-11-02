@@ -1,0 +1,42 @@
+{
+  "acceptanceDate": "2026-11-01 Asia/Shanghai",
+  "baselineSHA": "bbd6300ecd7f3a23dd1f3a9ca2f74e517ffa1d09",
+  "gates": {
+    "BASELINE_GATE": "PASS",
+    "SCRIPTING_REMOVAL_GATE": "PASS",
+    "ACTIVETAB_REMOVAL_GATE": "PASS",
+    "PERMISSION_MINIMIZATION_GATE": "PASS",
+    "CORE_FUNCTION_REGRESSION": "FAIL",
+    "PACKAGED_EXTENSION_GATE": "PASS",
+    "RELEASE_VERSION_GATE": "PASS",
+    "STORE_PACKAGE_MATCH_GATE": "NOT_VERIFIED",
+    "RELEASE_READY": "BLOCKED"
+  },
+  "gateScope": "PASS covers local permission removal and ZIP contents only; CORE fails existing toggle/paste issue; native Chrome/store update acceptance remains NOT_RUN.",
+  "baselineRegression": {
+    "passed": 18,
+    "total": 21,
+    "exitCode": 1
+  },
+  "candidateRegression": {
+    "passed": 18,
+    "total": 21,
+    "exitCode": 1
+  },
+  "newFailuresAgainstBaseline": [],
+  "restartBoundary": "Both final logs replay onInstalled reason=install; restart retention is not verified by a fresh-install path.",
+  "storePackageAvailable": false,
+  "productCodeModified": true,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "storeSubmission": "NOT_RUN",
+  "candidateFiles": {
+    "manifest.json": "61553936aca48cf3ad9910a5b6b673e5c1e2e3726f354517566d18b5623e2e43",
+    "package.json": "22d65f163b0df52de92b69ec47f6db70966c40497ef0ee5085392fca69997da1",
+    "package-lock.json": "b241cb46e212d5e49d4a4d987ff7e84b5939797f9364c4334adab3cf848978fd",
+    "scripts/package.js": "53fa746c799be4ed87dbea9a1d938b4cafa0eecc8a2b32292c5364aaebe9e11c",
+    "test/permission-regression.mjs": "8cda7953520b6ca319cc00b1c10b76295652cc2fa81f2a1c5038a1a18df8e6e4",
+    "test/fixtures/permission-fix.html": "9c1b1be796659c4b205490658c0e25e8e099145a971d5ed75654675bbb70ab7a",
+    "test/verify-permission-package.py": "3f2022a1103befb69d655076c11677d59b3da14ebea3c344255b9a827cffbad1"
+  }
+}

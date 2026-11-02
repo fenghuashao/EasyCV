@@ -1,6 +1,6 @@
 # EasyCV 隐私政策
 
-生效日期：2026-08-10
+生效日期：2026-11-01
 
 EasyCV（以下简称"本扩展"）尊重并保护用户隐私。本政策说明本扩展如何处理信息。
 
@@ -20,7 +20,7 @@ EasyCV（以下简称"本扩展"）尊重并保护用户隐私。本政策说明
 
 ## 权限说明
 
-本扩展申请的权限仅用于实现其核心功能（解除网页复制限制），具体用途见商店页面权限说明。1.1.0 起已移除全部非必要权限。
+1.1.2 移除未使用的 `scripting` 与冗余的 `activeTab` 权限。保留 `storage`（设置、自动启用与排除列表、统计的浏览器存储）和 `contextMenus`（右键操作）。保留 `<all_urls>` 网站访问范围，用于任意普通网页的静态 Content Script、自动解锁及标签页 URL 识别；页面脚本通过扩展内的 web-accessible resource 加载。商店权限说明应与此一致。
 
 ## 开源可审计
 
@@ -34,7 +34,7 @@ EasyCV（以下简称"本扩展"）尊重并保护用户隐私。本政策说明
 
 # EasyCV Privacy Policy
 
-Effective date: 2026-08-10
+Effective date: 2026-11-01
 
 EasyCV ("the extension") respects your privacy.
 
@@ -54,7 +54,7 @@ You can wipe everything via Settings → Advanced → Clear all data, or by unin
 
 ## Permissions
 
-All requested permissions serve the extension's single purpose only. Redundant permissions were removed in 1.1.0.
+Version 1.1.2 removes unused `scripting` and redundant `activeTab`. It retains `storage` for settings, lists and local statistics, and `contextMenus` for context menu actions. `<all_urls>` remains for static content scripts, automatic unlocking and tab URL identification on ordinary web pages. The page script is loaded from a packaged web-accessible resource.
 
 ## Open source
 

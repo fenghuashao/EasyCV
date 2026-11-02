@@ -1,0 +1,8 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "test/unit/docs-check.test.mjs"
+  ],
+  "exitCode": 1
+}

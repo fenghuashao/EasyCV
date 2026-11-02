@@ -1,0 +1,8 @@
+The following is a diff from the previous accessibility tree for Window: "" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 12, 22, 57
+~				9 按钮 关闭解锁
++				59 text 未激活 easycv.localhost
+~				20 按钮 (disabled) 已在自动开启列表
++					60 文本 已在自动开启列表
++			61 文本 已将 easycv.localhost 添加到自动开启列表
+The focused UI element is 2 HTML 内容 EasyCV - 复制粘贴助手, URL: chrome-extension://ggchllgdneckbbjcmchbjfelkomcekpj/popup/popup.html

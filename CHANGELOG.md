@@ -6,6 +6,13 @@
 
 ## [Unreleased]
 
+## [1.1.2] - 2026-11-01
+
+### 权限整改（本地候选，尚未提交商店）
+- 移除未使用的 `scripting` 与冗余的 `activeTab`；保留 `storage`、`contextMenus` 及现有 `<all_urls>` 范围，保持注入与核心业务逻辑原样
+- 同步 manifest、package 与 lockfile 根版本；打包说明从产物 manifest 读取权限，修正用户手册及隐私权限说明
+- 本轮回归、发布 ZIP 校验、人工验收及商店包比对限制见 [1.1.2 权限整改报告](./EASYCV-1.1.2-PERMISSION-FIX.md)
+
 ## [1.1.1] - 2026-08-31
 
 ### ✨ 新功能

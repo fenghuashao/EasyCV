@@ -1,0 +1,289 @@
+./CHANGELOG.md:12:- 移除未使用的 `scripting` 与冗余的 `activeTab`；保留 `storage`、`contextMenus` 及现有 `<all_urls>` 范围，保持注入与核心业务逻辑原样
+./CHANGELOG.md:24:- popup 默认状态与设置导出文件中的版本号改为动态读取 `chrome.runtime.getManifest().version`，消除每次发版的硬编码漂移（原导出文件始终盖 1.1.0 版本戳）
+./EASYCV-1.1.2-PERMISSION-FIX.md:7:已移除未使用的 `scripting` 和冗余的 `activeTab`，保留 `storage`、`contextMenus` 及原有 `<all_urls>`。版本统一为 1.1.2。核心业务与注入文件保持 1.1.1 原字节。
+./EASYCV-1.1.2-PERMISSION-FIX.md:24:| scripting | 申请 | 移除 | runtime、Popup、后台及辅助脚本均无 scripting API、executeScript、insertCSS 或动态 Content Script 注册调用 |
+./EASYCV-1.1.2-PERMISSION-FIX.md:25:| activeTab | 申请 | 移除 | 没有截图等特殊依赖；普通网页的 tabs.query/get URL 读取由已有 host permissions 覆盖；tabs.sendMessage 与静态脚本不依赖它 |
+./EASYCV-1.1.2-PERMISSION-FIX.md:32:实际注入链：manifest 静态脚本 → content/content.js 的 injectCustomScript() → runtime.getURL → DOM script 标签加载扩展内 content/injector.js。未改为 scripting 或修改注入机制。
+./EASYCV-1.1.2-PERMISSION-FIX.md:34:全仓扫描覆盖源码、后台、Popup、Options、Content Script、工具、测试、文档和辅助脚本；[基线搜索](docs/evidence/1.1.2/baseline-permission-search.txt) 保留历史文档/清单的命中。构建与 ZIP 的 API 清单、每文件 SHA256 见 [包验证 JSON](docs/evidence/1.1.2/package-verification.json)。运行/辅助 JS 中无 scripting、旧式注入或截图 API 调用；不是把文档出现的单词当作实际依赖。
+./EASYCV-1.1.2-PERMISSION-FIX.md:36:Chrome 官方依据：静态脚本由 [content_scripts 声明](https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts) 注册；[scripting API](https://developer.chrome.com/docs/extensions/reference/api/scripting) 才要求 scripting 权限；[Tabs API](https://developer.chrome.com/docs/extensions/reference/api/tabs) 允许匹配的 host permissions 读取标签 URL；[Purple Potassium 排错说明](https://developer.chrome.com/docs/webstore/troubleshooting#excessive-permissions) 明确指出已有相关 host permissions 时 activeTab 不必要。结合代码和对照回归，支持本轮删除；不代表 Google 已认可。
+./EASYCV-1.1.2-PERMISSION-FIX.md:78:- manifest 在 ZIP 根目录，版本 1.1.2，permissions 恰为 storage/contextMenus；无 optional_permissions。source、dist 与 ZIP 的 manifest 和所有运行文件逐字节一致。
+./EASYCV-1.1.2-PERMISSION-FIX.md:140:- 后台权限理由与新版清单一致：storage 用于浏览器内设置/名单/统计；contextMenus 用于三个右键动作；网站访问用于任意普通页面的自动解锁、静态脚本与标签识别。移除旧的 scripting/activeTab 用途宣称。
+./test/permission-regression.mjs:57:  const stored = key => sw.evaluate(async key => (await chrome.storage.sync.get(key))[key], key);
+./test/permission-regression.mjs:65:  const set = data => sw.evaluate(data => chrome.storage.sync.set(data), data);
+./test/permission-regression.mjs:81:    assert.equal(await sw.evaluate(() => chrome.runtime.getManifest().version), manifest.version);
+./test/permission-regression.mjs:82:    assert.deepEqual((await sw.evaluate(() => chrome.permissions.getAll())).permissions.sort(), [...manifest.permissions].sort());
+./test/permission-regression.mjs:104:      storage: await sw.evaluate(() => chrome.storage.sync.get(['plugin_enabled', 'user_settings'])),
+./test/permission-regression.mjs:167:  await check('second tab, activation and URL visibility without activeTab', async () => {
+./test/permission-regression.mjs:171:    const tabs = await sw.evaluate(() => chrome.tabs.query({}));
+./test/permission-regression.mjs:178:      const error = await sw.evaluate(id => new Promise(resolve => chrome.contextMenus.update(id, {}, () => resolve(chrome.runtime.lastError?.message || null))), id);
+./test/permission-regression.mjs:184:      const [tab] = await chrome.tabs.query({ url: url + '*' });
+./test/permission-regression.mjs:222:  const expected = await sw.evaluate(() => chrome.storage.sync.get(['user_settings', 'excluded_list', 'auto_enable_list']));
+./test/permission-regression.mjs:232:    diagnostics.afterRestart = await reopened.evaluate(() => chrome.storage.sync.get(['user_settings', 'excluded_list', 'auto_enable_list']));
+./docs/test-report.md:27:| 12 | chrome.storage 写路径 | popup 切换"解锁复制"→ `user_settings.copyEnabled` 真实写入并回读一致；options 切换"解锁粘贴"→ `pasteEnabled` 真实写入 | ✅ |
+./scripts/generate-icons.js:34:      || path.join(process.env.LOCALAPPDATA, 'ms-playwright/chromium-1228/chrome-win64/chrome.exe'),
+./scripts/generate-icons.js:39:    const page = await browser.newPage();
+./scripts/generate-icons.js:56:    await browser.close();
+./docs/root-cause-analysis.md:40:| 运行时症状 | options 修改任意设置 → console `TypeError: StorageUtils.setPluginSettings is not a function`，UI 报"保存失败"，`chrome.storage.sync`/`local` 实测均无写入 |
+./scripts/screenshot-popup.js:26:  || path.join(process.env.LOCALAPPDATA, 'ms-playwright/chromium-1228/chrome-win64/chrome.exe');
+./docs/release-checklist.md:19:| 移除 management 权限 | ✅ 已合入 master | 2e03739；manifest.json 权限仅 activeTab/storage/scripting/contextMenus |
+./docs/开发日志-2024-12.md:74:    - chrome.tabs.onUpdated: 使用StateManager处理自动启用
+./docs/用户使用手册.md:193:1.1.2 已移除 `scripting` 与 `activeTab`；静态 Content Script 与扩展内页面脚本的加载机制保持原样。
+./docs/bug-triage.md:21:- **症状**：options 页面修改任何设置 → `TypeError: StorageUtils.setPluginSettings is not a function`，UI 报"保存失败"且实测 `chrome.storage.sync/local` 均无写入。
+./docs/bug-triage.md:88:- **症状**：修复 P0-1/P0-2 后，popup 切换"解锁复制"→ 通知显示"复制功能已关闭"，但 SW 内存与 `chrome.storage` 中 `copyEnabled` 实际未变（仍为 true）。
+./docs/bug-triage.md:103:- **症状**：EASYCV-008 修复后，状态更新真实生效（内存 cache 与 `chrome.storage.user_settings` 均已写入 false），但确认协议返回 `success:false`：`State verification failed: copyEnabled expected false, got undefined`。
+./test/real-sites/lib/context.mjs:31:  || path.join(process.env.LOCALAPPDATA, 'ms-playwright/chromium-1228/chrome-win64/chrome.exe');
+./utils/message-utils.js:52:        if (!chrome.runtime || !chrome.runtime.sendMessage) {
+./utils/message-utils.js:58:          chrome.runtime.sendMessage(message),
+./utils/message-utils.js:102:        const tab = await chrome.tabs.get(tabId).catch(() => null);
+./utils/message-utils.js:113:        return await chrome.tabs.sendMessage(tabId, message);
+./utils/message-utils.js:140:    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+./utils/message-utils.js:193:      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+./utils/message-utils.js:227:      const tabs = await chrome.tabs.query({});
+./utils/storage-utils.js:48:      const result = await chrome.storage.sync.get(keys);
+./utils/storage-utils.js:53:      return await chrome.storage.local.get(keys);
+./utils/storage-utils.js:64:      await chrome.storage.sync.set(data);
+./utils/storage-utils.js:68:      await chrome.storage.local.set(data);
+./utils/storage-utils.js:79:      await chrome.storage.sync.remove(keys);
+./utils/storage-utils.js:82:      await chrome.storage.local.remove(keys);
+./utils/storage-utils.js:92:      await chrome.storage.sync.clear();
+./utils/storage-utils.js:93:      await chrome.storage.local.clear();
+./utils/storage-utils.js:351:    chrome.storage.onChanged.addListener((changes, areaName) => {
+./utils/i18n-utils.js:3: * 封装 chrome.i18n，环境无关（service worker / popup / options 均可使用）
+./utils/i18n-utils.js:15:      const message = chrome.i18n.getMessage(key, substitutions);
+./utils/i18n-utils.js:48:      document.documentElement.lang = chrome.i18n.getUILanguage();
+./content/content.js:605:      const injectorUrl = chrome.runtime.getURL('content/injector.js');
+./PRIVACY.md:13:以下数据仅保存在你的浏览器中（chrome.storage.sync / chrome.storage.local，由浏览器提供，可能通过你的 Google 账号同步，不经过开发者）：
+./PRIVACY.md:23:1.1.2 移除未使用的 `scripting` 与冗余的 `activeTab` 权限。保留 `storage`（设置、自动启用与排除列表、统计的浏览器存储）和 `contextMenus`（右键操作）。保留 `<all_urls>` 网站访问范围，用于任意普通网页的静态 Content Script、自动解锁及标签页 URL 识别；页面脚本通过扩展内的 web-accessible resource 加载。商店权限说明应与此一致。
+./PRIVACY.md:47:The following data lives only in your browser's own chrome.storage (synced by your Google account, never touching the developer):
+./PRIVACY.md:57:Version 1.1.2 removes unused `scripting` and redundant `activeTab`. It retains `storage` for settings, lists and local statistics, and `contextMenus` for context menu actions. `<all_urls>` remains for static content scripts, automatic unlocking and tab URL identification on ordinary web pages. The page script is loaded from a packaged web-accessible resource.
+./docs/技术架构文档.md:34:│   ├── i18n-utils.js                # chrome.i18n 封装（含 data-i18n 页面扫描）
+./docs/技术架构文档.md:51:manifest 仅声明 `storage`、`contextMenus`；`host_permissions`、静态 Content Script 的 matches 及 web-accessible resources 的 matches 保留 `<all_urls>`。Content Script 在 `document_start`、所有匹配 frame 中运行；`injectCustomScript()` 通过 `runtime.getURL` 创建扩展内 `content/injector.js` 的 DOM script 标签，未使用 scripting API。普通网页 URL 由现有 host permissions 覆盖，故移除冗余 activeTab。本轮未修改注入机制。
+./docs/技术架构文档.md:123:当前实现上，Options 页的大部分设置读写直接通过 `StorageUtils` 访问 `chrome.storage`；只有少量动作会通过消息通知后台或打开外部页面。
+./docs/技术架构文档.md:139:- 封装 `chrome.storage.sync/local`
+./docs/技术架构文档.md:144:- 封装 `chrome.i18n.getMessage`（带中文兜底）
+./docs/技术架构文档.md:192:当前状态主要存储在 `chrome.storage.sync`，由 `StorageUtils` 封装访问。
+./docs/代码规范文档.md:162:    const settings = await chrome.storage.sync.get('userSettings');
+./docs/代码规范文档.md:172:  chrome.storage.sync.get('userSettings', (result) => {
+./docs/代码规范文档.md:173:    if (chrome.runtime.lastError) {
+./docs/代码规范文档.md:174:      callback(null, chrome.runtime.lastError);
+./docs/decisions/ADR-001-合并t1重写版.md:16:3. **i18n 体系** —— 采用标准 `_locales`（zh_CN 默认 + en），静态文案 `data-i18n` 扫描、动态文案 `I18nUtils.t()`；**不移植** t1 的运行时语言切换（`chrome.i18n` 只跟随浏览器 UI locale，t1 的切换器本就未生效）。
+./docs/自动化打包配置说明.md:5:正式打包说明从 dist manifest 读取权限：`storage`、`contextMenus`，网站访问范围 `<all_urls>`；不再硬编码 activeTab/scripting。本轮仅运行 `npm run package` 生成本地候选，提交前验收见 [权限整改报告](../EASYCV-1.1.2-PERMISSION-FIX.md)。
+./docs/fix-plan.md:62:- **验证**：✅ 修复后 SW 内 `executeWithConfirmation({copyEnabled:false})` 真实写入内存 cache 与 `chrome.storage.user_settings`；popup 端到端切换 + 持久化 + 通知全链路通过。
+./test/real-sites/bilibili-contextmenu.mjs:17:  || path.join(process.env.LOCALAPPDATA, 'ms-playwright/chromium-1228/chrome-win64/chrome.exe');
+./test/real-sites/doc88-rootcause.mjs:17:  || path.join(process.env.LOCALAPPDATA, 'ms-playwright/chromium-1228/chrome-win64/chrome.exe');
+./test/verify-permission-package.py:25:assert old_manifest['permissions'] == ['activeTab', 'storage', 'scripting', 'contextMenus']
+./test/verify-permission-package.py:55:        assert not re.search(r'(?:chrome|browser)\s*(?:\.\s*scripting|\[\s*[\"\']scripting)', source), str(p)
+./test/verify-permission-package.py:56:        assert not re.search(r'\b(?:executeScript|insertCSS|registerContentScripts|captureVisibleTab|captureTab)\s*\(', source), str(p)
+./test/verify-permission-package.py:63:assert 'activeTab' not in notes and 'scripting' not in notes
+./test/verify-permission-package.py:70:               'no scripting or capture API dependency in runtime/helper JS'],
+./test/real-sites/real-sites-exclusion.mjs:11: * 注意：本扩展配置存储区域为 chrome.storage.sync（见 utils/storage-utils.js get/set）。
+./test/real-sites/real-sites-exclusion.mjs:46:    () => chrome.storage.sync.get(null).then((all) => all.excluded_list)
+./test/real-sites/real-sites-exclusion.mjs:85:  report('存储层写入确认（chrome.storage.sync）', storedOk,
+./test/e2e-extension.mjs:33:  || path.join(process.env.LOCALAPPDATA, 'ms-playwright/chromium-1228/chrome-win64/chrome.exe');
+./popup/popup.js:31:        versionBadge.textContent = `v${chrome.runtime.getManifest().version}`;
+./popup/popup.js:107:    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+./popup/popup.js:245:      const response = await chrome.runtime.sendMessage({
+./popup/popup.js:316:      version: chrome.runtime.getManifest().version
+./popup/popup.js:790:      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+./popup/popup.js:833:    chrome.tabs.create({ url: feedbackUrl });
+./popup/popup.js:898:    chrome.runtime.openOptionsPage();
+./popup/popup.js:905:    chrome.tabs.create({ url: 'https://github.com/your-repo/wiki' });
+./test/real-sites/real-sites-retry.mjs:17:  || path.join(process.env.LOCALAPPDATA, 'ms-playwright/chromium-1228/chrome-win64/chrome.exe');
+./test/real-sites/real-sites-exclusion-results.json:20:      "name": "存储层写入确认（chrome.storage.sync）",
+./test/unit/smoke.test.mjs:24:/** chrome.storage 的内存实现（仅覆盖测试用到的面） */
+./test/unit/smoke.test.mjs:117:test('t() 在 chrome.i18n 不可用时返回兜底文案', () => {
+./test/unit/smoke.test.mjs:123:test('t() 优先返回 chrome.i18n 消息并替换占位符', () => {
+./test/unit/storage-exclusion.test.mjs:23:/** chrome.storage 的内存实现（与 smoke.test.mjs 同款） */
+./dist/utils/message-utils.js:52:        if (!chrome.runtime || !chrome.runtime.sendMessage) {
+./dist/utils/message-utils.js:58:          chrome.runtime.sendMessage(message),
+./dist/utils/message-utils.js:102:        const tab = await chrome.tabs.get(tabId).catch(() => null);
+./dist/utils/message-utils.js:113:        return await chrome.tabs.sendMessage(tabId, message);
+./dist/utils/message-utils.js:140:    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+./dist/utils/message-utils.js:193:      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+./dist/utils/message-utils.js:227:      const tabs = await chrome.tabs.query({});
+./dist/background/auto-enable-manager.js:184:          await chrome.tabs.sendMessage(tabId, message);
+./dist/utils/storage-utils.js:48:      const result = await chrome.storage.sync.get(keys);
+./dist/utils/storage-utils.js:53:      return await chrome.storage.local.get(keys);
+./dist/utils/storage-utils.js:64:      await chrome.storage.sync.set(data);
+./dist/utils/storage-utils.js:68:      await chrome.storage.local.set(data);
+./dist/utils/storage-utils.js:79:      await chrome.storage.sync.remove(keys);
+./dist/utils/storage-utils.js:82:      await chrome.storage.local.remove(keys);
+./dist/utils/storage-utils.js:92:      await chrome.storage.sync.clear();
+./dist/utils/storage-utils.js:93:      await chrome.storage.local.clear();
+./dist/utils/storage-utils.js:351:    chrome.storage.onChanged.addListener((changes, areaName) => {
+./dist/background/icon-manager.js:82:      16: chrome.runtime.getURL(`icons/${iconPrefix}-16.png`),
+./dist/background/icon-manager.js:83:      32: chrome.runtime.getURL(`icons/${iconPrefix}-32.png`),
+./dist/background/icon-manager.js:84:      48: chrome.runtime.getURL(`icons/${iconPrefix}-48.png`),
+./dist/background/icon-manager.js:85:      128: chrome.runtime.getURL(`icons/${iconPrefix}-128.png`)
+./dist/background/icon-manager.js:178:      await chrome.action.setIcon({ path: iconPaths });
+./dist/background/icon-manager.js:182:      await chrome.action.setTitle({ title });
+./dist/background/icon-manager.js:186:      await chrome.action.setBadgeText({ text: badgeConfig.text });
+./dist/background/icon-manager.js:187:      await chrome.action.setBadgeBackgroundColor({ color: badgeConfig.color });
+./dist/popup/popup.js:31:        versionBadge.textContent = `v${chrome.runtime.getManifest().version}`;
+./dist/popup/popup.js:107:    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+./dist/popup/popup.js:245:      const response = await chrome.runtime.sendMessage({
+./dist/popup/popup.js:316:      version: chrome.runtime.getManifest().version
+./dist/popup/popup.js:790:      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+./dist/popup/popup.js:833:    chrome.tabs.create({ url: feedbackUrl });
+./dist/popup/popup.js:898:    chrome.runtime.openOptionsPage();
+./dist/popup/popup.js:905:    chrome.tabs.create({ url: 'https://github.com/your-repo/wiki' });
+./dist/utils/i18n-utils.js:3: * 封装 chrome.i18n，环境无关（service worker / popup / options 均可使用）
+./dist/utils/i18n-utils.js:15:      const message = chrome.i18n.getMessage(key, substitutions);
+./dist/utils/i18n-utils.js:48:      document.documentElement.lang = chrome.i18n.getUILanguage();
+./docs/解除网页复制粘贴插件分析报告_.txt:224:* 安全通信： 使用 chrome.runtime.sendMessage 和 chrome.tabs.sendMessage 在组件之间进行稳健的通信。
+./docs/解除网页复制粘贴插件分析报告_.txt:225:* 存储： 使用 chrome.storage.local 或 chrome.storage.sync 来持久化用户设置和白名单。sync 允许设置在用户的不同Chrome实例之间同步 16。
+./docs/解除网页复制粘贴插件分析报告_.txt:236:   * 缓解策略： 插件的内容脚本需要注入到每个相关的iframe中（在 chrome.tabs.executeScript 或清单文件中使用 allFrames: true）。主页面脚本和iframe脚本之间的通信可能必不可少。
+./docs/解除网页复制粘贴插件分析报告_.txt:240:Chrome的权限模型是安全和用户信任的关键方面 26。Manifest V3引入了一些变化，特别是在后台脚本（service workers）和对远程托管代码的限制方面，旨在增强安全性。虽然研究材料中没有针对这些特定扩展明确详述，但这是任何新Chrome扩展开发都必须考虑的关键宏观背景。因此，插件的设计必须考虑到Manifest V3，使用service worker执行后台任务，并遵守其限制。权限范围必须尽可能小（如果对某些核心功能可行，activeTab 可能优于广泛的主机权限，尽管对于“始终开启”的功能可能不够）。对所有权限进行清晰的说明至关重要。
+./docs/解除网页复制粘贴插件分析报告_.txt:269:12. 网页万能复制- Chrome 应用商店, 访问时间为 六月 6, 2025， https://chrome.google.com/webstore/detail/universal-copy-enable-cop/hmlmncgagbkggdfpklpmhjcmbjadpkdo?hl=zh-CN
+./docs/解除网页复制粘贴插件分析报告_.txt:309:52. Override web content and HTTP response headers locally | Chrome DevTools, 访问时间为 六月 6, 2025， https://developer.chrome.com/docs/devtools/overrides
+./dist/background/service-worker.js:754:      await chrome.contextMenus.removeAll();
+./dist/background/service-worker.js:757:      chrome.contextMenus.create({
+./dist/background/service-worker.js:763:      chrome.contextMenus.create({
+./dist/background/service-worker.js:769:      chrome.contextMenus.create({
+./dist/background/service-worker.js:776:      chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+./dist/background/service-worker.js:1201:chrome.runtime.onInstalled.addListener(async (details) => {
+./dist/background/service-worker.js:1226:chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/auto-enable-manager.js:184:          await chrome.tabs.sendMessage(tabId, message);
+./dist/content/content.js:605:      const injectorUrl = chrome.runtime.getURL('content/injector.js');
+./dist/background/monitoring-manager.js:322:    // 后续如需开启应改从 chrome.storage 的 debugMode 设置读取
+./.trae/rules/project_rules.md:7:    - chrome.storage (local/sync/session)
+./.trae/rules/project_rules.md:8:    - chrome.tabs 和 chrome.windows
+./.trae/rules/project_rules.md:9:    - chrome.runtime (消息传递, 生命周期事件)
+./.trae/rules/project_rules.md:10:    - chrome.scripting (程序化注入)
+./.trae/rules/project_rules.md:11:    - chrome.alarms
+./.trae/rules/project_rules.md:12:    - chrome.contextMenus
+./.trae/rules/project_rules.md:13:    - chrome.declarativeNetRequest
+./dist/options/options.js:41:        aboutVersion.textContent = I18nUtils.t('version_label', chrome.runtime.getManifest().version);
+./dist/options/options.js:301:        chrome.tabs.create({ url: SUPPORT_LINKS.repo });
+./dist/options/options.js:308:        chrome.tabs.create({ url: SUPPORT_LINKS.issues });
+./dist/options/options.js:315:        chrome.tabs.create({ url: SUPPORT_LINKS.docs });
+./dist/options/options.js:783:        version: chrome.runtime.getManifest().version
+./dist/options/options.js:901:      await chrome.storage.sync.clear();
+./dist/options/options.js:902:      await chrome.storage.local.clear();
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/icon-manager.js:82:      16: chrome.runtime.getURL(`icons/${iconPrefix}-16.png`),
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/icon-manager.js:83:      32: chrome.runtime.getURL(`icons/${iconPrefix}-32.png`),
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/icon-manager.js:84:      48: chrome.runtime.getURL(`icons/${iconPrefix}-48.png`),
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/icon-manager.js:85:      128: chrome.runtime.getURL(`icons/${iconPrefix}-128.png`)
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/icon-manager.js:178:      await chrome.action.setIcon({ path: iconPaths });
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/icon-manager.js:182:      await chrome.action.setTitle({ title });
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/icon-manager.js:186:      await chrome.action.setBadgeText({ text: badgeConfig.text });
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/icon-manager.js:187:      await chrome.action.setBadgeBackgroundColor({ color: badgeConfig.color });
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/service-worker.js:754:      await chrome.contextMenus.removeAll();
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/service-worker.js:757:      chrome.contextMenus.create({
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/service-worker.js:763:      chrome.contextMenus.create({
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/service-worker.js:769:      chrome.contextMenus.create({
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/service-worker.js:776:      chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/service-worker.js:1201:chrome.runtime.onInstalled.addListener(async (details) => {
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/service-worker.js:1226:chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/content/content.js:605:      const injectorUrl = chrome.runtime.getURL('content/injector.js');
+./options/options.js:41:        aboutVersion.textContent = I18nUtils.t('version_label', chrome.runtime.getManifest().version);
+./options/options.js:301:        chrome.tabs.create({ url: SUPPORT_LINKS.repo });
+./options/options.js:308:        chrome.tabs.create({ url: SUPPORT_LINKS.issues });
+./options/options.js:315:        chrome.tabs.create({ url: SUPPORT_LINKS.docs });
+./options/options.js:783:        version: chrome.runtime.getManifest().version
+./options/options.js:901:      await chrome.storage.sync.clear();
+./options/options.js:902:      await chrome.storage.local.clear();
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/storage-utils.js:48:      const result = await chrome.storage.sync.get(keys);
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/storage-utils.js:53:      return await chrome.storage.local.get(keys);
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/storage-utils.js:64:      await chrome.storage.sync.set(data);
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/storage-utils.js:68:      await chrome.storage.local.set(data);
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/storage-utils.js:79:      await chrome.storage.sync.remove(keys);
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/storage-utils.js:82:      await chrome.storage.local.remove(keys);
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/storage-utils.js:92:      await chrome.storage.sync.clear();
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/storage-utils.js:93:      await chrome.storage.local.clear();
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/storage-utils.js:351:    chrome.storage.onChanged.addListener((changes, areaName) => {
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/background/monitoring-manager.js:322:    // 后续如需开启应改从 chrome.storage 的 debugMode 设置读取
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/message-utils.js:52:        if (!chrome.runtime || !chrome.runtime.sendMessage) {
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/message-utils.js:58:          chrome.runtime.sendMessage(message),
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/message-utils.js:102:        const tab = await chrome.tabs.get(tabId).catch(() => null);
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/message-utils.js:113:        return await chrome.tabs.sendMessage(tabId, message);
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/message-utils.js:140:    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/message-utils.js:193:      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/message-utils.js:227:      const tabs = await chrome.tabs.query({});
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/i18n-utils.js:3: * 封装 chrome.i18n，环境无关（service worker / popup / options 均可使用）
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/i18n-utils.js:15:      const message = chrome.i18n.getMessage(key, substitutions);
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/utils/i18n-utils.js:48:      document.documentElement.lang = chrome.i18n.getUILanguage();
+./background/monitoring-manager.js:322:    // 后续如需开启应改从 chrome.storage 的 debugMode 设置读取
+./background/auto-enable-manager.js:184:          await chrome.tabs.sendMessage(tabId, message);
+./background/service-worker.js:754:      await chrome.contextMenus.removeAll();
+./background/service-worker.js:757:      chrome.contextMenus.create({
+./background/service-worker.js:763:      chrome.contextMenus.create({
+./background/service-worker.js:769:      chrome.contextMenus.create({
+./background/service-worker.js:776:      chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+./background/service-worker.js:1201:chrome.runtime.onInstalled.addListener(async (details) => {
+./background/service-worker.js:1226:chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+./background/icon-manager.js:82:      16: chrome.runtime.getURL(`icons/${iconPrefix}-16.png`),
+./background/icon-manager.js:83:      32: chrome.runtime.getURL(`icons/${iconPrefix}-32.png`),
+./background/icon-manager.js:84:      48: chrome.runtime.getURL(`icons/${iconPrefix}-48.png`),
+./background/icon-manager.js:85:      128: chrome.runtime.getURL(`icons/${iconPrefix}-128.png`)
+./background/icon-manager.js:178:      await chrome.action.setIcon({ path: iconPaths });
+./background/icon-manager.js:182:      await chrome.action.setTitle({ title });
+./background/icon-manager.js:186:      await chrome.action.setBadgeText({ text: badgeConfig.text });
+./background/icon-manager.js:187:      await chrome.action.setBadgeBackgroundColor({ color: badgeConfig.color });
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/popup/popup.js:31:        versionBadge.textContent = `v${chrome.runtime.getManifest().version}`;
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/popup/popup.js:107:    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/popup/popup.js:245:      const response = await chrome.runtime.sendMessage({
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/popup/popup.js:316:      version: chrome.runtime.getManifest().version
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/popup/popup.js:790:      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/popup/popup.js:833:    chrome.tabs.create({ url: feedbackUrl });
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/popup/popup.js:898:    chrome.runtime.openOptionsPage();
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/popup/popup.js:905:    chrome.tabs.create({ url: 'https://github.com/your-repo/wiki' });
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/options/options.js:41:        aboutVersion.textContent = I18nUtils.t('version_label', chrome.runtime.getManifest().version);
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/options/options.js:301:        chrome.tabs.create({ url: SUPPORT_LINKS.repo });
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/options/options.js:308:        chrome.tabs.create({ url: SUPPORT_LINKS.issues });
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/options/options.js:315:        chrome.tabs.create({ url: SUPPORT_LINKS.docs });
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/options/options.js:783:        version: chrome.runtime.getManifest().version
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/options/options.js:901:      await chrome.storage.sync.clear();
+./releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031/options/options.js:902:      await chrome.storage.local.clear();
+./releases/EasyCV-v1.1.2-20261031/background/auto-enable-manager.js:184:          await chrome.tabs.sendMessage(tabId, message);
+./releases/EasyCV-v1.1.2-20261031/background/monitoring-manager.js:322:    // 后续如需开启应改从 chrome.storage 的 debugMode 设置读取
+./releases/EasyCV-v1.1.2-20261031/background/icon-manager.js:82:      16: chrome.runtime.getURL(`icons/${iconPrefix}-16.png`),
+./releases/EasyCV-v1.1.2-20261031/background/icon-manager.js:83:      32: chrome.runtime.getURL(`icons/${iconPrefix}-32.png`),
+./releases/EasyCV-v1.1.2-20261031/background/icon-manager.js:84:      48: chrome.runtime.getURL(`icons/${iconPrefix}-48.png`),
+./releases/EasyCV-v1.1.2-20261031/background/icon-manager.js:85:      128: chrome.runtime.getURL(`icons/${iconPrefix}-128.png`)
+./releases/EasyCV-v1.1.2-20261031/background/icon-manager.js:178:      await chrome.action.setIcon({ path: iconPaths });
+./releases/EasyCV-v1.1.2-20261031/background/icon-manager.js:182:      await chrome.action.setTitle({ title });
+./releases/EasyCV-v1.1.2-20261031/background/icon-manager.js:186:      await chrome.action.setBadgeText({ text: badgeConfig.text });
+./releases/EasyCV-v1.1.2-20261031/background/icon-manager.js:187:      await chrome.action.setBadgeBackgroundColor({ color: badgeConfig.color });
+./releases/EasyCV-v1.1.2-20261031/content/content.js:605:      const injectorUrl = chrome.runtime.getURL('content/injector.js');
+./releases/EasyCV-v1.1.2-20261031/utils/message-utils.js:52:        if (!chrome.runtime || !chrome.runtime.sendMessage) {
+./releases/EasyCV-v1.1.2-20261031/utils/message-utils.js:58:          chrome.runtime.sendMessage(message),
+./releases/EasyCV-v1.1.2-20261031/utils/message-utils.js:102:        const tab = await chrome.tabs.get(tabId).catch(() => null);
+./releases/EasyCV-v1.1.2-20261031/utils/message-utils.js:113:        return await chrome.tabs.sendMessage(tabId, message);
+./releases/EasyCV-v1.1.2-20261031/utils/message-utils.js:140:    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+./releases/EasyCV-v1.1.2-20261031/utils/message-utils.js:193:      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+./releases/EasyCV-v1.1.2-20261031/utils/message-utils.js:227:      const tabs = await chrome.tabs.query({});
+./releases/EasyCV-v1.1.2-20261031/popup/popup.js:31:        versionBadge.textContent = `v${chrome.runtime.getManifest().version}`;
+./releases/EasyCV-v1.1.2-20261031/popup/popup.js:107:    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+./releases/EasyCV-v1.1.2-20261031/popup/popup.js:245:      const response = await chrome.runtime.sendMessage({
+./releases/EasyCV-v1.1.2-20261031/popup/popup.js:316:      version: chrome.runtime.getManifest().version
+./releases/EasyCV-v1.1.2-20261031/popup/popup.js:790:      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+./releases/EasyCV-v1.1.2-20261031/popup/popup.js:833:    chrome.tabs.create({ url: feedbackUrl });
+./releases/EasyCV-v1.1.2-20261031/popup/popup.js:898:    chrome.runtime.openOptionsPage();
+./releases/EasyCV-v1.1.2-20261031/popup/popup.js:905:    chrome.tabs.create({ url: 'https://github.com/your-repo/wiki' });
+./releases/EasyCV-v1.1.2-20261031/utils/i18n-utils.js:3: * 封装 chrome.i18n，环境无关（service worker / popup / options 均可使用）
+./releases/EasyCV-v1.1.2-20261031/utils/i18n-utils.js:15:      const message = chrome.i18n.getMessage(key, substitutions);
+./releases/EasyCV-v1.1.2-20261031/utils/i18n-utils.js:48:      document.documentElement.lang = chrome.i18n.getUILanguage();
+./releases/EasyCV-v1.1.2-20261031/background/service-worker.js:754:      await chrome.contextMenus.removeAll();
+./releases/EasyCV-v1.1.2-20261031/background/service-worker.js:757:      chrome.contextMenus.create({
+./releases/EasyCV-v1.1.2-20261031/background/service-worker.js:763:      chrome.contextMenus.create({
+./releases/EasyCV-v1.1.2-20261031/background/service-worker.js:769:      chrome.contextMenus.create({
+./releases/EasyCV-v1.1.2-20261031/background/service-worker.js:776:      chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+./releases/EasyCV-v1.1.2-20261031/background/service-worker.js:1201:chrome.runtime.onInstalled.addListener(async (details) => {
+./releases/EasyCV-v1.1.2-20261031/background/service-worker.js:1226:chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+./releases/EasyCV-v1.1.2-20261031/utils/storage-utils.js:48:      const result = await chrome.storage.sync.get(keys);
+./releases/EasyCV-v1.1.2-20261031/utils/storage-utils.js:53:      return await chrome.storage.local.get(keys);
+./releases/EasyCV-v1.1.2-20261031/utils/storage-utils.js:64:      await chrome.storage.sync.set(data);
+./releases/EasyCV-v1.1.2-20261031/utils/storage-utils.js:68:      await chrome.storage.local.set(data);
+./releases/EasyCV-v1.1.2-20261031/utils/storage-utils.js:79:      await chrome.storage.sync.remove(keys);
+./releases/EasyCV-v1.1.2-20261031/utils/storage-utils.js:82:      await chrome.storage.local.remove(keys);
+./releases/EasyCV-v1.1.2-20261031/utils/storage-utils.js:92:      await chrome.storage.sync.clear();
+./releases/EasyCV-v1.1.2-20261031/utils/storage-utils.js:93:      await chrome.storage.local.clear();
+./releases/EasyCV-v1.1.2-20261031/utils/storage-utils.js:351:    chrome.storage.onChanged.addListener((changes, areaName) => {
+./releases/EasyCV-v1.1.2-20261031/options/options.js:41:        aboutVersion.textContent = I18nUtils.t('version_label', chrome.runtime.getManifest().version);
+./releases/EasyCV-v1.1.2-20261031/options/options.js:301:        chrome.tabs.create({ url: SUPPORT_LINKS.repo });
+./releases/EasyCV-v1.1.2-20261031/options/options.js:308:        chrome.tabs.create({ url: SUPPORT_LINKS.issues });
+./releases/EasyCV-v1.1.2-20261031/options/options.js:315:        chrome.tabs.create({ url: SUPPORT_LINKS.docs });
+./releases/EasyCV-v1.1.2-20261031/options/options.js:783:        version: chrome.runtime.getManifest().version
+./releases/EasyCV-v1.1.2-20261031/options/options.js:901:      await chrome.storage.sync.clear();
+./releases/EasyCV-v1.1.2-20261031/options/options.js:902:      await chrome.storage.local.clear();

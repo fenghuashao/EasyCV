@@ -4,6 +4,10 @@
 
 文档角色（Vocabulary）以根目录的 [CONTEXT.md](../CONTEXT.md) 为准：Source Document / Reference Document / Working Document / Evidence Document / Governance Document / Archive / Asset。本文档用“状态=archive”表达“归档（Archive）材料”。
 
+## 1.1.2 本地权限整改
+
+当前候选的 Gate、证据及人工验收见 [EASYCV-1.1.2-PERMISSION-FIX](../EASYCV-1.1.2-PERMISSION-FIX.md)。下方历史 Evidence Document 不证明本次候选通过。
+
 ## 快速入口
 
 - 需求与范围：优先看 [EasyCV插件功能需求文档](./EasyCV插件功能需求文档%20.txt)

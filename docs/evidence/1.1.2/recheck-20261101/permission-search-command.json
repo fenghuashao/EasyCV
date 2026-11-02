@@ -1,0 +1,18 @@
+[
+  "rg",
+  "-n",
+  "--hidden",
+  "--no-ignore",
+  "-g",
+  "!.git/**",
+  "-g",
+  "!node_modules/**",
+  "-g",
+  "!.tmp/**",
+  "-g",
+  "!docs/evidence/**",
+  "-g",
+  "!test/real-sites/.profile/**",
+  "chrome\\s*(\\.|\\[)|browser\\s*(\\.|\\[)|activeTab|scripting|executeScript|insertCSS|registerContentScripts|captureVisibleTab|optional_permissions|optional_host_permissions",
+  "."
+]

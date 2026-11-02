@@ -1,0 +1,16 @@
+📦 开始打包 EasyCV...
+==================================================
+📋 准备打包: __MSG_extension_name__ v1.1.2
+📁 创建目录: /Users/fengshaohua/pro/github/EasyCV/releases/permission-recheck-20261101
+🗜️  正在压缩文件...
+✅ 打包完成: EasyCV-v1.1.2-20261031.zip (129.37 KB)
+📝 生成发布说明: EasyCV-v1.1.2-README.md
+📂 正在解压到: EasyCV-v1.1.2-20261031
+✅ 解压完成: releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031
+==================================================
+✅ 打包完成!
+📦 版本: 1.1.2
+📁 输出文件: releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031.zip
+📝 发布说明: releases/permission-recheck-20261101/EasyCV-v1.1.2-README.md
+💾 文件大小: 129.37 KB
+📂 解压目录: releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031

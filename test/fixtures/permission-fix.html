@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>EasyCV permission regression fixture</title>
+  <style>#restricted { user-select: none; -webkit-user-select: none; }</style>
+  <script>
+    // Installed before the extension finishes asynchronous state loading.
+    for (const type of ['copy', 'paste', 'selectstart']) {
+      document.addEventListener(type, event => event.preventDefault());
+    }
+  </script>
+</head>
+<body>
+  <p id="restricted" oncopy="return false" onselectstart="return false">EASYCV_PERMISSION_TEST_TEXT</p>
+  <textarea id="pasteTarget" onpaste="return false"></textarea>
+</body>
+</html>

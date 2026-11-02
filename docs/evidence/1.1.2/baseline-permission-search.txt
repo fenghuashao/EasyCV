@@ -1,0 +1,9 @@
+./.trae/rules/project_rules.md:10:    - chrome.scripting (程序化注入)
+./manifest.json:8:    "activeTab",
+./manifest.json:10:    "scripting",
+./scripts/package.js:175:- **权限要求**: activeTab, storage, scripting
+./docs/release-checklist.md:13:| 移除 management 权限 | ✅ 已合入 master | 2e03739；manifest.json 权限仅 activeTab/storage/scripting/contextMenus |
+./docs/解除网页复制粘贴插件分析报告_.txt:236:   * 缓解策略： 插件的内容脚本需要注入到每个相关的iframe中（在 chrome.tabs.executeScript 或清单文件中使用 allFrames: true）。主页面脚本和iframe脚本之间的通信可能必不可少。
+./docs/解除网页复制粘贴插件分析报告_.txt:240:Chrome的权限模型是安全和用户信任的关键方面 26。Manifest V3引入了一些变化，特别是在后台脚本（service workers）和对远程托管代码的限制方面，旨在增强安全性。虽然研究材料中没有针对这些特定扩展明确详述，但这是任何新Chrome扩展开发都必须考虑的关键宏观背景。因此，插件的设计必须考虑到Manifest V3，使用service worker执行后台任务，并遵守其限制。权限范围必须尽可能小（如果对某些核心功能可行，activeTab 可能优于广泛的主机权限，尽管对于“始终开启”的功能可能不够）。对所有权限进行清晰的说明至关重要。
+./docs/用户使用手册.md:189:| `activeTab` | 访问当前标签页 | 必需 - 检测和解除限制 |
+./docs/用户使用手册.md:191:| `scripting` | 注入解除脚本 | 必需 - 执行解除操作 |

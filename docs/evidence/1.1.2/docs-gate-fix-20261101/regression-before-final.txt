@@ -1,0 +1,105 @@
+✖ docs checker accepts absent ignored runtime directory in inline code: test/real-sites/.profile/ (22.924125ms)
+✖ docs checker accepts absent ignored runtime directory in inline code: ../test/real-sites/.profile/ (22.789708ms)
+✔ docs checker accepts an existing runtime directory (24.776209ms)
+✖ docs checker still fails: ordinary missing file alongside optional profile (23.522583ms)
+✔ docs checker still fails: ordinary broken Markdown link (23.553959ms)
+✔ docs checker still fails: ordinary broken document link (28.847125ms)
+✔ docs checker still fails: runtime directory used as a Markdown link (22.9205ms)
+✔ docs checker still fails: runtime directory linked from index (23.528ms)
+✔ docs checker still fails: missing child file under runtime directory (23.74925ms)
+✔ docs checker still fails: similarly named directory (24.719417ms)
+✔ docs checker still fails: runtime path without directory slash (23.347541ms)
+✔ docs checker still fails: runtime directory in plain text (24.264625ms)
+✔ docs checker still fails: runtime directory no longer ignored (24.295ms)
+✔ docs checker still fails: other ignored directory (23.359334ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 11
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 371.252833
+
+✖ failing tests:
+
+test at test/unit/docs-check.test.mjs:34:3
+✖ docs checker accepts absent ignored runtime directory in inline code: test/real-sites/.profile/ (22.924125ms)
+  AssertionError [ERR_ASSERTION]: ❌ docs:check 发现 1 个未处理问题：
+  1. [path] docs/history.md
+     行号: 1
+     命中内容: test/real-sites/.profile/
+     说明: 文档引用了仓库内不存在的路径。
+     建议: 修正文档中的仓库路径，或在后续实现中补齐对应文件/目录。
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///private/var/folders/78/v877tdd555dd8rhmtkfl4d880000gn/T/easycv-docs-before-imjdje4j/test/unit/docs-check.test.mjs:36:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/unit/docs-check.test.mjs:34:3
+✖ docs checker accepts absent ignored runtime directory in inline code: ../test/real-sites/.profile/ (22.789708ms)
+  AssertionError [ERR_ASSERTION]: ❌ docs:check 发现 1 个未处理问题：
+  1. [path] docs/history.md
+     行号: 1
+     命中内容: ../test/real-sites/.profile/
+     说明: 文档引用了仓库内不存在的路径。
+     建议: 修正文档中的仓库路径，或在后续实现中补齐对应文件/目录。
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///private/var/folders/78/v877tdd555dd8rhmtkfl4d880000gn/T/easycv-docs-before-imjdje4j/test/unit/docs-check.test.mjs:36:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/unit/docs-check.test.mjs:61:3
+✖ docs checker still fails: ordinary missing file alongside optional profile (23.522583ms)
+  AssertionError [ERR_ASSERTION]: ❌ docs:check 发现 2 个未处理问题：
+  1. [path] docs/history.md
+     行号: 1
+     命中内容: test/real-sites/.profile/
+     说明: 文档引用了仓库内不存在的路径。
+     建议: 修正文档中的仓库路径，或在后续实现中补齐对应文件/目录。
+  2. [path] docs/history.md
+     行号: 1
+     命中内容: test/real-sites/missing.mjs
+     说明: 文档引用了仓库内不存在的路径。
+     建议: 修正文档中的仓库路径，或在后续实现中补齐对应文件/目录。
+  
+      at TestContext.<anonymous> (file:///private/var/folders/78/v877tdd555dd8rhmtkfl4d880000gn/T/easycv-docs-before-imjdje4j/test/unit/docs-check.test.mjs:64:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

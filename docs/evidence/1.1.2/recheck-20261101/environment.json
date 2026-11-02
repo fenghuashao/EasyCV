@@ -1,0 +1,16 @@
+{
+  "versions": {
+    "node": "v24.21.0",
+    "npm": "11.19.0",
+    "browser": "Google Chrome for Testing 151.0.7922.34",
+    "playwright": "1.62.1"
+  },
+  "platform": "darwin",
+  "env": {
+    "PLAYWRIGHT_PATH": "/Users/fengshaohua/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright",
+    "CHROMIUM_PATH": "/Users/fengshaohua/Library/Caches/ms-playwright/chromium-1234/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+    "TEST_ORIGIN": "http://easycv.localhost:18931",
+    "TEST_PAGE_URL": "http://127.0.0.1:18931/test-page.html",
+    "NO_PROXY": "localhost,127.0.0.1,.localhost"
+  }
+}

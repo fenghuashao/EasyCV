@@ -1,0 +1,8 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "lint"
+  ],
+  "exitCode": 0
+}

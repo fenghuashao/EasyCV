@@ -1,0 +1,48 @@
+[
+  {
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exitCode": 0,
+    "log": "unit.txt"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0,
+    "log": "lint.txt"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "docs:check"
+    ],
+    "exitCode": 1,
+    "log": "docs-check.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "test/verify-permission-package.py",
+      "releases/EasyCV-v1.1.2-20261031.zip",
+      ".tmp/permission-fix/baseline-dist",
+      "docs/evidence/1.1.2/package-verification.json"
+    ],
+    "exitCode": 0,
+    "log": "package-check.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "log": "diff-check.txt"
+  }
+]

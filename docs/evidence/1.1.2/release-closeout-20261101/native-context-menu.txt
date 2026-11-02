@@ -1,0 +1,22 @@
+The following is a diff from the previous accessibility tree for Window: "EasyCV permission regression fixture" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
++				83 菜单 Secondary Actions: Cancel
++					84 返回, ID: itemSelected:
++					85 (disabled) 前进, ID: itemSelected:
++					86 重新加载, ID: itemSelected:
++					87 存储为…, ID: itemSelected:
++					88 打印…, ID: itemSelected:
++					89 在阅读模式下打开, ID: itemSelected:
++					90 为此页面创建二维码, ID: itemSelected:
++					91 翻译成中文（简体）, ID: itemSelected:
++					92 EasyCV - 解除网页复制粘贴限制
++						93 菜单 Secondary Actions: Cancel
++							94 启用/禁用 EasyCV, ID: itemSelected:
++							95 启用强力模式, ID: itemSelected:
++							96 添加到自动启用列表, ID: itemSelected:
++					97 从 Google 获取图片说明
++						98 菜单 Secondary Actions: Cancel
++							99 永远, ID: itemSelected:
++							100 仅一次, ID: itemSelected:
++					101 显示网页源代码, ID: itemSelected:
++					102 检查, ID: itemSelected:
+The focused UI element is 68 HTML 内容 EasyCV permission regression fixture, URL: easycv.localhost:18951/fixture

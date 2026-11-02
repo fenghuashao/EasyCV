@@ -1,0 +1,23 @@
+./CHANGELOG.md:12:- 移除未使用的 `scripting` 与冗余的 `activeTab`；保留 `storage`、`contextMenus` 及现有 `<all_urls>` 范围，保持注入与核心业务逻辑原样
+./EASYCV-1.1.2-PERMISSION-FIX.md:7:已移除未使用的 `scripting` 和冗余的 `activeTab`，保留 `storage`、`contextMenus` 及原有 `<all_urls>`。版本统一为 1.1.2。核心业务与注入文件保持 1.1.1 原字节。
+./EASYCV-1.1.2-PERMISSION-FIX.md:24:| scripting | 申请 | 移除 | runtime、Popup、后台及辅助脚本均无 scripting API、executeScript、insertCSS 或动态 Content Script 注册调用 |
+./EASYCV-1.1.2-PERMISSION-FIX.md:25:| activeTab | 申请 | 移除 | 没有截图等特殊依赖；普通网页的 tabs.query/get URL 读取由已有 host permissions 覆盖；tabs.sendMessage 与静态脚本不依赖它 |
+./EASYCV-1.1.2-PERMISSION-FIX.md:32:实际注入链：manifest 静态脚本 → content/content.js 的 injectCustomScript() → runtime.getURL → DOM script 标签加载扩展内 content/injector.js。未改为 scripting 或修改注入机制。
+./EASYCV-1.1.2-PERMISSION-FIX.md:34:全仓扫描覆盖源码、后台、Popup、Options、Content Script、工具、测试、文档和辅助脚本；[基线搜索](docs/evidence/1.1.2/baseline-permission-search.txt) 保留历史文档/清单的命中。构建与 ZIP 的 API 清单、每文件 SHA256 见 [包验证 JSON](docs/evidence/1.1.2/package-verification.json)。运行/辅助 JS 中无 scripting、旧式注入或截图 API 调用；不是把文档出现的单词当作实际依赖。
+./EASYCV-1.1.2-PERMISSION-FIX.md:36:Chrome 官方依据：静态脚本由 [content_scripts 声明](https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts) 注册；[scripting API](https://developer.chrome.com/docs/extensions/reference/api/scripting) 才要求 scripting 权限；[Tabs API](https://developer.chrome.com/docs/extensions/reference/api/tabs) 允许匹配的 host permissions 读取标签 URL；[Purple Potassium 排错说明](https://developer.chrome.com/docs/webstore/troubleshooting#excessive-permissions) 明确指出已有相关 host permissions 时 activeTab 不必要。结合代码和对照回归，支持本轮删除；不代表 Google 已认可。
+./EASYCV-1.1.2-PERMISSION-FIX.md:140:- 后台权限理由与新版清单一致：storage 用于浏览器内设置/名单/统计；contextMenus 用于三个右键动作；网站访问用于任意普通页面的自动解锁、静态脚本与标签识别。移除旧的 scripting/activeTab 用途宣称。
+./PRIVACY.md:23:1.1.2 移除未使用的 `scripting` 与冗余的 `activeTab` 权限。保留 `storage`（设置、自动启用与排除列表、统计的浏览器存储）和 `contextMenus`（右键操作）。保留 `<all_urls>` 网站访问范围，用于任意普通网页的静态 Content Script、自动解锁及标签页 URL 识别；页面脚本通过扩展内的 web-accessible resource 加载。商店权限说明应与此一致。
+./PRIVACY.md:57:Version 1.1.2 removes unused `scripting` and redundant `activeTab`. It retains `storage` for settings, lists and local statistics, and `contextMenus` for context menu actions. `<all_urls>` remains for static content scripts, automatic unlocking and tab URL identification on ordinary web pages. The page script is loaded from a packaged web-accessible resource.
+./test/permission-regression.mjs:167:  await check('second tab, activation and URL visibility without activeTab', async () => {
+./docs/自动化打包配置说明.md:5:正式打包说明从 dist manifest 读取权限：`storage`、`contextMenus`，网站访问范围 `<all_urls>`；不再硬编码 activeTab/scripting。本轮仅运行 `npm run package` 生成本地候选，提交前验收见 [权限整改报告](../EASYCV-1.1.2-PERMISSION-FIX.md)。
+./docs/用户使用手册.md:193:1.1.2 已移除 `scripting` 与 `activeTab`；静态 Content Script 与扩展内页面脚本的加载机制保持原样。
+./docs/解除网页复制粘贴插件分析报告_.txt:236:   * 缓解策略： 插件的内容脚本需要注入到每个相关的iframe中（在 chrome.tabs.executeScript 或清单文件中使用 allFrames: true）。主页面脚本和iframe脚本之间的通信可能必不可少。
+./docs/解除网页复制粘贴插件分析报告_.txt:240:Chrome的权限模型是安全和用户信任的关键方面 26。Manifest V3引入了一些变化，特别是在后台脚本（service workers）和对远程托管代码的限制方面，旨在增强安全性。虽然研究材料中没有针对这些特定扩展明确详述，但这是任何新Chrome扩展开发都必须考虑的关键宏观背景。因此，插件的设计必须考虑到Manifest V3，使用service worker执行后台任务，并遵守其限制。权限范围必须尽可能小（如果对某些核心功能可行，activeTab 可能优于广泛的主机权限，尽管对于“始终开启”的功能可能不够）。对所有权限进行清晰的说明至关重要。
+./docs/技术架构文档.md:51:manifest 仅声明 `storage`、`contextMenus`；`host_permissions`、静态 Content Script 的 matches 及 web-accessible resources 的 matches 保留 `<all_urls>`。Content Script 在 `document_start`、所有匹配 frame 中运行；`injectCustomScript()` 通过 `runtime.getURL` 创建扩展内 `content/injector.js` 的 DOM script 标签，未使用 scripting API。普通网页 URL 由现有 host permissions 覆盖，故移除冗余 activeTab。本轮未修改注入机制。
+./.trae/rules/project_rules.md:10:    - chrome.scripting (程序化注入)
+./test/verify-permission-package.py:25:assert old_manifest['permissions'] == ['activeTab', 'storage', 'scripting', 'contextMenus']
+./test/verify-permission-package.py:55:        assert not re.search(r'(?:chrome|browser)\s*(?:\.\s*scripting|\[\s*[\"\']scripting)', source), str(p)
+./test/verify-permission-package.py:56:        assert not re.search(r'\b(?:executeScript|insertCSS|registerContentScripts|captureVisibleTab|captureTab)\s*\(', source), str(p)
+./test/verify-permission-package.py:63:assert 'activeTab' not in notes and 'scripting' not in notes
+./test/verify-permission-package.py:70:               'no scripting or capture API dependency in runtime/helper JS'],
+./docs/release-checklist.md:19:| 移除 management 权限 | ✅ 已合入 master | 2e03739；manifest.json 权限仅 activeTab/storage/scripting/contextMenus |

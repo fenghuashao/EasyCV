@@ -1,0 +1,4 @@
+{
+  "command": "npm run docs:check",
+  "exitCode": 1
+}

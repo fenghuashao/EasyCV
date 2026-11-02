@@ -1,0 +1,63 @@
+
+> easycv@1.1.2 test
+> node --test "test/unit/*.test.mjs"
+
+✔ allowDefaultHandler 对 contextmenu 阻断传播 (0.950333ms)
+✔ allowDefaultHandler 对其余事件放行传播 (0.492792ms)
+✔ GET_STATUS 携带当前页域名（background 排除裁决的输入） (2.541625ms)
+✔ 排除列表变更触发全量状态重载并覆盖本地启用态 (1.078667ms)
+✔ 非排除列表键变更不触发后台往返（维持本地直写路径） (1.026833ms)
+✔ 注册吞没名单收窄：keydown/mousedown/mouseup 不再被吞，copy/selectstart 仍吞没 (1.137042ms)
+✔ keydown/keyup 仅组合键（ctrl/meta）时中和 preventDefault (0.55875ms)
+✔ mousedown 中和但豁免输入域目标（input/textarea/contenteditable） (0.106875ms)
+✔ contextmenu/copy 仍中和，mouseup 彻底退出中和名单 (0.067833ms)
+✔ stopPropagation/stopImmediatePropagation 走同一中和门控 (0.084ms)
+✔ 中和判断零异常：target getter 抛错时 fail-open 放行 (0.959833ms)
+✔ 页面篡改 Map 时，注册吞没路径不向页面抛异常 (1.334958ms)
+✔ Map 构造本身抛错时，injector 加载与拦截路径均不抛异常 (0.351042ms)
+✔ 非限制性监听器在 Map 被篡改时仍正常注册 (0.141583ms)
+✔ isRestrictiveListener 检查出错时 fail-open（不吞）且告警只刷一次 (0.101875ms)
+I18nUtils: failed to get message "main_unlock": ReferenceError: chrome is not defined
+    at I18nUtils.t (eval at loadBrowserClass (file:///Users/fengshaohua/pro/github/EasyCV/test/unit/smoke.test.mjs:17:19), <anonymous>:17:23)
+    at TestContext.<anonymous> (file:///Users/fengshaohua/pro/github/EasyCV/test/unit/smoke.test.mjs:119:26)
+    at Test.runInAsyncScope (node:async_hooks:227:14)
+    at Test.run (node:internal/test_runner/test:1402:25)
+    at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    at Test.postRun (node:internal/test_runner/test:1542:19)
+    at Test.run (node:internal/test_runner/test:1467:12)
+    at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+I18nUtils: failed to get message "missing_key": ReferenceError: chrome is not defined
+    at I18nUtils.t (eval at loadBrowserClass (file:///Users/fengshaohua/pro/github/EasyCV/test/unit/smoke.test.mjs:17:19), <anonymous>:17:23)
+    at TestContext.<anonymous> (file:///Users/fengshaohua/pro/github/EasyCV/test/unit/smoke.test.mjs:120:26)
+    at Test.runInAsyncScope (node:async_hooks:227:14)
+    at Test.run (node:internal/test_runner/test:1402:25)
+    at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    at Test.postRun (node:internal/test_runner/test:1542:19)
+    at Test.run (node:internal/test_runner/test:1467:12)
+    at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+✔ MESSAGE_TYPES 取值唯一（重复值会让白名单校验张冠李戴） (0.716292ms)
+✔ isValidMessage 接受全部已注册类型（含反馈与监控消息） (0.104291ms)
+✔ isValidMessage 拒绝未知类型与畸形消息 (0.048666ms)
+✔ getAutoEnableList 将旧版字符串数组转换为配置对象 (0.652792ms)
+✔ addToAutoEnableList 按域名去重且保留功能开关 (0.326958ms)
+✔ setPluginSettings 仅持久化白名单内的用户设置键 (0.207291ms)
+✔ t() 在 chrome.i18n 不可用时返回兜底文案 (0.7055ms)
+✔ t() 优先返回 chrome.i18n 消息并替换占位符 (0.18025ms)
+✔ getExcludedList 在键缺席时回落到默认敏感域名（R5：账号页不应承受 injector 暴露面） (1.327583ms)
+✔ getExcludedList 尊重用户清空（空数组不回落默认值） (1.31ms)
+✔ getExcludedList 对损坏的非数组值兜底为空列表而非抛错 (0.520292ms)
+✔ addToExcludedList 按域名去重 (0.651166ms)
+✔ removeFromExcludedList 移除已存在域名，对不存在域名静默 (0.249625ms)
+✔ isDomainExcluded 精确匹配命中 (0.787834ms)
+✔ isDomainExcluded 子域后缀匹配命中（排除主域即覆盖子域） (0.199708ms)
+✔ isDomainExcluded 不误伤相似域名（按点分段，非裸后缀） (0.472125ms)
+✔ isDomainExcluded 大小写归一 (0.44325ms)
+✔ isDomainExcluded 对空主机名与非法列表返回 false (0.330875ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 54.893291

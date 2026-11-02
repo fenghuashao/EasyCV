@@ -1,0 +1,11 @@
+{
+  "reportLocalLinksValid": true,
+  "evidenceAssertions": 52,
+  "mainRunnerExitCode": 0,
+  "reenableRunnerExitCode": 0,
+  "verifyObservationsExitCode": 0,
+  "docsCheckExitCode": 1,
+  "docsCheckOnlyPreexistingFinding": true,
+  "scriptSyntax": "PASS",
+  "reportSHA256": "85e819bd7b25524279bcc1dd38a2a918e67b413ab35bb2ec57c4a093b2e47854"
+}

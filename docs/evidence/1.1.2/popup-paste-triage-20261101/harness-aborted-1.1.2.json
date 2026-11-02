@@ -1,0 +1,276 @@
+{
+  "version": "1.1.2",
+  "extensionPath": "/Users/fengshaohua/pro/github/EasyCV/releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031",
+  "browser": "156.0.8078.79",
+  "cases": [
+    {
+      "name": "negative_control_disabled",
+      "state": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": false,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": false,
+          "copyEnabled": true,
+          "pasteEnabled": true,
+          "forceMode": false,
+          "lastKnownState": {
+            "isEnabled": false,
+            "copyEnabled": true,
+            "pasteEnabled": true,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": false,
+          "wrapper": "function preventDefault() { [native code] }",
+          "targets": [
+            {
+              "id": "inline",
+              "onpaste": "return false",
+              "handler": "function onpaste(event) {\nreturn false\n}",
+              "value": ""
+            },
+            {
+              "id": "input",
+              "onpaste": "return false",
+              "handler": "function onpaste(event) {\nreturn false\n}",
+              "value": ""
+            },
+            {
+              "id": "listener",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "keyboard",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "plain",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "editable",
+              "onpaste": "return false",
+              "handler": "function onpaste(event) {\nreturn false\n}",
+              "value": ""
+            }
+          ],
+          "time": 929.3000000007451
+        }
+      },
+      "paste": {
+        "target": "inline",
+        "marker": "EASYCV_TRIAGE_inline",
+        "value": "",
+        "pasted": false,
+        "onpaste": "return false",
+        "events": [
+          {
+            "id": "inline",
+            "isTrusted": true,
+            "defaultPrevented": true,
+            "time": 975.9000000003725
+          }
+        ]
+      }
+    },
+    {
+      "name": "first_install_defaults",
+      "state": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": true,
+          "pasteEnabled": true,
+          "forceMode": false,
+          "lastKnownState": {
+            "isEnabled": true,
+            "copyEnabled": true,
+            "pasteEnabled": true,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": true,
+          "wrapper": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }",
+          "targets": [
+            {
+              "id": "inline",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "input",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "listener",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "keyboard",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "plain",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "editable",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            }
+          ],
+          "time": 920.6000000014901
+        }
+      },
+      "paste": {
+        "target": "inline",
+        "marker": "EASYCV_TRIAGE_inline",
+        "value": "EASYCV_TRIAGE_inline",
+        "pasted": true,
+        "onpaste": null,
+        "events": [
+          {
+            "id": "inline",
+            "isTrusted": true,
+            "defaultPrevented": false,
+            "time": 966.4000000003725
+          }
+        ]
+      }
+    }
+  ],
+  "nativeToolbarMouse": "NOT_RUN: cua getApp timeout / native pipe closed",
+  "errors": [],
+  "profile": "/Users/fengshaohua/pro/github/EasyCV/.tmp/popup-paste-triage-20261101/chrome-1.1.2-2OCapX",
+  "extensionId": "lcklaoblcindpcjjacidlomohefiohad",
+  "manifest": {
+    "action": {
+      "default_icon": {
+        "16": "icons/icon-default-16.png",
+        "32": "icons/icon-default-32.png",
+        "48": "icons/icon-default-48.png",
+        "128": "icons/icon-default-128.png"
+      },
+      "default_popup": "popup/popup.html",
+      "default_title": "EasyCV - 解除网页复制粘贴限制"
+    },
+    "background": {
+      "service_worker": "background/service-worker.js"
+    },
+    "content_scripts": [
+      {
+        "all_frames": true,
+        "js": [
+          "utils/message-utils.js",
+          "utils/storage-utils.js",
+          "utils/dom-utils.js",
+          "content/content.js"
+        ],
+        "matches": [
+          "<all_urls>"
+        ],
+        "run_at": "document_start"
+      }
+    ],
+    "current_locale": "zh_CN",
+    "default_locale": "zh_CN",
+    "description": "一键解除网页复制粘贴限制，提升工作效率的浏览器插件",
+    "host_permissions": [
+      "<all_urls>"
+    ],
+    "icons": {
+      "16": "icons/icon-default-16.png",
+      "32": "icons/icon-default-32.png",
+      "48": "icons/icon-default-48.png",
+      "128": "icons/icon-default-128.png"
+    },
+    "manifest_version": 3,
+    "name": "EasyCV - 解除网页复制粘贴限制",
+    "options_page": "options/options.html",
+    "permissions": [
+      "storage",
+      "contextMenus"
+    ],
+    "version": "1.1.2",
+    "web_accessible_resources": [
+      {
+        "matches": [
+          "<all_urls>"
+        ],
+        "resources": [
+          "content/injector.js",
+          "icons/*.png",
+          "utils/*.js"
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "origins": [
+      "<all_urls>"
+    ],
+    "permissions": [
+      "contextMenus",
+      "storage"
+    ]
+  }
+}

@@ -1,0 +1,529 @@
+{
+  "environment": {
+    "browser": "156.0.8078.79",
+    "os": "macOS arm64",
+    "profile": "/Users/fengshaohua/pro/github/EasyCV/.tmp/release-closeout-20261101/profile",
+    "stage": "/Users/fengshaohua/pro/github/EasyCV/.tmp/release-closeout-20261101/extension",
+    "origin": "http://easycv.localhost:18951",
+    "sandbox": true
+  },
+  "initial": {
+    "id": "ggchllgdneckbbjcmchbjfelkomcekpj",
+    "manifest": {
+      "action": {
+        "default_icon": {
+          "16": "icons/icon-default-16.png",
+          "32": "icons/icon-default-32.png",
+          "48": "icons/icon-default-48.png",
+          "128": "icons/icon-default-128.png"
+        },
+        "default_popup": "popup/popup.html",
+        "default_title": "EasyCV - 解除网页复制粘贴限制"
+      },
+      "background": {
+        "service_worker": "background/service-worker.js"
+      },
+      "content_scripts": [
+        {
+          "all_frames": true,
+          "js": [
+            "utils/message-utils.js",
+            "utils/storage-utils.js",
+            "utils/dom-utils.js",
+            "content/content.js"
+          ],
+          "matches": [
+            "<all_urls>"
+          ],
+          "run_at": "document_start"
+        }
+      ],
+      "current_locale": "zh_CN",
+      "default_locale": "zh_CN",
+      "description": "一键解除网页复制粘贴限制，提升工作效率的浏览器插件",
+      "host_permissions": [
+        "<all_urls>"
+      ],
+      "icons": {
+        "16": "icons/icon-default-16.png",
+        "32": "icons/icon-default-32.png",
+        "48": "icons/icon-default-48.png",
+        "128": "icons/icon-default-128.png"
+      },
+      "manifest_version": 3,
+      "name": "EasyCV - 解除网页复制粘贴限制",
+      "options_page": "options/options.html",
+      "permissions": [
+        "activeTab",
+        "storage",
+        "scripting",
+        "contextMenus"
+      ],
+      "version": "1.1.1",
+      "web_accessible_resources": [
+        {
+          "matches": [
+            "<all_urls>"
+          ],
+          "resources": [
+            "content/injector.js",
+            "icons/*.png",
+            "utils/*.js"
+          ]
+        }
+      ]
+    },
+    "permissions": {
+      "origins": [
+        "<all_urls>"
+      ],
+      "permissions": [
+        "activeTab",
+        "contextMenus",
+        "storage",
+        "scripting"
+      ]
+    },
+    "installLogs": {}
+  },
+  "cases": [
+    {
+      "name": "baseline_nondefault_settings_seed",
+      "scope": "isolated fixture only",
+      "before": {
+        "auto_enable_list": [],
+        "excluded_list": [
+          "accounts.google.com",
+          "login.live.com",
+          "appleid.apple.com"
+        ],
+        "force_mode": false,
+        "plugin_enabled": true,
+        "user_settings": {
+          "autoEnableList": [],
+          "copyEnabled": true,
+          "enableStatistics": true,
+          "excludedList": [
+            "accounts.google.com",
+            "login.live.com",
+            "appleid.apple.com"
+          ],
+          "forceMode": false,
+          "pasteEnabled": true,
+          "pluginEnabled": true,
+          "showNotifications": true,
+          "theme": "auto"
+        }
+      }
+    }
+  ],
+  "nativeUi": {
+    "status": "NOT_RUN",
+    "reason": "cua native binding com.google.Chrome selects personal running process; Window menu has no isolated fixture window; no candidate toolbar/menu clicks performed. Existing-profile extensions page rejected by URL policy; not bypassed."
+  },
+  "beforeUpgrade": {
+    "auto_enable_list": [
+      {
+        "copyEnabled": true,
+        "domain": "auto.easycv.localhost",
+        "pasteEnabled": false
+      }
+    ],
+    "excluded_list": [
+      "excluded.easycv.localhost"
+    ],
+    "force_mode": true,
+    "plugin_enabled": false,
+    "user_settings": {
+      "autoEnableList": [],
+      "copyEnabled": true,
+      "debugMode": true,
+      "enableStatistics": true,
+      "excludedList": [
+        "accounts.google.com",
+        "login.live.com",
+        "appleid.apple.com"
+      ],
+      "forceMode": false,
+      "pasteEnabled": false,
+      "pluginEnabled": true,
+      "showNotifications": false,
+      "theme": "auto"
+    }
+  },
+  "upgradeMethod": "Close isolated Chrome, replace only mutable staging bytes at same unpacked path with locked ZIP extraction, reopen same profile without Extensions.loadUnpacked; not a signed store update",
+  "afterRestartTargets": {
+    "targetInfos": [
+      {
+        "targetId": "B3B94B185ED0DD8580D304506688A44A",
+        "type": "browser_ui",
+        "title": "Omnibox Popup",
+        "url": "chrome://omnibox-popup.top-chrome/",
+        "attached": false,
+        "canAccessOpener": false,
+        "browserContextId": "4696F3053EB1C49158611976E06A56F8"
+      },
+      {
+        "targetId": "A79DD8D3343D9F0DC83B9C58E91CE8C8",
+        "type": "browser_ui",
+        "title": "Omnibox Popup",
+        "url": "chrome://omnibox-popup.top-chrome/omnibox_popup_aim.html",
+        "attached": false,
+        "canAccessOpener": false,
+        "browserContextId": "4696F3053EB1C49158611976E06A56F8"
+      },
+      {
+        "targetId": "74AE48533A5F2EB73EC0B41E941BCE29",
+        "type": "page",
+        "title": "about:blank",
+        "url": "about:blank",
+        "attached": true,
+        "canAccessOpener": false,
+        "browserContextId": "4696F3053EB1C49158611976E06A56F8"
+      }
+    ]
+  },
+  "restartWithoutReload": {
+    "workers": [],
+    "targets": [
+      {
+        "type": "browser_ui",
+        "url": "chrome://omnibox-popup.top-chrome/"
+      },
+      {
+        "type": "browser_ui",
+        "url": "chrome://omnibox-popup.top-chrome/omnibox_popup_aim.html"
+      },
+      {
+        "type": "page",
+        "url": "about:blank"
+      }
+    ],
+    "result": "extension not automatically restored by this CDP unpacked installation; persistence NOT_VERIFIED by this method"
+  },
+  "afterUpgrade": {
+    "id": "ggchllgdneckbbjcmchbjfelkomcekpj",
+    "manifest": {
+      "action": {
+        "default_icon": {
+          "16": "icons/icon-default-16.png",
+          "32": "icons/icon-default-32.png",
+          "48": "icons/icon-default-48.png",
+          "128": "icons/icon-default-128.png"
+        },
+        "default_popup": "popup/popup.html",
+        "default_title": "EasyCV - 解除网页复制粘贴限制"
+      },
+      "background": {
+        "service_worker": "background/service-worker.js"
+      },
+      "content_scripts": [
+        {
+          "all_frames": true,
+          "js": [
+            "utils/message-utils.js",
+            "utils/storage-utils.js",
+            "utils/dom-utils.js",
+            "content/content.js"
+          ],
+          "matches": [
+            "<all_urls>"
+          ],
+          "run_at": "document_start"
+        }
+      ],
+      "current_locale": "zh_CN",
+      "default_locale": "zh_CN",
+      "description": "一键解除网页复制粘贴限制，提升工作效率的浏览器插件",
+      "host_permissions": [
+        "<all_urls>"
+      ],
+      "icons": {
+        "16": "icons/icon-default-16.png",
+        "32": "icons/icon-default-32.png",
+        "48": "icons/icon-default-48.png",
+        "128": "icons/icon-default-128.png"
+      },
+      "manifest_version": 3,
+      "name": "EasyCV - 解除网页复制粘贴限制",
+      "options_page": "options/options.html",
+      "permissions": [
+        "storage",
+        "contextMenus"
+      ],
+      "version": "1.1.2",
+      "web_accessible_resources": [
+        {
+          "matches": [
+            "<all_urls>"
+          ],
+          "resources": [
+            "content/injector.js",
+            "icons/*.png",
+            "utils/*.js"
+          ]
+        }
+      ]
+    },
+    "storage": {
+      "auto_enable_list": [],
+      "excluded_list": [
+        "accounts.google.com",
+        "login.live.com",
+        "appleid.apple.com"
+      ],
+      "force_mode": false,
+      "plugin_enabled": true,
+      "user_settings": {
+        "autoEnableList": [],
+        "copyEnabled": true,
+        "enableStatistics": true,
+        "excludedList": [
+          "accounts.google.com",
+          "login.live.com",
+          "appleid.apple.com"
+        ],
+        "forceMode": false,
+        "pasteEnabled": true,
+        "pluginEnabled": true,
+        "showNotifications": true,
+        "theme": "auto"
+      }
+    },
+    "result": "explicit CDP load after restart is not normal store update"
+  },
+  "inSessionUpgrade": {
+    "method": "same-profile same-path unpacked runtime.reload update; no uninstall or reinstall",
+    "before": {
+      "id": "ggchllgdneckbbjcmchbjfelkomcekpj",
+      "version": "1.1.1",
+      "storage": {
+        "auto_enable_list": [
+          {
+            "copyEnabled": true,
+            "domain": "auto.easycv.localhost",
+            "pasteEnabled": false
+          }
+        ],
+        "excluded_list": [
+          "excluded.easycv.localhost"
+        ],
+        "force_mode": true,
+        "plugin_enabled": false,
+        "user_settings": {
+          "autoEnableList": [],
+          "copyEnabled": true,
+          "debugMode": true,
+          "enableStatistics": true,
+          "excludedList": [
+            "accounts.google.com",
+            "login.live.com",
+            "appleid.apple.com"
+          ],
+          "forceMode": false,
+          "pasteEnabled": false,
+          "pluginEnabled": true,
+          "showNotifications": false,
+          "theme": "auto"
+        }
+      }
+    },
+    "after": {
+      "result": "NOT_VERIFIED: runtime.reload terminates CDP-loaded unpacked extension and no replacement service worker appears",
+      "workers": [],
+      "installEvents": []
+    }
+  },
+  "harnessErrors": [
+    "stale worker referenced by closure during first retry; corrected to direct evaluation",
+    "runtime.reload did not restore CDP-installed extension; no update event observed"
+  ],
+  "cft": {
+    "browser": "151.0.7922.34",
+    "purpose": "supplemental native toolbar/menu acceptance only; distinct Chrome for Testing app to avoid personal Chrome process ambiguity",
+    "afterNativeDisable": {
+      "force_mode": false,
+      "plugin_enabled": true,
+      "user_settings": {
+        "autoEnableList": [],
+        "copyEnabled": false,
+        "enableStatistics": true,
+        "excludedList": [
+          "accounts.google.com",
+          "login.live.com",
+          "appleid.apple.com"
+        ],
+        "forceMode": false,
+        "pasteEnabled": false,
+        "pluginEnabled": true,
+        "showNotifications": true,
+        "theme": "auto"
+      }
+    },
+    "nativePopup": true,
+    "afterNativePopup": {
+      "auto_enable_list": [
+        {
+          "copyEnabled": true,
+          "domain": "easycv.localhost",
+          "pasteEnabled": true
+        }
+      ],
+      "excluded_list": [
+        "accounts.google.com",
+        "login.live.com",
+        "appleid.apple.com"
+      ],
+      "force_mode": true,
+      "plugin_enabled": false,
+      "user_settings": {
+        "autoEnableList": [],
+        "copyEnabled": true,
+        "enableStatistics": true,
+        "excludedList": [
+          "accounts.google.com",
+          "login.live.com",
+          "appleid.apple.com"
+        ],
+        "forceMode": false,
+        "pasteEnabled": true,
+        "pluginEnabled": true,
+        "showNotifications": true,
+        "theme": "auto"
+      }
+    },
+    "afterMenuToggle": {
+      "auto_enable_list": [
+        {
+          "copyEnabled": true,
+          "domain": "easycv.localhost",
+          "pasteEnabled": true
+        }
+      ],
+      "excluded_list": [
+        "accounts.google.com",
+        "login.live.com",
+        "appleid.apple.com"
+      ],
+      "force_mode": true,
+      "plugin_enabled": false,
+      "user_settings": {
+        "autoEnableList": [],
+        "copyEnabled": true,
+        "enableStatistics": true,
+        "excludedList": [
+          "accounts.google.com",
+          "login.live.com",
+          "appleid.apple.com"
+        ],
+        "forceMode": false,
+        "pasteEnabled": true,
+        "pluginEnabled": true,
+        "showNotifications": true,
+        "theme": "auto"
+      }
+    },
+    "afterMenuForce": {
+      "force_mode": true
+    },
+    "afterAllNativeMenus": {
+      "auto_enable_list": [
+        {
+          "copyEnabled": true,
+          "domain": "easycv.localhost",
+          "pasteEnabled": true
+        },
+        {
+          "copyEnabled": true,
+          "domain": "menu.easycv.localhost",
+          "pasteEnabled": true
+        }
+      ],
+      "excluded_list": [
+        "accounts.google.com",
+        "login.live.com",
+        "appleid.apple.com"
+      ],
+      "force_mode": true,
+      "plugin_enabled": false,
+      "user_settings": {
+        "autoEnableList": [],
+        "copyEnabled": true,
+        "enableStatistics": true,
+        "excludedList": [
+          "accounts.google.com",
+          "login.live.com",
+          "appleid.apple.com"
+        ],
+        "forceMode": false,
+        "pasteEnabled": true,
+        "pluginEnabled": true,
+        "showNotifications": false,
+        "theme": "auto"
+      }
+    },
+    "checks": {
+      "popupNativeOpen": true,
+      "popupMainOffOnStorage": true,
+      "popupForceOff": true,
+      "popupAddAuto": true,
+      "popupSettingsEntry": true,
+      "optionsNotificationOffSurvivesPageReload": true,
+      "contextMenuGlobalToggle": true,
+      "contextMenuForceFalseToTrue": true,
+      "contextMenuAddNewDomain": true,
+      "scope": "native macOS CUA events in Chrome for Testing 151; storage independently read via serviceworker; no callback synthesis"
+    },
+    "uiHarnessNotes": [
+      "AX IDs change on full snapshot; invalid ID attempts made no product changes",
+      "typeText dropped colons in local URL; corrected with native paste",
+      "Options rejects .localhost domain by existing domain format validation; exclusion acceptance not claimed"
+    ]
+  },
+  "cftUpgradeEvents": [
+    {
+      "text": "EasyCV installed: {reason: install}",
+      "args": [
+        "EasyCV installed:",
+        {
+          "reason": "install"
+        }
+      ]
+    }
+  ],
+  "cftUpgrade": {
+    "method": "same-profile/path unpacked runtime.reload in Chrome for Testing with command-line registration; supplemental local update, not signed store rollout",
+    "before": {
+      "id": "mcicafmfloabkempgpdcbohfglljenjb",
+      "version": "1.1.1",
+      "storage": {
+        "auto_enable_list": [],
+        "excluded_list": [
+          "accounts.google.com",
+          "login.live.com",
+          "appleid.apple.com"
+        ],
+        "force_mode": false,
+        "plugin_enabled": true,
+        "user_settings": {
+          "autoEnableList": [],
+          "copyEnabled": true,
+          "enableStatistics": true,
+          "excludedList": [
+            "accounts.google.com",
+            "login.live.com",
+            "appleid.apple.com"
+          ],
+          "forceMode": false,
+          "pasteEnabled": true,
+          "pluginEnabled": true,
+          "showNotifications": true,
+          "theme": "auto"
+        }
+      }
+    },
+    "discarded": "initial onInstalled default seed raced with test nondefault seed; before snapshot shows defaults, so this attempt is not persistence evidence",
+    "finalStatus": "NOT_VERIFIED: no replacement serviceworker after runtime.reload; initial seed race invalidates this supplemental attempt; no product data-loss conclusion"
+  },
+  "upgradeAndPersistence": "PARTIAL: same-session/page-reload persistence only; normal browser restart and existing signed store install upgrade NOT_VERIFIED"
+}

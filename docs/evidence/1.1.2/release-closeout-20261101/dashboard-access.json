@@ -1,0 +1,9 @@
+{
+  "URL": "https://chrome.google.com/webstore/devconsole/",
+  "scope": "unauthenticated read only; no cookies or credentials; no writes",
+  "status": 200,
+  "finalURL": "https://accounts.google.com/v3/signin/identifier?continue=https://chrome.google.com/webstore/devconsole/&followup=https://chrome.google.com/webstore/devconsole/&osid=1&passive=1209600&service=chromewebstore&flowName=WebLiteSignIn&flowEntry=ServiceLogin&dsh=S1377426665:1793466016924213",
+  "accountLoginRequired": true,
+  "bytes": 952910,
+  "releaseRecordsVerified": false
+}

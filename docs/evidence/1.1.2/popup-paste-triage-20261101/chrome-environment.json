@@ -1,0 +1,31 @@
+{
+  "browser": "156.0.8078.79",
+  "profile": "/Users/fengshaohua/pro/github/EasyCV/.tmp/popup-paste-triage-20261101/chrome-profile",
+  "launch": {
+    "headless": false,
+    "executablePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "ignoreDefaultArgs": [
+      "--disable-extensions"
+    ],
+    "args": [
+      "--no-first-run",
+      "--no-default-browser-check"
+    ]
+  },
+  "extensionId": "lcklaoblcindpcjjacidlomohefiohad",
+  "loaded": {
+    "extensions": [
+      {
+        "id": "lcklaoblcindpcjjacidlomohefiohad",
+        "name": "EasyCV - 解除网页复制粘贴限制",
+        "version": "1.1.2",
+        "path": "/Users/fengshaohua/pro/github/EasyCV/releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031",
+        "enabled": true
+      }
+    ]
+  },
+  "nativeUiErrors": [
+    "getApp timed out; kernel reset",
+    "Sky Computer Use native pipe closed before response"
+  ]
+}

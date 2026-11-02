@@ -1,0 +1,1676 @@
+{
+  "version": "1.1.2",
+  "extensionPath": "/Users/fengshaohua/pro/github/EasyCV/releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031",
+  "browser": "156.0.8078.79",
+  "cases": [
+    {
+      "name": "negative_control_disabled",
+      "state": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": false,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": false,
+          "copyEnabled": true,
+          "pasteEnabled": true,
+          "forceMode": false,
+          "lastKnownState": {
+            "isEnabled": false,
+            "copyEnabled": true,
+            "pasteEnabled": true,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": false,
+          "wrapper": "function preventDefault() { [native code] }",
+          "targets": [
+            {
+              "id": "inline",
+              "onpaste": "return false",
+              "handler": "function onpaste(event) {\nreturn false\n}",
+              "value": ""
+            },
+            {
+              "id": "input",
+              "onpaste": "return false",
+              "handler": "function onpaste(event) {\nreturn false\n}",
+              "value": ""
+            },
+            {
+              "id": "listener",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "keyboard",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "plain",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "editable",
+              "onpaste": "return false",
+              "handler": "function onpaste(event) {\nreturn false\n}",
+              "value": ""
+            }
+          ],
+          "time": 936.0999999996275
+        }
+      },
+      "paste": {
+        "target": "inline",
+        "marker": "EASYCV_TRIAGE_inline",
+        "value": "",
+        "pasted": false,
+        "onpaste": "return false",
+        "events": [
+          {
+            "id": "inline",
+            "isTrusted": true,
+            "defaultPrevented": true,
+            "time": 972.7999999988824
+          }
+        ]
+      }
+    },
+    {
+      "name": "first_install_defaults",
+      "state": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": true,
+          "pasteEnabled": true,
+          "forceMode": false,
+          "lastKnownState": {
+            "isEnabled": true,
+            "copyEnabled": true,
+            "pasteEnabled": true,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": true,
+          "wrapper": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }",
+          "targets": [
+            {
+              "id": "inline",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "input",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "listener",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "keyboard",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "plain",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "editable",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            }
+          ],
+          "time": 929
+        }
+      },
+      "paste": {
+        "target": "inline",
+        "marker": "EASYCV_TRIAGE_inline",
+        "value": "EASYCV_TRIAGE_inline",
+        "pasted": true,
+        "onpaste": null,
+        "events": [
+          {
+            "id": "inline",
+            "isTrusted": true,
+            "defaultPrevented": false,
+            "time": 986
+          }
+        ]
+      }
+    },
+    {
+      "name": "popup_enable_ordinary",
+      "before": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": false,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": false,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": false,
+          "pasteEnabled": false,
+          "forceMode": false,
+          "lastKnownState": {
+            "isEnabled": true,
+            "copyEnabled": false,
+            "pasteEnabled": false,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": true,
+          "wrapper": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }",
+          "targets": [
+            {
+              "id": "pasteTarget",
+              "onpaste": "return false",
+              "handler": "function onpaste(event) {\nreturn false\n}",
+              "value": ""
+            }
+          ],
+          "time": 922.2000000011176
+        }
+      },
+      "popupContext": [
+        {
+          "contextId": "920c5e59-5846-4417-a140-70e53682baae",
+          "contextType": "POPUP",
+          "documentId": "3C3F635047959B1128C21BBE3F7025E3",
+          "documentOrigin": "chrome-extension://lcklaoblcindpcjjacidlomohefiohad",
+          "documentUrl": "chrome-extension://lcklaoblcindpcjjacidlomohefiohad/popup/popup.html",
+          "frameId": 0,
+          "incognito": false,
+          "tabId": -1,
+          "windowId": -1
+        }
+      ],
+      "popupBefore": {
+        "copy": false,
+        "paste": false,
+        "force": false,
+        "url": "正在获取..."
+      },
+      "popupAfter": {
+        "copy": true,
+        "paste": true,
+        "button": "\n          \n            \n          \n          关闭解锁\n        "
+      },
+      "after": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": false,
+          "pasteEnabled": false,
+          "forceMode": false,
+          "lastKnownState": {
+            "isEnabled": true,
+            "copyEnabled": false,
+            "pasteEnabled": false,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": true,
+          "wrapper": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }",
+          "targets": [
+            {
+              "id": "pasteTarget",
+              "onpaste": "return false",
+              "handler": "function onpaste(event) {\nreturn false\n}",
+              "value": ""
+            }
+          ],
+          "time": 2514.5999999996275
+        }
+      },
+      "paste": {
+        "target": "pasteTarget",
+        "marker": "EASYCV_TRIAGE_pasteTarget",
+        "value": "",
+        "pasted": false,
+        "onpaste": "return false"
+      },
+      "trace": [
+        {
+          "at": 1793464933369,
+          "tabId": 1742380238,
+          "type": "update_status",
+          "data": {
+            "changes": {
+              "excluded_list": {
+                "newValue": [],
+                "oldValue": [
+                  "accounts.google.com",
+                  "login.live.com",
+                  "appleid.apple.com"
+                ]
+              },
+              "plugin_enabled": {
+                "newValue": false,
+                "oldValue": true
+              }
+            },
+            "areaName": "sync"
+          },
+          "response": {
+            "success": false,
+            "error": "Content script unavailable",
+            "degraded": true
+          }
+        },
+        {
+          "at": 1793464933369,
+          "tabId": 1742380239,
+          "type": "update_status",
+          "data": {
+            "changes": {
+              "excluded_list": {
+                "newValue": [],
+                "oldValue": [
+                  "accounts.google.com",
+                  "login.live.com",
+                  "appleid.apple.com"
+                ]
+              },
+              "plugin_enabled": {
+                "newValue": false,
+                "oldValue": true
+              }
+            },
+            "areaName": "sync"
+          },
+          "response": {
+            "success": true
+          }
+        },
+        {
+          "at": 1793464933910,
+          "tabId": 1742380238,
+          "type": "update_status",
+          "data": {
+            "changes": {
+              "statistics": {
+                "newValue": {
+                  "lastUsed": null,
+                  "sitesUnlocked": [
+                    "easycv.localhost"
+                  ],
+                  "totalActivations": 0
+                }
+              }
+            },
+            "areaName": "sync"
+          },
+          "response": {
+            "success": false,
+            "error": "Content script unavailable",
+            "degraded": true
+          }
+        },
+        {
+          "at": 1793464933910,
+          "tabId": 1742380239,
+          "type": "update_status",
+          "data": {
+            "changes": {
+              "statistics": {
+                "newValue": {
+                  "lastUsed": null,
+                  "sitesUnlocked": [
+                    "easycv.localhost"
+                  ],
+                  "totalActivations": 0
+                }
+              }
+            },
+            "areaName": "sync"
+          },
+          "response": {
+            "success": true
+          }
+        },
+        {
+          "at": 1793464935105,
+          "tabId": 1742380238,
+          "type": "update_status",
+          "data": {
+            "changes": {
+              "plugin_enabled": {
+                "newValue": true,
+                "oldValue": false
+              }
+            },
+            "areaName": "sync"
+          },
+          "response": {
+            "success": false,
+            "error": "Content script unavailable",
+            "degraded": true
+          }
+        },
+        {
+          "at": 1793464935105,
+          "tabId": 1742380239,
+          "type": "update_status",
+          "data": {
+            "changes": {
+              "plugin_enabled": {
+                "newValue": true,
+                "oldValue": false
+              }
+            },
+            "areaName": "sync"
+          },
+          "response": {
+            "success": true
+          }
+        },
+        {
+          "at": 1793464936851,
+          "tabId": 1742380238,
+          "type": "update_status",
+          "data": {
+            "changes": {
+              "user_settings": {
+                "newValue": {
+                  "autoEnableList": [],
+                  "copyEnabled": false,
+                  "enableStatistics": true,
+                  "excludedList": [
+                    "accounts.google.com",
+                    "login.live.com",
+                    "appleid.apple.com"
+                  ],
+                  "forceMode": false,
+                  "pasteEnabled": false,
+                  "pluginEnabled": true,
+                  "showNotifications": true,
+                  "theme": "auto"
+                },
+                "oldValue": {
+                  "autoEnableList": [],
+                  "copyEnabled": true,
+                  "enableStatistics": true,
+                  "excludedList": [
+                    "accounts.google.com",
+                    "login.live.com",
+                    "appleid.apple.com"
+                  ],
+                  "forceMode": false,
+                  "pasteEnabled": true,
+                  "pluginEnabled": true,
+                  "showNotifications": true,
+                  "theme": "auto"
+                }
+              }
+            },
+            "areaName": "sync"
+          },
+          "response": {
+            "success": false,
+            "error": "Content script unavailable",
+            "degraded": true
+          }
+        },
+        {
+          "at": 1793464936851,
+          "tabId": 1742380239,
+          "type": "update_status",
+          "data": {
+            "changes": {
+              "user_settings": {
+                "newValue": {
+                  "autoEnableList": [],
+                  "copyEnabled": false,
+                  "enableStatistics": true,
+                  "excludedList": [
+                    "accounts.google.com",
+                    "login.live.com",
+                    "appleid.apple.com"
+                  ],
+                  "forceMode": false,
+                  "pasteEnabled": false,
+                  "pluginEnabled": true,
+                  "showNotifications": true,
+                  "theme": "auto"
+                },
+                "oldValue": {
+                  "autoEnableList": [],
+                  "copyEnabled": true,
+                  "enableStatistics": true,
+                  "excludedList": [
+                    "accounts.google.com",
+                    "login.live.com",
+                    "appleid.apple.com"
+                  ],
+                  "forceMode": false,
+                  "pasteEnabled": true,
+                  "pluginEnabled": true,
+                  "showNotifications": true,
+                  "theme": "auto"
+                }
+              }
+            },
+            "areaName": "sync"
+          },
+          "response": {
+            "success": true
+          }
+        },
+        {
+          "at": 1793464938611,
+          "tabId": 1742380238,
+          "type": "update_status",
+          "data": {
+            "changes": {
+              "user_settings": {
+                "newValue": {
+                  "autoEnableList": [],
+                  "copyEnabled": true,
+                  "enableStatistics": true,
+                  "excludedList": [
+                    "accounts.google.com",
+                    "login.live.com",
+                    "appleid.apple.com"
+                  ],
+                  "forceMode": false,
+                  "pasteEnabled": true,
+                  "pluginEnabled": true,
+                  "showNotifications": true,
+                  "theme": "auto"
+                },
+                "oldValue": {
+                  "autoEnableList": [],
+                  "copyEnabled": false,
+                  "enableStatistics": true,
+                  "excludedList": [
+                    "accounts.google.com",
+                    "login.live.com",
+                    "appleid.apple.com"
+                  ],
+                  "forceMode": false,
+                  "pasteEnabled": false,
+                  "pluginEnabled": true,
+                  "showNotifications": true,
+                  "theme": "auto"
+                }
+              }
+            },
+            "areaName": "sync"
+          }
+        },
+        {
+          "at": 1793464938611,
+          "tabId": 1742380239,
+          "type": "update_status",
+          "data": {
+            "changes": {
+              "user_settings": {
+                "newValue": {
+                  "autoEnableList": [],
+                  "copyEnabled": true,
+                  "enableStatistics": true,
+                  "excludedList": [
+                    "accounts.google.com",
+                    "login.live.com",
+                    "appleid.apple.com"
+                  ],
+                  "forceMode": false,
+                  "pasteEnabled": true,
+                  "pluginEnabled": true,
+                  "showNotifications": true,
+                  "theme": "auto"
+                },
+                "oldValue": {
+                  "autoEnableList": [],
+                  "copyEnabled": false,
+                  "enableStatistics": true,
+                  "excludedList": [
+                    "accounts.google.com",
+                    "login.live.com",
+                    "appleid.apple.com"
+                  ],
+                  "forceMode": false,
+                  "pasteEnabled": false,
+                  "pluginEnabled": true,
+                  "showNotifications": true,
+                  "theme": "auto"
+                }
+              }
+            },
+            "areaName": "sync"
+          },
+          "response": {
+            "success": true
+          }
+        },
+        {
+          "at": 1793464938611,
+          "tabId": 1742380238,
+          "type": "state_updated",
+          "data": {
+            "requestId": "main_unlock_toggle_1793464938610_kjhgar25w",
+            "updates": {
+              "copyEnabled": true,
+              "pasteEnabled": true
+            },
+            "newState": {
+              "pluginEnabled": true,
+              "forceMode": false,
+              "userSettings": {
+                "autoEnableList": [],
+                "copyEnabled": true,
+                "enableStatistics": true,
+                "excludedList": [
+                  "accounts.google.com",
+                  "login.live.com",
+                  "appleid.apple.com"
+                ],
+                "forceMode": false,
+                "pasteEnabled": true,
+                "pluginEnabled": true,
+                "showNotifications": true,
+                "theme": "auto"
+              },
+              "autoEnableList": [],
+              "timestamp": 1793464938611
+            }
+          }
+        },
+        {
+          "at": 1793464938611,
+          "tabId": 1742380239,
+          "type": "state_updated",
+          "data": {
+            "requestId": "main_unlock_toggle_1793464938610_kjhgar25w",
+            "updates": {
+              "copyEnabled": true,
+              "pasteEnabled": true
+            },
+            "newState": {
+              "pluginEnabled": true,
+              "forceMode": false,
+              "userSettings": {
+                "autoEnableList": [],
+                "copyEnabled": true,
+                "enableStatistics": true,
+                "excludedList": [
+                  "accounts.google.com",
+                  "login.live.com",
+                  "appleid.apple.com"
+                ],
+                "forceMode": false,
+                "pasteEnabled": true,
+                "pluginEnabled": true,
+                "showNotifications": true,
+                "theme": "auto"
+              },
+              "autoEnableList": [],
+              "timestamp": 1793464938611
+            }
+          },
+          "response": {
+            "success": false,
+            "error": "Unknown message type"
+          }
+        }
+      ]
+    },
+    {
+      "name": "popup_force_after_enable",
+      "popupAfter": {
+        "copy": true,
+        "paste": true,
+        "force": true
+      },
+      "state": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": true,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": false,
+          "pasteEnabled": false,
+          "forceMode": true,
+          "lastKnownState": {
+            "isEnabled": true,
+            "copyEnabled": false,
+            "pasteEnabled": false,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": true,
+          "wrapper": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }",
+          "targets": [
+            {
+              "id": "pasteTarget",
+              "onpaste": "return false",
+              "handler": "function onpaste(event) {\nreturn false\n}",
+              "value": ""
+            }
+          ],
+          "time": 4348.5999999996275
+        }
+      },
+      "paste": {
+        "target": "pasteTarget",
+        "marker": "EASYCV_TRIAGE_pasteTarget",
+        "value": "",
+        "pasted": false,
+        "onpaste": "return false"
+      }
+    },
+    {
+      "name": "refresh_force_on",
+      "state": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": true,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": true,
+          "pasteEnabled": true,
+          "forceMode": true,
+          "lastKnownState": {
+            "isEnabled": true,
+            "copyEnabled": true,
+            "pasteEnabled": true,
+            "forceMode": true
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": true,
+          "wrapper": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }",
+          "targets": [
+            {
+              "id": "pasteTarget",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            }
+          ],
+          "time": 922.2999999988824
+        }
+      },
+      "paste": {
+        "target": "pasteTarget",
+        "marker": "EASYCV_TRIAGE_pasteTarget",
+        "value": "EASYCV_TRIAGE_pasteTarget",
+        "pasted": true,
+        "onpaste": null
+      }
+    },
+    {
+      "name": "refresh_force_off",
+      "state": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": true,
+          "pasteEnabled": true,
+          "forceMode": false,
+          "lastKnownState": {
+            "isEnabled": true,
+            "copyEnabled": true,
+            "pasteEnabled": true,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": true,
+          "wrapper": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }",
+          "targets": [
+            {
+              "id": "pasteTarget",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            }
+          ],
+          "time": 916
+        }
+      },
+      "paste": {
+        "target": "pasteTarget",
+        "marker": "EASYCV_TRIAGE_pasteTarget",
+        "value": "EASYCV_TRIAGE_pasteTarget",
+        "pasted": true,
+        "onpaste": null
+      }
+    },
+    {
+      "name": "mechanisms_popup_enable",
+      "state": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": false,
+          "pasteEnabled": false,
+          "forceMode": false,
+          "lastKnownState": {
+            "isEnabled": true,
+            "copyEnabled": false,
+            "pasteEnabled": false,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": true,
+          "wrapper": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }",
+          "targets": [
+            {
+              "id": "inline",
+              "onpaste": "return false",
+              "handler": "function onpaste(event) {\nreturn false\n}",
+              "value": ""
+            },
+            {
+              "id": "input",
+              "onpaste": "return false",
+              "handler": "function onpaste(event) {\nreturn false\n}",
+              "value": ""
+            },
+            {
+              "id": "listener",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "keyboard",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "plain",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "editable",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            }
+          ],
+          "time": 2458.4000000003725
+        }
+      },
+      "pastes": [
+        {
+          "target": "plain",
+          "marker": "EASYCV_TRIAGE_plain",
+          "value": "EASYCV_TRIAGE_plain",
+          "pasted": true,
+          "onpaste": null,
+          "events": [
+            {
+              "id": "plain",
+              "isTrusted": true,
+              "defaultPrevented": false,
+              "time": 2504.199999999255
+            }
+          ]
+        },
+        {
+          "target": "listener",
+          "marker": "EASYCV_TRIAGE_listener",
+          "value": "EASYCV_TRIAGE_listener",
+          "pasted": true,
+          "onpaste": null,
+          "events": [
+            {
+              "id": "listener",
+              "isTrusted": true,
+              "defaultPrevented": false,
+              "time": 2788.9000000003725
+            }
+          ]
+        },
+        {
+          "target": "keyboard",
+          "marker": "EASYCV_TRIAGE_keyboard",
+          "value": "EASYCV_TRIAGE_keyboard",
+          "pasted": true,
+          "onpaste": null,
+          "events": [
+            {
+              "id": "keyboard",
+              "isTrusted": true,
+              "defaultPrevented": false,
+              "time": 3071.0999999996275
+            }
+          ]
+        },
+        {
+          "target": "inline",
+          "marker": "EASYCV_TRIAGE_inline",
+          "value": "",
+          "pasted": false,
+          "onpaste": "return false",
+          "events": [
+            {
+              "id": "inline",
+              "isTrusted": true,
+              "defaultPrevented": true,
+              "time": 3354.5999999996275
+            }
+          ]
+        },
+        {
+          "target": "input",
+          "marker": "EASYCV_TRIAGE_input",
+          "value": "",
+          "pasted": false,
+          "onpaste": "return false",
+          "events": [
+            {
+              "id": "input",
+              "isTrusted": true,
+              "defaultPrevented": true,
+              "time": 3631.0999999996275
+            }
+          ]
+        },
+        {
+          "target": "editable",
+          "marker": "EASYCV_TRIAGE_editable",
+          "value": "EASYCV_TRIAGE_editable",
+          "pasted": true,
+          "onpaste": null,
+          "events": [
+            {
+              "id": "editable",
+              "isTrusted": true,
+              "defaultPrevented": false,
+              "time": 3921.199999999255
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mechanisms_after_refresh",
+      "state": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": true,
+          "pasteEnabled": true,
+          "forceMode": false,
+          "lastKnownState": {
+            "isEnabled": true,
+            "copyEnabled": true,
+            "pasteEnabled": true,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": true,
+          "wrapper": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }",
+          "targets": [
+            {
+              "id": "inline",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "input",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "listener",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "keyboard",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "plain",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            },
+            {
+              "id": "editable",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            }
+          ],
+          "time": 931.1999999992549
+        }
+      },
+      "pastes": [
+        {
+          "target": "plain",
+          "marker": "EASYCV_TRIAGE_plain",
+          "value": "EASYCV_TRIAGE_plain",
+          "pasted": true,
+          "onpaste": null,
+          "events": [
+            {
+              "id": "plain",
+              "isTrusted": true,
+              "defaultPrevented": false,
+              "time": 974
+            }
+          ]
+        },
+        {
+          "target": "listener",
+          "marker": "EASYCV_TRIAGE_listener",
+          "value": "EASYCV_TRIAGE_listener",
+          "pasted": true,
+          "onpaste": null,
+          "events": [
+            {
+              "id": "listener",
+              "isTrusted": true,
+              "defaultPrevented": false,
+              "time": 1257.2999999988824
+            }
+          ]
+        },
+        {
+          "target": "keyboard",
+          "marker": "EASYCV_TRIAGE_keyboard",
+          "value": "EASYCV_TRIAGE_keyboard",
+          "pasted": true,
+          "onpaste": null,
+          "events": [
+            {
+              "id": "keyboard",
+              "isTrusted": true,
+              "defaultPrevented": false,
+              "time": 1524.199999999255
+            }
+          ]
+        },
+        {
+          "target": "inline",
+          "marker": "EASYCV_TRIAGE_inline",
+          "value": "EASYCV_TRIAGE_inline",
+          "pasted": true,
+          "onpaste": null,
+          "events": [
+            {
+              "id": "inline",
+              "isTrusted": true,
+              "defaultPrevented": false,
+              "time": 1808.199999999255
+            }
+          ]
+        },
+        {
+          "target": "input",
+          "marker": "EASYCV_TRIAGE_input",
+          "value": "EASYCV_TRIAGE_input",
+          "pasted": true,
+          "onpaste": null,
+          "events": [
+            {
+              "id": "input",
+              "isTrusted": true,
+              "defaultPrevented": false,
+              "time": 2091.5999999996275
+            }
+          ]
+        },
+        {
+          "target": "editable",
+          "marker": "EASYCV_TRIAGE_editable",
+          "value": "EASYCV_TRIAGE_editable",
+          "pasted": true,
+          "onpaste": null,
+          "events": [
+            {
+              "id": "editable",
+              "isTrusted": true,
+              "defaultPrevented": false,
+              "time": 2374.4000000003725
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "causal_same_payload_renamed_only",
+      "state": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": false,
+          "pasteEnabled": false,
+          "forceMode": false,
+          "lastKnownState": {
+            "isEnabled": true,
+            "copyEnabled": false,
+            "pasteEnabled": false,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": true,
+          "wrapper": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }",
+          "targets": [
+            {
+              "id": "pasteTarget",
+              "onpaste": "return false",
+              "handler": "function onpaste(event) {\nreturn false\n}",
+              "value": ""
+            }
+          ],
+          "time": 2278
+        }
+      },
+      "paste": {
+        "target": "pasteTarget",
+        "marker": "EASYCV_TRIAGE_pasteTarget",
+        "value": "",
+        "pasted": false,
+        "onpaste": "return false"
+      }
+    },
+    {
+      "name": "causal_correct_flat_state",
+      "state": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": false,
+          "pasteEnabled": false,
+          "forceMode": false,
+          "lastKnownState": {
+            "isEnabled": true,
+            "copyEnabled": false,
+            "pasteEnabled": false,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": true,
+          "wrapper": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }",
+          "targets": [
+            {
+              "id": "pasteTarget",
+              "onpaste": "return false",
+              "handler": "function onpaste(event) {\nreturn false\n}",
+              "value": ""
+            }
+          ],
+          "time": 3176.4000000003725
+        }
+      },
+      "paste": {
+        "target": "pasteTarget",
+        "marker": "EASYCV_TRIAGE_pasteTarget",
+        "value": "",
+        "pasted": false,
+        "onpaste": "return false"
+      }
+    },
+    {
+      "name": "causal_remove_inline_only",
+      "before": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": false,
+          "pasteEnabled": false,
+          "forceMode": false,
+          "lastKnownState": {
+            "isEnabled": true,
+            "copyEnabled": false,
+            "pasteEnabled": false,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": true,
+          "wrapper": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }",
+          "targets": [
+            {
+              "id": "pasteTarget",
+              "onpaste": "return false",
+              "handler": "function onpaste(event) {\nreturn false\n}",
+              "value": ""
+            }
+          ],
+          "time": 2247
+        }
+      },
+      "after": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": false,
+          "pasteEnabled": false,
+          "forceMode": false,
+          "lastKnownState": {
+            "isEnabled": true,
+            "copyEnabled": false,
+            "pasteEnabled": false,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": true,
+          "wrapper": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }",
+          "targets": [
+            {
+              "id": "pasteTarget",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            }
+          ],
+          "time": 2250.10000000149
+        }
+      },
+      "paste": {
+        "target": "pasteTarget",
+        "marker": "EASYCV_TRIAGE_pasteTarget",
+        "value": "EASYCV_TRIAGE_pasteTarget",
+        "pasted": true,
+        "onpaste": null
+      }
+    },
+    {
+      "name": "popup_disable_reenable_already_loaded",
+      "off": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": false,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": false,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": true,
+          "pasteEnabled": true,
+          "forceMode": false,
+          "lastKnownState": {
+            "isEnabled": true,
+            "copyEnabled": true,
+            "pasteEnabled": true,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": true,
+          "wrapper": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }",
+          "targets": [
+            {
+              "id": "pasteTarget",
+              "onpaste": null,
+              "handler": "null",
+              "value": ""
+            }
+          ],
+          "time": 2239
+        }
+      },
+      "offPaste": {
+        "target": "pasteTarget",
+        "marker": "EASYCV_TRIAGE_pasteTarget",
+        "value": "EASYCV_TRIAGE_pasteTarget",
+        "pasted": true,
+        "onpaste": null
+      },
+      "on": {
+        "storage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": true,
+          "pasteEnabled": true,
+          "forceMode": false,
+          "lastKnownState": {
+            "isEnabled": true,
+            "copyEnabled": true,
+            "pasteEnabled": true,
+            "forceMode": false
+          }
+        },
+        "main": {
+          "readyState": "complete",
+          "injected": true,
+          "wrapper": "function() {\n    if (shouldNeutralize(this)) {\n      debugLog(`EasyCV: Prevented preventDefault on ${this.type} event`);\n      return; // 不执行preventDefault\n    }\n\n    // 对其他事件正常执行\n    return originalFunctions.preventDefault.call(this);\n  }",
+          "targets": [
+            {
+              "id": "pasteTarget",
+              "onpaste": null,
+              "handler": "null",
+              "value": "EASYCV_TRIAGE_pasteTarget"
+            }
+          ],
+          "time": 3861.2999999988824
+        }
+      },
+      "onPaste": {
+        "target": "pasteTarget",
+        "marker": "EASYCV_TRIAGE_pasteTarget",
+        "value": "EASYCV_TRIAGE_pasteTarget",
+        "pasted": true,
+        "onpaste": null
+      }
+    },
+    {
+      "name": "browser_extension_disable_reenable",
+      "error": "worker.evaluate: Target page, context or browser has been closed\n    at store (/Users/fengshaohua/pro/github/EasyCV/docs/evidence/1.1.2/popup-paste-triage-20261101/triage-runner.mjs:46:22)\n    at snap (/Users/fengshaohua/pro/github/EasyCV/docs/evidence/1.1.2/popup-paste-triage-20261101/triage-runner.mjs:47:39)\n    at /Users/fengshaohua/pro/github/EasyCV/docs/evidence/1.1.2/popup-paste-triage-20261101/triage-runner.mjs:111:118\n    at async record (/Users/fengshaohua/pro/github/EasyCV/docs/evidence/1.1.2/popup-paste-triage-20261101/triage-runner.mjs:74:124)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/docs/evidence/1.1.2/popup-paste-triage-20261101/triage-runner.mjs:108:3"
+    }
+  ],
+  "nativeToolbarMouse": "NOT_RUN: cua getApp timeout / native pipe closed",
+  "errors": [
+    {
+      "name": "browser_extension_disable_reenable",
+      "error": "worker.evaluate: Target page, context or browser has been closed"
+    }
+  ],
+  "profile": "/Users/fengshaohua/pro/github/EasyCV/.tmp/popup-paste-triage-20261101/chrome-1.1.2-XHqVLd",
+  "extensionId": "lcklaoblcindpcjjacidlomohefiohad",
+  "manifest": {
+    "action": {
+      "default_icon": {
+        "16": "icons/icon-default-16.png",
+        "32": "icons/icon-default-32.png",
+        "48": "icons/icon-default-48.png",
+        "128": "icons/icon-default-128.png"
+      },
+      "default_popup": "popup/popup.html",
+      "default_title": "EasyCV - 解除网页复制粘贴限制"
+    },
+    "background": {
+      "service_worker": "background/service-worker.js"
+    },
+    "content_scripts": [
+      {
+        "all_frames": true,
+        "js": [
+          "utils/message-utils.js",
+          "utils/storage-utils.js",
+          "utils/dom-utils.js",
+          "content/content.js"
+        ],
+        "matches": [
+          "<all_urls>"
+        ],
+        "run_at": "document_start"
+      }
+    ],
+    "current_locale": "zh_CN",
+    "default_locale": "zh_CN",
+    "description": "一键解除网页复制粘贴限制，提升工作效率的浏览器插件",
+    "host_permissions": [
+      "<all_urls>"
+    ],
+    "icons": {
+      "16": "icons/icon-default-16.png",
+      "32": "icons/icon-default-32.png",
+      "48": "icons/icon-default-48.png",
+      "128": "icons/icon-default-128.png"
+    },
+    "manifest_version": 3,
+    "name": "EasyCV - 解除网页复制粘贴限制",
+    "options_page": "options/options.html",
+    "permissions": [
+      "storage",
+      "contextMenus"
+    ],
+    "version": "1.1.2",
+    "web_accessible_resources": [
+      {
+        "matches": [
+          "<all_urls>"
+        ],
+        "resources": [
+          "content/injector.js",
+          "icons/*.png",
+          "utils/*.js"
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "origins": [
+      "<all_urls>"
+    ],
+    "permissions": [
+      "contextMenus",
+      "storage"
+    ]
+  },
+  "extensionManagerApi": {
+    "management": "function"
+  }
+}

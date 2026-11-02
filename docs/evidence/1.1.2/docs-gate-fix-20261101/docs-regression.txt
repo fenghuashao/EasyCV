@@ -1,0 +1,22 @@
+✔ docs checker accepts absent ignored runtime directory in inline code: test/real-sites/.profile/ (30.959333ms)
+✔ docs checker accepts absent ignored runtime directory in inline code: ../test/real-sites/.profile/ (30.261583ms)
+✔ docs checker accepts an existing runtime directory (41.833834ms)
+✔ docs checker still fails: ordinary missing file alongside optional profile (26.682625ms)
+✔ docs checker still fails: ordinary broken Markdown link (24.112833ms)
+✔ docs checker still fails: ordinary broken document link (23.968291ms)
+✔ docs checker still fails: runtime directory used as a Markdown link (25.129666ms)
+✔ docs checker still fails: runtime directory linked from index (24.869209ms)
+✔ docs checker still fails: missing child file under runtime directory (23.590666ms)
+✔ docs checker still fails: similarly named directory (24.76475ms)
+✔ docs checker still fails: runtime path without directory slash (25.141084ms)
+✔ docs checker still fails: runtime directory in plain text (23.632333ms)
+✔ docs checker still fails: runtime directory no longer ignored (23.838958ms)
+✔ docs checker still fails: other ignored directory (24.821584ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 420.179333

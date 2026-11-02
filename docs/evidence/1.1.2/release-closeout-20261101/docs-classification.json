@@ -1,0 +1,20 @@
+{
+  "status": "FAIL",
+  "baselineExitCode": 1,
+  "candidateExitCode": 1,
+  "activeFindings": 1,
+  "path": "test/real-sites/.profile/",
+  "historicalEvidence": "docs/测试报告-真实站点回归-2026-08-v2.md:5",
+  "classification": "Environment-dependent runtime path treated as mandatory repository artifact; not a broken historical report link or candidate product regression",
+  "supportingSource": [
+    ".gitignore:157",
+    "test/real-sites/lib/context.mjs: PROFILE_DIR defaults to .profile and makeContext creates it",
+    "scripts/check-docs.js: checkPathReferences -> fs.existsSync without distinguishing ignored runtime paths"
+  ],
+  "realBrokenDocumentLinkDetected": false,
+  "scope": "existing docs checker only; not exhaustive prose validation",
+  "historicalEvidenceModified": false,
+  "dummyProfileCreated": false,
+  "baselineSuppressionAdded": false,
+  "remainingAction": "Separately review and authorize correcting checker semantics for explicitly documented ignored runtime paths, rerun check; or FA explicitly accepts a scoped release exception. No waiver recorded."
+}

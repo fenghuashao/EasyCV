@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-01 Asia/Shanghai",
+  "gates": {
+    "PERMISSION_COMPLIANCE_GATE": "PASS",
+    "PACKAGE_INTEGRITY_GATE": "PASS",
+    "REGRESSION_DIFF_GATE": "PASS",
+    "KNOWN_BASELINE_RISK_GATE": "PARTIAL",
+    "UPGRADE_AND_PERSISTENCE_GATE": "PARTIAL",
+    "PLATFORM_ACCEPTANCE_GATE": "PARTIAL",
+    "DOCS_CHECK_GATE": "FAIL",
+    "STORE_PACKAGE_MATCH_GATE": "PASS",
+    "HOTFIX_RELEASE_READY": "FAIL"
+  },
+  "releaseDecision": "BLOCKED",
+  "candidateZIP": "releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031.zip",
+  "candidateSHA256": "6a2f2478e847ff06d6b7a35dbe01b543d2cd00ab52df7f96d2763d758e77782a",
+  "reportSHA256": "a3fc4bfd5105106e749f8ba0064be94de3a8e75a5825a51943bea105340651cd",
+  "verification": {
+    "package": {
+      "exitCode": 0,
+      "evidence": "package-verification.json"
+    },
+    "storeSignatureAndPayload": {
+      "exitCode": 0,
+      "script": "verify-store-package.py"
+    },
+    "unit": {
+      "exitCode": 0,
+      "passed": 33,
+      "evidence": "unit.txt"
+    },
+    "syntax": {
+      "exitCode": 0,
+      "files": 43,
+      "evidence": "lint.txt"
+    },
+    "candidateDocs": {
+      "exitCode": 1,
+      "evidence": "docs-check.txt"
+    },
+    "baselineDocs": {
+      "exitCode": 1,
+      "evidence": "baseline-docs-check.txt"
+    },
+    "nativeUI": {
+      "evidence": "chrome-upgrade-observations.json",
+      "scope": "Chrome for Testing 151 macOS native CUA, not Windows or full formal Chrome acceptance"
+    },
+    "normalUpgradeAndRestart": "NOT_VERIFIED",
+    "windowsChrome": "NOT_RUN",
+    "windowsEdge": "NOT_RUN",
+    "allPreexistingFilesPreserved": 372,
+    "reportLinks": "PASS"
+  },
+  "productCodeModified": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "storeSubmission": "NOT_RUN",
+  "releaseExceptionsGranted": false
+}

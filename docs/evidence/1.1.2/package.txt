@@ -1,0 +1,85 @@
+
+> easycv@1.1.2 package
+> npm run build && npm run zip
+
+
+> easycv@1.1.2 build
+> node scripts/build.js
+
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+🧹 清理目录: /Users/fengshaohua/pro/github/EasyCV/dist
+📁 创建目录: /Users/fengshaohua/pro/github/EasyCV/dist
+📄 复制文件: manifest.json -> dist/manifest.json
+📁 创建目录: /Users/fengshaohua/pro/github/EasyCV/dist/background/
+📄 复制文件: background/auto-enable-manager.js -> dist/background/auto-enable-manager.js
+📄 复制文件: background/icon-manager.js -> dist/background/icon-manager.js
+📄 复制文件: background/monitoring-manager.js -> dist/background/monitoring-manager.js
+📄 复制文件: background/service-worker.js -> dist/background/service-worker.js
+📄 复制文件: background/state-confirmation-manager.js -> dist/background/state-confirmation-manager.js
+📁 创建目录: /Users/fengshaohua/pro/github/EasyCV/dist/content/
+📄 复制文件: content/content.js -> dist/content/content.js
+📄 复制文件: content/injector.js -> dist/content/injector.js
+📁 创建目录: /Users/fengshaohua/pro/github/EasyCV/dist/popup/
+📄 复制文件: popup/popup.css -> dist/popup/popup.css
+📄 复制文件: popup/popup.html -> dist/popup/popup.html
+📄 复制文件: popup/popup.js -> dist/popup/popup.js
+📁 创建目录: /Users/fengshaohua/pro/github/EasyCV/dist/options/
+📄 复制文件: options/options.css -> dist/options/options.css
+📄 复制文件: options/options.html -> dist/options/options.html
+📄 复制文件: options/options.js -> dist/options/options.js
+📁 创建目录: /Users/fengshaohua/pro/github/EasyCV/dist/utils/
+📄 复制文件: utils/dom-utils.js -> dist/utils/dom-utils.js
+📄 复制文件: utils/i18n-utils.js -> dist/utils/i18n-utils.js
+📄 复制文件: utils/message-utils.js -> dist/utils/message-utils.js
+📄 复制文件: utils/notification-utils.js -> dist/utils/notification-utils.js
+📄 复制文件: utils/storage-utils.js -> dist/utils/storage-utils.js
+📁 创建目录: /Users/fengshaohua/pro/github/EasyCV/dist/icons/
+📄 复制文件: icons/icon-active-128.png -> dist/icons/icon-active-128.png
+📄 复制文件: icons/icon-active-16.png -> dist/icons/icon-active-16.png
+📄 复制文件: icons/icon-active-32.png -> dist/icons/icon-active-32.png
+📄 复制文件: icons/icon-active-48.png -> dist/icons/icon-active-48.png
+📄 复制文件: icons/icon-default-128.png -> dist/icons/icon-default-128.png
+📄 复制文件: icons/icon-default-16.png -> dist/icons/icon-default-16.png
+📄 复制文件: icons/icon-default-32.png -> dist/icons/icon-default-32.png
+📄 复制文件: icons/icon-default-48.png -> dist/icons/icon-default-48.png
+📄 复制文件: icons/icon-inactive-128.png -> dist/icons/icon-inactive-128.png
+📄 复制文件: icons/icon-inactive-16.png -> dist/icons/icon-inactive-16.png
+📄 复制文件: icons/icon-inactive-32.png -> dist/icons/icon-inactive-32.png
+📄 复制文件: icons/icon-inactive-48.png -> dist/icons/icon-inactive-48.png
+📄 复制文件: icons/icon-partial-128.png -> dist/icons/icon-partial-128.png
+📄 复制文件: icons/icon-partial-16.png -> dist/icons/icon-partial-16.png
+📄 复制文件: icons/icon-partial-32.png -> dist/icons/icon-partial-32.png
+📄 复制文件: icons/icon-partial-48.png -> dist/icons/icon-partial-48.png
+📁 创建目录: /Users/fengshaohua/pro/github/EasyCV/dist/_locales/
+📁 创建目录: /Users/fengshaohua/pro/github/EasyCV/dist/_locales/en
+📄 复制文件: _locales/en/messages.json -> dist/_locales/en/messages.json
+📁 创建目录: /Users/fengshaohua/pro/github/EasyCV/dist/_locales/zh_CN
+📄 复制文件: _locales/zh_CN/messages.json -> dist/_locales/zh_CN/messages.json
+==================================================
+✅ 构建完成!
+📦 版本: 1.1.2
+📁 输出目录: /Users/fengshaohua/pro/github/EasyCV/dist
+⏰ 构建时间: 2026-10-31T16:05:17.655Z
+
+> easycv@1.1.2 zip
+> node scripts/package.js
+
+📦 开始打包 EasyCV...
+==================================================
+📋 准备打包: __MSG_extension_name__ v1.1.2
+📁 创建目录: /Users/fengshaohua/pro/github/EasyCV/releases
+🗜️  正在压缩文件...
+✅ 打包完成: EasyCV-v1.1.2-20261031.zip (129.37 KB)
+📝 生成发布说明: EasyCV-v1.1.2-README.md
+📂 正在解压到: EasyCV-v1.1.2-20261031
+✅ 解压完成: releases/EasyCV-v1.1.2-20261031
+==================================================
+✅ 打包完成!
+📦 版本: 1.1.2
+📁 输出文件: releases/EasyCV-v1.1.2-20261031.zip
+📝 发布说明: releases/EasyCV-v1.1.2-README.md
+💾 文件大小: 129.37 KB
+📂 解压目录: releases/EasyCV-v1.1.2-20261031

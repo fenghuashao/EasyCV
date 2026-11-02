@@ -1,0 +1,14 @@
+{
+  "host": "macOS arm64",
+  "formalChrome": "156.0.8078.79",
+  "nativeChromeSupplement": "Chrome for Testing 151.0.7922.34",
+  "windowsVM": {
+    "name": "Windows 11",
+    "prlctlStatus": "invalid",
+    "repairedOrStarted": false
+  },
+  "windowsChrome": "NOT_RUN",
+  "windowsEdge": "NOT_RUN",
+  "source": "docs/测试计划.md: 兼容性测试矩阵: Windows 10+ Chrome P0 发布前必测; Edge P0 发布前 smoke 必测",
+  "waiverGranted": false
+}

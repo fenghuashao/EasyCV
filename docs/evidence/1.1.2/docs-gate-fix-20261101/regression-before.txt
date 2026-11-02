@@ -1,0 +1,137 @@
+✖ docs checker accepts absent ignored runtime directory in inline code: test/real-sites/.profile/ (24.444667ms)
+✖ docs checker accepts absent ignored runtime directory in inline code: ../test/real-sites/.profile/ (24.298625ms)
+✔ docs checker accepts an existing runtime directory (22.036459ms)
+✖ docs checker still fails: ordinary missing file alongside optional profile (21.151333ms)
+✔ docs checker still fails: ordinary broken Markdown link (21.467333ms)
+✔ docs checker still fails: runtime directory used as a Markdown link (21.772542ms)
+✖ docs checker still fails: runtime directory linked from index (21.018875ms)
+✔ docs checker still fails: missing child file under runtime directory (21.942917ms)
+✔ docs checker still fails: similarly named directory (20.362875ms)
+✔ docs checker still fails: runtime path without directory slash (21.004334ms)
+✔ docs checker still fails: runtime directory in plain text (21.255792ms)
+✔ docs checker still fails: runtime directory no longer ignored (21.609375ms)
+✔ docs checker still fails: other ignored directory (21.579417ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 9
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 318.170625
+
+✖ failing tests:
+
+test at test/unit/docs-check.test.mjs:34:3
+✖ docs checker accepts absent ignored runtime directory in inline code: test/real-sites/.profile/ (24.444667ms)
+  AssertionError [ERR_ASSERTION]: ❌ docs:check 发现 1 个未处理问题：
+  1. [path] docs/history.md
+     行号: 1
+     命中内容: test/real-sites/.profile/
+     说明: 文档引用了仓库内不存在的路径。
+     建议: 修正文档中的仓库路径，或在后续实现中补齐对应文件/目录。
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///private/var/folders/78/v877tdd555dd8rhmtkfl4d880000gn/T/easycv-docs-before-nmpxu5iu/test/unit/docs-check.test.mjs:36:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/unit/docs-check.test.mjs:34:3
+✖ docs checker accepts absent ignored runtime directory in inline code: ../test/real-sites/.profile/ (24.298625ms)
+  AssertionError [ERR_ASSERTION]: ❌ docs:check 发现 1 个未处理问题：
+  1. [path] docs/history.md
+     行号: 1
+     命中内容: ../test/real-sites/.profile/
+     说明: 文档引用了仓库内不存在的路径。
+     建议: 修正文档中的仓库路径，或在后续实现中补齐对应文件/目录。
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///private/var/folders/78/v877tdd555dd8rhmtkfl4d880000gn/T/easycv-docs-before-nmpxu5iu/test/unit/docs-check.test.mjs:36:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/unit/docs-check.test.mjs:60:3
+✖ docs checker still fails: ordinary missing file alongside optional profile (21.151333ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /docs:check 发现 1 个未处理问题/. Input:
+  
+  '❌ docs:check 发现 2 个未处理问题：\n' +
+    '1. [path] docs/history.md\n' +
+    '   行号: 1\n' +
+    '   命中内容: test/real-sites/.profile/\n' +
+    '   说明: 文档引用了仓库内不存在的路径。\n' +
+    '   建议: 修正文档中的仓库路径，或在后续实现中补齐对应文件/目录。\n' +
+    '2. [path] docs/history.md\n' +
+    '   行号: 1\n' +
+    '   命中内容: test/real-sites/missing.mjs\n' +
+    '   说明: 文档引用了仓库内不存在的路径。\n' +
+    '   建议: 修正文档中的仓库路径，或在后续实现中补齐对应文件/目录。\n'
+  
+      at TestContext.<anonymous> (file:///private/var/folders/78/v877tdd555dd8rhmtkfl4d880000gn/T/easycv-docs-before-nmpxu5iu/test/unit/docs-check.test.mjs:63:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '❌ docs:check 发现 2 个未处理问题：\n1. [path] docs/history.md\n   行号: 1\n   命中内容: test/real-sites/.profile/\n   说明: 文档引用了仓库内不存在的路径。\n   建议: 修正文档中的仓库路径，或在后续实现中补齐对应文件/目录。\n2. [path] docs/history.md\n   行号: 1\n   命中内容: test/real-sites/missing.mjs\n   说明: 文档引用了仓库内不存在的路径。\n   建议: 修正文档中的仓库路径，或在后续实现中补齐对应文件/目录。\n',
+    expected: /docs:check 发现 1 个未处理问题/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at test/unit/docs-check.test.mjs:60:3
+✖ docs checker still fails: runtime directory linked from index (21.018875ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /docs:check 发现 1 个未处理问题/. Input:
+  
+  '❌ docs:check 发现 2 个未处理问题：\n' +
+    '1. [index] docs/README.md\n' +
+    '   行号: 2\n' +
+    '   命中内容: ../test/real-sites/.profile/\n' +
+    '   说明: 文档索引引用了不存在的本地文件。\n' +
+    '   建议: 修正 docs/README.md 中的链接路径，或补齐缺失文件。\n' +
+    '2. [path] docs/README.md\n' +
+    '   行号: 2\n' +
+    '   命中内容: ../test/real-sites/.profile/\n' +
+    '   说明: 文档引用了仓库内不存在的路径。\n' +
+    '   建议: 修正文档中的仓库路径，或在后续实现中补齐对应文件/目录。\n'
+  
+      at TestContext.<anonymous> (file:///private/var/folders/78/v877tdd555dd8rhmtkfl4d880000gn/T/easycv-docs-before-nmpxu5iu/test/unit/docs-check.test.mjs:63:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '❌ docs:check 发现 2 个未处理问题：\n1. [index] docs/README.md\n   行号: 2\n   命中内容: ../test/real-sites/.profile/\n   说明: 文档索引引用了不存在的本地文件。\n   建议: 修正 docs/README.md 中的链接路径，或补齐缺失文件。\n2. [path] docs/README.md\n   行号: 2\n   命中内容: ../test/real-sites/.profile/\n   说明: 文档引用了仓库内不存在的路径。\n   建议: 修正文档中的仓库路径，或在后续实现中补齐对应文件/目录。\n',
+    expected: /docs:check 发现 1 个未处理问题/,
+    operator: 'match',
+    diff: 'simple'
+  }

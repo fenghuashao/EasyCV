@@ -1,0 +1,28 @@
+{
+  "format": "CRX3",
+  "signedItemID": "bnbmgiidicjdbnmkmdnjeelhijnlhnjb",
+  "requestedItemID": "bnbmgiidicjdbnmkmdnjeelhijnlhnjb",
+  "idMatchesRequest": true,
+  "proofs": [
+    {
+      "type": 2,
+      "validSignature": true,
+      "publicKeySHA256": "b5e4096227b83f82101fc2aa49f2a251accde3d98471464dd17d1819b43786b0",
+      "bindsRequestedItemID": false
+    },
+    {
+      "type": 2,
+      "validSignature": true,
+      "publicKeySHA256": "1d1c688382931dcac3d944b789db7d91c164eae9aceaf0fb23dee420c78d139c",
+      "bindsRequestedItemID": true
+    },
+    {
+      "type": 3,
+      "validSignature": true,
+      "publicKeySHA256": "61f7f2a6bfcf74cd0bc1fe2497cc9b04254c658f79f2145392867ea8366367cf",
+      "bindsRequestedItemID": false
+    }
+  ],
+  "validItemProof": true,
+  "trustBasis": "official Google HTTPS redirect plus valid CRX3 item-key proof; store publisher identity corroborated by official listing repository link; no CA pinning claim"
+}

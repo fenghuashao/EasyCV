@@ -39,7 +39,9 @@ class Packager {
     const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
     return {
       version: manifest.version,
-      name: manifest.name
+      name: manifest.name,
+      permissions: manifest.permissions || [],
+      hostPermissions: manifest.host_permissions || []
     };
   }
 
@@ -172,7 +174,8 @@ class Packager {
 ## 🔧 技术规格
 - **Manifest 版本**: V3
 - **支持浏览器**: Chrome 88+, Edge 88+
-- **权限要求**: activeTab, storage, scripting
+- **权限要求**: ${versionInfo.permissions.join(', ')}
+- **网站访问范围**: ${versionInfo.hostPermissions.join(', ')}
 
 ---
 *此发布包由自动化脚本生成*

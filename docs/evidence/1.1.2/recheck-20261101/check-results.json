@@ -1,0 +1,187 @@
+[
+  {
+    "name": "baseline-build",
+    "command": [
+      "node",
+      "scripts/build.js"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV/.tmp/permission-recheck-20261101/baseline-source",
+    "exitCode": 0,
+    "log": "baseline-build.txt",
+    "seconds": 0.04
+  },
+  {
+    "name": "baseline-unit",
+    "command": [
+      "npm",
+      "test"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV/.tmp/permission-recheck-20261101/baseline-source",
+    "exitCode": 0,
+    "log": "baseline-unit.txt",
+    "seconds": 0.18
+  },
+  {
+    "name": "baseline-docs-check",
+    "command": [
+      "npm",
+      "run",
+      "docs:check"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV/.tmp/permission-recheck-20261101/baseline-source",
+    "exitCode": 1,
+    "log": "baseline-docs-check.txt",
+    "seconds": 0.12
+  },
+  {
+    "name": "unit",
+    "command": [
+      "npm",
+      "test"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV",
+    "exitCode": 0,
+    "log": "unit.txt",
+    "seconds": 0.15
+  },
+  {
+    "name": "lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV",
+    "exitCode": 0,
+    "log": "lint.txt",
+    "seconds": 0.92
+  },
+  {
+    "name": "docs-check",
+    "command": [
+      "npm",
+      "run",
+      "docs:check"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV",
+    "exitCode": 1,
+    "log": "docs-check.txt",
+    "seconds": 0.1
+  },
+  {
+    "name": "build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV",
+    "exitCode": 0,
+    "log": "build.txt",
+    "seconds": 0.11
+  },
+  {
+    "name": "package",
+    "command": [
+      "node",
+      "-e",
+      "const P=require('./scripts/package'); const p=new P(); p.outputDir=require('path').resolve('releases/permission-recheck-20261101'); p.package().catch(e=>{console.error(e);process.exitCode=1});"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV",
+    "exitCode": 0,
+    "log": "package.txt",
+    "seconds": 0.13
+  },
+  {
+    "name": "package-check",
+    "command": [
+      "python3",
+      "test/verify-permission-package.py",
+      "/Users/fengshaohua/pro/github/EasyCV/releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031.zip",
+      "/Users/fengshaohua/pro/github/EasyCV/.tmp/permission-recheck-20261101/baseline-source/dist",
+      "/Users/fengshaohua/pro/github/EasyCV/docs/evidence/1.1.2/recheck-20261101/package-verification.json"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV",
+    "exitCode": 0,
+    "log": "package-check.txt",
+    "seconds": 0.06
+  },
+  {
+    "name": "baseline-e2e",
+    "command": [
+      "node",
+      "test/e2e-extension.mjs"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV/.tmp/permission-recheck-20261101/baseline-source",
+    "exitCode": 0,
+    "log": "baseline-e2e.txt",
+    "seconds": 7.89
+  },
+  {
+    "name": "e2e",
+    "command": [
+      "node",
+      "test/e2e-extension.mjs"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV",
+    "exitCode": 0,
+    "log": "e2e.txt",
+    "seconds": 7.29
+  },
+  {
+    "name": "baseline-permission-regression",
+    "command": [
+      "node",
+      "test/permission-regression.mjs"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV",
+    "exitCode": 1,
+    "log": "baseline-permission-regression.txt",
+    "seconds": 19.28
+  },
+  {
+    "name": "permission-regression",
+    "command": [
+      "node",
+      "test/permission-regression.mjs"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV",
+    "exitCode": 1,
+    "log": "permission-regression.txt",
+    "seconds": 19.21
+  },
+  {
+    "name": "diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV",
+    "exitCode": 0,
+    "log": "diff-check.txt",
+    "seconds": 0.01
+  },
+  {
+    "name": "docs-check-final",
+    "command": [
+      "npm",
+      "run",
+      "docs:check"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV",
+    "exitCode": 1,
+    "log": "docs-check-final.txt"
+  },
+  {
+    "name": "diff-check-final",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "cwd": "/Users/fengshaohua/pro/github/EasyCV",
+    "exitCode": 0,
+    "log": "diff-check-final.txt"
+  }
+]

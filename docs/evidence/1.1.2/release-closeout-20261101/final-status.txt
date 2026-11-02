@@ -1,0 +1,22 @@
+ M CHANGELOG.md
+ M PRIVACY.md
+ M docs/README.md
+ M docs/release-checklist.md
+ M "docs/\346\212\200\346\234\257\346\236\266\346\236\204\346\226\207\346\241\243.md"
+ M "docs/\346\265\213\350\257\225\347\224\250\344\276\213.md"
+ M "docs/\346\265\213\350\257\225\350\256\241\345\210\222.md"
+ M "docs/\347\224\250\346\210\267\344\275\277\347\224\250\346\211\213\345\206\214.md"
+ M "docs/\350\207\252\345\212\250\345\214\226\346\211\223\345\214\205\351\205\215\347\275\256\350\257\264\346\230\216.md"
+ M "docs/\351\203\250\347\275\262\346\226\207\346\241\243.md"
+ M "docs/\351\241\271\347\233\256\345\274\200\345\217\221\350\256\241\345\210\222.md"
+ M manifest.json
+ M package-lock.json
+ M package.json
+ M scripts/package.js
+?? EASYCV-1.1.2-PERMISSION-FIX.md
+?? EASYCV-1.1.2-POPUP-PASTE-TRIAGE.md
+?? EASYCV-1.1.2-RELEASE-CLOSEOUT.md
+?? docs/evidence/
+?? test/fixtures/
+?? test/permission-regression.mjs
+?? test/verify-permission-package.py

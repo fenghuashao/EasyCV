@@ -1,0 +1,2 @@
+There has been no change in the accessibility tree for Window: "EasyCV 设置".
+The focused UI element is 132 HTML 内容 EasyCV 设置, URL: chrome-extension://ggchllgdneckbbjcmchbjfelkomcekpj/options/options.html

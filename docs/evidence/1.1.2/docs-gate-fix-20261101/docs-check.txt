@@ -1,0 +1,5 @@
+
+> easycv@1.1.2 docs:check
+> node scripts/check-docs.js
+
+✅ docs:check 通过

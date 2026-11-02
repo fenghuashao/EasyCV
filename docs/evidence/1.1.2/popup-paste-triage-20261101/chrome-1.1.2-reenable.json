@@ -1,0 +1,211 @@
+{
+  "version": "1.1.2",
+  "extensionPath": "/Users/fengshaohua/pro/github/EasyCV/releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031",
+  "browser": "156.0.8078.79",
+  "cases": [
+    {
+      "name": "browser_extension_disable_reenable",
+      "disabled": {
+        "priorStorage": {
+          "auto_enable_list": [],
+          "excluded_list": [],
+          "force_mode": false,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        },
+        "content": {
+          "unavailable": "no content context"
+        },
+        "injected": false
+      },
+      "disabledPaste": {
+        "target": "pasteTarget",
+        "marker": "EASYCV_TRIAGE_pasteTarget",
+        "value": "",
+        "pasted": false,
+        "onpaste": "return false"
+      },
+      "beforeReload": {
+        "content": {
+          "unavailable": "no content context"
+        },
+        "injected": false,
+        "paste": {
+          "target": "pasteTarget",
+          "marker": "EASYCV_TRIAGE_pasteTarget",
+          "value": "",
+          "pasted": false,
+          "onpaste": "return false"
+        },
+        "storage": {
+          "force_mode": false,
+          "plugin_enabled": true,
+          "user_settings": {
+            "autoEnableList": [],
+            "copyEnabled": true,
+            "enableStatistics": true,
+            "excludedList": [
+              "accounts.google.com",
+              "login.live.com",
+              "appleid.apple.com"
+            ],
+            "forceMode": false,
+            "pasteEnabled": true,
+            "pluginEnabled": true,
+            "showNotifications": true,
+            "theme": "auto"
+          }
+        }
+      },
+      "ping": {
+        "error": "Could not establish connection. Receiving end does not exist."
+      },
+      "afterReload": {
+        "ping": {
+          "success": true,
+          "message": "Content script is available"
+        },
+        "worlds": [
+          {
+            "id": 5,
+            "origin": "http://easycv.localhost:18941",
+            "name": "",
+            "uniqueId": "-2820009039056020036.245319495365833530",
+            "auxData": {
+              "isDefault": true,
+              "type": "default",
+              "frameId": "DA747A144D4414B6E28A25F568D79BAC"
+            }
+          },
+          {
+            "id": 6,
+            "origin": "http://easycv.localhost:18941",
+            "name": "__playwright_utility_world_page@f9a4a12072e1409c0be1222c8f1d7ac2",
+            "uniqueId": "-1833824537171426129.418948118226294099",
+            "auxData": {
+              "isDefault": false,
+              "type": "isolated",
+              "frameId": "DA747A144D4414B6E28A25F568D79BAC"
+            }
+          },
+          {
+            "id": 7,
+            "origin": "chrome-extension://lcklaoblcindpcjjacidlomohefiohad",
+            "name": "EasyCV - 解除网页复制粘贴限制",
+            "uniqueId": "1808817710682366721.-4389750232767376133",
+            "auxData": {
+              "isDefault": false,
+              "type": "isolated",
+              "frameId": "DA747A144D4414B6E28A25F568D79BAC"
+            }
+          }
+        ],
+        "content": {
+          "isEnabled": true,
+          "copyEnabled": true,
+          "pasteEnabled": true
+        },
+        "paste": {
+          "target": "pasteTarget",
+          "marker": "EASYCV_TRIAGE_pasteTarget",
+          "value": "EASYCV_TRIAGE_pasteTarget",
+          "pasted": true,
+          "onpaste": null
+        },
+        "injected": true
+      }
+    }
+  ],
+  "nativeToolbarMouse": "NOT_RUN: cua getApp timeout / native pipe closed",
+  "errors": [],
+  "profile": "/Users/fengshaohua/pro/github/EasyCV/.tmp/popup-paste-triage-20261101/chrome-1.1.2-NxZIvk",
+  "extensionId": "lcklaoblcindpcjjacidlomohefiohad",
+  "manifest": {
+    "action": {
+      "default_icon": {
+        "16": "icons/icon-default-16.png",
+        "32": "icons/icon-default-32.png",
+        "48": "icons/icon-default-48.png",
+        "128": "icons/icon-default-128.png"
+      },
+      "default_popup": "popup/popup.html",
+      "default_title": "EasyCV - 解除网页复制粘贴限制"
+    },
+    "background": {
+      "service_worker": "background/service-worker.js"
+    },
+    "content_scripts": [
+      {
+        "all_frames": true,
+        "js": [
+          "utils/message-utils.js",
+          "utils/storage-utils.js",
+          "utils/dom-utils.js",
+          "content/content.js"
+        ],
+        "matches": [
+          "<all_urls>"
+        ],
+        "run_at": "document_start"
+      }
+    ],
+    "current_locale": "zh_CN",
+    "default_locale": "zh_CN",
+    "description": "一键解除网页复制粘贴限制，提升工作效率的浏览器插件",
+    "host_permissions": [
+      "<all_urls>"
+    ],
+    "icons": {
+      "16": "icons/icon-default-16.png",
+      "32": "icons/icon-default-32.png",
+      "48": "icons/icon-default-48.png",
+      "128": "icons/icon-default-128.png"
+    },
+    "manifest_version": 3,
+    "name": "EasyCV - 解除网页复制粘贴限制",
+    "options_page": "options/options.html",
+    "permissions": [
+      "storage",
+      "contextMenus"
+    ],
+    "version": "1.1.2",
+    "web_accessible_resources": [
+      {
+        "matches": [
+          "<all_urls>"
+        ],
+        "resources": [
+          "content/injector.js",
+          "icons/*.png",
+          "utils/*.js"
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "origins": [
+      "<all_urls>"
+    ],
+    "permissions": [
+      "contextMenus",
+      "storage"
+    ]
+  },
+  "extensionManagerApi": {
+    "management": "function"
+  }
+}

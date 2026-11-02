@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "test/verify-permission-package.py",
+    "releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031.zip",
+    ".tmp/permission-recheck-20261101/baseline-source/dist",
+    "docs/evidence/1.1.2/docs-gate-fix-20261101/package-verification.json"
+  ],
+  "exitCode": 0
+}

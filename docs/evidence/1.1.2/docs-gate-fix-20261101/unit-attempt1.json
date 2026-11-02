@@ -1,0 +1,7 @@
+{
+  "command": [
+    "npm",
+    "test"
+  ],
+  "exitCode": 1
+}

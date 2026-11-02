@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "preexistingFilesChecked": 372,
+  "changedFiles": [],
+  "headBefore": "bbd6300ecd7f3a23dd1f3a9ca2f74e517ffa1d09",
+  "headAfter": "bbd6300ecd7f3a23dd1f3a9ca2f74e517ffa1d09",
+  "commitCreated": false,
+  "productCodeModified": false,
+  "candidateZIPUnchanged": true,
+  "historicalEvidenceUnchanged": true,
+  "testBrowsersClosed": true,
+  "fixtureServerClosed": true
+}
