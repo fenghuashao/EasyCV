@@ -194,6 +194,11 @@ class DocsChecker {
         continue;
       }
 
+      const candidateIndex = match.index + match[1].length;
+      if (this.isOptionalRuntimeDirectory(normalizedCandidate, resolvedPath, content, candidateIndex)) {
+        continue;
+      }
+
       this.addFinding({
         type: 'path',
         file: relativeFile,
@@ -203,6 +208,23 @@ class DocsChecker {
         suggestion: '修正文档中的仓库路径，或在后续实现中补齐对应文件/目录。'
       });
     }
+  }
+
+  isOptionalRuntimeDirectory(candidate, resolvedPath, content, index) {
+    // context.mjs creates this private profile on demand; only its inline-code
+    // directory mention is optional. Links, child files and other paths stay checked.
+    const runtimeDir = 'test/real-sites/.profile/';
+    if (!candidate.endsWith('/') || this.toRepoPath(resolvedPath) !== runtimeDir.slice(0, -1)) {
+      return false;
+    }
+
+    if (content[index - 1] !== '`' || content[index + candidate.length] !== '`') {
+      return false;
+    }
+
+    const ignorePath = path.join(this.rootDir, '.gitignore');
+    return fs.existsSync(ignorePath) && fs.readFileSync(ignorePath, 'utf8')
+      .split(/\r?\n/).some((line) => line.trim() === runtimeDir);
   }
 
   isExternalTarget(target) {
