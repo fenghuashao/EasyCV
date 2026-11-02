@@ -1,0 +1,36 @@
+{
+  "observedAt": "2026-11-01T01:27:10.829152+08:00",
+  "limitedPackageInventory": [
+    {
+      "package": "/Users/fengshaohua/Parallels/Windows 11.pvm",
+      "configPresent": true,
+      "diskBundles": [
+        "harddisk.hdd"
+      ]
+    },
+    {
+      "package": "/Users/fengshaohua/Library/Group Containers/4C6364ACXT.com.parallels.desktop.appstore/Shared/Parallels/Windows 11.pvm",
+      "configPresent": true,
+      "diskBundles": [
+        "harddisk.hdd"
+      ]
+    }
+  ],
+  "nativeUIObservations": [
+    "Parallels showed Windows 11 stopped behind a modal offering Delete and Cancel; modal body not reliably readable in the screenshot.",
+    "Attempt to click Cancel was rejected by UI tool: user changed app; no action applied.",
+    "Fresh native observation showed New VM wizard. No creation or deletion action performed by FX."
+  ],
+  "cliFollowup": {
+    "prlctl list -a": "No registered entries returned",
+    "prlctl start Windows 11": {
+      "exitCode": 255,
+      "stderr": "Failed to get VM config: The virtual machine could not be found. The virtual machine is not registered in the virtual machine directory on your Mac."
+    }
+  },
+  "vmConfigurationModifiedByFX": false,
+  "vmStartAttempted": true,
+  "guestStarted": false,
+  "cause": "UNKNOWN; user reports previously usable Win11; do not infer VM loss or corruption from these observations alone",
+  "nextStep": "User identifies or opens the existing usable Win11. Repair, registration changes or creating a VM not performed."
+}

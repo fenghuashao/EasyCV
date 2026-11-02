@@ -1,0 +1,22 @@
+{
+  "observedAt": "2026-11-02T21:02:24.770640+08:00",
+  "browser": "edge",
+  "session": "easycv-win-edge-20261102",
+  "guestCDPPort": 19332,
+  "commands": [
+    [
+      "get",
+      "url"
+    ],
+    [
+      "tab",
+      "list",
+      "--json"
+    ]
+  ],
+  "timeoutSeconds": 20,
+  "exitCode": 0,
+  "stdout": "edge://extensions/\nACTION_RESULT {\"arguments\":[\"get\",\"url\"],\"exitCode\":0}\r\n{\"success\":true,\"data\":{\"lifecycle\":{\"effectiveLaunch\":{\"browserLaunched\":true,\"engine\":\"chrome\",\"launchHash\":8917641277948395186},\"launched\":false,\"relaunchedBrowser\":false,\"restartedBackground\":false,\"restoreStatus\":\"not_configured\",\"reused\":true,\"saveStatus\":\"not_attempted\"},\"tabs\":[{\"active\":true,\"label\":null,\"tabId\":\"t1\",\"targetId\":\"64930959C6FC9D90086C319F3774005A\",\"title\":\"edge://extensions\",\"type\":\"page\",\"url\":\"edge://extensions/\"}]},\"error\":null}\nACTION_RESULT {\"arguments\":[\"tab\",\"list\",\"--json\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

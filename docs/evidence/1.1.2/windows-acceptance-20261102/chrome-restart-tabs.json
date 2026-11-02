@@ -1,0 +1,18 @@
+{
+  "observedAt": "2026-11-02T22:24:23.311448+08:00",
+  "browser": "chrome",
+  "session": "easycv-win-chrome-20261102",
+  "guestCDPPort": 19331,
+  "commands": [
+    [
+      "tab",
+      "list",
+      "--json"
+    ]
+  ],
+  "timeoutSeconds": 45,
+  "exitCode": 0,
+  "stdout": "{\"success\":true,\"data\":{\"lifecycle\":{\"effectiveLaunch\":{\"browserLaunched\":true,\"engine\":\"chrome\",\"launchHash\":10497060223723932023},\"launched\":false,\"relaunchedBrowser\":false,\"restartedBackground\":false,\"restoreStatus\":\"not_configured\",\"reused\":true,\"saveStatus\":\"not_configured\"},\"tabs\":[{\"active\":true,\"label\":null,\"tabId\":\"t1\",\"targetId\":\"A223DB1BD8FB4D3571B85F06C57AD3C2\",\"title\":\"\",\"type\":\"page\",\"url\":\"about:blank\"}]},\"error\":null}\nACTION_RESULT {\"arguments\":[\"tab\",\"list\",\"--json\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

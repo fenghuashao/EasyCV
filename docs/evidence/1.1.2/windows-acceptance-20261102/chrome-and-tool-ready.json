@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T20:48:58.564126+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding = [Text.UTF8Encoding]::new($false)\n$ProgressPreference='SilentlyContinue'\n$paths=@('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',(Join-Path $env:LOCALAPPDATA 'Google\\Chrome\\Application\\chrome.exe'))\nforeach($p in $paths){if(Test-Path -LiteralPath $p){@{browser=$p;version=(Get-Item -LiteralPath $p).VersionInfo.ProductVersion}|ConvertTo-Json -Compress}}\n$a=Join-Path $env:LOCALAPPDATA 'EasyCV-Downloads-20261102-Tools\\package\\bin\\agent-browser-win32-x64.exe'\n& $a --version\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -EncodedCommand",
+  "timeoutSeconds": 25,
+  "exitCode": 0,
+  "stdout": "agent-browser 0.41.0\n",
+  "stderr": "",
+  "timedOut": false
+}

@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T22:47:17.346304+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "\n[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$ProgressPreference='SilentlyContinue'\n$profile=Join-Path $env:LOCALAPPDATA 'EasyCV-Acceptance-20261102-r3\\chrome-store-profile'\nif(-not (Test-Path -LiteralPath $profile)){throw 'Original Profile missing'}\n$p=Start-Process -FilePath 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' -ArgumentList ('--user-data-dir=\"'+$profile+'\"'),'--remote-debugging-port=19333','--no-first-run','--no-default-browser-check','--new-window','chrome-extension://bnbmgiidicjdbnmkmdnjeelhijnlhnjb/options/options.html' -PassThru\n@{browserPID=$p.Id;profile=$profile;normalRestart=$true;extensionReinstalled=$false;storageCopied=$false;idChanged=$false;extensionLoadFlagsUsed=$false;upgradeClaimed=$false}|ConvertTo-Json -Compress\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand",
+  "timeoutSeconds": 25,
+  "exitCode": 0,
+  "stdout": "{\"extensionReinstalled\":false,\"idChanged\":false,\"profile\":\"C:\\\\Users\\\\fengshaohua\\\\AppData\\\\Local\\\\EasyCV-Acceptance-20261102-r3\\\\chrome-store-profile\",\"upgradeClaimed\":false,\"browserPID\":9724,\"storageCopied\":false,\"extensionLoadFlagsUsed\":false,\"normalRestart\":true}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

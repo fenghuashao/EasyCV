@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T20:54:54.127942+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$ProgressPreference='SilentlyContinue'\n$a=Join-Path $env:LOCALAPPDATA 'EasyCV-Downloads-20261102-Tools\\package\\bin\\agent-browser-win32-x64.exe'\n& $a --session easycv-win-edge-20261102 --cdp 19332 open 'edge://extensions/'\n& $a --session easycv-win-edge-20261102 --cdp 19332 snapshot -i\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -EncodedCommand",
+  "timeoutSeconds": 30,
+  "exitCode": 0,
+  "stdout": "- heading \"嗯… 无法访问此页面\" [level=1, ref=e183]\n- button \"刷新\" [ref=e184]\n",
+  "stderr": "✗ Navigation failed: net::ERR_NAME_NOT_RESOLVED\n",
+  "timedOut": false
+}

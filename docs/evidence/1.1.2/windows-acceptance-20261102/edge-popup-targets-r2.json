@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T21:21:51.588423+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$ProgressPreference='SilentlyContinue'\n$targets=Invoke-RestMethod -Uri 'http://127.0.0.1:19332/json/list'\n@($targets | Where-Object {$_.url -like 'chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/*'} | Select-Object id,type,url,webSocketDebuggerUrl)|ConvertTo-Json -Depth 3 -Compress\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand",
+  "timeoutSeconds": 20,
+  "exitCode": 0,
+  "stdout": "[{\"id\":\"703DBE6751BB15231D373199974A38B9\",\"type\":\"page\",\"url\":\"chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\",\"webSocketDebuggerUrl\":\"ws://127.0.0.1:19332/devtools/page/703DBE6751BB15231D373199974A38B9\"},{\"id\":\"AB5115C998B097EC1F55755526501FBE\",\"type\":\"page\",\"url\":\"chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\",\"webSocketDebuggerUrl\":\"ws://127.0.0.1:19332/devtools/page/AB5115C998B097EC1F55755526501FBE\"},{\"id\":\"8B7599685538AA2B7836B6D05FFCA0B6\",\"type\":\"service_worker\",\"url\":\"chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/background/service-worker.js\",\"webSocketDebuggerUrl\":\"ws://127.0.0.1:19332/devtools/page/8B7599685538AA2B7836B6D05FFCA0B6\"}]\r\n",
+  "stderr": "",
+  "timedOut": false
+}

@@ -1,0 +1,17 @@
+{
+  "observedAt": "2026-11-02T21:39:59.933245+08:00",
+  "browser": "chrome",
+  "session": "easycv-win-chrome-20261102",
+  "guestCDPPort": 19331,
+  "commands": [
+    [
+      "click",
+      "@e8"
+    ]
+  ],
+  "timeoutSeconds": 20,
+  "exitCode": 0,
+  "stdout": "✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"@e8\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

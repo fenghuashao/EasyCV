@@ -1,0 +1,42 @@
+{
+  "observedAt": "2026-11-02T22:39:16.718348+08:00",
+  "browser": "chrome-store",
+  "session": "easycv-win-chrome-store-20261102",
+  "guestCDPPort": 19333,
+  "commands": [
+    [
+      "tab",
+      "new",
+      "chrome://extensions/"
+    ],
+    [
+      "eval",
+      "-b",
+      "bmV3IFByb21pc2Uocj0+Y2hyb21lLmRldmVsb3BlclByaXZhdGUuZ2V0RXh0ZW5zaW9uc0luZm8oe2luY2x1ZGVEaXNhYmxlZDp0cnVlLGluY2x1ZGVUZXJtaW5hdGVkOnRydWV9LHhzPT5yKHhzLmZpbHRlcihlPT5lLmlkPT09J2JuYm1naWlkaWNqZGJubWttZG5qZWVsaGlqbmxobmpiJykubWFwKGU9Pih7aWQ6ZS5pZCxuYW1lOmUubmFtZSx2ZXJzaW9uOmUudmVyc2lvbixzdGF0ZTplLnN0YXRlLGxvY2F0aW9uOmUubG9jYXRpb24sZnJvbVdlYlN0b3JlOmUuZnJvbVdlYlN0b3JlLGluc3RhbGxXYXJuaW5nczplLmluc3RhbGxXYXJuaW5ncyxydW50aW1lRXJyb3JzOmUucnVudGltZUVycm9yc30pKSkp"
+    ],
+    [
+      "tab",
+      "new",
+      "chrome-extension://bnbmgiidicjdbnmkmdnjeelhijnlhnjb/options/options.html"
+    ],
+    [
+      "snapshot",
+      "-i"
+    ],
+    [
+      "eval",
+      "-b",
+      "KGFzeW5jKCk9Pih7aWQ6Y2hyb21lLnJ1bnRpbWUuaWQsdmVyc2lvbjpjaHJvbWUucnVudGltZS5nZXRNYW5pZmVzdCgpLnZlcnNpb24sbWFuaWZlc3RVcGRhdGVVUkw6Y2hyb21lLnJ1bnRpbWUuZ2V0TWFuaWZlc3QoKS51cGRhdGVfdXJsLHN0b3JhZ2U6YXdhaXQgY2hyb21lLnN0b3JhZ2Uuc3luYy5nZXQoWyJwbHVnaW5fZW5hYmxlZCIsImZvcmNlX21vZGUiLCJ1c2VyX3NldHRpbmdzIiwiYXV0b19lbmFibGVfbGlzdCIsImV4Y2x1ZGVkX2xpc3QiXSl9KSkoKQ=="
+    ],
+    [
+      "tab",
+      "list",
+      "--json"
+    ]
+  ],
+  "timeoutSeconds": 35,
+  "exitCode": 1,
+  "stdout": "chrome://extensions/\nACTION_RESULT {\"arguments\":[\"tab\",\"new\",\"chrome://extensions/\"],\"exitCode\":0}\r\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"bmV3IFByb21pc2Uocj0+Y2hyb21lLmRldmVsb3BlclByaXZhdGUuZ2V0RXh0ZW5zaW9uc0luZm8oe2luY2x1ZGVEaXNhYmxlZDp0cnVlLGluY2x1ZGVUZXJtaW5hdGVkOnRydWV9LHhzPT5yKHhzLmZpbHRlcihlPT5lLmlkPT09J2JuYm1naWlkaWNqZGJubWttZG5qZWVsaGlqbmxobmpiJykubWFwKGU9Pih7aWQ6ZS5pZCxuYW1lOmUubmFtZSx2ZXJzaW9uOmUudmVyc2lvbixzdGF0ZTplLnN0YXRlLGxvY2F0aW9uOmUubG9jYXRpb24sZnJvbVdlYlN0b3JlOmUuZnJvbVdlYlN0b3JlLGluc3RhbGxXYXJuaW5nczplLmluc3RhbGxXYXJuaW5ncyxydW50aW1lRXJyb3JzOmUucnVudGltZUVycm9yc30pKSkp\"],\"exitCode\":1}\r\n",
+  "stderr": "✗ Evaluation error: SyntaxError: missing ) after argument list\n",
+  "timedOut": false
+}

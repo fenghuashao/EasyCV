@@ -1,0 +1,22 @@
+{
+  "observedAt": "2026-11-02T21:05:20.509766+08:00",
+  "browser": "edge",
+  "session": "easycv-win-edge-20261102",
+  "guestCDPPort": 19332,
+  "commands": [
+    [
+      "snapshot",
+      "-i"
+    ],
+    [
+      "tab",
+      "list",
+      "--json"
+    ]
+  ],
+  "timeoutSeconds": 25,
+  "exitCode": 0,
+  "stdout": "- heading \"扩展\" [level=1, ref=e197]\n- textbox [ref=e208]\n- menuitemradio \"我的扩展\" [checked=true, ref=e200]\n- menuitemradio \"键盘快捷方式\" [checked=false, ref=e201]\n- link \"获取 Microsoft Edge 扩展\" [ref=e202]\n- switch \"开发人员模式\" [checked=true, ref=e203]\n- link \"了解更多信息\" [ref=e204]\n- button \"加载解压缩的扩展\" [ref=e205]\n- button \"打包扩展\" [ref=e206]\n- button \"更新\" [ref=e207]\n- switch \"开启 EasyCV - 解除网页复制粘贴限制\" [checked=true, ref=e209]\n- button \"服务工作进程; (不活动)\" [ref=e210]\n- button \"详细信息\" [ref=e211]\n- button \"删除\" [ref=e212]\n- button \"重新加载\" [ref=e213]\n- button \"从 Edge 加载项发现扩展和主题\" [ref=e198]\n- link \"Chrome Web Store \" [ref=e199]\nACTION_RESULT {\"arguments\":[\"snapshot\",\"-i\"],\"exitCode\":0}\r\n{\"success\":true,\"data\":{\"lifecycle\":{\"effectiveLaunch\":{\"browserLaunched\":true,\"engine\":\"chrome\",\"launchHash\":8917641277948395186},\"launched\":false,\"relaunchedBrowser\":false,\"restartedBackground\":false,\"restoreStatus\":\"not_configured\",\"reused\":true,\"saveStatus\":\"not_attempted\"},\"tabs\":[{\"active\":true,\"label\":null,\"tabId\":\"t1\",\"targetId\":\"64930959C6FC9D90086C319F3774005A\",\"title\":\"edge://extensions\",\"type\":\"page\",\"url\":\"edge://extensions/\"}]},\"error\":null}\nACTION_RESULT {\"arguments\":[\"tab\",\"list\",\"--json\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

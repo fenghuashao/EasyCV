@@ -1,0 +1,15 @@
+{
+  "dataAndRestoredUI": "PASS",
+  "beforeEvidence": "edge-popup-force-off.json",
+  "closeEvidence": "edge-restart-close-confirmed.json",
+  "restartEvidence": "edge-restart-relaunch.json",
+  "afterEvidence": "edge-restart-restored-settings.json",
+  "criticalStorageExactMatch": true,
+  "nondefaultNotificationDelayRetriesAndListsRestored": true,
+  "sameDevelopmentExtensionIDAndVersionRestored": true,
+  "forceModeAtRestart": false,
+  "forceModeTrueUIReloadBug": "Separate earlier failed scenario; not erased by this comparison",
+  "postRestartRealPageFunction": "NOT_RUN",
+  "upgrade111To112": "NOT_VERIFIED",
+  "browserRestartGate": "PARTIAL"
+}

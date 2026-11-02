@@ -1,0 +1,8 @@
+{
+  "observedAt": "2026-11-02T23:10:24.825133+08:00",
+  "command": "npm run docs:check",
+  "purpose": "Validate new acceptance documentation only; no permission/build/package gate rerun",
+  "exitCode": 0,
+  "stdout": "\n> easycv@1.1.2 docs:check\n> node scripts/check-docs.js\n\n✅ docs:check 通过\n",
+  "stderr": ""
+}

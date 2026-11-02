@@ -1,0 +1,47 @@
+{
+  "observedAt": "2026-11-02T22:29:53.518010+08:00",
+  "browser": "edge",
+  "session": "easycv-win-edge-20261102",
+  "guestCDPPort": 19332,
+  "commands": [
+    [
+      "tab",
+      "t1"
+    ],
+    [
+      "fill",
+      "#plain",
+      ""
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "click",
+      "#inline"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "click",
+      "#input"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "eval",
+      "-b",
+      "KHtmb2N1czpkb2N1bWVudC5oYXNGb2N1cygpLHZhbHVlczpPYmplY3QuZnJvbUVudHJpZXMoWyJpbmxpbmUiLCJpbnB1dCIsInBsYWluIl0ubWFwKGlkPT5baWQsZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoaWQpLnZhbHVlXSkpLGV2ZW50czp0cmlhZ2VFdmVudHN9KQ=="
+    ]
+  ],
+  "timeoutSeconds": 45,
+  "exitCode": 0,
+  "stdout": "✓ Paste mechanisms\n  http://127.0.0.1:18951/mechanisms.html\nACTION_RESULT {\"arguments\":[\"tab\",\"t1\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"fill\",\"#plain\",\"\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+v\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"#inline\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+v\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"#input\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+v\"],\"exitCode\":0}\r\n{\n  \"events\": [\n    {\n      \"defaultPrevented\": false,\n      \"id\": \"plain\",\n      \"isTrusted\": true,\n      \"time\": 256.30000000074506\n    },\n    {\n      \"defaultPrevented\": true,\n      \"id\": \"inline\",\n      \"isTrusted\": true,\n      \"time\": 370.4000000003726\n    },\n    {\n      \"defaultPrevented\": true,\n      \"id\": \"input\",\n      \"isTrusted\": true,\n      \"time\": 473\n    },\n    {\n      \"defaultPrevented\": false,\n      \"id\": \"plain\",\n      \"isTrusted\": true,\n      \"time\": 5296.5\n    },\n    {\n      \"defaultPrevented\": true,\n      \"id\": \"inline\",\n      \"isTrusted\": true,\n      \"time\": 5411.700000000186\n    },\n    {\n      \"defaultPrevented\": true,\n      \"id\": \"input\",\n      \"isTrusted\": true,\n      \"time\": 5493.800000000745\n    }\n  ],\n  \"focus\": true,\n  \"values\": {\n    \"inline\": \"\",\n    \"input\": \"\",\n    \"plain\": \"EASYCV_EDGE_POPUP_RECHECK_20261102\"\n  }\n}\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"KHtmb2N1czpkb2N1bWVudC5oYXNGb2N1cygpLHZhbHVlczpPYmplY3QuZnJvbUVudHJpZXMoWyJpbmxpbmUiLCJpbnB1dCIsInBsYWluIl0ubWFwKGlkPT5baWQsZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoaWQpLnZhbHVlXSkpLGV2ZW50czp0cmlhZ2VFdmVudHN9KQ==\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

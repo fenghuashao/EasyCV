@@ -1,0 +1,56 @@
+{
+  "observedAt": "2026-11-02T21:14:53.554352+08:00",
+  "browser": "edge",
+  "session": "easycv-win-edge-20261102",
+  "guestCDPPort": 19332,
+  "commands": [
+    [
+      "tab",
+      "t2"
+    ],
+    [
+      "uncheck",
+      "#showNotifications"
+    ],
+    [
+      "check",
+      "#forceMode"
+    ],
+    [
+      "fill",
+      "#detectionDelay",
+      "1500"
+    ],
+    [
+      "press",
+      "Tab"
+    ],
+    [
+      "fill",
+      "#maxRetries",
+      "5"
+    ],
+    [
+      "press",
+      "Tab"
+    ],
+    [
+      "eval",
+      "-b",
+      "bmV3IFByb21pc2Uocj0+Y2hyb21lLnN0b3JhZ2Uuc3luYy5nZXQoWydwbHVnaW5fZW5hYmxlZCcsJ2ZvcmNlX21vZGUnLCd1c2VyX3NldHRpbmdzJywnYXV0b19lbmFibGVfbGlzdCcsJ2V4Y2x1ZGVkX2xpc3QnXSx2PT5yKHtzdG9yYWdlOnYsdWk6e2ZvcmNlTW9kZTpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZm9yY2VNb2RlJykuY2hlY2tlZCxzaG93Tm90aWZpY2F0aW9uczpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnc2hvd05vdGlmaWNhdGlvbnMnKS5jaGVja2VkLGRldGVjdGlvbkRlbGF5OmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdkZXRlY3Rpb25EZWxheScpLnZhbHVlLG1heFJldHJpZXM6ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ21heFJldHJpZXMnKS52YWx1ZX19KSkp"
+    ],
+    [
+      "click",
+      "[data-tab=\"whitelist\"]"
+    ],
+    [
+      "snapshot",
+      "-i"
+    ]
+  ],
+  "timeoutSeconds": 40,
+  "exitCode": 0,
+  "stdout": "✓ EasyCV 设置\n  chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\nACTION_RESULT {\"arguments\":[\"tab\",\"t2\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"uncheck\",\"#showNotifications\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"check\",\"#forceMode\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"fill\",\"#detectionDelay\",\"1500\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Tab\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"fill\",\"#maxRetries\",\"5\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Tab\"],\"exitCode\":0}\r\n{\n  \"storage\": {\n    \"auto_enable_list\": [],\n    \"excluded_list\": [\n      \"accounts.google.com\",\n      \"login.live.com\",\n      \"appleid.apple.com\"\n    ],\n    \"force_mode\": true,\n    \"plugin_enabled\": true,\n    \"user_settings\": {\n      \"autoEnableList\": [],\n      \"copyEnabled\": true,\n      \"detectionDelay\": 1500,\n      \"enableStatistics\": true,\n      \"excludedList\": [\n        \"accounts.google.com\",\n        \"login.live.com\",\n        \"appleid.apple.com\"\n      ],\n      \"forceMode\": false,\n      \"maxRetries\": 5,\n      \"pasteEnabled\": true,\n      \"pluginEnabled\": true,\n      \"showNotifications\": false,\n      \"theme\": \"auto\"\n    }\n  },\n  \"ui\": {\n    \"detectionDelay\": \"1500\",\n    \"forceMode\": true,\n    \"maxRetries\": \"5\",\n    \"showNotifications\": false\n  }\n}\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"bmV3IFByb21pc2Uocj0+Y2hyb21lLnN0b3JhZ2Uuc3luYy5nZXQoWydwbHVnaW5fZW5hYmxlZCcsJ2ZvcmNlX21vZGUnLCd1c2VyX3NldHRpbmdzJywnYXV0b19lbmFibGVfbGlzdCcsJ2V4Y2x1ZGVkX2xpc3QnXSx2PT5yKHtzdG9yYWdlOnYsdWk6e2ZvcmNlTW9kZTpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZm9yY2VNb2RlJykuY2hlY2tlZCxzaG93Tm90aWZpY2F0aW9uczpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnc2hvd05vdGlmaWNhdGlvbnMnKS5jaGVja2VkLGRldGVjdGlvbkRlbGF5OmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdkZXRlY3Rpb25EZWxheScpLnZhbHVlLG1heFJldHJpZXM6ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ21heFJldHJpZXMnKS52YWx1ZX19KSkp\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"[data-tab=\\\"whitelist\\\"]\"],\"exitCode\":0}\r\n- heading \"EasyCV\" [level=1, ref=e225]\n- listitem \"常规设置\" [level=1, ref=e227] clickable [cursor:pointer]\n- listitem \"自动解锁管理\" [level=1, ref=e228] clickable [cursor:pointer]\n- listitem \"站点排除\" [level=1, ref=e229] clickable [cursor:pointer]\n- listitem \"高级设置\" [level=1, ref=e230] clickable [cursor:pointer]\n- listitem \"使用统计\" [level=1, ref=e231] clickable [cursor:pointer]\n- listitem \"关于\" [level=1, ref=e232] clickable [cursor:pointer]\n- heading \"自动解锁管理\" [level=2, ref=e244]\n- heading \"添加网站\" [level=3, ref=e245]\n- textbox \"输入网站域名，如：example.com\" [ref=e246]\n- heading \"功能选择\" [level=4, ref=e247]\n- LabelText \"解锁复制\\n                        允许在该网站复制受保护的内容\" [ref=e248] clickable [cursor:pointer]\n  - checkbox \"解锁复制 允许在该网站复制受保护的内容\" [checked=true, ref=e252]\n- LabelText \"解锁粘贴\\n                        允许在该网站粘贴内容到输入框\" [ref=e249] clickable [cursor:pointer]\n  - checkbox \"解锁粘贴 允许在该网站粘贴内容到输入框\" [checked=true, ref=e253]\n- button \"添加\" [ref=e250]\n- heading \"自动解锁网站\" [level=3, ref=e251]\n- button [ref=e226]\nACTION_RESULT {\"arguments\":[\"snapshot\",\"-i\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

@@ -1,0 +1,41 @@
+{
+  "observedAt": "2026-11-02T23:00:38.608451+08:00",
+  "browser": "chrome",
+  "session": "easycv-win-chrome-20261102",
+  "guestCDPPort": 19331,
+  "commands": [
+    [
+      "tab",
+      "list",
+      "--json"
+    ],
+    [
+      "tab",
+      "new",
+      "chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html"
+    ],
+    [
+      "wait",
+      "#detectionDelay"
+    ],
+    [
+      "click",
+      "[data-tab=whitelist]"
+    ],
+    [
+      "eval",
+      "-b",
+      "KGFzeW5jKCk9Pih7aWQ6Y2hyb21lLnJ1bnRpbWUuaWQsdmVyc2lvbjpjaHJvbWUucnVudGltZS5nZXRNYW5pZmVzdCgpLnZlcnNpb24sZm9yY2VVSTpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZm9yY2VNb2RlIikuY2hlY2tlZCxyZW5kZXJlZEF1dG9MaXN0OmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJ3aGl0ZWxpc3RDb250YWluZXIiKS5pbm5lclRleHQsc3RvcmFnZTphd2FpdCBjaHJvbWUuc3RvcmFnZS5zeW5jLmdldChbInBsdWdpbl9lbmFibGVkIiwiZm9yY2VfbW9kZSIsInVzZXJfc2V0dGluZ3MiLCJhdXRvX2VuYWJsZV9saXN0IiwiZXhjbHVkZWRfbGlzdCJdKX0pKSgp"
+    ],
+    [
+      "tab",
+      "list",
+      "--json"
+    ]
+  ],
+  "timeoutSeconds": 30,
+  "exitCode": 0,
+  "stdout": "{\"success\":true,\"data\":{\"lifecycle\":{\"effectiveLaunch\":{\"browserLaunched\":true,\"engine\":\"chrome\",\"launchHash\":10497060223723932023},\"launched\":false,\"relaunchedBrowser\":false,\"restartedBackground\":false,\"restoreStatus\":\"not_configured\",\"reused\":true,\"saveStatus\":\"not_configured\"},\"tabs\":[{\"active\":true,\"label\":null,\"tabId\":\"t2\",\"targetId\":\"C83CA287960931CC50A626A4EE14B31E\",\"title\":\"Paste mechanisms\",\"type\":\"page\",\"url\":\"http://menu.localhost:18951/mechanisms.html\"},{\"active\":false,\"label\":null,\"tabId\":\"t3\",\"targetId\":\"E9BA99DAAE148F38DD73DB3F91B0F3EB\",\"title\":\"Paste mechanisms\",\"type\":\"page\",\"url\":\"http://blocked.localhost:18951/mechanisms.html\"}]},\"error\":null}\nACTION_RESULT {\"arguments\":[\"tab\",\"list\",\"--json\"],\"exitCode\":0}\r\nchrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\nACTION_RESULT {\"arguments\":[\"tab\",\"new\",\"chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"wait\",\"#detectionDelay\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"[data-tab=whitelist]\"],\"exitCode\":0}\r\n{\n  \"forceUI\": false,\n  \"id\": \"dgckfbbdhlgcjhaihmpdnnhnfpfeaono\",\n  \"renderedAutoList\": \"chrome.localhost\\n全部解锁\\n启用功能: 复制 + 粘贴\\n编辑\\n删除\\nblocked.localhost\\n全部解锁\\n启用功能: 复制 + 粘贴\\n编辑\\n删除\\nmenu.localhost\\n全部解锁\\n启用功能: 复制 + 粘贴\\n编辑\\n删除\",\n  \"storage\": {\n    \"auto_enable_list\": [\n      {\n        \"copyEnabled\": true,\n        \"domain\": \"chrome.localhost\",\n        \"pasteEnabled\": true\n      },\n      {\n        \"copyEnabled\": true,\n        \"domain\": \"blocked.localhost\",\n        \"pasteEnabled\": true\n      },\n      {\n        \"copyEnabled\": true,\n        \"domain\": \"menu.localhost\",\n        \"pasteEnabled\": true\n      }\n    ],\n    \"excluded_list\": [\n      \"accounts.google.com\",\n      \"login.live.com\",\n      \"appleid.apple.com\",\n      \"blocked.localhost\"\n    ],\n    \"force_mode\": true,\n    \"plugin_enabled\": true,\n    \"user_settings\": {\n      \"autoEnableList\": [],\n      \"copyEnabled\": true,\n      \"detectionDelay\": 1700,\n      \"enableStatistics\": true,\n      \"excludedList\": [\n        \"accounts.google.com\",\n        \"login.live.com\",\n        \"appleid.apple.com\"\n      ],\n      \"forceMode\": false,\n      \"maxRetries\": 6,\n      \"pasteEnabled\": true,\n      \"pluginEnabled\": true,\n      \"showNotifications\": false,\n      \"theme\": \"auto\"\n    }\n  },\n  \"version\": \"1.1.2\"\n}\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"KGFzeW5jKCk9Pih7aWQ6Y2hyb21lLnJ1bnRpbWUuaWQsdmVyc2lvbjpjaHJvbWUucnVudGltZS5nZXRNYW5pZmVzdCgpLnZlcnNpb24sZm9yY2VVSTpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZm9yY2VNb2RlIikuY2hlY2tlZCxyZW5kZXJlZEF1dG9MaXN0OmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJ3aGl0ZWxpc3RDb250YWluZXIiKS5pbm5lclRleHQsc3RvcmFnZTphd2FpdCBjaHJvbWUuc3RvcmFnZS5zeW5jLmdldChbInBsdWdpbl9lbmFibGVkIiwiZm9yY2VfbW9kZSIsInVzZXJfc2V0dGluZ3MiLCJhdXRvX2VuYWJsZV9saXN0IiwiZXhjbHVkZWRfbGlzdCJdKX0pKSgp\"],\"exitCode\":0}\r\n{\"success\":true,\"data\":{\"lifecycle\":{\"effectiveLaunch\":{\"browserLaunched\":true,\"engine\":\"chrome\",\"launchHash\":10497060223723932023},\"launched\":false,\"relaunchedBrowser\":false,\"restartedBackground\":false,\"restoreStatus\":\"not_configured\",\"reused\":true,\"saveStatus\":\"not_configured\"},\"tabs\":[{\"active\":false,\"label\":null,\"tabId\":\"t2\",\"targetId\":\"C83CA287960931CC50A626A4EE14B31E\",\"title\":\"Paste mechanisms\",\"type\":\"page\",\"url\":\"http://menu.localhost:18951/mechanisms.html\"},{\"active\":false,\"label\":null,\"tabId\":\"t3\",\"targetId\":\"E9BA99DAAE148F38DD73DB3F91B0F3EB\",\"title\":\"Paste mechanisms\",\"type\":\"page\",\"url\":\"http://blocked.localhost:18951/mechanisms.html\"},{\"active\":true,\"label\":null,\"tabId\":\"t4\",\"targetId\":\"3BE41E8438A791D82D4D1E713768E35F\",\"title\":\"\",\"type\":\"page\",\"url\":\"chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\"}]},\"error\":null}\nACTION_RESULT {\"arguments\":[\"tab\",\"list\",\"--json\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

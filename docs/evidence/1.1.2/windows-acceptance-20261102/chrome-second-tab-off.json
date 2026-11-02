@@ -1,0 +1,27 @@
+{
+  "observedAt": "2026-11-02T22:16:49.600442+08:00",
+  "browser": "chrome",
+  "session": "easycv-win-chrome-20261102",
+  "guestCDPPort": 19331,
+  "commands": [
+    [
+      "tab",
+      "new",
+      "http://localhost:18951/mechanisms.html"
+    ],
+    [
+      "wait",
+      "#plain"
+    ],
+    [
+      "tab",
+      "list",
+      "--json"
+    ]
+  ],
+  "timeoutSeconds": 45,
+  "exitCode": 0,
+  "stdout": "http://localhost:18951/mechanisms.html\nACTION_RESULT {\"arguments\":[\"tab\",\"new\",\"http://localhost:18951/mechanisms.html\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"wait\",\"#plain\"],\"exitCode\":0}\r\n{\"success\":true,\"data\":{\"lifecycle\":{\"effectiveLaunch\":{\"browserLaunched\":true,\"engine\":\"chrome\",\"launchHash\":10497060223723932023},\"launched\":false,\"relaunchedBrowser\":false,\"restartedBackground\":false,\"restoreStatus\":\"not_configured\",\"reused\":true,\"saveStatus\":\"not_attempted\"},\"tabs\":[{\"active\":false,\"label\":null,\"tabId\":\"t1\",\"targetId\":\"714F067A11559B33800BDC8D35660055\",\"title\":\"扩展程序\",\"type\":\"page\",\"url\":\"chrome://extensions/\"},{\"active\":false,\"label\":null,\"tabId\":\"t2\",\"targetId\":\"9EF2BE4D8959DD698DF7C218781FBA60\",\"title\":\"EasyCV 设置\",\"type\":\"page\",\"url\":\"chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\"},{\"active\":false,\"label\":null,\"tabId\":\"t3\",\"targetId\":\"D951B14B30D2D0182CF45B4DF8A7B920\",\"title\":\"Paste mechanisms\",\"type\":\"page\",\"url\":\"http://127.0.0.1:18951/mechanisms.html\"},{\"active\":false,\"label\":null,\"tabId\":\"t4\",\"targetId\":\"18F3077ECC17F1429F6EE5D544C752A7\",\"title\":\"127.0.0.1:18951/permission-fix.html\",\"type\":\"page\",\"url\":\"http://127.0.0.1:18951/permission-fix.html\"},{\"active\":true,\"label\":null,\"tabId\":\"t5\",\"targetId\":\"AA2579C8A4D20BD595044C2BB4B47500\",\"title\":\"localhost:18951/mechanisms.html\",\"type\":\"page\",\"url\":\"http://localhost:18951/mechanisms.html\"}]},\"error\":null}\nACTION_RESULT {\"arguments\":[\"tab\",\"list\",\"--json\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

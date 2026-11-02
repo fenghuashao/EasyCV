@@ -1,0 +1,76 @@
+{
+  "gate": "PARTIAL",
+  "reason": "Two 1.1.2 development installs retain bytes and real function across normal browser restarts; Chrome force=true UI remains wrong; post-upgrade restart not executed",
+  "results": {
+    "chrome": {
+      "criticalDataExactMatch": true,
+      "restoredID": "dgckfbbdhlgcjhaihmpdnnhnfpfeaono",
+      "restoredVersion": "1.1.2",
+      "restoredNondefaultUI": {
+        "notifications": false,
+        "delay": "1700",
+        "retries": "6"
+      },
+      "canonicalForceMode": true,
+      "forceModeUI": false,
+      "autoList": [
+        {
+          "copyEnabled": true,
+          "domain": "chrome.localhost",
+          "pasteEnabled": true
+        },
+        {
+          "copyEnabled": true,
+          "domain": "blocked.localhost",
+          "pasteEnabled": true
+        }
+      ],
+      "excludedList": [
+        "accounts.google.com",
+        "login.live.com",
+        "appleid.apple.com",
+        "blocked.localhost"
+      ],
+      "realPastePositiveControlEvidence": "chrome-restart-real-paste-r2.json",
+      "realCopySelectionEvidence": "chrome-restart-real-copy-paste-select.json",
+      "developmentInstallRestartDataAndFunction": "PASS",
+      "forceTrueUIIssue": "FAIL",
+      "postUpgradeRestart": "NOT_VERIFIED"
+    },
+    "edge": {
+      "criticalDataExactMatch": true,
+      "restoredID": "dgckfbbdhlgcjhaihmpdnnhnfpfeaono",
+      "restoredVersion": "1.1.2",
+      "restoredNondefaultUI": {
+        "notifications": false,
+        "delay": "1500",
+        "retries": "5"
+      },
+      "canonicalForceMode": false,
+      "forceModeUI": false,
+      "autoList": [
+        {
+          "copyEnabled": true,
+          "domain": "edge.localhost",
+          "pasteEnabled": true
+        }
+      ],
+      "excludedList": [
+        "accounts.google.com",
+        "login.live.com",
+        "appleid.apple.com",
+        "blocked.localhost"
+      ],
+      "realPastePositiveControlEvidence": "edge-restart-real-paste-r3.json",
+      "realCopySelectionEvidence": "edge-restart-real-copy-paste-select.json",
+      "developmentInstallRestartDataAndFunction": "PASS",
+      "forceTrueUIIssue": "Previously reproduced; restart scenario used false",
+      "postUpgradeRestart": "NOT_VERIFIED"
+    }
+  },
+  "discardedKeyboardProbes": [
+    "chrome-restart-real-copy-paste-select.json: mechanisms subsection only, zero events; later copy/selection subsection valid",
+    "edge-restart-real-copy-paste-select.json: mechanisms subsection only, zero events; later copy/selection subsection valid",
+    "edge-restart-real-paste-r2.json: plain control also empty, zero events; invalid foreground harness"
+  ]
+}

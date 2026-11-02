@@ -1,0 +1,25 @@
+{
+  "scope": "Source identity only; original 1.1.1 Windows UI is a separate test",
+  "files": [
+    {
+      "file": "background/auto-enable-manager.js",
+      "sha256": "e703ebd597ae6134e434a31cd08abbc91bd7d91ae16b8d94d654fc3d689f8523",
+      "byteIdenticalToVerifiedStore111": true
+    },
+    {
+      "file": "background/service-worker.js",
+      "sha256": "6dca77acddc9fee791ac4f7024eef598a029a3777584c7db07e5da0671a25d70",
+      "byteIdenticalToVerifiedStore111": true
+    },
+    {
+      "file": "content/content.js",
+      "sha256": "f3dd4c8e30653f8c8c6eeb92e44a8a7fbc6b85a3af45fb48b909f0f6d039ca21",
+      "byteIdenticalToVerifiedStore111": true
+    },
+    {
+      "file": "utils/message-utils.js",
+      "sha256": "3fd77cf582cfa413fe4faa4425f7685661b1bbf69f9f9c85fcc466f2c0674e98",
+      "byteIdenticalToVerifiedStore111": true
+    }
+  ]
+}

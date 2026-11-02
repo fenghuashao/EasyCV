@@ -1,0 +1,420 @@
+{
+  "scope": "Windows Chrome 1.1.2 real action Popup/CDP mouse plus real keyboard page interaction; physical toolbar test separate",
+  "knownDefect": "ECV-POST-112-01 reproduced; two existing tabs remain stale; force does not rescue; refresh restores actual paste",
+  "knownDefectPageReproductionAndWorkaround": "PASS_WITH_KNOWN_DEFECT",
+  "autoFirstVisit": "FAIL_TO_UNLOCK_OBSERVED; must retest delayed and refreshed scene before final attribution",
+  "observations": {
+    "chrome-popup-seed-positive": {
+      "active": "input",
+      "events": [
+        {
+          "defaultPrevented": false,
+          "id": "inline",
+          "isTrusted": true,
+          "time": 524.2999999998137
+        },
+        {
+          "defaultPrevented": false,
+          "id": "input",
+          "isTrusted": true,
+          "time": 629.7999999998137
+        }
+      ],
+      "focus": true,
+      "url": "http://127.0.0.1:18951/mechanisms.html",
+      "values": {
+        "inline": "EASYCV_CHROME_POPUP_HISTORY_20261102",
+        "input": "EASYCV_CHROME_POPUP_HISTORY_20261102",
+        "keyboard": "",
+        "listener": "",
+        "plain": "EASYCV_CHROME_POPUP_HISTORY_20261102"
+      }
+    },
+    "chrome-popup-off-refreshed-a": {
+      "active": "input",
+      "events": [
+        {
+          "defaultPrevented": false,
+          "id": "plain",
+          "isTrusted": true,
+          "time": 224.29999999981376
+        },
+        {
+          "defaultPrevented": true,
+          "id": "inline",
+          "isTrusted": true,
+          "time": 295
+        },
+        {
+          "defaultPrevented": true,
+          "id": "input",
+          "isTrusted": true,
+          "time": 538.5999999996275
+        }
+      ],
+      "focus": true,
+      "url": "http://127.0.0.1:18951/mechanisms.html",
+      "values": {
+        "inline": "",
+        "input": "",
+        "keyboard": "",
+        "listener": "",
+        "plain": "EASYCV_CHROME_POPUP_HISTORY_20261102"
+      }
+    },
+    "chrome-popup-off-refreshed-b": {
+      "active": "input",
+      "events": [
+        {
+          "defaultPrevented": false,
+          "id": "plain",
+          "isTrusted": true,
+          "time": 5000.5
+        },
+        {
+          "defaultPrevented": true,
+          "id": "inline",
+          "isTrusted": true,
+          "time": 5322.700000000186
+        },
+        {
+          "defaultPrevented": true,
+          "id": "input",
+          "isTrusted": true,
+          "time": 5410
+        }
+      ],
+      "focus": true,
+      "url": "http://localhost:18951/mechanisms.html",
+      "values": {
+        "inline": "",
+        "input": "",
+        "keyboard": "",
+        "listener": "",
+        "plain": "EASYCV_CHROME_POPUP_HISTORY_20261102"
+      }
+    },
+    "chrome-popup-on-stale-a": {
+      "active": "input",
+      "events": [
+        {
+          "defaultPrevented": false,
+          "id": "plain",
+          "isTrusted": true,
+          "time": 224.29999999981376
+        },
+        {
+          "defaultPrevented": true,
+          "id": "inline",
+          "isTrusted": true,
+          "time": 295
+        },
+        {
+          "defaultPrevented": true,
+          "id": "input",
+          "isTrusted": true,
+          "time": 538.5999999996275
+        },
+        {
+          "defaultPrevented": false,
+          "id": "plain",
+          "isTrusted": true,
+          "time": 10594
+        },
+        {
+          "defaultPrevented": true,
+          "id": "inline",
+          "isTrusted": true,
+          "time": 10674.299999999814
+        },
+        {
+          "defaultPrevented": true,
+          "id": "input",
+          "isTrusted": true,
+          "time": 10746.599999999627
+        }
+      ],
+      "focus": true,
+      "url": "http://127.0.0.1:18951/mechanisms.html",
+      "values": {
+        "inline": "",
+        "input": "",
+        "keyboard": "",
+        "listener": "",
+        "plain": "EASYCV_CHROME_POPUP_HISTORY_20261102"
+      }
+    },
+    "chrome-popup-on-stale-b": {
+      "active": "input",
+      "events": [
+        {
+          "defaultPrevented": false,
+          "id": "plain",
+          "isTrusted": true,
+          "time": 5000.5
+        },
+        {
+          "defaultPrevented": true,
+          "id": "inline",
+          "isTrusted": true,
+          "time": 5322.700000000186
+        },
+        {
+          "defaultPrevented": true,
+          "id": "input",
+          "isTrusted": true,
+          "time": 5410
+        },
+        {
+          "defaultPrevented": false,
+          "id": "plain",
+          "isTrusted": true,
+          "time": 10941.099999999627
+        },
+        {
+          "defaultPrevented": true,
+          "id": "inline",
+          "isTrusted": true,
+          "time": 11012
+        },
+        {
+          "defaultPrevented": true,
+          "id": "input",
+          "isTrusted": true,
+          "time": 11099.200000000186
+        }
+      ],
+      "focus": true,
+      "url": "http://localhost:18951/mechanisms.html",
+      "values": {
+        "inline": "",
+        "input": "",
+        "keyboard": "",
+        "listener": "",
+        "plain": "EASYCV_CHROME_POPUP_HISTORY_20261102"
+      }
+    },
+    "chrome-popup-force-stale-a": {
+      "active": "input",
+      "events": [
+        {
+          "defaultPrevented": false,
+          "id": "plain",
+          "isTrusted": true,
+          "time": 224.29999999981376
+        },
+        {
+          "defaultPrevented": true,
+          "id": "inline",
+          "isTrusted": true,
+          "time": 295
+        },
+        {
+          "defaultPrevented": true,
+          "id": "input",
+          "isTrusted": true,
+          "time": 538.5999999996275
+        },
+        {
+          "defaultPrevented": false,
+          "id": "plain",
+          "isTrusted": true,
+          "time": 10594
+        },
+        {
+          "defaultPrevented": true,
+          "id": "inline",
+          "isTrusted": true,
+          "time": 10674.299999999814
+        },
+        {
+          "defaultPrevented": true,
+          "id": "input",
+          "isTrusted": true,
+          "time": 10746.599999999627
+        },
+        {
+          "defaultPrevented": false,
+          "id": "plain",
+          "isTrusted": true,
+          "time": 16463
+        },
+        {
+          "defaultPrevented": true,
+          "id": "inline",
+          "isTrusted": true,
+          "time": 16648.099999999627
+        },
+        {
+          "defaultPrevented": true,
+          "id": "input",
+          "isTrusted": true,
+          "time": 16840.5
+        }
+      ],
+      "focus": true,
+      "url": "http://127.0.0.1:18951/mechanisms.html",
+      "values": {
+        "inline": "",
+        "input": "",
+        "keyboard": "",
+        "listener": "",
+        "plain": "EASYCV_CHROME_POPUP_HISTORY_20261102"
+      }
+    },
+    "chrome-popup-refresh-workaround-a": {
+      "active": "input",
+      "events": [
+        {
+          "defaultPrevented": false,
+          "id": "inline",
+          "isTrusted": true,
+          "time": 529.2999999998137
+        },
+        {
+          "defaultPrevented": false,
+          "id": "input",
+          "isTrusted": true,
+          "time": 620.0999999996275
+        }
+      ],
+      "focus": true,
+      "url": "http://127.0.0.1:18951/mechanisms.html",
+      "values": {
+        "inline": "EASYCV_CHROME_POPUP_HISTORY_20261102",
+        "input": "EASYCV_CHROME_POPUP_HISTORY_20261102",
+        "keyboard": "",
+        "listener": "",
+        "plain": "EASYCV_CHROME_POPUP_HISTORY_20261102"
+      }
+    },
+    "chrome-popup-refresh-workaround-b": {
+      "active": "input",
+      "events": [
+        {
+          "defaultPrevented": false,
+          "id": "inline",
+          "isTrusted": true,
+          "time": 3588.399999999441
+        },
+        {
+          "defaultPrevented": false,
+          "id": "input",
+          "isTrusted": true,
+          "time": 3691.199999999255
+        }
+      ],
+      "focus": true,
+      "url": "http://localhost:18951/mechanisms.html",
+      "values": {
+        "inline": "EASYCV_CHROME_POPUP_HISTORY_20261102",
+        "input": "EASYCV_CHROME_POPUP_HISTORY_20261102",
+        "keyboard": "",
+        "listener": "",
+        "plain": "EASYCV_CHROME_POPUP_HISTORY_20261102"
+      }
+    },
+    "chrome-auto-unlisted-control": {
+      "active": "input",
+      "events": [
+        {
+          "defaultPrevented": false,
+          "id": "plain",
+          "isTrusted": true,
+          "time": 1259.7000000001865
+        },
+        {
+          "defaultPrevented": true,
+          "id": "inline",
+          "isTrusted": true,
+          "time": 1345.2000000001865
+        },
+        {
+          "defaultPrevented": true,
+          "id": "input",
+          "isTrusted": true,
+          "time": 1415
+        }
+      ],
+      "focus": true,
+      "url": "http://127.0.0.1:18951/mechanisms.html",
+      "values": {
+        "inline": "",
+        "input": "",
+        "keyboard": "",
+        "listener": "",
+        "plain": "EASYCV_CHROME_POPUP_HISTORY_20261102"
+      }
+    },
+    "chrome-auto-enabled-real-page": {
+      "active": "input",
+      "events": [
+        {
+          "defaultPrevented": false,
+          "id": "plain",
+          "isTrusted": true,
+          "time": 4001.400000000373
+        },
+        {
+          "defaultPrevented": true,
+          "id": "inline",
+          "isTrusted": true,
+          "time": 4234
+        },
+        {
+          "defaultPrevented": true,
+          "id": "input",
+          "isTrusted": true,
+          "time": 4404.4000000003725
+        }
+      ],
+      "focus": true,
+      "url": "http://chrome.localhost:18951/mechanisms.html",
+      "values": {
+        "inline": "",
+        "input": "",
+        "keyboard": "",
+        "listener": "",
+        "plain": "EASYCV_CHROME_POPUP_HISTORY_20261102"
+      }
+    },
+    "chrome-exclusion-priority-real-page": {
+      "active": "listener",
+      "events": [
+        {
+          "defaultPrevented": false,
+          "id": "plain",
+          "isTrusted": true,
+          "time": 510.1000000005588
+        },
+        {
+          "defaultPrevented": true,
+          "id": "inline",
+          "isTrusted": true,
+          "time": 583.7999999998137
+        },
+        {
+          "defaultPrevented": true,
+          "id": "input",
+          "isTrusted": true,
+          "time": 670.7000000001863
+        },
+        {
+          "defaultPrevented": true,
+          "id": "listener",
+          "isTrusted": true,
+          "time": 746.5
+        }
+      ],
+      "focus": true,
+      "url": "http://blocked.localhost:18951/mechanisms.html",
+      "values": {
+        "inline": "",
+        "input": "",
+        "keyboard": "",
+        "listener": "",
+        "plain": "EASYCV_CHROME_POPUP_HISTORY_20261102"
+      }
+    }
+  }
+}

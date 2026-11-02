@@ -1,0 +1,34 @@
+{
+  "observedAt": "2026-11-02T21:17:27.027954+08:00",
+  "browser": "edge",
+  "session": "easycv-win-edge-20261102",
+  "guestCDPPort": 19332,
+  "commands": [
+    [
+      "eval",
+      "-b",
+      "bmV3IFByb21pc2Uocj0+Y2hyb21lLnN0b3JhZ2Uuc3luYy5nZXQoWydwbHVnaW5fZW5hYmxlZCcsJ2ZvcmNlX21vZGUnLCd1c2VyX3NldHRpbmdzJywnYXV0b19lbmFibGVfbGlzdCcsJ2V4Y2x1ZGVkX2xpc3QnXSx2PT5yKHtzdG9yYWdlOnYsZm9yY2VNb2RlVUk6ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2ZvcmNlTW9kZScpLmNoZWNrZWR9KSkp"
+    ],
+    [
+      "click",
+      "[data-tab=\"whitelist\"]"
+    ],
+    [
+      "snapshot",
+      "-i"
+    ],
+    [
+      "click",
+      "[data-tab=\"excluded\"]"
+    ],
+    [
+      "snapshot",
+      "-i"
+    ]
+  ],
+  "timeoutSeconds": 30,
+  "exitCode": 0,
+  "stdout": "{\n  \"forceModeUI\": false,\n  \"storage\": {\n    \"auto_enable_list\": [\n      {\n        \"copyEnabled\": true,\n        \"domain\": \"edge.localhost\",\n        \"pasteEnabled\": true\n      }\n    ],\n    \"excluded_list\": [\n      \"accounts.google.com\",\n      \"login.live.com\",\n      \"appleid.apple.com\",\n      \"blocked.localhost\"\n    ],\n    \"force_mode\": true,\n    \"plugin_enabled\": true,\n    \"user_settings\": {\n      \"autoEnableList\": [],\n      \"copyEnabled\": true,\n      \"detectionDelay\": 1500,\n      \"enableStatistics\": true,\n      \"excludedList\": [\n        \"accounts.google.com\",\n        \"login.live.com\",\n        \"appleid.apple.com\"\n      ],\n      \"forceMode\": false,\n      \"maxRetries\": 5,\n      \"pasteEnabled\": true,\n      \"pluginEnabled\": true,\n      \"showNotifications\": false,\n      \"theme\": \"auto\"\n    }\n  }\n}\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"bmV3IFByb21pc2Uocj0+Y2hyb21lLnN0b3JhZ2Uuc3luYy5nZXQoWydwbHVnaW5fZW5hYmxlZCcsJ2ZvcmNlX21vZGUnLCd1c2VyX3NldHRpbmdzJywnYXV0b19lbmFibGVfbGlzdCcsJ2V4Y2x1ZGVkX2xpc3QnXSx2PT5yKHtzdG9yYWdlOnYsZm9yY2VNb2RlVUk6ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2ZvcmNlTW9kZScpLmNoZWNrZWR9KSkp\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"[data-tab=\\\"whitelist\\\"]\"],\"exitCode\":0}\r\n- heading \"EasyCV\" [level=1, ref=e254]\n- listitem \"常规设置\" [level=1, ref=e256] clickable [cursor:pointer]\n- listitem \"自动解锁管理\" [level=1, ref=e257] clickable [cursor:pointer]\n- listitem \"站点排除\" [level=1, ref=e258] clickable [cursor:pointer]\n- listitem \"高级设置\" [level=1, ref=e259] clickable [cursor:pointer]\n- listitem \"使用统计\" [level=1, ref=e260] clickable [cursor:pointer]\n- listitem \"关于\" [level=1, ref=e261] clickable [cursor:pointer]\n- heading \"自动解锁管理\" [level=2, ref=e273]\n- heading \"添加网站\" [level=3, ref=e274]\n- textbox \"输入网站域名，如：example.com\" [ref=e275]\n- heading \"功能选择\" [level=4, ref=e276]\n- LabelText \"解锁复制\\n                        允许在该网站复制受保护的内容\" [ref=e277] clickable [cursor:pointer]\n  - checkbox \"解锁复制 允许在该网站复制受保护的内容\" [checked=true, ref=e281]\n- LabelText \"解锁粘贴\\n                        允许在该网站粘贴内容到输入框\" [ref=e278] clickable [cursor:pointer]\n  - checkbox \"解锁粘贴 允许在该网站粘贴内容到输入框\" [checked=true, ref=e282]\n- button \"添加\" [ref=e279]\n- heading \"自动解锁网站\" [level=3, ref=e280]\n- button \"编辑\" [ref=e283]\n- button \"删除\" [ref=e284]\n- button [ref=e255]\nACTION_RESULT {\"arguments\":[\"snapshot\",\"-i\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"[data-tab=\\\"excluded\\\"]\"],\"exitCode\":0}\r\n- heading \"EasyCV\" [level=1, ref=e254]\n- listitem \"常规设置\" [level=1, ref=e256] clickable [cursor:pointer]\n- listitem \"自动解锁管理\" [level=1, ref=e257] clickable [cursor:pointer]\n- listitem \"站点排除\" [level=1, ref=e258] clickable [cursor:pointer]\n- listitem \"高级设置\" [level=1, ref=e259] clickable [cursor:pointer]\n- listitem \"使用统计\" [level=1, ref=e260] clickable [cursor:pointer]\n- listitem \"关于\" [level=1, ref=e261] clickable [cursor:pointer]\n- heading \"站点排除\" [level=2, ref=e285]\n- heading \"添加网站\" [level=3, ref=e286]\n- textbox \"输入要排除的域名，如：bilibili.com\" [ref=e287]\n- button \"添加\" [ref=e288]\n- heading \"已排除的网站\" [level=3, ref=e289]\n- button \"删除\" [ref=e290]\n- button \"删除\" [ref=e291]\n- button \"删除\" [ref=e292]\n- button \"删除\" [ref=e293]\n- button [ref=e255]\nACTION_RESULT {\"arguments\":[\"snapshot\",\"-i\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

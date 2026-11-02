@@ -1,0 +1,66 @@
+{
+  "observedAt": "2026-11-02T21:12:46.091243+08:00",
+  "browser": "edge",
+  "session": "easycv-win-edge-20261102",
+  "guestCDPPort": 19332,
+  "commands": [
+    [
+      "eval",
+      "-b",
+      "d2luZG93LndpbkNvcHlFdmVudHM9W107ZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignY29weScsZT0+c2V0VGltZW91dCgoKT0+d2luQ29weUV2ZW50cy5wdXNoKHtpc1RydXN0ZWQ6ZS5pc1RydXN0ZWQsZGVmYXVsdFByZXZlbnRlZDplLmRlZmF1bHRQcmV2ZW50ZWR9KSwwKSx0cnVlKTsnb2JzZXJ2ZXIgaW5zdGFsbGVkJw=="
+    ],
+    [
+      "mouse",
+      "move",
+      "9",
+      "27"
+    ],
+    [
+      "mouse",
+      "down",
+      "left"
+    ],
+    [
+      "mouse",
+      "move",
+      "700",
+      "27",
+      "--duration",
+      "250",
+      "--steps",
+      "12"
+    ],
+    [
+      "mouse",
+      "up",
+      "left"
+    ],
+    [
+      "eval",
+      "-b",
+      "Z2V0U2VsZWN0aW9uKCkudG9TdHJpbmcoKQ=="
+    ],
+    [
+      "press",
+      "Control+c"
+    ],
+    [
+      "click",
+      "#pasteTarget"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "eval",
+      "-b",
+      "KHtzZWxlY3Rpb246Z2V0U2VsZWN0aW9uKCkudG9TdHJpbmcoKSxwYXN0ZWQ6ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3Bhc3RlVGFyZ2V0JykudmFsdWUsY29weUV2ZW50czp3aW5kb3cud2luQ29weUV2ZW50c30p"
+    ]
+  ],
+  "timeoutSeconds": 40,
+  "exitCode": 0,
+  "stdout": "\"observer installed\"\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"d2luZG93LndpbkNvcHlFdmVudHM9W107ZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignY29weScsZT0+c2V0VGltZW91dCgoKT0+d2luQ29weUV2ZW50cy5wdXNoKHtpc1RydXN0ZWQ6ZS5pc1RydXN0ZWQsZGVmYXVsdFByZXZlbnRlZDplLmRlZmF1bHRQcmV2ZW50ZWR9KSwwKSx0cnVlKTsnb2JzZXJ2ZXIgaW5zdGFsbGVkJw==\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"mouse\",\"move\",\"9\",\"27\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"mouse\",\"down\",\"left\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"mouse\",\"move\",\"700\",\"27\",\"--duration\",\"250\",\"--steps\",\"12\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"mouse\",\"up\",\"left\"],\"exitCode\":0}\r\n\"EASYCV_PERMISSION_TEST_TEXT\"\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"Z2V0U2VsZWN0aW9uKCkudG9TdHJpbmcoKQ==\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+c\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"#pasteTarget\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+v\"],\"exitCode\":0}\r\n{\n  \"copyEvents\": [\n    {\n      \"defaultPrevented\": false,\n      \"isTrusted\": true\n    }\n  ],\n  \"pasted\": \"EASYCV_PERMISSION_TEST_TEXT\",\n  \"selection\": \"\"\n}\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"KHtzZWxlY3Rpb246Z2V0U2VsZWN0aW9uKCkudG9TdHJpbmcoKSxwYXN0ZWQ6ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3Bhc3RlVGFyZ2V0JykudmFsdWUsY29weUV2ZW50czp3aW5kb3cud2luQ29weUV2ZW50c30p\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

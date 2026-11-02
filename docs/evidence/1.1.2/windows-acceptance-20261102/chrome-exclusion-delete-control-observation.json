@@ -1,0 +1,17 @@
+{
+  "observedAt": "2026-11-02T22:54:06.592710+08:00",
+  "browser": "chrome",
+  "session": "easycv-win-chrome-20261102",
+  "guestCDPPort": 19331,
+  "commands": [
+    [
+      "eval",
+      "Array.from(document.querySelectorAll('#excludedContainer button')).map(e=>({text:e.innerText,cls:e.className,domain:e.getAttribute('data-domain')}))"
+    ]
+  ],
+  "timeoutSeconds": 45,
+  "exitCode": 0,
+  "stdout": "[\n  {\n    \"cls\": \"action-btn-small delete\",\n    \"domain\": \"accounts.google.com\",\n    \"text\": \"删除\"\n  },\n  {\n    \"cls\": \"action-btn-small delete\",\n    \"domain\": \"login.live.com\",\n    \"text\": \"删除\"\n  },\n  {\n    \"cls\": \"action-btn-small delete\",\n    \"domain\": \"appleid.apple.com\",\n    \"text\": \"删除\"\n  },\n  {\n    \"cls\": \"action-btn-small delete\",\n    \"domain\": \"blocked.localhost\",\n    \"text\": \"删除\"\n  }\n]\nACTION_RESULT {\"arguments\":[\"eval\",\"Array.from(document.querySelectorAll(\\u0027#excludedContainer button\\u0027)).map(e=\\u003e({text:e.innerText,cls:e.className,domain:e.getAttribute(\\u0027data-domain\\u0027)}))\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

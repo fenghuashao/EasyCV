@@ -1,0 +1,27 @@
+{
+  "observedAt": "2026-11-02T21:11:45.108090+08:00",
+  "browser": "edge",
+  "session": "easycv-win-edge-20261102",
+  "guestCDPPort": 19332,
+  "commands": [
+    [
+      "tab",
+      "new",
+      "http://127.0.0.1:18951/permission-fix.html"
+    ],
+    [
+      "wait",
+      "#restricted"
+    ],
+    [
+      "eval",
+      "-b",
+      "KHtyZWN0OmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdyZXN0cmljdGVkJykuZ2V0Qm91bmRpbmdDbGllbnRSZWN0KCkudG9KU09OKCksdGV4dDpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncmVzdHJpY3RlZCcpLnRleHRDb250ZW50fSk="
+    ]
+  ],
+  "timeoutSeconds": 25,
+  "exitCode": 0,
+  "stdout": "http://127.0.0.1:18951/permission-fix.html\nACTION_RESULT {\"arguments\":[\"tab\",\"new\",\"http://127.0.0.1:18951/permission-fix.html\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"wait\",\"#restricted\"],\"exitCode\":0}\r\n{\n  \"rect\": {\n    \"bottom\": 39,\n    \"height\": 23,\n    \"left\": 8,\n    \"right\": 1121,\n    \"top\": 16,\n    \"width\": 1113,\n    \"x\": 8,\n    \"y\": 16\n  },\n  \"text\": \"EASYCV_PERMISSION_TEST_TEXT\"\n}\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"KHtyZWN0OmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdyZXN0cmljdGVkJykuZ2V0Qm91bmRpbmdDbGllbnRSZWN0KCkudG9KU09OKCksdGV4dDpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncmVzdHJpY3RlZCcpLnRleHRDb250ZW50fSk=\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

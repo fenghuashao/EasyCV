@@ -1,0 +1,18 @@
+{
+  "observedAt": "2026-11-02T21:06:44.822893+08:00",
+  "browser": "edge",
+  "session": "easycv-win-edge-20261102",
+  "guestCDPPort": 19332,
+  "commands": [
+    [
+      "eval",
+      "-b",
+      "bmV3IFByb21pc2Uocj0+Y2hyb21lLm1hbmFnZW1lbnQuZ2V0QWxsKGVzPT5yKGVzLmZpbHRlcihlPT5lLm5hbWUuaW5jbHVkZXMoJ0Vhc3lDVicpKS5tYXAoZT0+KHtpZDplLmlkLHZlcnNpb246ZS52ZXJzaW9uLGVuYWJsZWQ6ZS5lbmFibGVkLGluc3RhbGxUeXBlOmUuaW5zdGFsbFR5cGV9KSkpKSk="
+    ]
+  ],
+  "timeoutSeconds": 20,
+  "exitCode": 0,
+  "stdout": "[\n  {\n    \"enabled\": true,\n    \"id\": \"dgckfbbdhlgcjhaihmpdnnhnfpfeaono\",\n    \"installType\": \"development\",\n    \"version\": \"1.1.2\"\n  }\n]\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"bmV3IFByb21pc2Uocj0+Y2hyb21lLm1hbmFnZW1lbnQuZ2V0QWxsKGVzPT5yKGVzLmZpbHRlcihlPT5lLm5hbWUuaW5jbHVkZXMoJ0Vhc3lDVicpKS5tYXAoZT0+KHtpZDplLmlkLHZlcnNpb246ZS52ZXJzaW9uLGVuYWJsZWQ6ZS5lbmFibGVkLGluc3RhbGxUeXBlOmUuaW5zdGFsbFR5cGV9KSkpKSk=\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

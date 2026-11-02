@@ -1,0 +1,16 @@
+{
+  "guestFiles": 38,
+  "exactLockedPayloadMatch": true,
+  "loopbackOnlyListeners": [
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 19332
+    },
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 18951
+    }
+  ],
+  "productAndLockedZIPModified": false,
+  "raw": "guest-candidate-files-and-ports.json"
+}

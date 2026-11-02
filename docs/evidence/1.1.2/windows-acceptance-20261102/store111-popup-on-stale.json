@@ -1,0 +1,47 @@
+{
+  "observedAt": "2026-11-02T22:42:02.870396+08:00",
+  "browser": "chrome-store",
+  "session": "easycv-win-chrome-store-20261102",
+  "guestCDPPort": 19333,
+  "commands": [
+    [
+      "tab",
+      "t4"
+    ],
+    [
+      "fill",
+      "#plain",
+      ""
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "click",
+      "#inline"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "click",
+      "#input"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "eval",
+      "-b",
+      "KHt1cmw6bG9jYXRpb24uaHJlZixmb2N1czpkb2N1bWVudC5oYXNGb2N1cygpLHZhbHVlczpPYmplY3QuZnJvbUVudHJpZXMoWyJpbmxpbmUiLCJpbnB1dCIsImxpc3RlbmVyIiwia2V5Ym9hcmQiLCJwbGFpbiJdLm1hcChpZD0+W2lkLGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGlkKS52YWx1ZV0pKSxldmVudHM6dHJpYWdlRXZlbnRzfSk="
+    ]
+  ],
+  "timeoutSeconds": 40,
+  "exitCode": 0,
+  "stdout": "✓ Paste mechanisms\n  http://127.0.0.1:18951/mechanisms.html\nACTION_RESULT {\"arguments\":[\"tab\",\"t4\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"fill\",\"#plain\",\"\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+v\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"#inline\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+v\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"#input\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+v\"],\"exitCode\":0}\r\n{\n  \"events\": [\n    {\n      \"defaultPrevented\": false,\n      \"id\": \"plain\",\n      \"isTrusted\": true,\n      \"time\": 376.69999999925494\n    },\n    {\n      \"defaultPrevented\": true,\n      \"id\": \"inline\",\n      \"isTrusted\": true,\n      \"time\": 608.7999999998137\n    },\n    {\n      \"defaultPrevented\": true,\n      \"id\": \"input\",\n      \"isTrusted\": true,\n      \"time\": 916.3999999994412\n    },\n    {\n      \"defaultPrevented\": false,\n      \"id\": \"plain\",\n      \"isTrusted\": true,\n      \"time\": 8867.599999999627\n    },\n    {\n      \"defaultPrevented\": true,\n      \"id\": \"inline\",\n      \"isTrusted\": true,\n      \"time\": 9123.199999999257\n    },\n    {\n      \"defaultPrevented\": true,\n      \"id\": \"input\",\n      \"isTrusted\": true,\n      \"time\": 9469.39999999944\n    }\n  ],\n  \"focus\": true,\n  \"url\": \"http://127.0.0.1:18951/mechanisms.html\",\n  \"values\": {\n    \"inline\": \"\",\n    \"input\": \"\",\n    \"keyboard\": \"\",\n    \"listener\": \"\",\n    \"plain\": \"EASYCV_STORE111_BASELINE_20261102\"\n  }\n}\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"KHt1cmw6bG9jYXRpb24uaHJlZixmb2N1czpkb2N1bWVudC5oYXNGb2N1cygpLHZhbHVlczpPYmplY3QuZnJvbUVudHJpZXMoWyJpbmxpbmUiLCJpbnB1dCIsImxpc3RlbmVyIiwia2V5Ym9hcmQiLCJwbGFpbiJdLm1hcChpZD0+W2lkLGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGlkKS52YWx1ZV0pKSxldmVudHM6dHJpYWdlRXZlbnRzfSk=\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

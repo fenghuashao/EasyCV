@@ -1,0 +1,51 @@
+{
+  "observedAt": "2026-11-01T01:30:42.989956+08:00",
+  "storeItemID": "bnbmgiidicjdbnmkmdnjeelhijnlhnjb",
+  "currentPublicDownload": "store-current-check.json",
+  "trustedUpdatePathEstablished": false,
+  "upgradeExecuted": false,
+  "gate": "NOT_VERIFIED",
+  "reason": "Public endpoint returned signed 1.1.1 byte-identical to prior verified CRX; no trusted same-ID 1.1.2 update artifact/route established. Windows reinstall is in progress by FA.",
+  "routes": [
+    {
+      "route": "Existing official store installation receives same-item signed store update",
+      "assessment": "Credible standard path; current query has no 1.1.2. No upload/review/publish executed.",
+      "sources": [
+        "https://developer.chrome.com/docs/webstore/update",
+        "https://developer.chrome.com/docs/extensions/develop/concepts/extensions-update-lifecycle"
+      ]
+    },
+    {
+      "route": "Load unpacked with manifest key or modify ID",
+      "assessment": "Development key can stabilize ID but is not evidence of preserving an existing store installation; excluded by current task. Not executed.",
+      "sources": [
+        "https://developer.chrome.com/docs/extensions/reference/manifest/key"
+      ]
+    },
+    {
+      "route": "Self-hosted CRX / enterprise override",
+      "assessment": "Requires separately verified signing identity plus supported/authorized deployment environment. No such artifact/environment established; no policy, registry, sandbox or browser security changes performed.",
+      "sources": [
+        "https://developer.chrome.com/docs/extensions/how-to/distribute/host-on-linux",
+        "https://developer.chrome.com/docs/extensions/how-to/distribute/install-extensions",
+        "https://developer.chrome.com/docs/extensions/develop/concepts/extensions-update-lifecycle"
+      ]
+    },
+    {
+      "route": "New private/BETA store item",
+      "assessment": "Official separate testing-item route does not prove upgrade of the original production ID; no new item created or submitted.",
+      "sources": [
+        "https://developer.chrome.com/docs/webstore/update",
+        "https://developer.chrome.com/docs/webstore/cws-dashboard-distribution"
+      ]
+    }
+  ],
+  "minimumFollowup": [
+    "Establish usable Windows desktop and isolated test profiles.",
+    "Install official original-ID 1.1.1 and retain nondefault settings/site lists in an isolated upgrade profile.",
+    "Provide/verify an authorized same-ID signed 1.1.2 update channel or artifact on a supported deployment path; otherwise retain NOT_VERIFIED until an approved store release provides it.",
+    "Do not publish solely to close the test; any release exception remains an explicit FA decision.",
+    "With the same install/Profile, verify settings and real page actions after update and after a normal browser restart."
+  ],
+  "scope": "Research result, not an executed upgrade. No claim that all conceivable pre-release paths are impossible."
+}

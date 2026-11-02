@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T21:34:42.111917+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$ProgressPreference='SilentlyContinue'\n$ErrorActionPreference='Stop'\n$d=Join-Path $env:LOCALAPPDATA 'EasyCV-Acceptance-20261102-r3'\n$paths=@('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',(Join-Path $env:LOCALAPPDATA 'Google\\Chrome\\Application\\chrome.exe'))\n$p=@($paths|Where-Object {Test-Path -LiteralPath $_})[0]\nif(-not $p){throw 'Chrome executable not found'}\n$profile=Join-Path $d 'chrome-profile'\nif(Test-Path $profile){throw 'Profile already exists'}\n$c=Start-Process -FilePath $p -ArgumentList ('--user-data-dir=\"'+$profile+'\"'),'--remote-debugging-port=19331','--no-first-run','--no-default-browser-check','--new-window','--window-size=1150,800','chrome://extensions/' -PassThru\n$br=[IO.BinaryReader]::new([IO.File]::OpenRead($p));$br.BaseStream.Position=60;$offset=$br.ReadInt32();$br.BaseStream.Position=$offset+4;$machine=$br.ReadUInt16();$br.Dispose()\n@{browserPath=$p;version=(Get-Item $p).VersionInfo.ProductVersion;peMachine=('0x{0:X4}' -f $machine);profile=$profile;browserPID=$c.Id;debugPort=19331}|ConvertTo-Json -Compress\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand",
+  "timeoutSeconds": 25,
+  "exitCode": 0,
+  "stdout": "{\"version\":\"156.0.8078.80\",\"debugPort\":19331,\"profile\":\"C:\\\\Users\\\\fengshaohua\\\\AppData\\\\Local\\\\EasyCV-Acceptance-20261102-r3\\\\chrome-profile\",\"browserPID\":8028,\"peMachine\":\"0xAA64\",\"browserPath\":\"C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\"}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

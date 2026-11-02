@@ -1,0 +1,21 @@
+{
+  "observedAt": "2026-11-02T21:39:41.950578+08:00",
+  "browser": "chrome",
+  "session": "easycv-win-chrome-20261102",
+  "guestCDPPort": 19331,
+  "commands": [
+    [
+      "click",
+      "@e1"
+    ],
+    [
+      "snapshot",
+      "-i"
+    ]
+  ],
+  "timeoutSeconds": 20,
+  "exitCode": 0,
+  "stdout": "✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"@e1\"],\"exitCode\":0}\r\n- heading \"扩展程序\" [level=1, ref=e2]\n- searchbox \"搜索扩展程序\" [ref=e3]\n- switch \"开发者模式\" [checked=true, ref=e1]\n- button \"加载未打包的扩展程序\" [ref=e8]\n- button \"打包扩展程序\" [ref=e9]\n- button \"更新\" [ref=e10]\n- menuitem \"我的扩展程序\" [ref=e4]\n- menuitem \"键盘快捷键\" [ref=e5]\n- link \"Chrome Extensions 和 Chrome Web Store skill\" [ref=e11]\n- link \"Chrome 应用商店\" [ref=e12]\n- link \"Chrome 应用商店\" [ref=e7]\nACTION_RESULT {\"arguments\":[\"snapshot\",\"-i\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

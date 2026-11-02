@@ -1,0 +1,22 @@
+{
+  "observedAt": "2026-11-02T21:16:51.654049+08:00",
+  "browser": "edge",
+  "session": "easycv-win-edge-20261102",
+  "guestCDPPort": 19332,
+  "commands": [
+    [
+      "snapshot",
+      "-i"
+    ],
+    [
+      "eval",
+      "-b",
+      "KHt1cmw6bG9jYXRpb24uaHJlZix0aXRsZTpkb2N1bWVudC50aXRsZSx1aTpPYmplY3QuZnJvbUVudHJpZXMoWydmb3JjZU1vZGUnLCdzaG93Tm90aWZpY2F0aW9ucycsJ2RldGVjdGlvbkRlbGF5JywnbWF4UmV0cmllcyddLm1hcChpZD0+e2xldCBlPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGlkKTtyZXR1cm4gW2lkLGU/e3ZhbHVlOmUudmFsdWUsY2hlY2tlZDplLmNoZWNrZWR9Om51bGxdfSkpLHRleHQ6ZG9jdW1lbnQuYm9keS5pbm5lclRleHQuc2xpY2UoMCwxODAwKX0p"
+    ]
+  ],
+  "timeoutSeconds": 20,
+  "exitCode": 0,
+  "stdout": "- heading \"EasyCV\" [level=1, ref=e254]\n- listitem \"常规设置\" [level=1, ref=e256] clickable [cursor:pointer]\n- listitem \"自动解锁管理\" [level=1, ref=e257] clickable [cursor:pointer]\n- listitem \"站点排除\" [level=1, ref=e258] clickable [cursor:pointer]\n- listitem \"高级设置\" [level=1, ref=e259] clickable [cursor:pointer]\n- listitem \"使用统计\" [level=1, ref=e260] clickable [cursor:pointer]\n- listitem \"关于\" [level=1, ref=e261] clickable [cursor:pointer]\n- heading \"常规设置\" [level=2, ref=e262]\n- heading \"基本功能\" [level=3, ref=e263]\n- checkbox [checked=true, ref=e267]\n- checkbox [checked=true, ref=e268]\n- checkbox [checked=true, ref=e269]\n- checkbox [checked=false, ref=e270]\n- checkbox [checked=false, ref=e271]\n- checkbox [checked=false, ref=e272]\n- heading \"检测设置\" [level=3, ref=e264]\n- spinbutton [ref=e265]: 1500\n- spinbutton [ref=e266]: 5\n- button [ref=e255]\nACTION_RESULT {\"arguments\":[\"snapshot\",\"-i\"],\"exitCode\":0}\r\n{\n  \"text\": \"EasyCV\\n\\n复制粘贴助手\\n\\n常规设置\\n自动解锁管理\\n站点排除\\n高级设置\\n使用统计\\n关于\\n常规设置\\n\\n配置插件的基本功能和行为\\n\\n基本功能\\n解锁复制\\n\\n启用或禁用复制功能解锁\\n\\n解锁粘贴\\n\\n启用或禁用粘贴功能解锁\\n\\n自动检测\\n\\n页面加载时自动检测并移除复制粘贴限制\\n\\n强制模式\\n\\n使用更强力的方法处理顽固的限制\\n\\n显示通知\\n\\n在处理限制时显示桌面通知\\n\\n解锁成功后自动加入自动启用列表\\n\\n手动解锁成功的网站将自动加入自动启用列表，下次访问无需再操作\\n\\n检测设置\\n检测延迟\\n\\n页面加载后等待多长时间开始检测（毫秒）\\n\\nms\\n重试次数\\n\\n检测失败时的最大重试次数\\n\\n次\",\n  \"title\": \"EasyCV 设置\",\n  \"ui\": {\n    \"detectionDelay\": {\n      \"checked\": false,\n      \"value\": \"1500\"\n    },\n    \"forceMode\": {\n      \"checked\": false,\n      \"value\": \"on\"\n    },\n    \"maxRetries\": {\n      \"checked\": false,\n      \"value\": \"5\"\n    },\n    \"showNotifications\": {\n      \"checked\": false,\n      \"value\": \"on\"\n    }\n  },\n  \"url\": \"chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\"\n}\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"KHt1cmw6bG9jYXRpb24uaHJlZix0aXRsZTpkb2N1bWVudC50aXRsZSx1aTpPYmplY3QuZnJvbUVudHJpZXMoWydmb3JjZU1vZGUnLCdzaG93Tm90aWZpY2F0aW9ucycsJ2RldGVjdGlvbkRlbGF5JywnbWF4UmV0cmllcyddLm1hcChpZD0+e2xldCBlPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGlkKTtyZXR1cm4gW2lkLGU/e3ZhbHVlOmUudmFsdWUsY2hlY2tlZDplLmNoZWNrZWR9Om51bGxdfSkpLHRleHQ6ZG9jdW1lbnQuYm9keS5pbm5lclRleHQuc2xpY2UoMCwxODAwKX0p\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

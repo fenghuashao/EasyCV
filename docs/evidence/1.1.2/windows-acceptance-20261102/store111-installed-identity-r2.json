@@ -1,0 +1,41 @@
+{
+  "observedAt": "2026-11-02T22:39:43.399598+08:00",
+  "browser": "chrome-store",
+  "session": "easycv-win-chrome-store-20261102",
+  "guestCDPPort": 19333,
+  "commands": [
+    [
+      "eval",
+      "-b",
+      "bmV3IFByb21pc2UocmVzb2x2ZT0+e2Nocm9tZS5kZXZlbG9wZXJQcml2YXRlLmdldEV4dGVuc2lvbnNJbmZvKHtpbmNsdWRlRGlzYWJsZWQ6dHJ1ZSxpbmNsdWRlVGVybWluYXRlZDp0cnVlfSxpdGVtcz0+e3Jlc29sdmUoaXRlbXMuZmlsdGVyKGU9PmUuaWQ9PT0nYm5ibWdpaWRpY2pkYm5ta21kbmplZWxoaWpubGhuamInKS5tYXAoZT0+KHtpZDplLmlkLG5hbWU6ZS5uYW1lLHZlcnNpb246ZS52ZXJzaW9uLHN0YXRlOmUuc3RhdGUsbG9jYXRpb246ZS5sb2NhdGlvbixzb3VyY2U6ZS5zb3VyY2UsZnJvbVdlYlN0b3JlOmUuZnJvbVdlYlN0b3JlLGluc3RhbGxXYXJuaW5nczplLmluc3RhbGxXYXJuaW5ncyxydW50aW1lRXJyb3JzOmUucnVudGltZUVycm9yc30pKSk7fSk7fSk="
+    ],
+    [
+      "tab",
+      "new",
+      "chrome-extension://bnbmgiidicjdbnmkmdnjeelhijnlhnjb/options/options.html"
+    ],
+    [
+      "wait",
+      "#detectionDelay"
+    ],
+    [
+      "snapshot",
+      "-i"
+    ],
+    [
+      "eval",
+      "-b",
+      "KGFzeW5jKCk9Pih7aWQ6Y2hyb21lLnJ1bnRpbWUuaWQsdmVyc2lvbjpjaHJvbWUucnVudGltZS5nZXRNYW5pZmVzdCgpLnZlcnNpb24sbWFuaWZlc3RVcGRhdGVVUkw6Y2hyb21lLnJ1bnRpbWUuZ2V0TWFuaWZlc3QoKS51cGRhdGVfdXJsLHN0b3JhZ2U6YXdhaXQgY2hyb21lLnN0b3JhZ2Uuc3luYy5nZXQoWyJwbHVnaW5fZW5hYmxlZCIsImZvcmNlX21vZGUiLCJ1c2VyX3NldHRpbmdzIiwiYXV0b19lbmFibGVfbGlzdCIsImV4Y2x1ZGVkX2xpc3QiXSl9KSkoKQ=="
+    ],
+    [
+      "tab",
+      "list",
+      "--json"
+    ]
+  ],
+  "timeoutSeconds": 35,
+  "exitCode": 0,
+  "stdout": "[\n  {\n    \"id\": \"bnbmgiidicjdbnmkmdnjeelhijnlhnjb\",\n    \"installWarnings\": [],\n    \"location\": \"FROM_STORE\",\n    \"name\": \"EasyCV - 解除网页复制粘贴限制\",\n    \"runtimeErrors\": [],\n    \"state\": \"ENABLED\",\n    \"version\": \"1.1.1\"\n  }\n]\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"bmV3IFByb21pc2UocmVzb2x2ZT0+e2Nocm9tZS5kZXZlbG9wZXJQcml2YXRlLmdldEV4dGVuc2lvbnNJbmZvKHtpbmNsdWRlRGlzYWJsZWQ6dHJ1ZSxpbmNsdWRlVGVybWluYXRlZDp0cnVlfSxpdGVtcz0+e3Jlc29sdmUoaXRlbXMuZmlsdGVyKGU9PmUuaWQ9PT0nYm5ibWdpaWRpY2pkYm5ta21kbmplZWxoaWpubGhuamInKS5tYXAoZT0+KHtpZDplLmlkLG5hbWU6ZS5uYW1lLHZlcnNpb246ZS52ZXJzaW9uLHN0YXRlOmUuc3RhdGUsbG9jYXRpb246ZS5sb2NhdGlvbixzb3VyY2U6ZS5zb3VyY2UsZnJvbVdlYlN0b3JlOmUuZnJvbVdlYlN0b3JlLGluc3RhbGxXYXJuaW5nczplLmluc3RhbGxXYXJuaW5ncyxydW50aW1lRXJyb3JzOmUucnVudGltZUVycm9yc30pKSk7fSk7fSk=\"],\"exitCode\":0}\r\nchrome-extension://bnbmgiidicjdbnmkmdnjeelhijnlhnjb/options/options.html\nACTION_RESULT {\"arguments\":[\"tab\",\"new\",\"chrome-extension://bnbmgiidicjdbnmkmdnjeelhijnlhnjb/options/options.html\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"wait\",\"#detectionDelay\"],\"exitCode\":0}\r\n- heading \"EasyCV\" [level=1, ref=e62]\n- listitem \"常规设置\" [level=1, ref=e64] clickable [cursor:pointer]\n- listitem \"自动解锁管理\" [level=1, ref=e65] clickable [cursor:pointer]\n- listitem \"站点排除\" [level=1, ref=e66] clickable [cursor:pointer]\n- listitem \"高级设置\" [level=1, ref=e67] clickable [cursor:pointer]\n- listitem \"使用统计\" [level=1, ref=e68] clickable [cursor:pointer]\n- listitem \"关于\" [level=1, ref=e69] clickable [cursor:pointer]\n- heading \"常规设置\" [level=2, ref=e70]\n- heading \"基本功能\" [level=3, ref=e71]\n- checkbox [checked=true, ref=e75]\n- checkbox [checked=true, ref=e76]\n- checkbox [checked=true, ref=e77]\n- checkbox [checked=false, ref=e78]\n- checkbox [checked=true, ref=e79]\n- checkbox [checked=false, ref=e80]\n- heading \"检测设置\" [level=3, ref=e72]\n- spinbutton [ref=e73]: 1000\n- spinbutton [ref=e74]: 3\n- button [ref=e63]\nACTION_RESULT {\"arguments\":[\"snapshot\",\"-i\"],\"exitCode\":0}\r\n{\n  \"id\": \"bnbmgiidicjdbnmkmdnjeelhijnlhnjb\",\n  \"manifestUpdateURL\": \"https://clients2.google.com/service/update2/crx\",\n  \"storage\": {\n    \"auto_enable_list\": [],\n    \"excluded_list\": [\n      \"accounts.google.com\",\n      \"login.live.com\",\n      \"appleid.apple.com\"\n    ],\n    \"force_mode\": false,\n    \"plugin_enabled\": true,\n    \"user_settings\": {\n      \"autoEnableList\": [],\n      \"copyEnabled\": true,\n      \"enableStatistics\": true,\n      \"excludedList\": [\n        \"accounts.google.com\",\n        \"login.live.com\",\n        \"appleid.apple.com\"\n      ],\n      \"forceMode\": false,\n      \"pasteEnabled\": true,\n      \"pluginEnabled\": true,\n      \"showNotifications\": true,\n      \"theme\": \"auto\"\n    }\n  },\n  \"version\": \"1.1.1\"\n}\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"KGFzeW5jKCk9Pih7aWQ6Y2hyb21lLnJ1bnRpbWUuaWQsdmVyc2lvbjpjaHJvbWUucnVudGltZS5nZXRNYW5pZmVzdCgpLnZlcnNpb24sbWFuaWZlc3RVcGRhdGVVUkw6Y2hyb21lLnJ1bnRpbWUuZ2V0TWFuaWZlc3QoKS51cGRhdGVfdXJsLHN0b3JhZ2U6YXdhaXQgY2hyb21lLnN0b3JhZ2Uuc3luYy5nZXQoWyJwbHVnaW5fZW5hYmxlZCIsImZvcmNlX21vZGUiLCJ1c2VyX3NldHRpbmdzIiwiYXV0b19lbmFibGVfbGlzdCIsImV4Y2x1ZGVkX2xpc3QiXSl9KSkoKQ==\"],\"exitCode\":0}\r\n{\"success\":true,\"data\":{\"lifecycle\":{\"effectiveLaunch\":{\"browserLaunched\":true,\"engine\":\"chrome\",\"launchHash\":3228441923842977383},\"launched\":false,\"relaunchedBrowser\":false,\"restartedBackground\":false,\"restoreStatus\":\"not_configured\",\"reused\":true,\"saveStatus\":\"not_attempted\"},\"tabs\":[{\"active\":false,\"label\":null,\"tabId\":\"t1\",\"targetId\":\"C3760808D06322428D029DAF73EFF02F\",\"title\":\"EasyCV - 解除网页复制粘贴限制 - Chrome 应用商店\",\"type\":\"page\",\"url\":\"https://chromewebstore.google.com/detail/easycv-%E8%A7%A3%E9%99%A4%E7%BD%91%E9%A1%B5%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4%E9%99%90%E5%88%B6/bnbmgiidicjdbnmkmdnjeelhijnlhnjb\"},{\"active\":false,\"label\":null,\"tabId\":\"t2\",\"targetId\":\"9E671A6FA316F4477AA509CA3CDB3508\",\"title\":\"\",\"type\":\"page\",\"url\":\"chrome://extensions/\"},{\"active\":true,\"label\":null,\"tabId\":\"t3\",\"targetId\":\"132DED853DEFA0F171ABCF30ED3542EC\",\"title\":\"\",\"type\":\"page\",\"url\":\"chrome-extension://bnbmgiidicjdbnmkmdnjeelhijnlhnjb/options/options.html\"}]},\"error\":null}\nACTION_RESULT {\"arguments\":[\"tab\",\"list\",\"--json\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

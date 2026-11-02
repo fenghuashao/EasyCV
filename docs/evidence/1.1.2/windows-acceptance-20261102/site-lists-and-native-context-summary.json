@@ -1,0 +1,20 @@
+{
+  "candidateChrome": "1.1.2",
+  "globalEnabled": true,
+  "forceModeDuringRoundtrip": false,
+  "sameDomainInBothLists": "blocked.localhost",
+  "excludedRealPasteNegative": "PASS: plain sentinel succeeds; four restricted mechanisms remain blocked",
+  "removedFromExcludedRealPastePositive": "PASS: all four mechanisms receive exact sentinel with five trusted uncanceled paste events",
+  "readdedToExcludedNegative": "PASS: trusted paste into textarea/input canceled again; plain control succeeds",
+  "autoListAddThenDelete": "PASS: throwaway remove-me.localhost absent; original lists retained",
+  "nativeContextRestrictionSetup": "Only own loopback fixture document.addEventListener(contextmenu, preventDefault); no extension patch or synthetic contextmenu event",
+  "nativeContextNegative": "PASS: actual right click isTrusted=true/defaultPrevented=true; CUA observes no native menu",
+  "nativeContextPositive": "PASS: after UI exclusion removal and page refresh, same restriction setup; CUA observes real native menu including EasyCV; fixture listener intercepted (empty test log), not misreported as a fabricated event",
+  "evidence": [
+    "chrome-excluded-both-lists-context-negative.json",
+    "chrome-exclusion-remove-and-context-restored.json: includes valid negative menu event before a later selector harness failure",
+    "chrome-exclusion-remove-and-context-restored-r2.json",
+    "chrome-site-lists-roundtrip-and-menu-ready.json"
+  ],
+  "gate": "PASS for these scoped real-page/list/native restoration scenarios"
+}

@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T20:56:10.223570+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$a=Join-Path $env:LOCALAPPDATA 'EasyCV-Downloads-20261102-Tools\\package\\bin\\agent-browser-win32-x64.exe'\n& $a --session easycv-win-edge-20261102 --cdp 19332 check '@e191'\n& $a --session easycv-win-edge-20261102 --cdp 19332 snapshot -i\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -EncodedCommand",
+  "timeoutSeconds": 20,
+  "exitCode": null,
+  "timedOut": true,
+  "stdout": "",
+  "stderr": ""
+}

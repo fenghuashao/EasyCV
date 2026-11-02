@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T21:21:06.188040+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$ProgressPreference='SilentlyContinue'\n@(Invoke-RestMethod -Uri 'http://127.0.0.1:19332/json/list' | Where-Object {$_.url -like 'chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/*'} | Select-Object id,type,url,webSocketDebuggerUrl)|ConvertTo-Json -Depth 3 -Compress\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand",
+  "timeoutSeconds": 20,
+  "exitCode": 0,
+  "stdout": "{\"id\":null,\"type\":null,\"url\":null,\"webSocketDebuggerUrl\":null}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

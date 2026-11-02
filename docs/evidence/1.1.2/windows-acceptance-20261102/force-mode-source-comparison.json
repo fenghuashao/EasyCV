@@ -1,0 +1,15 @@
+{
+  "scope": "Static relationship only; does not replace Windows 1.1.1 UI reproduction",
+  "files": [
+    {
+      "file": "utils/storage-utils.js",
+      "sha256": "686f433b758c2b33ea787a8053d1f23d18097b89104447aeb0bce6e13f7d1262",
+      "byteIdenticalTo111Baseline": true
+    },
+    {
+      "file": "options/options.js",
+      "sha256": "20f1681f8b92efb247216aed55d03ae8690229e3c89382100bb5a9e098c90be4",
+      "byteIdenticalTo111Baseline": true
+    }
+  ]
+}

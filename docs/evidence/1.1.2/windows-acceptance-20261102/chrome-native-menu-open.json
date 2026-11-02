@@ -1,0 +1,40 @@
+{
+  "observedAt": "2026-11-02T22:20:22.351905+08:00",
+  "browser": "chrome",
+  "session": "easycv-win-chrome-20261102",
+  "guestCDPPort": 19331,
+  "commands": [
+    [
+      "tab",
+      "t3"
+    ],
+    [
+      "reload"
+    ],
+    [
+      "wait",
+      "#plain"
+    ],
+    [
+      "mouse",
+      "move",
+      "800",
+      "600"
+    ],
+    [
+      "mouse",
+      "down",
+      "right"
+    ],
+    [
+      "mouse",
+      "up",
+      "right"
+    ]
+  ],
+  "timeoutSeconds": 45,
+  "exitCode": 0,
+  "stdout": "✓ Paste mechanisms\n  http://127.0.0.1:18951/mechanisms.html\nACTION_RESULT {\"arguments\":[\"tab\",\"t3\"],\"exitCode\":0}\r\nhttp://127.0.0.1:18951/mechanisms.html\nACTION_RESULT {\"arguments\":[\"reload\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"wait\",\"#plain\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"mouse\",\"move\",\"800\",\"600\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"mouse\",\"down\",\"right\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"mouse\",\"up\",\"right\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

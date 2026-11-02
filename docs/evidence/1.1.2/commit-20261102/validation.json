@@ -1,0 +1,93 @@
+{
+  "observedAt": "2026-11-02T23:37:54.756417+08:00",
+  "purpose": "Pre-commit checks after explicit authorization to commit all 1.1.2 release changes; historical evidence remains unchanged",
+  "checks": {
+    "unit": {
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "stdout": "\n> easycv@1.1.2 test\n> node --test \"test/unit/*.test.mjs\"\n\n✔ allowDefaultHandler 对 contextmenu 阻断传播 (0.963166ms)\n✔ allowDefaultHandler 对其余事件放行传播 (0.510833ms)\n✔ GET_STATUS 携带当前页域名（background 排除裁决的输入） (6.197834ms)\n✔ 排除列表变更触发全量状态重载并覆盖本地启用态 (0.813292ms)\n✔ 非排除列表键变更不触发后台往返（维持本地直写路径） (1.29225ms)\n✔ docs checker accepts absent ignored runtime directory in inline code: test/real-sites/.profile/ (34.370334ms)\n✔ docs checker accepts absent ignored runtime directory in inline code: ../test/real-sites/.profile/ (24.727541ms)\n✔ docs checker accepts an existing runtime directory (24.30925ms)\n✔ docs checker still fails: ordinary missing file alongside optional profile (24.316083ms)\n✔ docs checker still fails: ordinary broken Markdown link (22.821583ms)\n✔ docs checker still fails: ordinary broken document link (24.526625ms)\n✔ docs checker still fails: runtime directory used as a Markdown link (26.572125ms)\n✔ docs checker still fails: runtime directory linked from index (24.222583ms)\n✔ docs checker still fails: missing child file under runtime directory (26.6975ms)\n✔ docs checker still fails: similarly named directory (23.681834ms)\n✔ docs checker still fails: runtime path without directory slash (24.544917ms)\n✔ docs checker still fails: runtime directory in plain text (24.547875ms)\n✔ docs checker still fails: runtime directory no longer ignored (22.629958ms)\n✔ docs checker still fails: other ignored directory (22.732917ms)\n✔ 注册吞没名单收窄：keydown/mousedown/mouseup 不再被吞，copy/selectstart 仍吞没 (1.257875ms)\n✔ keydown/keyup 仅组合键（ctrl/meta）时中和 preventDefault (0.541625ms)\n✔ mousedown 中和但豁免输入域目标（input/textarea/contenteditable） (0.106833ms)\n✔ contextmenu/copy 仍中和，mouseup 彻底退出中和名单 (0.066416ms)\n✔ stopPropagation/stopImmediatePropagation 走同一中和门控 (0.084459ms)\n✔ 中和判断零异常：target getter 抛错时 fail-open 放行 (0.60425ms)\n✔ 页面篡改 Map 时，注册吞没路径不向页面抛异常 (1.291083ms)\n✔ Map 构造本身抛错时，injector 加载与拦截路径均不抛异常 (0.332042ms)\n✔ 非限制性监听器在 Map 被篡改时仍正常注册 (0.137167ms)\n✔ isRestrictiveListener 检查出错时 fail-open（不吞）且告警只刷一次 (0.102625ms)\nI18nUtils: failed to get message \"main_unlock\": ReferenceError: chrome is not defined\n    at I18nUtils.t (eval at loadBrowserClass (file:///Users/fengshaohua/pro/github/EasyCV/test/unit/smoke.test.mjs:17:19), <anonymous>:17:23)\n    at TestContext.<anonymous> (file:///Users/fengshaohua/pro/github/EasyCV/test/unit/smoke.test.mjs:119:26)\n    at Test.runInAsyncScope (node:async_hooks:227:14)\n    at Test.run (node:internal/test_runner/test:1402:25)\n    at Test.processPendingSubtests (node:internal/test_runner/test:974:18)\n    at Test.postRun (node:internal/test_runner/test:1542:19)\n    at Test.run (node:internal/test_runner/test:1467:12)\n    at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)\nI18nUtils: failed to get message \"missing_key\": ReferenceError: chrome is not defined\n    at I18nUtils.t (eval at loadBrowserClass (file:///Users/fengshaohua/pro/github/EasyCV/test/unit/smoke.test.mjs:17:19), <anonymous>:17:23)\n    at TestContext.<anonymous> (file:///Users/fengshaohua/pro/github/EasyCV/test/unit/smoke.test.mjs:120:26)\n    at Test.runInAsyncScope (node:async_hooks:227:14)\n    at Test.run (node:internal/test_runner/test:1402:25)\n    at Test.processPendingSubtests (node:internal/test_runner/test:974:18)\n    at Test.postRun (node:internal/test_runner/test:1542:19)\n    at Test.run (node:internal/test_runner/test:1467:12)\n    at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)\n✔ MESSAGE_TYPES 取值唯一（重复值会让白名单校验张冠李戴） (1.018625ms)\n✔ isValidMessage 接受全部已注册类型（含反馈与监控消息） (0.1345ms)\n✔ isValidMessage 拒绝未知类型与畸形消息 (0.054916ms)\n✔ getAutoEnableList 将旧版字符串数组转换为配置对象 (0.660708ms)\n✔ addToAutoEnableList 按域名去重且保留功能开关 (0.692459ms)\n✔ setPluginSettings 仅持久化白名单内的用户设置键 (0.473833ms)\n✔ t() 在 chrome.i18n 不可用时返回兜底文案 (0.570416ms)\n✔ t() 优先返回 chrome.i18n 消息并替换占位符 (0.728ms)\n✔ getExcludedList 在键缺席时回落到默认敏感域名（R5：账号页不应承受 injector 暴露面） (1.17175ms)\n✔ getExcludedList 尊重用户清空（空数组不回落默认值） (0.480292ms)\n✔ getExcludedList 对损坏的非数组值兜底为空列表而非抛错 (0.126292ms)\n✔ addToExcludedList 按域名去重 (0.197708ms)\n✔ removeFromExcludedList 移除已存在域名，对不存在域名静默 (0.160208ms)\n✔ isDomainExcluded 精确匹配命中 (0.651ms)\n✔ isDomainExcluded 子域后缀匹配命中（排除主域即覆盖子域） (0.195167ms)\n✔ isDomainExcluded 不误伤相似域名（按点分段，非裸后缀） (0.097792ms)\n✔ isDomainExcluded 大小写归一 (0.104083ms)\n✔ isDomainExcluded 对空主机名与非法列表返回 false (0.128375ms)\nℹ tests 47\nℹ suites 0\nℹ pass 47\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 399.853459\n",
+      "stderr": ""
+    },
+    "lint": {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "stdout": "\n> easycv@1.1.2 lint\n> node scripts/lint.js\n\n✅ 44 个文件语法检查通过\n",
+      "stderr": ""
+    },
+    "docs": {
+      "command": [
+        "npm",
+        "run",
+        "docs:check"
+      ],
+      "exitCode": 0,
+      "stdout": "\n> easycv@1.1.2 docs:check\n> node scripts/check-docs.js\n\n✅ docs:check 通过\n",
+      "stderr": ""
+    },
+    "trackedWhitespace": {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "lockedPackageReadOnly": {
+      "command": [
+        "python3",
+        "test/verify-permission-package.py",
+        "releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031.zip",
+        ".tmp/permission-recheck-20261101/baseline-source/dist",
+        "/Users/fengshaohua/pro/github/EasyCV/.tmp/commit-1.1.2-20261102/package-verification.json"
+      ],
+      "exitCode": 0,
+      "stdout": "PASS: 38 files; ZIP SHA256 6a2f2478e847ff06d6b7a35dbe01b543d2cd00ab52df7f96d2763d758e77782a\n",
+      "stderr": ""
+    }
+  },
+  "lockedZipSHA256": "6a2f2478e847ff06d6b7a35dbe01b543d2cd00ab52df7f96d2763d758e77782a",
+  "lockedZipChanged": false,
+  "buildOrPackageRun": false,
+  "existingFilesChangedDuringCommitPreparation": [
+    "EASYCV-1.1.2-WINDOWS-ACCEPTANCE.md"
+  ],
+  "windowsReportBeforeAnnotationSHA256": "1b9322ec47833f630ce7bdfe4d0ae47e151e3bbb65239ba3500b0f7413321db4",
+  "windowsReportAfterAnnotationSHA256": "90b30f92fbfc89c24910b4012b714c774e72433f77a04aec59ced60d24335ff1",
+  "historicalEvidenceChanged": false,
+  "secretPatternCandidates": [],
+  "pushPerformed": false,
+  "storeSubmission": "NOT_RUN",
+  "releaseDecision": "BLOCKED",
+  "stagedHistoricalWhitespace": {
+    "fullStagedWhitespaceExitCode": 2,
+    "warningCount": 123,
+    "files": [
+      "EASYCV-1.1.2-PERMISSION-FIX.md",
+      "EASYCV-1.1.2-POPUP-PASTE-TRIAGE.md",
+      "docs/evidence/1.1.2/baseline-permission-search.txt",
+      "docs/evidence/1.1.2/docs-gate-fix-20261101/docs-regression-attempt1.txt",
+      "docs/evidence/1.1.2/docs-gate-fix-20261101/regression-before-final.txt",
+      "docs/evidence/1.1.2/docs-gate-fix-20261101/regression-before.txt",
+      "docs/evidence/1.1.2/docs-gate-fix-20261101/unit-attempt1.txt",
+      "docs/evidence/1.1.2/final-permission-search.txt",
+      "docs/evidence/1.1.2/recheck-20261101/initial-diff.patch",
+      "docs/evidence/1.1.2/recheck-20261101/permission-search.txt",
+      "docs/evidence/1.1.2/release-closeout-20261101/initial-diff.patch"
+    ],
+    "findings": {
+      "trailing whitespace": 123
+    },
+    "allFlaggedFilesByteIdenticalToPreCommitSnapshot": true,
+    "reasonPreserved": "Historical Markdown hard line breaks, verbatim command output and unified diff context lines must retain their original bytes; no whitespace cleanup or checker suppression",
+    "nonHistoricalChangesWhitespaceExitCode": 0
+  }
+}

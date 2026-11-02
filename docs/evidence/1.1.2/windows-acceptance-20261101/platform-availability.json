@@ -1,0 +1,39 @@
+{
+  "observedAt": "2026-11-01T01:25:30.587440+08:00",
+  "host": {
+    "system": "Darwin",
+    "release": "24.6.0",
+    "machine": "arm64"
+  },
+  "commands": {
+    "uname -srm": {
+      "exitCode": 0,
+      "stdout": "Darwin 24.6.0 arm64",
+      "stderr": ""
+    },
+    "prlctl list -a": {
+      "exitCode": 0,
+      "stdout": "UUID                                    STATUS       IP_ADDR         NAME\n{fd6c0386-8057-42e3-bce5-ad19eca454d0}  invalid      -               Windows 11",
+      "stderr": ""
+    },
+    "prlctl list -i Windows 11": {
+      "exitCode": 0,
+      "stdout": "Name: Windows 11\nState: invalid\nOS: \nGuestTools: state=possibly_installed",
+      "stderr": ""
+    },
+    "zsh -lc command -v agent-browser": {
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  "registeredVMHomeExists": true,
+  "registeredVMConfigExists": true,
+  "vmRepairOrStartAttempted": false,
+  "windowsBrowserSessionEstablished": false,
+  "browserProfilesReadOrModified": false,
+  "windowsChrome": "NOT_RUN",
+  "windowsEdge": "NOT_RUN",
+  "nativeWindowsUI": "NOT_RUN",
+  "toolFallback": "agent-browser not on PATH; no Windows guest or remote test endpoint established. macOS browser is not a Windows substitute."
+}

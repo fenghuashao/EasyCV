@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T20:54:12.651346+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$ProgressPreference='SilentlyContinue'\n$p=Get-Process -Id 7716 -ErrorAction SilentlyContinue\nif($p){@{knownInstallerPID=$p.Id;name=$p.ProcessName;windowTitle=$p.MainWindowTitle;responding=$p.Responding}|ConvertTo-Json -Compress}\n$l=Join-Path $env:TEMP 'chrome_installer.log'\nif((Test-Path -LiteralPath $l) -and (Get-Item $l).LastWriteTime -gt [datetime]'2026-11-02T20:48:00') { Get-Content -LiteralPath $l -Tail 45 | Select-String -Pattern 'ERROR|error|failed|Failed|install' | ForEach-Object {$_.Line} }\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -EncodedCommand",
+  "timeoutSeconds": 20,
+  "exitCode": 0,
+  "stdout": "{\"windowTitle\":\"Google 安装程序\",\"name\":\"ChromeStandaloneSetupARM64\",\"responding\":true,\"knownInstallerPID\":7716}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

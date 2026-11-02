@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T20:51:00.411685+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding = [Text.UTF8Encoding]::new($false)\n$ProgressPreference='SilentlyContinue'\n$paths=@('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe','C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',(Join-Path $env:LOCALAPPDATA 'Google\\Chrome\\Application\\chrome.exe'))\nforeach($p in $paths){if(Test-Path -LiteralPath $p){@{browser=$p;version=(Get-Item -LiteralPath $p).VersionInfo.ProductVersion}|ConvertTo-Json -Compress}}\n$p=Get-Process -Id 4044 -ErrorAction SilentlyContinue\n@{installerStillRunning=($null -ne $p)} | ConvertTo-Json -Compress\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -EncodedCommand",
+  "timeoutSeconds": 20,
+  "exitCode": 0,
+  "stdout": "{\"installerStillRunning\":false}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

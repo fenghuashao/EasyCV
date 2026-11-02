@@ -1,0 +1,103 @@
+{
+  "observedAt": "2026-11-02T22:59:43.685295+08:00",
+  "browser": "chrome",
+  "session": "easycv-win-chrome-20261102",
+  "guestCDPPort": 19331,
+  "commands": [
+    [
+      "tab",
+      "t1"
+    ],
+    [
+      "reload"
+    ],
+    [
+      "wait",
+      "#detectionDelay"
+    ],
+    [
+      "click",
+      "[data-tab=whitelist]"
+    ],
+    [
+      "eval",
+      "-b",
+      "KGFzeW5jKCk9Pih7aWQ6Y2hyb21lLnJ1bnRpbWUuaWQsdmVyc2lvbjpjaHJvbWUucnVudGltZS5nZXRNYW5pZmVzdCgpLnZlcnNpb24sZm9yY2VVSTpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZm9yY2VNb2RlIikuY2hlY2tlZCxyZW5kZXJlZEF1dG9MaXN0OmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJ3aGl0ZWxpc3RDb250YWluZXIiKS5pbm5lclRleHQsc3RvcmFnZTphd2FpdCBjaHJvbWUuc3RvcmFnZS5zeW5jLmdldChbInBsdWdpbl9lbmFibGVkIiwiZm9yY2VfbW9kZSIsInVzZXJfc2V0dGluZ3MiLCJhdXRvX2VuYWJsZV9saXN0IiwiZXhjbHVkZWRfbGlzdCJdKX0pKSgp"
+    ],
+    [
+      "tab",
+      "t2"
+    ],
+    [
+      "reload"
+    ],
+    [
+      "wait",
+      "#plain"
+    ],
+    [
+      "fill",
+      "#plain",
+      "EASYCV_CHROME_NATIVE_ALL_ENTRIES_20261102"
+    ],
+    [
+      "press",
+      "Control+a"
+    ],
+    [
+      "press",
+      "Control+c"
+    ],
+    [
+      "fill",
+      "#plain",
+      ""
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "click",
+      "#inline"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "click",
+      "#input"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "click",
+      "#listener"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "click",
+      "#keyboard"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "eval",
+      "-b",
+      "KHt1cmw6bG9jYXRpb24uaHJlZixmb2N1czpkb2N1bWVudC5oYXNGb2N1cygpLHZhbHVlczpPYmplY3QuZnJvbUVudHJpZXMoWyJpbmxpbmUiLCJpbnB1dCIsImxpc3RlbmVyIiwia2V5Ym9hcmQiLCJwbGFpbiJdLm1hcChpZD0+W2lkLGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGlkKS52YWx1ZV0pKSxldmVudHM6dHJpYWdlRXZlbnRzfSk="
+    ]
+  ],
+  "timeoutSeconds": 35,
+  "exitCode": 1,
+  "stdout": "ACTION_RESULT {\"arguments\":[\"tab\",\"t1\"],\"exitCode\":1}\r\n",
+  "stderr": "✗ Tab t1 not found; run `agent-browser tab` to list open tabs\n",
+  "timedOut": false
+}

@@ -1,0 +1,22 @@
+{
+  "observedAt": "2026-11-02T22:19:49.697150+08:00",
+  "browser": "chrome",
+  "session": "easycv-win-chrome-20261102",
+  "guestCDPPort": 19331,
+  "commands": [
+    [
+      "tab",
+      "t2"
+    ],
+    [
+      "eval",
+      "-b",
+      "KGFzeW5jKCk9Pih7c3RhdGU6YXdhaXQgbmV3IFByb21pc2Uocj0+Y2hyb21lLnN0b3JhZ2Uuc3luYy5nZXQoWyJwbHVnaW5fZW5hYmxlZCIsImZvcmNlX21vZGUiLCJ1c2VyX3NldHRpbmdzIiwiYXV0b19lbmFibGVfbGlzdCIsImV4Y2x1ZGVkX2xpc3QiXSxyKSksdWk6e2ZvcmNlOmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJmb3JjZU1vZGUiKS5jaGVja2VkLGF1dG86ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImF1dG9FbmFibGVMaXN0IikuaW5uZXJUZXh0fX0pKSgp"
+    ]
+  ],
+  "timeoutSeconds": 45,
+  "exitCode": 1,
+  "stdout": "✓ EasyCV 设置\n  chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\nACTION_RESULT {\"arguments\":[\"tab\",\"t2\"],\"exitCode\":0}\r\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"KGFzeW5jKCk9Pih7c3RhdGU6YXdhaXQgbmV3IFByb21pc2Uocj0+Y2hyb21lLnN0b3JhZ2Uuc3luYy5nZXQoWyJwbHVnaW5fZW5hYmxlZCIsImZvcmNlX21vZGUiLCJ1c2VyX3NldHRpbmdzIiwiYXV0b19lbmFibGVfbGlzdCIsImV4Y2x1ZGVkX2xpc3QiXSxyKSksdWk6e2ZvcmNlOmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJmb3JjZU1vZGUiKS5jaGVja2VkLGF1dG86ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImF1dG9FbmFibGVMaXN0IikuaW5uZXJUZXh0fX0pKSgp\"],\"exitCode\":1}\r\n",
+  "stderr": "✗ Evaluation error: TypeError: Cannot read properties of null (reading 'innerText')\n    at <anonymous>:1:252\n",
+  "timedOut": false
+}

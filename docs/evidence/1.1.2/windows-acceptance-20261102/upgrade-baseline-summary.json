@@ -1,0 +1,59 @@
+{
+  "originalStoreID": "bnbmgiidicjdbnmkmdnjeelhijnlhnjb",
+  "installation": "Normal Chrome Web Store, FROM_STORE and ENABLED; no candidate loaded in this Profile",
+  "profileRelativeToGuestLocalAppData": "EasyCV-Acceptance-20261102-r3/chrome-store-profile",
+  "identityEvidence": "store111-installed-identity-r2.json",
+  "beforeVersion": "1.1.1",
+  "afterNormalRestartVersion": "1.1.1",
+  "uiSeededOnly": true,
+  "criticalDataExactMatchAcrossNormalRestart": true,
+  "data": {
+    "auto_enable_list": [
+      {
+        "copyEnabled": true,
+        "domain": "store-auto.localhost",
+        "pasteEnabled": true
+      },
+      {
+        "copyEnabled": true,
+        "domain": "blocked.localhost",
+        "pasteEnabled": true
+      }
+    ],
+    "excluded_list": [
+      "accounts.google.com",
+      "login.live.com",
+      "appleid.apple.com",
+      "blocked.localhost"
+    ],
+    "force_mode": true,
+    "plugin_enabled": true,
+    "user_settings": {
+      "autoEnableList": [],
+      "copyEnabled": false,
+      "detectionDelay": 2100,
+      "enableStatistics": true,
+      "excludedList": [
+        "accounts.google.com",
+        "login.live.com",
+        "appleid.apple.com"
+      ],
+      "forceMode": false,
+      "maxRetries": 7,
+      "pasteEnabled": true,
+      "pluginEnabled": true,
+      "showNotifications": false,
+      "theme": "auto"
+    }
+  },
+  "forceModeUIReloadProblemAlsoOnOriginal111": true,
+  "actualPasteAfterOriginal111Restart": "PASS with five trusted uncanceled events and exact sentinel",
+  "originalInstallAndDataPreserved": true,
+  "finalNormalCloseProcessesRemaining": 0,
+  "upgradePerformed": false,
+  "upgrade111To112Gate": "NOT_VERIFIED",
+  "postUpgradeBrowserRestart": "NOT_VERIFIED",
+  "blocker": "No verified same-ID 1.1.2 signed target or supported update route established; latest checked public update returned 1.1.1",
+  "forbiddenWorkaroundsUsed": false,
+  "storeSubmission": "NOT_RUN"
+}

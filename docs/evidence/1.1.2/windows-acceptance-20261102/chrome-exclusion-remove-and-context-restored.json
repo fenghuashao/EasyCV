@@ -1,0 +1,131 @@
+{
+  "observedAt": "2026-11-02T22:53:43.946038+08:00",
+  "browser": "chrome",
+  "session": "easycv-win-chrome-20261102",
+  "guestCDPPort": 19331,
+  "commands": [
+    [
+      "eval",
+      "-b",
+      "KHt1cmw6bG9jYXRpb24uaHJlZixtZW51RXZlbnRzOnRlc3RNZW51RXZlbnRzfSk="
+    ],
+    [
+      "tab",
+      "t1"
+    ],
+    [
+      "eval",
+      "-b",
+      "KGFzeW5jKCk9Pih7aWQ6Y2hyb21lLnJ1bnRpbWUuaWQsdmVyc2lvbjpjaHJvbWUucnVudGltZS5nZXRNYW5pZmVzdCgpLnZlcnNpb24sc3RvcmFnZTphd2FpdCBjaHJvbWUuc3RvcmFnZS5zeW5jLmdldChbInBsdWdpbl9lbmFibGVkIiwiZm9yY2VfbW9kZSIsInVzZXJfc2V0dGluZ3MiLCJhdXRvX2VuYWJsZV9saXN0IiwiZXhjbHVkZWRfbGlzdCJdKX0pKSgp"
+    ],
+    [
+      "click",
+      "[data-tab=\"excluded\"]"
+    ],
+    [
+      "click",
+      "#excludedContainer .delete[data-domain=\"blocked.localhost\"]"
+    ],
+    [
+      "eval",
+      "-b",
+      "KGFzeW5jKCk9Pih7aWQ6Y2hyb21lLnJ1bnRpbWUuaWQsdmVyc2lvbjpjaHJvbWUucnVudGltZS5nZXRNYW5pZmVzdCgpLnZlcnNpb24sc3RvcmFnZTphd2FpdCBjaHJvbWUuc3RvcmFnZS5zeW5jLmdldChbInBsdWdpbl9lbmFibGVkIiwiZm9yY2VfbW9kZSIsInVzZXJfc2V0dGluZ3MiLCJhdXRvX2VuYWJsZV9saXN0IiwiZXhjbHVkZWRfbGlzdCJdKX0pKSgp"
+    ],
+    [
+      "tab",
+      "t3"
+    ],
+    [
+      "reload"
+    ],
+    [
+      "wait",
+      "#plain"
+    ],
+    [
+      "fill",
+      "#plain",
+      "EASYCV_CHROME_EXCLUSION_CONTEXT_20261102"
+    ],
+    [
+      "press",
+      "Control+a"
+    ],
+    [
+      "press",
+      "Control+c"
+    ],
+    [
+      "fill",
+      "#plain",
+      ""
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "click",
+      "#inline"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "click",
+      "#input"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "click",
+      "#listener"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "click",
+      "#keyboard"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "eval",
+      "-b",
+      "KHt1cmw6bG9jYXRpb24uaHJlZixmb2N1czpkb2N1bWVudC5oYXNGb2N1cygpLHZhbHVlczpPYmplY3QuZnJvbUVudHJpZXMoWyJpbmxpbmUiLCJpbnB1dCIsImxpc3RlbmVyIiwia2V5Ym9hcmQiLCJwbGFpbiJdLm1hcChpZD0+W2lkLGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGlkKS52YWx1ZV0pKSxldmVudHM6dHJpYWdlRXZlbnRzfSk="
+    ],
+    [
+      "eval",
+      "-b",
+      "d2luZG93LnRlc3RNZW51RXZlbnRzPVtdO2RvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoImNvbnRleHRtZW51IixlPT57ZS5wcmV2ZW50RGVmYXVsdCgpO3NldFRpbWVvdXQoKCk9PnRlc3RNZW51RXZlbnRzLnB1c2goe2lzVHJ1c3RlZDplLmlzVHJ1c3RlZCxkZWZhdWx0UHJldmVudGVkOmUuZGVmYXVsdFByZXZlbnRlZH0pLDApfSk7dHJ1ZQ=="
+    ],
+    [
+      "mouse",
+      "move",
+      "800",
+      "600"
+    ],
+    [
+      "mouse",
+      "down",
+      "right"
+    ],
+    [
+      "mouse",
+      "up",
+      "right"
+    ]
+  ],
+  "timeoutSeconds": 35,
+  "exitCode": 1,
+  "stdout": "{\n  \"menuEvents\": [\n    {\n      \"defaultPrevented\": true,\n      \"isTrusted\": true\n    }\n  ],\n  \"url\": \"http://blocked.localhost:18951/mechanisms.html\"\n}\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"KHt1cmw6bG9jYXRpb24uaHJlZixtZW51RXZlbnRzOnRlc3RNZW51RXZlbnRzfSk=\"],\"exitCode\":0}\r\n✓ EasyCV 设置\n  chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\nACTION_RESULT {\"arguments\":[\"tab\",\"t1\"],\"exitCode\":0}\r\n{\n  \"id\": \"dgckfbbdhlgcjhaihmpdnnhnfpfeaono\",\n  \"storage\": {\n    \"auto_enable_list\": [\n      {\n        \"copyEnabled\": true,\n        \"domain\": \"chrome.localhost\",\n        \"pasteEnabled\": true\n      },\n      {\n        \"copyEnabled\": true,\n        \"domain\": \"blocked.localhost\",\n        \"pasteEnabled\": true\n      }\n    ],\n    \"excluded_list\": [\n      \"accounts.google.com\",\n      \"login.live.com\",\n      \"appleid.apple.com\",\n      \"blocked.localhost\"\n    ],\n    \"force_mode\": false,\n    \"plugin_enabled\": true,\n    \"user_settings\": {\n      \"autoEnableList\": [],\n      \"copyEnabled\": true,\n      \"detectionDelay\": 1700,\n      \"enableStatistics\": true,\n      \"excludedList\": [\n        \"accounts.google.com\",\n        \"login.live.com\",\n        \"appleid.apple.com\"\n      ],\n      \"forceMode\": false,\n      \"maxRetries\": 6,\n      \"pasteEnabled\": true,\n      \"pluginEnabled\": true,\n      \"showNotifications\": false,\n      \"theme\": \"auto\"\n    }\n  },\n  \"version\": \"1.1.2\"\n}\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"KGFzeW5jKCk9Pih7aWQ6Y2hyb21lLnJ1bnRpbWUuaWQsdmVyc2lvbjpjaHJvbWUucnVudGltZS5nZXRNYW5pZmVzdCgpLnZlcnNpb24sc3RvcmFnZTphd2FpdCBjaHJvbWUuc3RvcmFnZS5zeW5jLmdldChbInBsdWdpbl9lbmFibGVkIiwiZm9yY2VfbW9kZSIsInVzZXJfc2V0dGluZ3MiLCJhdXRvX2VuYWJsZV9saXN0IiwiZXhjbHVkZWRfbGlzdCJdKX0pKSgp\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"[data-tab=\\\"excluded\\\"]\"],\"exitCode\":0}\r\nACTION_RESULT {\"arguments\":[\"click\",\"#excludedContainer .delete[data-domain=\\\"blocked.localhost\\\"]\"],\"exitCode\":1}\r\n",
+  "stderr": "✗ Element not found: #excludedContainer .delete[data-domain=blocked.localhost]. Verify the selector, role, or name is correct and the element exists in the DOM.\n",
+  "timedOut": false
+}

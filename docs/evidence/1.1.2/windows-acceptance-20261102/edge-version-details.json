@@ -1,0 +1,20 @@
+{
+  "observedAt": "2026-11-02T21:06:29.035542+08:00",
+  "browser": "edge",
+  "session": "easycv-win-edge-20261102",
+  "guestCDPPort": 19332,
+  "commands": [
+    [
+      "click",
+      "@e211"
+    ],
+    [
+      "snapshot"
+    ]
+  ],
+  "timeoutSeconds": 25,
+  "exitCode": 0,
+  "stdout": "✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"@e211\"],\"exitCode\":0}\r\n- generic\n  - status\n    - StaticText \"已加载扩展\"\n  - generic\n    - heading \"扩展\" [level=1, ref=e197]\n    - search\n      - generic\n        - textbox [ref=e208]\n    - navigation\n      - menuitemradio \"我的扩展\" [checked=true, ref=e200]\n        - image\n        - StaticText \"我的扩展\"\n      - menuitemradio \"键盘快捷方式\" [checked=false, ref=e201]\n        - image\n        - StaticText \"键盘快捷方式\"\n    - link \"获取 Microsoft Edge 扩展\" [ref=e202]\n      - StaticText \"获取 Microsoft Edge 扩展\"\n      - image\n    - StaticText \"开发人员模式\"\n    - switch \"开发人员模式\" [checked=true, ref=e203]\n    - StaticText \"由你的组织管理\"\n    - StaticText \"某些设置可能已禁用。\"\n    - link \"了解更多信息\" [ref=e204]\n      - StaticText \"了解更多信息\"\n  - button \"返回\" [ref=e214]\n    - image\n  - link \"已安装的扩展\" [ref=e215]\n    - StaticText \"已安装的扩展\"\n  - StaticText \"/\"\n  - StaticText \"EasyCV - 解除网页复制粘贴限制\"\n  - article\n    - generic\n      - image \"EasyCV - 解除网页复制粘贴限制 扩展图标\"\n      - image \"解压缩扩展\"\n    - StaticText \"EasyCV - 解除网页复制粘贴限制\"\n    - StaticText \"大小: < 1 MB\"\n    - StaticText \"版本: 1 . 1 . 2\"\n    - switch \"扩展开启\" [checked=true, ref=e216]\n    - StaticText \"描述\"\n    - StaticText \"一键解除网页复制粘贴限制，提升工作效率的浏览器插件\"\n    - StaticText \"权限\"\n    - StaticText \"此扩展不需要特殊权限\"\n    - StaticText \"站点访问权限\"\n    - StaticText \"允许此扩展读取和更改你访问的网站上的所有数据。\"\n    - link \"了解更多信息\" [ref=e221]\n      - StaticText \"了解更多信息\"\n    - combobox [ref=e222]: 在所有站点上\n      - StaticText \"在所有站点上\"\n    - form\n      - dialog\n    - StaticText \"在 InPrivate 中允许\"\n    - StaticText \"如果选择此选项，系统可能仍会记录你的浏览器历史记录。即使是在 InPrivate 模式下，Microsoft Edge 也无法阻止该扩展保存你的浏览器历史记录。\"\n    - switch [checked=false, ref=e217]\n    - StaticText \"允许访问文件 URL\"\n    - switch [checked=true, ref=e218]\n    - StaticText \"收集错误\"\n    - switch [checked=true, ref=e219]\n    - generic\n      - StaticText \"来源\"\n      - StaticText \"解压缩扩展\"\n      - StaticText \"加载位置\"\n      - StaticText \"C:\\\\Users\\\\fengshaohua\\\\AppData\\\\Local\\\\EasyCV-Acceptance-20261102-r3\\\\candidate\"\n    - StaticText \"ID\"\n    - StaticText \"dgckfbbdhlgcjhaihmpdnnhnfpfeaono\"\n    - StaticText \"检查视图\"\n    - button \"服务工作进程; (不活动)\" [ref=e220]\n      - StaticText \"服务工作进程; (不活动)\"\n    - link \"扩展选项\" [ref=e223]\n      - StaticText \"扩展选项\"\n      - image\n    - button \"删除\" [ref=e224]\n      - StaticText \"删除\"\n  - dialog\n  - alertdialog\n    - dialog\n  - dialog \"无法加载扩展\"\n  - dialog \"打包扩展\"\n  - dialog \"打包扩展\"\nACTION_RESULT {\"arguments\":[\"snapshot\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

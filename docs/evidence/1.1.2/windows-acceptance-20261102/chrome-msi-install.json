@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T21:21:52.758931+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$ProgressPreference='SilentlyContinue'\n$ErrorActionPreference='Stop'\n$d=Join-Path $env:LOCALAPPDATA 'EasyCV-Downloads-20261102-Chrome'\n$p=Join-Path $d 'googlechromestandaloneenterprise_arm64.msi'\n$s=Get-AuthenticodeSignature -LiteralPath $p\nif($s.Status -ne 'Valid' -or $s.SignerCertificate.Subject -notmatch 'O=Google LLC'){throw 'MSI not trusted'}\n$i=Start-Process msiexec.exe -ArgumentList '/i',$p,'/L*v',(Join-Path $d 'chrome-msi-install.log') -PassThru\n@{installerPID=$i.Id;signatureStatus=[string]$s.Status;mode='Standard interactive MSI; no enterprise enrollment/policy options';installationComplete=$false}|ConvertTo-Json -Compress\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand",
+  "timeoutSeconds": 20,
+  "exitCode": 0,
+  "stdout": "{\"mode\":\"Standard interactive MSI; no enterprise enrollment/policy options\",\"installerPID\":7016,\"installationComplete\":false,\"signatureStatus\":\"Valid\"}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

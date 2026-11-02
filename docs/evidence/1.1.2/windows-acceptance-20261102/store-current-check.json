@@ -1,0 +1,13 @@
+{
+  "observedAt": "2026-11-02T21:02:56.848855+08:00",
+  "requestedURL": "https://clients2.google.com/service/update2/crx?response=redirect&prodversion=156.0.8078.79&acceptformat=crx3&x=id%3Dbnbmgiidicjdbnmkmdnjeelhijnlhnjb%26installsource%3Dondemand%26uc",
+  "itemID": "bnbmgiidicjdbnmkmdnjeelhijnlhnjb",
+  "cookiesOrAccountUsed": false,
+  "scope": "One anonymous public update request; not authenticated dashboard or all regions",
+  "httpStatus": 200,
+  "finalURL": "https://clients2.googleusercontent.com/crx/blobs/ARGaeZIRoTtixAox2qcbfV0VZecWNehKxfQflXIWvZ99Ruy4I8WLX0Ypyb9i6lF2CCds_08-oUlJx9GhGnoNavOdVpa8npcTlRC1HP-zfCxA1xaV5z-HwrvjOZjFDalZzkMAxlKa5SFhkxgwkhBBkSA48uURQxYg4jc2/BNBMGIIDICJDBNMKMDNJEELHIJNLHNJB_1_1_1_0.crx",
+  "bytes": 137031,
+  "sha256": "71804c76f85b30fc3b78c16a631f72fbcaa5d983a71ba8aedd47372ab9472cef",
+  "version": "1.1.1",
+  "byteIdenticalToPreviouslyVerified111": true
+}

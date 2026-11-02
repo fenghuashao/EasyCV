@@ -1,0 +1,22 @@
+{
+  "observedAt": "2026-11-02T22:20:11.028143+08:00",
+  "browser": "chrome",
+  "session": "easycv-win-chrome-20261102",
+  "guestCDPPort": 19331,
+  "commands": [
+    [
+      "tab",
+      "t2"
+    ],
+    [
+      "eval",
+      "-b",
+      "KGFzeW5jKCk9Pih7c3RhdGU6YXdhaXQgY2hyb21lLnN0b3JhZ2Uuc3luYy5nZXQoWyJwbHVnaW5fZW5hYmxlZCIsImZvcmNlX21vZGUiLCJ1c2VyX3NldHRpbmdzIiwiYXV0b19lbmFibGVfbGlzdCIsImV4Y2x1ZGVkX2xpc3QiXSksdWk6e2ZvcmNlOmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJmb3JjZU1vZGUiKS5jaGVja2VkLGJvZHk6ZG9jdW1lbnQuYm9keS5pbm5lclRleHR9fSkpKCk="
+    ]
+  ],
+  "timeoutSeconds": 45,
+  "exitCode": 0,
+  "stdout": "✓ EasyCV 设置\n  chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\nACTION_RESULT {\"arguments\":[\"tab\",\"t2\"],\"exitCode\":0}\r\n{\n  \"state\": {\n    \"auto_enable_list\": [\n      {\n        \"copyEnabled\": true,\n        \"domain\": \"chrome.localhost\",\n        \"pasteEnabled\": true\n      },\n      {\n        \"copyEnabled\": true,\n        \"domain\": \"blocked.localhost\",\n        \"pasteEnabled\": true\n      }\n    ],\n    \"excluded_list\": [\n      \"accounts.google.com\",\n      \"login.live.com\",\n      \"appleid.apple.com\",\n      \"blocked.localhost\"\n    ],\n    \"force_mode\": true,\n    \"plugin_enabled\": true,\n    \"user_settings\": {\n      \"autoEnableList\": [],\n      \"copyEnabled\": true,\n      \"detectionDelay\": 1700,\n      \"enableStatistics\": true,\n      \"excludedList\": [\n        \"accounts.google.com\",\n        \"login.live.com\",\n        \"appleid.apple.com\"\n      ],\n      \"forceMode\": false,\n      \"maxRetries\": 6,\n      \"pasteEnabled\": true,\n      \"pluginEnabled\": true,\n      \"showNotifications\": false,\n      \"theme\": \"auto\"\n    }\n  },\n  \"ui\": {\n    \"body\": \"EasyCV\\n\\n复制粘贴助手\\n\\n常规设置\\n自动解锁管理\\n站点排除\\n高级设置\\n使用统计\\n关于\\n常规设置\\n\\n配置插件的基本功能和行为\\n\\n基本功能\\n解锁复制\\n\\n启用或禁用复制功能解锁\\n\\n解锁粘贴\\n\\n启用或禁用粘贴功能解锁\\n\\n自动检测\\n\\n页面加载时自动检测并移除复制粘贴限制\\n\\n强制模式\\n\\n使用更强力的方法处理顽固的限制\\n\\n显示通知\\n\\n在处理限制时显示桌面通知\\n\\n解锁成功后自动加入自动启用列表\\n\\n手动解锁成功的网站将自动加入自动启用列表，下次访问无需再操作\\n\\n检测设置\\n检测延迟\\n\\n页面加载后等待多长时间开始检测（毫秒）\\n\\nms\\n重试次数\\n\\n检测失败时的最大重试次数\\n\\n次\",\n    \"force\": false\n  }\n}\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"KGFzeW5jKCk9Pih7c3RhdGU6YXdhaXQgY2hyb21lLnN0b3JhZ2Uuc3luYy5nZXQoWyJwbHVnaW5fZW5hYmxlZCIsImZvcmNlX21vZGUiLCJ1c2VyX3NldHRpbmdzIiwiYXV0b19lbmFibGVfbGlzdCIsImV4Y2x1ZGVkX2xpc3QiXSksdWk6e2ZvcmNlOmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJmb3JjZU1vZGUiKS5jaGVja2VkLGJvZHk6ZG9jdW1lbnQuYm9keS5pbm5lclRleHR9fSkpKCk=\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

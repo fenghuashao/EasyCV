@@ -1,0 +1,82 @@
+{
+  "source": "https://chromium.googlesource.com/chromium/src/+/refs/tags/141.0.7390.34/extensions/browser/sandboxed_unpacker.cc",
+  "cause": "Inferred browser image/message sanitization; exact content comparisons below; no filesystem write tracing claim",
+  "pillowVersion": "13.0.0",
+  "byteIdenticalOtherRuntimeFiles": 30,
+  "normalizedAssets": [
+    {
+      "file": "icons/icon-default-128.png",
+      "comparison": "Decoded RGBA pixel equality",
+      "sourceDimensions": [
+        128,
+        128
+      ],
+      "installedDimensions": [
+        128,
+        128
+      ],
+      "sourcePixelSHA256": "543f7c27f83870cfbb41836c830de6222f344c09db977e9bec9b32f5e171a101",
+      "installedPixelSHA256": "09d3b69c30661c73265358df2213481bdd1a7b82650211d19c554609b4e1caa7",
+      "equal": false
+    },
+    {
+      "file": "icons/icon-default-16.png",
+      "comparison": "Decoded RGBA pixel equality",
+      "sourceDimensions": [
+        16,
+        16
+      ],
+      "installedDimensions": [
+        16,
+        16
+      ],
+      "sourcePixelSHA256": "4448bef0deb3c2e97da7ad7a056f4ca2becb3ce39cea26f2e8636cb25b152d66",
+      "installedPixelSHA256": "4448bef0deb3c2e97da7ad7a056f4ca2becb3ce39cea26f2e8636cb25b152d66",
+      "equal": true
+    },
+    {
+      "file": "icons/icon-default-32.png",
+      "comparison": "Decoded RGBA pixel equality",
+      "sourceDimensions": [
+        32,
+        32
+      ],
+      "installedDimensions": [
+        32,
+        32
+      ],
+      "sourcePixelSHA256": "d9447b85312debf3865c0c221852d350981ffb009651f63fd3faa5fd1907a987",
+      "installedPixelSHA256": "d9447b85312debf3865c0c221852d350981ffb009651f63fd3faa5fd1907a987",
+      "equal": true
+    },
+    {
+      "file": "icons/icon-default-48.png",
+      "comparison": "Decoded RGBA pixel equality",
+      "sourceDimensions": [
+        48,
+        48
+      ],
+      "installedDimensions": [
+        48,
+        48
+      ],
+      "sourcePixelSHA256": "9da00eaa5575fb34b4f40321baa9ef104ca5f0fefd348a835d246686a2b6d2ff",
+      "installedPixelSHA256": "9da00eaa5575fb34b4f40321baa9ef104ca5f0fefd348a835d246686a2b6d2ff",
+      "equal": true
+    },
+    {
+      "file": "_locales/en/messages.json",
+      "comparison": "Parsed JSON object equality",
+      "equal": true
+    },
+    {
+      "file": "_locales/zh_CN/messages.json",
+      "comparison": "Parsed JSON object equality",
+      "equal": true
+    }
+  ],
+  "allEquivalent": false,
+  "candidateOriginal38FilesByteIdentical": true,
+  "lockedZipSHA256InGuest": "6a2f2478e847ff06d6b7a35dbe01b543d2cd00ab52df7f96d2763d758e77782a",
+  "browserStorageReadOrCopiedByThisCheck": false
+}

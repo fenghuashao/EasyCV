@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T23:06:42.862040+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$ProgressPreference='SilentlyContinue'\n$listen=@(Get-NetTCPConnection -State Listen -LocalPort 18951 -ErrorAction SilentlyContinue)\nforeach($listener in $listen){\n $testProcess=Get-CimInstance Win32_Process -Filter (\"ProcessId=\"+$listener.OwningProcess)\n @{address=$listener.LocalAddress;port=$listener.LocalPort;pid=$listener.OwningProcess;name=$testProcess.Name;parentPID=$testProcess.ParentProcessId;commandMentionsTaskRoot=$testProcess.CommandLine -like '*EasyCV-Acceptance-20261102-r3*';commandMentionsFixture=$testProcess.CommandLine -like '*fixture-server.ps1*';commandMentionsEncodedCommand=$testProcess.CommandLine -like '*EncodedCommand*'}|ConvertTo-Json -Compress\n}\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand",
+  "timeoutSeconds": 20,
+  "exitCode": 0,
+  "stdout": "{\"pid\":12980,\"commandMentionsFixture\":false,\"parentPID\":3992,\"name\":\"powershell.exe\",\"port\":18951,\"commandMentionsTaskRoot\":false,\"commandMentionsEncodedCommand\":true,\"address\":\"127.0.0.1\"}\r\n",
+  "stderr": "#< CLIXML\r\n<Objs Version=\"1.1.0.1\" xmlns=\"http://schemas.microsoft.com/powershell/2004/04\"><Obj S=\"progress\" RefId=\"0\"><TN RefId=\"0\"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N=\"SourceId\">3</I64><PR N=\"Record\"><AV>Get-NetTCPConnection -State Listen -LocalPort 18951 -ErrorAction SilentlyContinue)</AV><AI>172687508</AI><Nil /><PI>-1</PI><PC>100</PC><T>Completed</T><SR>0</SR><SD>已完成 1/1</SD></PR></MS></Obj></Objs>",
+  "timedOut": false
+}

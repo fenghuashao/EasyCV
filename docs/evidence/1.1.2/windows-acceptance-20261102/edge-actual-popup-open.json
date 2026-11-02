@@ -1,0 +1,27 @@
+{
+  "observedAt": "2026-11-02T21:19:46.148853+08:00",
+  "browser": "edge",
+  "session": "easycv-win-edge-20261102",
+  "guestCDPPort": 19332,
+  "commands": [
+    [
+      "tab",
+      "t2"
+    ],
+    [
+      "eval",
+      "-b",
+      "KGFzeW5jKCk9Pntjb25zdCB0cz1hd2FpdCBjaHJvbWUudGFicy5xdWVyeSh7dXJsOidodHRwOi8vMTI3LjAuMC4xOjE4OTUxL21lY2hhbmlzbXMuaHRtbCd9KTtpZih0cy5sZW5ndGghPT0xKXRocm93IEVycm9yKCdFeHBlY3RlZCBvbmUga25vd24gdGVzdCB0YWInKTthd2FpdCBjaHJvbWUudGFicy51cGRhdGUodHNbMF0uaWQse2FjdGl2ZTp0cnVlfSk7YXdhaXQgY2hyb21lLmFjdGlvbi5vcGVuUG9wdXAoKTtyZXR1cm4gYXdhaXQgY2hyb21lLnJ1bnRpbWUuZ2V0Q29udGV4dHMoe2NvbnRleHRUeXBlczpbJ1BPUFVQJ119KTt9KSgp"
+    ],
+    [
+      "tab",
+      "list",
+      "--json"
+    ]
+  ],
+  "timeoutSeconds": 25,
+  "exitCode": 0,
+  "stdout": "✓ EasyCV 设置\n  chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\nACTION_RESULT {\"arguments\":[\"tab\",\"t2\"],\"exitCode\":0}\r\n[\n  {\n    \"contextId\": \"a3ee93c7-0119-483f-977c-312861a29467\",\n    \"contextType\": \"POPUP\",\n    \"documentId\": \"92A3BAFC9FA30D0FEB0DD163FD70FCC3\",\n    \"documentOrigin\": \"chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono\",\n    \"documentUrl\": \"chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/popup/popup.html\",\n    \"frameId\": 0,\n    \"incognito\": false,\n    \"tabId\": -1,\n    \"windowId\": -1\n  }\n]\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"KGFzeW5jKCk9Pntjb25zdCB0cz1hd2FpdCBjaHJvbWUudGFicy5xdWVyeSh7dXJsOidodHRwOi8vMTI3LjAuMC4xOjE4OTUxL21lY2hhbmlzbXMuaHRtbCd9KTtpZih0cy5sZW5ndGghPT0xKXRocm93IEVycm9yKCdFeHBlY3RlZCBvbmUga25vd24gdGVzdCB0YWInKTthd2FpdCBjaHJvbWUudGFicy51cGRhdGUodHNbMF0uaWQse2FjdGl2ZTp0cnVlfSk7YXdhaXQgY2hyb21lLmFjdGlvbi5vcGVuUG9wdXAoKTtyZXR1cm4gYXdhaXQgY2hyb21lLnJ1bnRpbWUuZ2V0Q29udGV4dHMoe2NvbnRleHRUeXBlczpbJ1BPUFVQJ119KTt9KSgp\"],\"exitCode\":0}\r\n{\"success\":true,\"data\":{\"lifecycle\":{\"effectiveLaunch\":{\"browserLaunched\":true,\"engine\":\"chrome\",\"launchHash\":8917641277948395186},\"launched\":false,\"relaunchedBrowser\":false,\"restartedBackground\":false,\"restoreStatus\":\"not_configured\",\"reused\":true,\"saveStatus\":\"not_attempted\"},\"tabs\":[{\"active\":false,\"label\":null,\"tabId\":\"t1\",\"targetId\":\"64930959C6FC9D90086C319F3774005A\",\"title\":\"扩展\",\"type\":\"page\",\"url\":\"edge://extensions/?id=dgckfbbdhlgcjhaihmpdnnhnfpfeaono\"},{\"active\":true,\"label\":null,\"tabId\":\"t2\",\"targetId\":\"703DBE6751BB15231D373199974A38B9\",\"title\":\"EasyCV 设置\",\"type\":\"page\",\"url\":\"chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\"},{\"active\":false,\"label\":null,\"tabId\":\"t3\",\"targetId\":\"70BF5D050CAF7A2902622903EB1E1CA5\",\"title\":\"127.0.0.1:18951/mechanisms.html\",\"type\":\"page\",\"url\":\"http://127.0.0.1:18951/mechanisms.html\"},{\"active\":false,\"label\":null,\"tabId\":\"t4\",\"targetId\":\"2A1FD7CFF19CD4D9E7387163BDAFEBA0\",\"title\":\"127.0.0.1:18951/permission-fix.html\",\"type\":\"page\",\"url\":\"http://127.0.0.1:18951/permission-fix.html\"},{\"active\":false,\"label\":null,\"tabId\":\"t5\",\"targetId\":\"4B28882A084118C0C9A24614771E6113\",\"title\":\"blocked.localhost:18951/mechanisms.html\",\"type\":\"page\",\"url\":\"http://blocked.localhost:18951/mechanisms.html\"}]},\"error\":null}\nACTION_RESULT {\"arguments\":[\"tab\",\"list\",\"--json\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

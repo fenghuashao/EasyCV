@@ -1,0 +1,32 @@
+{
+  "scope": "Real Windows 11 ARM64; Chrome 156.0.8078.80 and Edge 156.0.4314.58; FA-assisted native gestures plus independently verified real page effects",
+  "gates": {
+    "WINDOWS_CHROME_P0_GATE": "FAIL",
+    "WINDOWS_EDGE_SMOKE_GATE": "FAIL",
+    "NATIVE_UI_GATE": "PASS",
+    "UPGRADE_111_TO_112_GATE": "NOT_VERIFIED",
+    "BROWSER_RESTART_PERSISTENCE_GATE": "PARTIAL",
+    "SETTINGS_AND_SITE_LIST_GATE": "FAIL",
+    "KNOWN_POPUP_DEFECT_GATE": "PASS_WITH_KNOWN_DEFECT",
+    "RELEASE_DECISION": "BLOCKED"
+  },
+  "new112P0P1RegressionConfirmed": false,
+  "knownAndNewlyRegisteredBaselineIssues": [
+    "ECV-POST-112-01",
+    "Options force-mode reload mismatch",
+    "Auto-list first-visit propagation failure"
+  ],
+  "original111WindowsChromeComparisonCompleted": true,
+  "actual111To112UpgradeExecuted": false,
+  "normalRestartCandidateDataAndRealFunction": "PASS",
+  "normalRestartOriginal111DataAndRealFunction": "PASS",
+  "postUpgradeRestart": "NOT_VERIFIED",
+  "finalGuestCleanup": "PASS",
+  "flags": {
+    "PRODUCT_RUNTIME_MODIFIED": "NO",
+    "LOCKED_ZIP_CHANGED": "NO",
+    "COMMIT_CREATED": "NO",
+    "PUSH_PERFORMED": "NO",
+    "STORE_SUBMISSION": "NOT_RUN"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "userClarifications": [
+    "FA reports previous Win11 was usable.",
+    "FA confirmed manually deleting the VM after a corruption/delete prompt.",
+    "FA confirmed reinstalling and asked FX to wait until the new system is ready."
+  ],
+  "fxActions": "No VM deletion, creation, repair or configuration modification by FX. One start attempt before the clarification failed because no VM was registered. Existing alternate VM package not opened by FX.",
+  "latestCLIObservation": "prlctl list -a now shows Windows 11 UUID 799dc443-ad93-4544-98a6-52260c5e6cea, stopped; does not prove installation completion."
+}

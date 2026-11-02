@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T22:36:32.364937+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "\n[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$ProgressPreference='SilentlyContinue'\n$profile=Join-Path $env:LOCALAPPDATA 'EasyCV-Acceptance-20261102-r3\\chrome-store-profile'\nif(Test-Path -LiteralPath $profile){throw 'Store Profile already exists; do not overwrite'}\n$url='https://chromewebstore.google.com/detail/bnbmgiidicjdbnmkmdnjeelhijnlhnjb'\n$p=Start-Process -FilePath 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' -ArgumentList ('--user-data-dir=\"'+$profile+'\"'),'--remote-debugging-port=19333','--no-first-run','--no-default-browser-check','--new-window',$url -PassThru\n@{browserPID=$p.Id;profile=$profile;port=19333;requestedURL=$url;extensionLoadFlagsUsed=$false;candidateInstalledInThisProfile=$false;purpose='Normal original CWS 1.1.1 installation and pre-upgrade nondefault baseline, not an upgrade';storeSubmission=$false}|ConvertTo-Json -Compress\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand",
+  "timeoutSeconds": 25,
+  "exitCode": 0,
+  "stdout": "{\"storeSubmission\":false,\"profile\":\"C:\\\\Users\\\\fengshaohua\\\\AppData\\\\Local\\\\EasyCV-Acceptance-20261102-r3\\\\chrome-store-profile\",\"browserPID\":2800,\"candidateInstalledInThisProfile\":false,\"purpose\":\"Normal original CWS 1.1.1 installation and pre-upgrade nondefault baseline, not an upgrade\",\"extensionLoadFlagsUsed\":false,\"port\":19333,\"requestedURL\":\"https://chromewebstore.google.com/detail/bnbmgiidicjdbnmkmdnjeelhijnlhnjb\"}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

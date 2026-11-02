@@ -1,0 +1,58 @@
+{
+  "observedAt": "2026-11-02T21:34:43.334376+08:00",
+  "browser": "edge",
+  "session": "easycv-win-edge-20261102",
+  "guestCDPPort": 19332,
+  "commands": [
+    [
+      "tab",
+      "t3"
+    ],
+    [
+      "reload"
+    ],
+    [
+      "wait",
+      "#plain"
+    ],
+    [
+      "fill",
+      "#plain",
+      "EASYCV_EDGE_POPUP_HISTORY"
+    ],
+    [
+      "press",
+      "Control+a"
+    ],
+    [
+      "press",
+      "Control+c"
+    ],
+    [
+      "click",
+      "#inline"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "click",
+      "#input"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "eval",
+      "-b",
+      "KHt2YWx1ZXM6T2JqZWN0LmZyb21FbnRyaWVzKFsnaW5saW5lJywnaW5wdXQnLCdwbGFpbiddLm1hcChpZD0+W2lkLGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGlkKS52YWx1ZV0pKSxldmVudHM6d2luZG93LnRyaWFnZUV2ZW50c30p"
+    ]
+  ],
+  "timeoutSeconds": 35,
+  "exitCode": 0,
+  "stdout": "✓ Paste mechanisms\n  http://127.0.0.1:18951/mechanisms.html\nACTION_RESULT {\"arguments\":[\"tab\",\"t3\"],\"exitCode\":0}\r\nhttp://127.0.0.1:18951/mechanisms.html\nACTION_RESULT {\"arguments\":[\"reload\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"wait\",\"#plain\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"fill\",\"#plain\",\"EASYCV_EDGE_POPUP_HISTORY\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+a\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+c\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"#inline\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+v\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"#input\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+v\"],\"exitCode\":0}\r\n{\n  \"events\": [],\n  \"values\": {\n    \"inline\": \"\",\n    \"input\": \"\",\n    \"plain\": \"EASYCV_EDGE_POPUP_HISTORY\"\n  }\n}\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"KHt2YWx1ZXM6T2JqZWN0LmZyb21FbnRyaWVzKFsnaW5saW5lJywnaW5wdXQnLCdwbGFpbiddLm1hcChpZD0+W2lkLGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGlkKS52YWx1ZV0pKSxldmVudHM6d2luZG93LnRyaWFnZUV2ZW50c30p\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

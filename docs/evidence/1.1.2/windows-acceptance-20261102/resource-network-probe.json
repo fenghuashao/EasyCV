@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T20:45:15.566889+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding = [Text.UTF8Encoding]::new($false)\n$ProgressPreference = 'SilentlyContinue'\n$urls = @('https://dl.google.com/chrome/install/ChromeStandaloneSetupARM64.exe','https://registry.npmjs.org/agent-browser/-/agent-browser-0.41.0.tgz')\nforeach ($u in $urls) { try { $r = Invoke-WebRequest -Uri $u -Method Head -UseBasicParsing -TimeoutSec 18; @{url=$u;status=[int]$r.StatusCode;bytes=$r.Headers['Content-Length']} | ConvertTo-Json -Compress } catch { @{url=$u;error=$_.Exception.Message} | ConvertTo-Json -Compress } }\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -EncodedCommand",
+  "timeoutSeconds": 50,
+  "exitCode": 0,
+  "stdout": "{\"status\":200,\"url\":\"https://dl.google.com/chrome/install/ChromeStandaloneSetupARM64.exe\",\"bytes\":\"172990392\"}\r\n{\"status\":200,\"url\":\"https://registry.npmjs.org/agent-browser/-/agent-browser-0.41.0.tgz\",\"bytes\":null}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

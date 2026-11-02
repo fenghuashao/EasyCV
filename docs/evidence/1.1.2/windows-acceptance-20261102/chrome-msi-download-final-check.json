@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T21:19:44.953950+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$ProgressPreference='SilentlyContinue'\n$d=Join-Path $env:LOCALAPPDATA 'EasyCV-Downloads-20261102-Chrome'\n$p=Join-Path $d 'googlechromestandaloneenterprise_arm64.msi'\n$c=Get-Process -Id 7380 -ErrorAction SilentlyContinue\n$r=@{bytes=(Get-Item -LiteralPath $p).Length;downloadRunning=($null -ne $c)}\nif(-not $c){$s=Get-AuthenticodeSignature -LiteralPath $p;$r.signatureStatus=[string]$s.Status;$r.publisher=$s.SignerCertificate.Subject;$r.sha256=(Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash;$r.stderr=Get-Content -Raw (Join-Path $d 'msi-resume.stderr.txt') -ErrorAction SilentlyContinue}\n$r|ConvertTo-Json -Compress\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand",
+  "timeoutSeconds": 25,
+  "exitCode": 0,
+  "stdout": "{\"publisher\":\"CN=Google LLC, O=Google LLC, L=Mountain View, S=California, C=US, SERIALNUMBER=3582691, OID.2.5.4.15=Private Organization, OID.1.3.6.1.4.1.311.60.2.1.2=Delaware, OID.1.3.6.1.4.1.311.60.2.1.3=US\",\"sha256\":\"8E5DE3313C2D95AB9ED3592400FE655490F34F7CD015992D280342600B44AD8B\",\"signatureStatus\":\"Valid\",\"bytes\":174944256,\"stderr\":null,\"downloadRunning\":false}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

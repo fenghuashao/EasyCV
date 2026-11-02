@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T21:16:31.035084+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$ProgressPreference='SilentlyContinue'\n$p=Join-Path $env:LOCALAPPDATA 'EasyCV-Downloads-20261102-Chrome\\googlechromestandaloneenterprise_arm64.msi'\n$c=Get-Process -Id 7380 -ErrorAction SilentlyContinue\n@{bytes=(Get-Item -LiteralPath $p).Length;expectedBytes=174944256;knownDownloadPIDRunning=($null -ne $c)}|ConvertTo-Json -Compress\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand",
+  "timeoutSeconds": 20,
+  "exitCode": 0,
+  "stdout": "{\"bytes\":102723456,\"expectedBytes\":174944256,\"knownDownloadPIDRunning\":true}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

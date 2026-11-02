@@ -1,0 +1,26 @@
+{
+  "observedAt": "2026-11-02T22:52:20.943925+08:00",
+  "browser": "chrome",
+  "session": "easycv-win-chrome-20261102",
+  "guestCDPPort": 19331,
+  "commands": [
+    [
+      "open",
+      "chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html"
+    ],
+    [
+      "wait",
+      "#detectionDelay"
+    ],
+    [
+      "tab",
+      "list",
+      "--json"
+    ]
+  ],
+  "timeoutSeconds": 30,
+  "exitCode": 0,
+  "stdout": "✓ EasyCV 设置\n  chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\nACTION_RESULT {\"arguments\":[\"open\",\"chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"wait\",\"#detectionDelay\"],\"exitCode\":0}\r\n{\"success\":true,\"data\":{\"lifecycle\":{\"effectiveLaunch\":{\"browserLaunched\":true,\"engine\":\"chrome\",\"launchHash\":10497060223723932023},\"launched\":false,\"relaunchedBrowser\":false,\"restartedBackground\":false,\"restoreStatus\":\"not_configured\",\"reused\":true,\"saveStatus\":\"not_configured\"},\"tabs\":[{\"active\":true,\"label\":null,\"tabId\":\"t1\",\"targetId\":\"B942A20779DEE57C83F8EDD94A5677AA\",\"title\":\"EasyCV 设置\",\"type\":\"page\",\"url\":\"chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\"}]},\"error\":null}\nACTION_RESULT {\"arguments\":[\"tab\",\"list\",\"--json\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

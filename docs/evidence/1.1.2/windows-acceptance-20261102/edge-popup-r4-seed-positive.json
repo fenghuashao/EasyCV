@@ -1,0 +1,67 @@
+{
+  "observedAt": "2026-11-02T22:29:38.474325+08:00",
+  "browser": "edge",
+  "session": "easycv-win-edge-20261102",
+  "guestCDPPort": 19332,
+  "commands": [
+    [
+      "tab",
+      "t1"
+    ],
+    [
+      "reload"
+    ],
+    [
+      "wait",
+      "#plain"
+    ],
+    [
+      "fill",
+      "#plain",
+      "EASYCV_EDGE_POPUP_RECHECK_20261102"
+    ],
+    [
+      "press",
+      "Control+a"
+    ],
+    [
+      "press",
+      "Control+c"
+    ],
+    [
+      "fill",
+      "#plain",
+      ""
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "click",
+      "#inline"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "click",
+      "#input"
+    ],
+    [
+      "press",
+      "Control+v"
+    ],
+    [
+      "eval",
+      "-b",
+      "KHtmb2N1czpkb2N1bWVudC5oYXNGb2N1cygpLHZhbHVlczpPYmplY3QuZnJvbUVudHJpZXMoWyJpbmxpbmUiLCJpbnB1dCIsInBsYWluIl0ubWFwKGlkPT5baWQsZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoaWQpLnZhbHVlXSkpLGV2ZW50czp0cmlhZ2VFdmVudHN9KQ=="
+    ]
+  ],
+  "timeoutSeconds": 45,
+  "exitCode": 0,
+  "stdout": "✓ Paste mechanisms\n  http://127.0.0.1:18951/mechanisms.html\nACTION_RESULT {\"arguments\":[\"tab\",\"t1\"],\"exitCode\":0}\r\nhttp://127.0.0.1:18951/mechanisms.html\nACTION_RESULT {\"arguments\":[\"reload\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"wait\",\"#plain\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"fill\",\"#plain\",\"EASYCV_EDGE_POPUP_RECHECK_20261102\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+a\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+c\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"fill\",\"#plain\",\"\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+v\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"#inline\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+v\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"#input\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"press\",\"Control+v\"],\"exitCode\":0}\r\n{\n  \"events\": [\n    {\n      \"defaultPrevented\": false,\n      \"id\": \"plain\",\n      \"isTrusted\": true,\n      \"time\": 876.4000000003725\n    },\n    {\n      \"defaultPrevented\": false,\n      \"id\": \"inline\",\n      \"isTrusted\": true,\n      \"time\": 1167.7999999998135\n    },\n    {\n      \"defaultPrevented\": false,\n      \"id\": \"input\",\n      \"isTrusted\": true,\n      \"time\": 1415\n    }\n  ],\n  \"focus\": true,\n  \"values\": {\n    \"inline\": \"EASYCV_EDGE_POPUP_RECHECK_20261102\",\n    \"input\": \"EASYCV_EDGE_POPUP_RECHECK_20261102\",\n    \"plain\": \"EASYCV_EDGE_POPUP_RECHECK_20261102\"\n  }\n}\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"KHtmb2N1czpkb2N1bWVudC5oYXNGb2N1cygpLHZhbHVlczpPYmplY3QuZnJvbUVudHJpZXMoWyJpbmxpbmUiLCJpbnB1dCIsInBsYWluIl0ubWFwKGlkPT5baWQsZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoaWQpLnZhbHVlXSkpLGV2ZW50czp0cmlhZ2VFdmVudHN9KQ==\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

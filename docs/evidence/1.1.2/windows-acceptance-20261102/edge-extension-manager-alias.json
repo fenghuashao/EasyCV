@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T20:55:34.145576+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$a=Join-Path $env:LOCALAPPDATA 'EasyCV-Downloads-20261102-Tools\\package\\bin\\agent-browser-win32-x64.exe'\n& $a --session easycv-win-edge-20261102 --cdp 19332 open 'chrome://extensions/'\n& $a --session easycv-win-edge-20261102 --cdp 19332 snapshot -i\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -EncodedCommand",
+  "timeoutSeconds": 25,
+  "exitCode": 0,
+  "stdout": "✓ 扩展\n  edge://extensions/\n- heading \"扩展\" [level=1, ref=e185]\n- textbox [ref=e193]\n- menuitemradio \"我的扩展\" [checked=true, ref=e188]\n- menuitemradio \"键盘快捷方式\" [checked=false, ref=e189]\n- link \"获取 Microsoft Edge 扩展\" [ref=e190]\n- switch \"开发人员模式\" [checked=false, ref=e191]\n- link \"了解更多信息\" [ref=e192]\n- switch \"开启 Google 文档的离线功能\" [checked=false, ref=e194]\n- button \"详细信息\" [ref=e195]\n- button \"删除\" [ref=e196]\n- button \"从 Edge 加载项发现扩展和主题\" [ref=e186]\n- link \"Chrome Web Store \" [ref=e187]\n",
+  "stderr": "#< CLIXML\r\n<Objs Version=\"1.1.0.1\" xmlns=\"http://schemas.microsoft.com/powershell/2004/04\"><Obj S=\"progress\" RefId=\"0\"><TN RefId=\"0\"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N=\"SourceId\">1</I64><PR N=\"Record\"><AV>正在准备首次使用模块。</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>",
+  "timedOut": false
+}

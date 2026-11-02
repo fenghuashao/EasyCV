@@ -1,0 +1,21 @@
+{
+  "observedAt": "2026-11-02T21:37:23.840944+08:00",
+  "browser": "chrome",
+  "session": "easycv-win-chrome-20261102",
+  "guestCDPPort": 19331,
+  "commands": [
+    [
+      "open",
+      "chrome://extensions/"
+    ],
+    [
+      "snapshot",
+      "-i"
+    ]
+  ],
+  "timeoutSeconds": 35,
+  "exitCode": null,
+  "stdout": "✓ 扩展程序\n  chrome://extensions/\nACTION_RESULT {\"arguments\":[\"open\",\"chrome://extensions/\"],\"exitCode\":0}\r\n- heading \"扩展程序\" [level=1, ref=e2]\n- searchbox \"搜索扩展程序\" [ref=e3]\n- switch \"开发者模式\" [checked=false, ref=e1]\n- menuitem \"我的扩展程序\" [ref=e4]\n- menuitem \"键盘快捷键\" [ref=e5]\n- link \"Chrome 应用商店\" [ref=e6]\n- link \"Chrome 应用商店\" [ref=e7]\nACTION_RESULT {\"arguments\":[\"snapshot\",\"-i\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": true
+}

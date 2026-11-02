@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T21:24:07.912853+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$ProgressPreference='SilentlyContinue'\n$paths=@('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',(Join-Path $env:LOCALAPPDATA 'Google\\Chrome\\Application\\chrome.exe'))\nforeach($p in $paths){if(Test-Path -LiteralPath $p){@{browser=$p;version=(Get-Item -LiteralPath $p).VersionInfo.ProductVersion}|ConvertTo-Json -Compress}}\n$i=Get-Process -Id 7016 -ErrorAction SilentlyContinue\nif($i){@{knownInstallerPID=$i.Id;windowTitle=$i.MainWindowTitle}|ConvertTo-Json -Compress}\n$l=Join-Path $env:LOCALAPPDATA 'EasyCV-Downloads-20261102-Chrome\\chrome-msi-install.log'\nif(Test-Path -LiteralPath $l){Get-Content -LiteralPath $l -Tail 18 | Select-String 'Installation|Product:|Return value 3|error status|错误状态' | ForEach-Object {$_.Line}}\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand",
+  "timeoutSeconds": 20,
+  "exitCode": 0,
+  "stdout": "{\"windowTitle\":\"Google Chrome\",\"knownInstallerPID\":7016}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

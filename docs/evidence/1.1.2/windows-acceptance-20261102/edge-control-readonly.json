@@ -1,0 +1,18 @@
+{
+  "observedAt": "2026-11-02T21:03:20.943507+08:00",
+  "browser": "edge",
+  "session": "easycv-win-edge-20261102",
+  "guestCDPPort": 19332,
+  "commands": [
+    [
+      "eval",
+      "-b",
+      "SlNPTi5zdHJpbmdpZnkoQXJyYXkuZnJvbShkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCdpbnB1dCxbcm9sZT0ic3dpdGNoIl0nKSkubWFwKHg9Pih7dGFnOngudGFnTmFtZSxpZDp4LmlkLHJvbGU6eC5nZXRBdHRyaWJ1dGUoJ3JvbGUnKSxkaXNhYmxlZDp4LmRpc2FibGVkLGFyaWFEaXNhYmxlZDp4LmdldEF0dHJpYnV0ZSgnYXJpYS1kaXNhYmxlZCcpLGNoZWNrZWQ6eC5jaGVja2VkLGFyaWFDaGVja2VkOnguZ2V0QXR0cmlidXRlKCdhcmlhLWNoZWNrZWQnKX0pKSk="
+    ]
+  ],
+  "timeoutSeconds": 20,
+  "exitCode": 0,
+  "stdout": "\"[]\"\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"SlNPTi5zdHJpbmdpZnkoQXJyYXkuZnJvbShkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCdpbnB1dCxbcm9sZT0ic3dpdGNoIl0nKSkubWFwKHg9Pih7dGFnOngudGFnTmFtZSxpZDp4LmlkLHJvbGU6eC5nZXRBdHRyaWJ1dGUoJ3JvbGUnKSxkaXNhYmxlZDp4LmRpc2FibGVkLGFyaWFEaXNhYmxlZDp4LmdldEF0dHJpYnV0ZSgnYXJpYS1kaXNhYmxlZCcpLGNoZWNrZWQ6eC5jaGVja2VkLGFyaWFDaGVja2VkOnguZ2V0QXR0cmlidXRlKCdhcmlhLWNoZWNrZWQnKX0pKSk=\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

@@ -1,0 +1,69 @@
+{
+  "observedAt": "2026-11-02T22:41:37.257244+08:00",
+  "browser": "chrome-store",
+  "session": "easycv-win-chrome-store-20261102",
+  "guestCDPPort": 19333,
+  "commands": [
+    [
+      "reload"
+    ],
+    [
+      "wait",
+      "#detectionDelay"
+    ],
+    [
+      "eval",
+      "-b",
+      "KGFzeW5jKCk9Pih7aWQ6Y2hyb21lLnJ1bnRpbWUuaWQsdmVyc2lvbjpjaHJvbWUucnVudGltZS5nZXRNYW5pZmVzdCgpLnZlcnNpb24sdWk6e2ZvcmNlTW9kZTpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZm9yY2VNb2RlIikuY2hlY2tlZCxjb3B5OmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJlbmFibGVDb3B5IikuY2hlY2tlZCxwYXN0ZTpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZW5hYmxlUGFzdGUiKS5jaGVja2VkLG5vdGlmaWNhdGlvbnM6ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInNob3dOb3RpZmljYXRpb25zIikuY2hlY2tlZCxkZWxheTpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZGV0ZWN0aW9uRGVsYXkiKS52YWx1ZSxyZXRyaWVzOmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJtYXhSZXRyaWVzIikudmFsdWUsYXV0b0xpc3Q6ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIndoaXRlbGlzdENvbnRhaW5lciIpLnRleHRDb250ZW50LGV4Y2x1ZGVkTGlzdDpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZXhjbHVkZWRDb250YWluZXIiKS50ZXh0Q29udGVudH0sc3RvcmFnZTphd2FpdCBjaHJvbWUuc3RvcmFnZS5zeW5jLmdldChbInBsdWdpbl9lbmFibGVkIiwiZm9yY2VfbW9kZSIsInVzZXJfc2V0dGluZ3MiLCJhdXRvX2VuYWJsZV9saXN0IiwiZXhjbHVkZWRfbGlzdCJdKX0pKSgp"
+    ],
+    [
+      "click",
+      "[data-tab=\"whitelist\"]"
+    ],
+    [
+      "fill",
+      "#whitelistInput",
+      "store-auto.localhost"
+    ],
+    [
+      "click",
+      "#addWhitelistBtn"
+    ],
+    [
+      "fill",
+      "#whitelistInput",
+      "blocked.localhost"
+    ],
+    [
+      "click",
+      "#addWhitelistBtn"
+    ],
+    [
+      "click",
+      "[data-tab=\"excluded\"]"
+    ],
+    [
+      "fill",
+      "#excludedInput",
+      "blocked.localhost"
+    ],
+    [
+      "click",
+      "#addExcludedBtn"
+    ],
+    [
+      "tab",
+      "new",
+      "http://127.0.0.1:18951/mechanisms.html"
+    ],
+    [
+      "wait",
+      "#plain"
+    ]
+  ],
+  "timeoutSeconds": 40,
+  "exitCode": 0,
+  "stdout": "chrome-extension://bnbmgiidicjdbnmkmdnjeelhijnlhnjb/options/options.html\nACTION_RESULT {\"arguments\":[\"reload\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"wait\",\"#detectionDelay\"],\"exitCode\":0}\r\n{\n  \"id\": \"bnbmgiidicjdbnmkmdnjeelhijnlhnjb\",\n  \"storage\": {\n    \"auto_enable_list\": [],\n    \"excluded_list\": [\n      \"accounts.google.com\",\n      \"login.live.com\",\n      \"appleid.apple.com\"\n    ],\n    \"force_mode\": true,\n    \"plugin_enabled\": true,\n    \"user_settings\": {\n      \"autoEnableList\": [],\n      \"copyEnabled\": true,\n      \"enableStatistics\": true,\n      \"excludedList\": [\n        \"accounts.google.com\",\n        \"login.live.com\",\n        \"appleid.apple.com\"\n      ],\n      \"forceMode\": false,\n      \"pasteEnabled\": true,\n      \"pluginEnabled\": true,\n      \"showNotifications\": true,\n      \"theme\": \"auto\"\n    }\n  },\n  \"ui\": {\n    \"autoList\": \"\\n        \\n          \\n            \\n          \\n          暂无自动解锁网站\\n        \\n      \",\n    \"copy\": true,\n    \"delay\": \"1000\",\n    \"excludedList\": \"\\n      \\n        \\n          \\n            accounts.google.com\\n          \\n        \\n        \\n          \\n            \\n            删除\\n          \\n        \\n      \\n    \\n      \\n        \\n          \\n            login.live.com\\n          \\n        \\n        \\n          \\n            \\n            删除\\n          \\n        \\n      \\n    \\n      \\n        \\n          \\n            appleid.apple.com\\n          \\n        \\n        \\n          \\n            \\n            删除\\n          \\n        \\n      \\n    \",\n    \"forceMode\": false,\n    \"notifications\": true,\n    \"paste\": true,\n    \"retries\": \"3\"\n  },\n  \"version\": \"1.1.1\"\n}\nACTION_RESULT {\"arguments\":[\"eval\",\"-b\",\"KGFzeW5jKCk9Pih7aWQ6Y2hyb21lLnJ1bnRpbWUuaWQsdmVyc2lvbjpjaHJvbWUucnVudGltZS5nZXRNYW5pZmVzdCgpLnZlcnNpb24sdWk6e2ZvcmNlTW9kZTpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZm9yY2VNb2RlIikuY2hlY2tlZCxjb3B5OmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJlbmFibGVDb3B5IikuY2hlY2tlZCxwYXN0ZTpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZW5hYmxlUGFzdGUiKS5jaGVja2VkLG5vdGlmaWNhdGlvbnM6ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInNob3dOb3RpZmljYXRpb25zIikuY2hlY2tlZCxkZWxheTpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZGV0ZWN0aW9uRGVsYXkiKS52YWx1ZSxyZXRyaWVzOmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJtYXhSZXRyaWVzIikudmFsdWUsYXV0b0xpc3Q6ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIndoaXRlbGlzdENvbnRhaW5lciIpLnRleHRDb250ZW50LGV4Y2x1ZGVkTGlzdDpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZXhjbHVkZWRDb250YWluZXIiKS50ZXh0Q29udGVudH0sc3RvcmFnZTphd2FpdCBjaHJvbWUuc3RvcmFnZS5zeW5jLmdldChbInBsdWdpbl9lbmFibGVkIiwiZm9yY2VfbW9kZSIsInVzZXJfc2V0dGluZ3MiLCJhdXRvX2VuYWJsZV9saXN0IiwiZXhjbHVkZWRfbGlzdCJdKX0pKSgp\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"[data-tab=\\\"whitelist\\\"]\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"fill\",\"#whitelistInput\",\"store-auto.localhost\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"#addWhitelistBtn\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"fill\",\"#whitelistInput\",\"blocked.localhost\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"#addWhitelistBtn\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"[data-tab=\\\"excluded\\\"]\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"fill\",\"#excludedInput\",\"blocked.localhost\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"click\",\"#addExcludedBtn\"],\"exitCode\":0}\r\nhttp://127.0.0.1:18951/mechanisms.html\nACTION_RESULT {\"arguments\":[\"tab\",\"new\",\"http://127.0.0.1:18951/mechanisms.html\"],\"exitCode\":0}\r\n✓ Done\nACTION_RESULT {\"arguments\":[\"wait\",\"#plain\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

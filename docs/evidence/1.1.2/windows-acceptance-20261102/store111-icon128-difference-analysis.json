@@ -1,0 +1,136 @@
+{
+  "file": "icons/icon-default-128.png",
+  "dimensions": [
+    128,
+    128
+  ],
+  "pixelCount": 16384,
+  "differentRGBAPixelCount": 8,
+  "alphaBytesEqual": true,
+  "allOpaquePixelsEqual": true,
+  "premultipliedRGBAEqual": true,
+  "maxRawRGBChannelDifference": 1,
+  "differentPixels": [
+    {
+      "index": 1947,
+      "source": [
+        51,
+        123,
+        183,
+        204
+      ],
+      "installed": [
+        51,
+        122,
+        182,
+        204
+      ]
+    },
+    {
+      "index": 2020,
+      "source": [
+        51,
+        123,
+        183,
+        204
+      ],
+      "installed": [
+        51,
+        122,
+        182,
+        204
+      ]
+    },
+    {
+      "index": 3471,
+      "source": [
+        51,
+        123,
+        183,
+        204
+      ],
+      "installed": [
+        51,
+        122,
+        182,
+        204
+      ]
+    },
+    {
+      "index": 3568,
+      "source": [
+        51,
+        123,
+        183,
+        204
+      ],
+      "installed": [
+        51,
+        122,
+        182,
+        204
+      ]
+    },
+    {
+      "index": 12815,
+      "source": [
+        51,
+        123,
+        183,
+        204
+      ],
+      "installed": [
+        51,
+        122,
+        182,
+        204
+      ]
+    },
+    {
+      "index": 12912,
+      "source": [
+        51,
+        123,
+        183,
+        204
+      ],
+      "installed": [
+        51,
+        122,
+        182,
+        204
+      ]
+    },
+    {
+      "index": 14363,
+      "source": [
+        51,
+        123,
+        183,
+        204
+      ],
+      "installed": [
+        51,
+        122,
+        182,
+        204
+      ]
+    },
+    {
+      "index": 14436,
+      "source": [
+        51,
+        123,
+        183,
+        204
+      ],
+      "installed": [
+        51,
+        122,
+        182,
+        204
+      ]
+    }
+  ],
+  "conclusion": "Raw RGBA is not byte equal; retain this fact. Compare premultiplied result and Chromium image sanitizer for bounded normalization explanation."
+}

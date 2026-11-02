@@ -1,0 +1,22 @@
+{
+  "observedAt": "2026-11-02T22:37:19.477998+08:00",
+  "browser": "chrome-store",
+  "session": "easycv-win-chrome-store-20261102",
+  "guestCDPPort": 19333,
+  "commands": [
+    [
+      "tab",
+      "list",
+      "--json"
+    ],
+    [
+      "snapshot",
+      "-i"
+    ]
+  ],
+  "timeoutSeconds": 40,
+  "exitCode": null,
+  "stdout": "{\"success\":true,\"data\":{\"lifecycle\":{\"effectiveLaunch\":{\"browserLaunched\":true,\"engine\":\"chrome\",\"launchHash\":3228441923842977383},\"launched\":false,\"relaunchedBrowser\":false,\"restartedBackground\":false,\"restoreStatus\":\"not_configured\",\"reused\":true,\"saveStatus\":\"not_attempted\"},\"tabs\":[{\"active\":true,\"label\":null,\"tabId\":\"t1\",\"targetId\":\"C3760808D06322428D029DAF73EFF02F\",\"title\":\"EasyCV - 解除网页复制粘贴限制 - Chrome 应用商店\",\"type\":\"page\",\"url\":\"https://chromewebstore.google.com/detail/easycv-%E8%A7%A3%E9%99%A4%E7%BD%91%E9%A1%B5%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4%E9%99%90%E5%88%B6/bnbmgiidicjdbnmkmdnjeelhijnlhnjb\"}]},\"error\":null}\nACTION_RESULT {\"arguments\":[\"tab\",\"list\",\"--json\"],\"exitCode\":0}\r\n- link \"跳到主要内容\" [ref=e1]\n- link \"Chrome 应用商店的徽标 chrome 应用商店\" [ref=e2]\n- combobox \"搜索 Chrome 应用商店\" [expanded=false, ref=e14]\n- button \"一个包含更多选项的菜单\" [expanded=false, ref=e6]\n- button \"Google 应用\" [expanded=false, ref=e42]\n- link \"登录\" [ref=e12]\n- tab \"探索\" [ref=e3]\n- tab \"扩展程序\" [selected, ref=e4]\n- tab \"主题\" [ref=e5]\n- heading \"EasyCV - 解除网页复制粘贴限制\" [level=1, ref=e43]\n- button \"分享\" [ref=e54]\n- link \"扩展程序\" [ref=e44]\n- link \"工具\" [ref=e45]\n- button \"添加至 Chrome\" [ref=e58]\n- region \"媒体轮播界面\" [ref=e15]\n  - button \"上一张幻灯片\" [ref=e46]\n  - button \"EasyCV - 解除网页复制粘贴限制的项目媒体 1（屏幕截图）\" [ref=e59]\n  - button \"下一张幻灯片\" [ref=e47]\n- button \"EasyCV - 解除网页复制粘贴限制的预览幻灯片 1\" [ref=e16]\n- button \"EasyCV - 解除网页复制粘贴限制的预览幻灯片 2\" [ref=e17]\n- button \"EasyCV - 解除网页复制粘贴限制的预览幻灯片 3\" [ref=e18]\n- button \"EasyCV - 解除网页复制粘贴限制的预览幻灯片 4\" [ref=e19]\n- button \"EasyCV - 解除网页复制粘贴限制的预览幻灯片 5\" [ref=e20]\n- heading \"概述\" [level=2, ref=e21]\n- button \"查看更多\" [expanded=false, ref=e22]\n- heading \"0 星（5 星制） 0 星（最高为 5 星） 无评分• 详细了解结果和评价。\" [level=2, ref=e23]\n  - link \"详细了解结果和评价。\" [ref=e55]\n- generic \"查看所有评价\" [ref=e24] clickable [cursor:pointer]\n  - link \"查看所有评价\" [ref=e48]\n- heading \"详情\" [level=2, ref=e25]\n- link \"举报问题\" [ref=e60]\n- button \"显示更多语言\" [ref=e61]\n- heading \"隐私权\" [level=2, ref=e26]\n- link \"privacy policy\" [ref=e27]\n- heading \"该开发者已声明，您的数据：\" [level=2, ref=e28]\n- link \"批准的用途\" [ref=e56]\n- heading \"支持\" [level=2, ref=e29]\n- generic \"访问支持中心\" [ref=e49] clickable [cursor:pointer]\n  - link \"访问支持中心\" [ref=e57]\n- heading \"您可能还喜欢…\" [level=2, ref=e13]\n- link \"Easy Scraper - One-click web scraper\" [ref=e30]\n- heading \"Easy Scraper - One-click web scraper\" [level=3, ref=e31]\n- generic [ref=e32] clickable [cursor:pointer]\n  - link \"详细了解“Easy Scraper - One-click web scraper”的结果和评价。\" [expanded=false, ref=e50]\n- link \"SmartCopy 一键全能复制\" [ref=e33]\n- heading \"SmartCopy 一键全能复制\" [level=3, ref=e34]\n- generic [ref=e35] clickable [cursor:pointer]\n  - link \"详细了解“SmartCopy 一键全能复制”的结果和评价。\" [expanded=false, ref=e51]\n- link \"Snip - 删除网页元素\" [ref=e36]\n- heading \"Snip - 删除网页元素\" [level=3, ref=e37]\n- generic [ref=e38] clickable [cursor:pointer]\n  - link \"详细了解“Snip - 删除网页元素”的结果和评价。\" [expanded=false, ref=e52]\n- link \"复制受保护的文本\" [ref=e39]\n- heading \"复制受保护的文本\" [level=3, ref=e40]\n- generic [ref=e41] clickable [cursor:pointer]\n  - link \"详细了解“复制受保护的文本”的结果和评价。\" [expanded=false, ref=e53]\n- link \"关于 Chrome 应用商店\" [ref=e7]\n- link \"开发者信息中心\" [ref=e8]\n- link \"隐私权政策\" [ref=e9]\n- link \"服务条款\" [ref=e10]\n- link \"帮助\" [ref=e11]\nACTION_RESULT {\"arguments\":[\"snapshot\",\"-i\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": true
+}

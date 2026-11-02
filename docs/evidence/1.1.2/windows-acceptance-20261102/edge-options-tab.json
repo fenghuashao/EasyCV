@@ -1,0 +1,27 @@
+{
+  "observedAt": "2026-11-02T21:08:29.068788+08:00",
+  "browser": "edge",
+  "session": "easycv-win-edge-20261102",
+  "guestCDPPort": 19332,
+  "commands": [
+    [
+      "tab",
+      "list",
+      "--json"
+    ],
+    [
+      "tab",
+      "new",
+      "chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html"
+    ],
+    [
+      "snapshot",
+      "-i"
+    ]
+  ],
+  "timeoutSeconds": 25,
+  "exitCode": 0,
+  "stdout": "{\"success\":true,\"data\":{\"lifecycle\":{\"effectiveLaunch\":{\"browserLaunched\":true,\"engine\":\"chrome\",\"launchHash\":8917641277948395186},\"launched\":false,\"relaunchedBrowser\":false,\"restartedBackground\":false,\"restoreStatus\":\"not_configured\",\"reused\":true,\"saveStatus\":\"not_attempted\"},\"tabs\":[{\"active\":true,\"label\":null,\"tabId\":\"t1\",\"targetId\":\"64930959C6FC9D90086C319F3774005A\",\"title\":\"扩展\",\"type\":\"page\",\"url\":\"edge://extensions/?id=dgckfbbdhlgcjhaihmpdnnhnfpfeaono\"}]},\"error\":null}\nACTION_RESULT {\"arguments\":[\"tab\",\"list\",\"--json\"],\"exitCode\":0}\r\nchrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\nACTION_RESULT {\"arguments\":[\"tab\",\"new\",\"chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html\"],\"exitCode\":0}\r\n- heading \"EasyCV\" [level=1, ref=e225]\n- listitem \"常规设置\" [level=1, ref=e227] clickable [cursor:pointer]\n- listitem \"自动解锁管理\" [level=1, ref=e228] clickable [cursor:pointer]\n- listitem \"站点排除\" [level=1, ref=e229] clickable [cursor:pointer]\n- listitem \"高级设置\" [level=1, ref=e230] clickable [cursor:pointer]\n- listitem \"使用统计\" [level=1, ref=e231] clickable [cursor:pointer]\n- listitem \"关于\" [level=1, ref=e232] clickable [cursor:pointer]\n- heading \"常规设置\" [level=2, ref=e233]\n- heading \"基本功能\" [level=3, ref=e234]\n- checkbox [checked=true, ref=e238]\n- checkbox [checked=true, ref=e239]\n- checkbox [checked=true, ref=e240]\n- checkbox [checked=false, ref=e241]\n- checkbox [checked=true, ref=e242]\n- checkbox [checked=false, ref=e243]\n- heading \"检测设置\" [level=3, ref=e235]\n- spinbutton [ref=e236]: 1000\n- spinbutton [ref=e237]: 3\n- button [ref=e226]\nACTION_RESULT {\"arguments\":[\"snapshot\",\"-i\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

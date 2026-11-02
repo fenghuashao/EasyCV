@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T21:58:04.044891+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$ProgressPreference='SilentlyContinue'\n$d=Join-Path $env:LOCALAPPDATA 'EasyCV-Acceptance-20261102-r3'\n$profile=Join-Path $d 'edge-profile'\n$p=Start-Process -FilePath 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe' -ArgumentList ('--user-data-dir=\"'+$profile+'\"'),'--remote-debugging-port=19332','--no-first-run','--no-default-browser-check','--start-minimized','--new-window','chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html' -PassThru\n@{browserPID=$p.Id;profile=$profile;normalRestart=$true;extensionLoadFlagsUsed=$false;extensionReinstalled=$false;storageCopied=$false;startMinimized='Preserve FA Chrome directory-picker focus'}|ConvertTo-Json -Compress\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand",
+  "timeoutSeconds": 20,
+  "exitCode": 0,
+  "stdout": "{\"startMinimized\":\"Preserve FA Chrome directory-picker focus\",\"normalRestart\":true,\"extensionReinstalled\":false,\"profile\":\"C:\\\\Users\\\\fengshaohua\\\\AppData\\\\Local\\\\EasyCV-Acceptance-20261102-r3\\\\edge-profile\",\"browserPID\":724,\"storageCopied\":false,\"extensionLoadFlagsUsed\":false}\r\n",
+  "stderr": "",
+  "timedOut": false
+}

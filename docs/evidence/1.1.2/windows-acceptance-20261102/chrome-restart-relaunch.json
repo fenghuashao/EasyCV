@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T22:24:12.534024+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "\n[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$profile=Join-Path $env:LOCALAPPDATA 'EasyCV-Acceptance-20261102-r3\\chrome-profile'\n$p=Start-Process -FilePath 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' -ArgumentList ('--user-data-dir=\"'+$profile+'\"'),'--remote-debugging-port=19331','--no-first-run','--no-default-browser-check','--new-window','chrome-extension://dgckfbbdhlgcjhaihmpdnnhnfpfeaono/options/options.html' -PassThru\n@{browserPID=$p.Id;profile=$profile;normalRestart=$true;extensionLoadFlagsUsed=$false;extensionReinstalled=$false;storageCopied=$false}|ConvertTo-Json -Compress\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand",
+  "timeoutSeconds": 25,
+  "exitCode": 0,
+  "stdout": "{\"normalRestart\":true,\"extensionReinstalled\":false,\"profile\":\"C:\\\\Users\\\\fengshaohua\\\\AppData\\\\Local\\\\EasyCV-Acceptance-20261102-r3\\\\chrome-profile\",\"browserPID\":10728,\"storageCopied\":false,\"extensionLoadFlagsUsed\":false}\r\n",
+  "stderr": "#< CLIXML\r\n<Objs Version=\"1.1.0.1\" xmlns=\"http://schemas.microsoft.com/powershell/2004/04\"><Obj S=\"progress\" RefId=\"0\"><TN RefId=\"0\"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N=\"SourceId\">1</I64><PR N=\"Record\"><AV>正在准备首次使用模块。</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj><Obj S=\"progress\" RefId=\"1\"><TNRef RefId=\"0\" /><MS><I64 N=\"SourceId\">1</I64><PR N=\"Record\"><AV>正在准备首次使用模块。</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>",
+  "timedOut": false
+}

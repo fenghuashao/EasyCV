@@ -1,0 +1,84 @@
+# EasyCV 1.1.2 — Windows 发布前验收
+
+日期：2026-11-01（Asia/Shanghai）。**验收进行中，当前 RELEASE_DECISION = BLOCKED。** Windows 重装由 FA 操作，等待系统就绪；下列未执行项不构成功能失败，也不构成通过。报告将随本轮真实验收更新。
+
+## 基线与包保全
+
+已读取 [release closeout](EASYCV-1.1.2-RELEASE-CLOSEOUT.md)、[Popup 历史调查](EASYCV-1.1.2-POPUP-PASTE-TRIAGE.md)、[docs Gate 修复](EASYCV-1.1.2-DOCS-GATE-FIX.md)、[测试计划](docs/测试计划.md)、[测试用例](docs/测试用例.md)及[功能验证指南](docs/功能验证指南.md)。权限、既有打包 Gate 和 docs PASS 沿用对应报告，不重建候选，不把旧 macOS 证据算作 Windows 验收。
+
+| 项目 | 本轮核对 |
+| --- | --- |
+| Git 基线 | `master`，`bbd6300ecd7f3a23dd1f3a9ca2f74e517ffa1d09`；开始时已有大量已修改/未跟踪工作，完整状态及哈希已留存 |
+| 唯一候选 | `releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031.zip` |
+| 大小 / 文件数 | 132475 字节 / 38 个文件 |
+| SHA256 | `6a2f2478e847ff06d6b7a35dbe01b543d2cd00ab52df7f96d2763d758e77782a` |
+| 内容 | CRC、无重复条目、manifest 1.1.2、逐文件与既有解压目录一致：PASS；[完整清单](docs/evidence/1.1.2/windows-acceptance-20261101/locked-package.json) |
+| 保全范围 | 开始时 427 个文件，覆盖 tracked/unignored、dist、releases 及既有 1.1.1 baseline dist；[原始快照](docs/evidence/1.1.2/windows-acceptance-20261101/preservation-before.json)。浏览器 Profile、cookie 和 `.git` 内部状态不纳入读取 |
+
+## 环境与当前阻塞
+
+本机为 macOS / Darwin 24.6.0 arm64，Parallels Desktop 20.3.1。首次只读 CLI 查询发现 App Store 目录所注册的 Windows 11 为 `invalid`；原生界面随后出现删除/取消提示。尝试点击取消被工具以“用户已改变应用”拒绝；重新观察进入新建向导。之后一次 `prlctl start 'Windows 11'` 返回 255，原因是未注册。FX 未删除、创建、修复或重配虚拟机。
+
+FA 后续确认：原虚拟机提示损坏后由 FA 手动删除，目前由 FA 重装，要求等待新系统就绪。另发现 `~/Parallels/Windows 11.pvm`，含配置和磁盘、UUID 与原登记不同，未由 FX 打开或操作。最新安装观察仍为 Windows 下载过程；尚未建立 Windows Chrome/Edge 测试会话。不能仅凭 VM 包存在、登记状态或安装进度认定桌面可用。见[初始环境](docs/evidence/1.1.2/windows-acceptance-20261101/platform-availability.json)、[后续观察](docs/evidence/1.1.2/windows-acceptance-20261101/platform-followup.json)及[用户澄清](docs/evidence/1.1.2/windows-acceptance-20261101/environment-user-clarification.json)。
+
+Windows 实际系统版本、架构、Chrome/Edge 版本及 Profile 路径均待就绪后记录。未读取个人浏览器配置/页面内容、登录态或私人剪贴板；未在个人浏览器安装候选。已通过临时 npm cache 取得 agent-browser 0.41.0 使用文档及 Windows 工具，未全局安装 Skill 或更改全局配置；尚未启动 Windows 浏览器自动化。
+
+## Gate 快照
+
+表内 Native UI、设置和重启 Gate 均指本轮 Windows 范围；历史已通过的 macOS 局部结果只作参考。
+
+| Gate | 当前结果 | 证据与剩余条件 |
+| --- | --- | --- |
+| WINDOWS_CHROME_P0_GATE | NOT_RUN | 等待可用 Windows 与独立测试 Profile；下表全部项目待实测 |
+| WINDOWS_EDGE_SMOKE_GATE | NOT_RUN | 同上；不能用 macOS Chrome/Edge 替代 |
+| NATIVE_UI_GATE | NOT_RUN | Windows 工具栏实际 Popup、原生右键菜单未执行 |
+| UPGRADE_111_TO_112_GATE | NOT_VERIFIED | 1.1.1 身份已重新核验；尚无已建立的可信同 ID 1.1.2 更新路径，未执行升级 |
+| BROWSER_RESTART_PERSISTENCE_GATE | NOT_VERIFIED | 未在 Windows 正常退出/重启同一安装；候选独立安装与商店升级后的重启须分别记录 |
+| SETTINGS_AND_SITE_LIST_GATE | NOT_VERIFIED | 非默认设置、自动名单、排除名单尚无 Windows 保存/刷新/重启前后有效对照 |
+| KNOWN_POPUP_DEFECT_GATE | PARTIAL | 历史共同缺陷已确认且有刷新绕行证据；Windows 两版复现及绕行均 NOT_RUN，未因历史缺陷直接判新增回归 |
+| RELEASE_DECISION | BLOCKED | Windows 必测、同 ID 升级及重启/名单保持的必要证据不足；无例外授权 |
+
+## Windows 实测矩阵
+
+| 项目 | Chrome P0 | Edge smoke | 实际结果 |
+| --- | --- | --- | --- |
+| 安装、启用与正常加载 | NOT_RUN | NOT_RUN | 待 Windows 会话 |
+| 工具栏 Popup 主按钮及强力模式 | NOT_RUN | NOT_RUN | 待 Windows 会话；主按钮控制子开关，与全局开关分开记录 |
+| 真实复制、粘贴与文本选择解锁 | NOT_RUN | NOT_RUN | 待 Ctrl+C/Ctrl+V、拖选、限制负对照及文本落地断言 |
+| 自动启用与域名排除优先级 | NOT_RUN | NOT_RUN | Chrome 完整验收；Edge 至少保存名单并验证基本行为 |
+| 网页右键及 EasyCV 菜单动作 | NOT_RUN | NOT_RUN | 待原生菜单点击与页面效果核对 |
+| 非默认设置保存、Options 与页面刷新 | NOT_RUN | NOT_RUN | 待 UI 回读与真实功能共同验证 |
+| 多标签状态同步 | NOT_RUN | NOT_RUN | Chrome 必测；未刷新与刷新后分别记录 |
+| Popup 历史粘贴缺陷及刷新绕行 | NOT_RUN | NOT_RUN | 不以 storage=true/injector 存在代替真实粘贴 |
+| 正常关闭、重启后持久化 | NOT_RUN | NOT_RUN | 待同 Profile、原安装自然恢复；不显式重新加载冒充恢复 |
+
+具体可执行步骤、断言及证据要求已准备为[执行卡](docs/evidence/1.1.2/windows-acceptance-20261101/execution-plan.md)。此卡是待执行计划，不是测试通过记录；Windows 外部公开页面兼容性也尚未执行。
+
+## 同 ID 升级路径核查
+
+**本轮已确认包身份，尚未确认 Windows 中已安装该包。** Google 官方公开更新请求本次返回 1.1.1：ID `bnbmgiidicjdbnmkmdnjeelhijnlhnjb`，137031 字节，SHA256 `71804c76f85b30fc3b78c16a631f72fbcaa5d983a71ba8aedd47372ab9472cef`，与历史官方 CRX 逐字节相同。本轮重新执行既有只读签名脚本退出 0：三份 CRX3 签名有效，含绑定原 ID 的 item-key proof；36 个运行资源及已解释的 manifest/元数据差异仍匹配。见[本次请求与复验记录](docs/evidence/1.1.2/windows-acceptance-20261101/store-current-check.json)。这仅代表本次公开请求，不代表已读取认证后台或所有地区分发状态。
+
+路径评估见[结构化记录](docs/evidence/1.1.2/windows-acceptance-20261101/upgrade-path.json)：
+
+- **正常原商店商品更新**是可信路径；浏览器可在扩展管理页发起检查，扩展需进入 idle 才能应用。本次端点未给出 1.1.2；未上传、提交或发布。[官方更新生命周期](https://developer.chrome.com/docs/extensions/develop/concepts/extensions-update-lifecycle)。
+- **开发模式添加 `key` 保持 ID**仅解决开发身份，不足以证明原商店安装原位升级；本任务禁止修改 ID，不执行此替代实验。[官方 key 说明](https://developer.chrome.com/docs/extensions/reference/manifest/key)。
+- **自托管/企业策略**须有可信签名包和受支持、已授权的部署环境；当前均未建立。未生成密钥、重签包、改 update_url、注册表、企业策略或安装安全边界。[官方部署限制](https://developer.chrome.com/docs/extensions/how-to/distribute/install-extensions)、[CRX 更新签名要求](https://developer.chrome.com/docs/extensions/how-to/distribute/host-on-linux)。
+- **另建 BETA/私有商品**不能证明原商品 ID 的升级，且需新的商店操作，不执行。官方说明并行测试可以另建商品；原商品渠道变更还可能涉及下架/重发，不能默认为无影响的测试方法。[官方商品更新流程](https://developer.chrome.com/docs/webstore/update)。
+
+因此保持 NOT_VERIFIED，不宣称所有预发布路径均不可能。最小后续是：Windows 就绪后先以隔离 Profile 正常安装原 ID 1.1.1，等待初始化完成，用 UI 写入并保存非默认设置和两类名单；保留该安装及 Profile，取得经过来源/签名核验、可在受支持路径原位更新的同 ID 1.1.2，再核对完整设置/名单及真实网页功能，正常退出、重启后重验。若只能等获批发布后才有该更新，则升级 Gate 继续保留；是否接受发布例外由 FA 单独决定，不能为了验收自行提交或发布。
+
+不得卸载重装、手工复制存储、编辑浏览器 Preferences、模拟 onInstalled/update、用 runtime.reload 或新路径重新 loadExtension 代替真实升级；也不能以下载 CRX、读到存储值或 Worker 存在声称已安装/已升级/功能正常。
+
+## 已知缺陷、风险与交付边界
+
+`ECV-POST-112-01` 仍按[历史 Popup 调查](EASYCV-1.1.2-POPUP-PASTE-TRIAGE.md)独立登记：两版子开关关闭后加载受限 textarea/input，再从 Popup 开启时可能未应用到当前页；强力模式不能可靠补救，开启后刷新已有 macOS 实测绕行证据。关闭方向也可能残留解锁。Windows 本轮尚未复现，不能写成已通过或新增严重问题；目前也没有 Windows 实测证据足以判断是否存在新增严重回归。
+
+剩余风险是 Windows 浏览器交互兼容性未知、升级和正常重启后的设置/域名名单保持未知、历史 Popup 状态传播缺陷持续存在。docs Gate 修复已解除原 docs 阻塞，不解除上述必测义务。回滚本轮文档交付仅移走新增报告和 `windows-acceptance-20261101` 证据目录；不要 reset/clean 或覆盖既有未提交工作。
+
+```ini
+PRODUCT_RUNTIME_MODIFIED = NO
+LOCKED_ZIP_CHANGED = NO
+COMMIT_CREATED = NO
+PUSH_PERFORMED = NO
+STORE_SUBMISSION = NOT_RUN
+```

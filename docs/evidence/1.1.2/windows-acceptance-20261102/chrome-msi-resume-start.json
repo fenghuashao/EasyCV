@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-02T21:14:54.663107+08:00",
+  "vm": "799dc443-ad93-4544-98a6-52260c5e6cea",
+  "script": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$d=Join-Path $env:LOCALAPPDATA 'EasyCV-Downloads-20261102-Chrome'\n$p=Join-Path $d 'googlechromestandaloneenterprise_arm64.msi'\n$u='https://dl.google.com/dl/chrome/install/googlechromestandaloneenterprise_arm64.msi'\n$c=Start-Process curl.exe -ArgumentList '--fail','--silent','--show-error','--location','--continue-at','-','--max-time','600','--output',$p,$u -RedirectStandardError (Join-Path $d 'msi-resume.stderr.txt') -RedirectStandardOutput (Join-Path $d 'msi-resume.stdout.txt') -WindowStyle Hidden -PassThru\n@{downloadPID=$c.Id;currentBytes=(Get-Item $p).Length;source=$u;mode='Resume partial official download in background, installation not started'}|ConvertTo-Json -Compress\n",
+  "launch": "prlctl exec --current-user powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand",
+  "timeoutSeconds": 20,
+  "exitCode": null,
+  "timedOut": true,
+  "stdout": "{\"downloadPID\":7380,\"currentBytes\":17563520,\"source\":\"https://dl.google.com/dl/chrome/install/googlechromestandaloneenterprise_arm64.msi\",\"mode\":\"Resume partial official download in background, installation not started\"}\r\n",
+  "stderr": "#< CLIXML\r\n<Objs Version=\"1.1.0.1\" xmlns=\"http://schemas.microsoft.com/powershell/2004/04\"><Obj S=\"progress\" RefId=\"0\"><TN RefId=\"0\"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N=\"SourceId\">1</I64><PR N=\"Record\"><AV>正在准备首次使用模块。</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj><Obj S=\"progress\" RefId=\"1\"><TNRef RefId=\"0\" /><MS><I64 N=\"SourceId\">1</I64><PR N=\"Record\"><AV>正在准备首次使用模块。</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>"
+}
