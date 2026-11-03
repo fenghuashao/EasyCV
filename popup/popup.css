@@ -245,6 +245,35 @@ input:checked+.slider:before {
   border-radius: 4px;
 }
 
+.control-scope {
+  margin: 8px 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.help-panel {
+  margin-bottom: 16px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: var(--background-secondary);
+  font-size: 12px;
+}
+
+.help-panel ol {
+  padding-left: 18px;
+  margin: 8px 0;
+}
+
+.help-panel li + li {
+  margin-top: 6px;
+}
+
+.action-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .page-status {
   display: flex;
   align-items: center;

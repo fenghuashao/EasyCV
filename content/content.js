@@ -268,13 +268,13 @@ class CopyPasteManager {
           case 'FORCE_MODE_CHANGED':
             return await this.handleForceModeChanged(data);
 
-          case 'REFRESH_DETECTION':
+          case MessageUtils.MESSAGE_TYPES.REFRESH_DETECTION:
             return await this.handleRefreshDetection(data);
 
-          case 'TEST_COPY':
+          case MessageUtils.MESSAGE_TYPES.TEST_COPY:
             return await this.handleTestCopy(data);
 
-          case 'GET_PAGE_STATUS':
+          case MessageUtils.MESSAGE_TYPES.GET_PAGE_STATUS:
             return await this.handleGetPageStatus(data);
 
           default:

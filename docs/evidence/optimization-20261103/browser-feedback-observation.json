@@ -1,0 +1,62 @@
+{
+  "source": "working tree (manifest version unchanged; no release build)",
+  "platform": "win32",
+  "architecture": "x64",
+  "externalFeedbackNavigation": "aborted before network; no issue submitted",
+  "results": [
+    {
+      "language": "en-US",
+      "checks": [
+        "actual enabled page status",
+        "requested UI locale and translated copy check",
+        "refresh detection traverses the real content receiver",
+        "trusted keyboard copy and paste on the restricted fixture",
+        "enabled copy check requests manual verification",
+        "paste switch immediately updates partial page status",
+        "both switches off updates inactive page status",
+        "disabled copy check does not claim successful copying",
+        "main switch restores enabled page status",
+        "local help expands, remains accessible and fits 380px"
+      ],
+      "popupSurface": "extension HTML tab, not native action popup",
+      "targetTabLookup": "test-only override to the real fixture tab",
+      "browserVersion": "149.0.7827.55",
+      "uiLanguage": "en-US",
+      "pass": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'https://github.com/manifest.json'\n- 'https://github.com/fenghuashao/EasyCV/issues/new'\n\n    at file:///D:/pro/github/EasyCV/test/popup-ux-regression.mjs:136:16\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:541:9)\n    at async check (file:///D:/pro/github/EasyCV/test/popup-ux-regression.mjs:45:7)\n    at async file:///D:/pro/github/EasyCV/test/popup-ux-regression.mjs:129:7",
+      "observed": {
+        "status": "Copy and paste unlock are on for this page",
+        "copy": true,
+        "paste": true,
+        "language": "en-US"
+      }
+    },
+    {
+      "language": "zh-CN",
+      "checks": [
+        "actual enabled page status",
+        "requested UI locale and translated copy check",
+        "refresh detection traverses the real content receiver",
+        "trusted keyboard copy and paste on the restricted fixture",
+        "enabled copy check requests manual verification",
+        "paste switch immediately updates partial page status",
+        "both switches off updates inactive page status",
+        "disabled copy check does not claim successful copying",
+        "main switch restores enabled page status",
+        "local help expands, remains accessible and fits 380px"
+      ],
+      "popupSurface": "extension HTML tab, not native action popup",
+      "targetTabLookup": "test-only override to the real fixture tab",
+      "browserVersion": "149.0.7827.55",
+      "uiLanguage": "zh-CN",
+      "pass": false,
+      "error": "browserContext.waitForEvent: Timeout 10000ms exceeded while waiting for event \"request\"\n    at D:\\pro\\github\\EasyCV\\test\\popup-ux-regression.mjs:131:38\n    at async check (D:\\pro\\github\\EasyCV\\test\\popup-ux-regression.mjs:45:7)\n    at async file:///D:/pro/github/EasyCV/test/popup-ux-regression.mjs:129:7",
+      "observed": {
+        "status": "本页复制与粘贴解锁已开启",
+        "copy": true,
+        "paste": true,
+        "language": "zh-CN"
+      }
+    }
+  ]
+}

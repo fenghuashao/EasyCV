@@ -18,6 +18,8 @@ EasyCV（以下简称"本扩展"）尊重并保护用户隐私。本政策说明
 
 你可以随时在扩展设置页「高级设置 → 清除所有数据」删除以上全部内容，或卸载扩展自动清除。
 
+后续优化源码的反馈入口（尚未包含在锁定的 1.1.2 ZIP）：用户主动点击后打开 GitHub issue 草稿，仅自动填写扩展版本及空白模板，不自动附带浏览地址、查询参数或浏览器明细。你可以编辑、放弃或自行提交草稿；提交内容由 GitHub 按其政策处理。帮助指南直接在扩展内显示。
+
 ## 权限说明
 
 1.1.2 移除未使用的 `scripting` 与冗余的 `activeTab` 权限。保留 `storage`（设置、自动启用与排除列表、统计的浏览器存储）和 `contextMenus`（右键操作）。保留 `<all_urls>` 网站访问范围，用于任意普通网页的静态 Content Script、自动解锁及标签页 URL 识别；页面脚本通过扩展内的 web-accessible resource 加载。商店权限说明应与此一致。
@@ -51,6 +53,8 @@ The following data lives only in your browser's own chrome.storage (synced by yo
 - Recent error reports & feedback drafts (last 10/20 entries, local only, never sent automatically)
 
 You can wipe everything via Settings → Advanced → Clear all data, or by uninstalling.
+
+The feedback flow in the next development iteration (not included in the locked 1.1.2 ZIP) opens a GitHub issue draft only when you click Feedback. It pre-fills the extension version and a blank template, without browsing URLs, query parameters or browser details. You can edit, discard or submit it yourself; submitted content is handled by GitHub under its policies. Help is shown locally in the extension.
 
 ## Permissions
 

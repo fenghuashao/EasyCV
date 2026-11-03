@@ -1,0 +1,10 @@
+page.waitForFunction: Timeout 30000ms exceeded.
+    at D:\pro\github\EasyCV\test\popup-ux-regression.mjs:52:18 {
+  log: [],
+  name: 'TimeoutError'
+}
+page.waitForFunction: Timeout 30000ms exceeded.
+    at D:\pro\github\EasyCV\test\popup-ux-regression.mjs:52:18 {
+  log: [],
+  name: 'TimeoutError'
+}

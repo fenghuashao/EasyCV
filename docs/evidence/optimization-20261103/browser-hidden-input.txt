@@ -1,0 +1,92 @@
+PASS [en-US] actual enabled page status
+PASS [en-US] requested UI locale and translated copy check
+PASS [en-US] trusted keyboard copy and paste on the restricted fixture
+PASS [en-US] enabled copy check requests manual verification
+locator.uncheck: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator('#pasteToggle')
+    - locator resolved to <input checked type="checkbox" id="pasteToggle"/>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 500ms
+    - waiting for element to be visible, enabled and stable
+
+    at D:\pro\github\EasyCV\test\popup-ux-regression.mjs:92:45
+    at check (D:\pro\github\EasyCV\test\popup-ux-regression.mjs:44:13)
+    at D:\pro\github\EasyCV\test\popup-ux-regression.mjs:91:13 {
+  log: [
+    "  - waiting for locator('#pasteToggle')",
+    '    - locator resolved to <input checked type="checkbox" id="pasteToggle"/>',
+    '  - attempting click action',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is not visible',
+    '    - retrying click action',
+    '    - waiting 20ms',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is not visible',
+    '    - retrying click action',
+    '      - waiting 100ms',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is not visible',
+    '    - retrying click action',
+    '      - waiting 500ms',
+    '    - waiting for element to be visible, enabled and stable'
+  ],
+  name: 'TimeoutError'
+}
+PASS [zh-CN] actual enabled page status
+PASS [zh-CN] requested UI locale and translated copy check
+PASS [zh-CN] trusted keyboard copy and paste on the restricted fixture
+PASS [zh-CN] enabled copy check requests manual verification
+locator.uncheck: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator('#pasteToggle')
+    - locator resolved to <input checked type="checkbox" id="pasteToggle"/>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 500ms
+    - waiting for element to be visible, enabled and stable
+
+    at D:\pro\github\EasyCV\test\popup-ux-regression.mjs:92:45
+    at check (D:\pro\github\EasyCV\test\popup-ux-regression.mjs:44:13)
+    at D:\pro\github\EasyCV\test\popup-ux-regression.mjs:91:13 {
+  log: [
+    "  - waiting for locator('#pasteToggle')",
+    '    - locator resolved to <input checked type="checkbox" id="pasteToggle"/>',
+    '  - attempting click action',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is not visible',
+    '    - retrying click action',
+    '    - waiting 20ms',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is not visible',
+    '    - retrying click action',
+    '      - waiting 100ms',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is not visible',
+    '    - retrying click action',
+    '      - waiting 500ms',
+    '    - waiting for element to be visible, enabled and stable'
+  ],
+  name: 'TimeoutError'
+}

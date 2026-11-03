@@ -257,6 +257,8 @@ class PopupManager {
       if (!response.success) {
         throw new Error(response.error || '状态更新失败');
       }
+
+      await this.updatePageStatus();
       
       return response;
       
@@ -571,7 +573,7 @@ class PopupManager {
       
       // 发送刷新检测消息到content script
       const response = await MessageUtils.sendToContentScript(this.currentTab.id, {
-        type: 'REFRESH_DETECTION'
+        type: MessageUtils.MESSAGE_TYPES.REFRESH_DETECTION
       });
       
       if (response && response.success) {
@@ -589,17 +591,17 @@ class PopupManager {
   }
 
   /**
-   * 处理测试复制
+   * 检查页面复制开关；消息成功不代表真实剪贴板操作成功。
    */
   async handleTestCopy() {
     try {
       // 发送测试复制消息到content script
       const response = await MessageUtils.sendToContentScript(this.currentTab.id, {
-        type: 'TEST_COPY'
+        type: MessageUtils.MESSAGE_TYPES.TEST_COPY
       });
       
-      if (response && response.success) {
-        NotificationUtils.show(I18nUtils.t('test_copy_success'), 'success');
+      if (response?.success && typeof response.canCopy === 'boolean') {
+        NotificationUtils.show(I18nUtils.t(response.canCopy ? 'copy_check_enabled' : 'copy_check_disabled'), 'info');
       } else {
         throw new Error(response?.error || '测试复制失败');
       }
@@ -642,72 +644,81 @@ class PopupManager {
   }
 
   /**
-   * 更新页面状态显示
+   * 仅普通网页与获准访问的本地文件可能有内容脚本；商店禁止注入。
+   */
+  getSupportedPageUrl() {
+    try {
+      const url = new URL(this.currentTab?.url || '');
+      if (!['http:', 'https:', 'file:'].includes(url.protocol)) return null;
+      if (url.hostname === 'chromewebstore.google.com' ||
+          (url.hostname === 'chrome.google.com' && url.pathname.startsWith('/webstore'))) return null;
+      return url;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  setPageStatus(key, indicatorClass) {
+    const indicator = document.getElementById('statusIndicator');
+    const text = document.getElementById('statusText');
+    if (indicator) indicator.className = `status-indicator ${indicatorClass}`;
+    if (text) text.textContent = I18nUtils.t(key);
+  }
+
+  setPageActionsEnabled(enabled) {
+    for (const id of ['refreshBtn', 'testCopyBtn']) {
+      const button = document.getElementById(id);
+      if (button) button.disabled = !enabled;
+    }
+  }
+
+  /**
+   * 使用内容脚本的真实 status 信封显示启用态，不将开关或检测结果当作复制成功。
    */
   async updatePageStatus() {
-    if (!this.currentTab) return;
-    
+    this.setPageActionsEnabled(false);
+    const url = this.getSupportedPageUrl();
+    const currentUrlElement = document.getElementById('currentUrl');
+    if (currentUrlElement) {
+      currentUrlElement.textContent = url ? (url.hostname || I18nUtils.t('local_file')) : '';
+      currentUrlElement.style.display = url ? '' : 'none';
+    }
+    if (!url) {
+      this.setPageStatus('status_unsupported', 'inactive');
+      return;
+    }
+
     try {
-      // 获取插件设置（getPluginSettings 返回的主开关字段为 enabled）
-      const settings = await StorageUtils.getPluginSettings();
-      const isPluginEnabled = settings.enabled !== false;
-      
-      // 检查是否为自动开启网站的首次交互
-      const isFirstInteraction = await this.checkFirstInteraction();
-      
-      // 获取页面状态
-      let pageStatus = null;
-      try {
-        const response = await MessageUtils.sendToContentScript(this.currentTab.id, {
-          type: 'GET_PAGE_STATUS'
-        });
-        pageStatus = response;
-      } catch (error) {
-        console.warn('无法获取页面状态:', error);
+      const [settings, excluded] = await Promise.all([
+        StorageUtils.getPluginSettings(), StorageUtils.getExcludedList()
+      ]);
+      if (StorageUtils.isDomainExcluded(url.hostname, excluded)) {
+        this.setPageStatus('status_excluded', 'inactive');
+        return;
       }
-      
-      // 更新状态指示器
-      const statusIndicator = document.getElementById('statusIndicator');
-      const statusText = document.getElementById('statusText');
-
-      // 展示当前站点域名；扩展页等非 http(s) 场景隐藏该行（原缺陷：该行从未被赋值，永远显示「正在获取...」）
-      const currentUrlElement = document.getElementById('currentUrl');
-      if (currentUrlElement) {
-        try {
-          const url = new URL(this.currentTab.url || '');
-          if (url.protocol === 'http:' || url.protocol === 'https:') {
-            currentUrlElement.textContent = url.hostname;
-            currentUrlElement.style.display = '';
-          } else {
-            currentUrlElement.style.display = 'none';
-          }
-        } catch (urlError) {
-          currentUrlElement.style.display = 'none';
-        }
+      if (settings.enabled === false) {
+        this.setPageStatus('status_plugin_disabled', 'disabled');
+        return;
       }
 
-      if (statusIndicator && statusText) {
-        if (!isPluginEnabled) {
-          statusIndicator.className = 'status-indicator disabled';
-          statusText.textContent = I18nUtils.t('status_plugin_disabled');
-        } else if (isFirstInteraction) {
-          statusIndicator.className = 'status-indicator warning';
-          statusText.textContent = I18nUtils.t('status_first_visit');
-        } else if (pageStatus && pageStatus.isActive) {
-          if (pageStatus.hasRestrictions) {
-            statusIndicator.className = 'status-indicator warning';
-            statusText.textContent = I18nUtils.t('status_active_restricted');
-          } else {
-            statusIndicator.className = 'status-indicator active';
-            statusText.textContent = I18nUtils.t('status_active');
-          }
-        } else {
-          statusIndicator.className = 'status-indicator inactive';
-          statusText.textContent = I18nUtils.t('status_inactive');
-        }
+      const response = await MessageUtils.sendToContentScript(this.currentTab.id,
+        { type: MessageUtils.MESSAGE_TYPES.GET_PAGE_STATUS }, { retries: 0, silent: true });
+      const status = response?.success ? response.status : null;
+      if (!status || ['isEnabled', 'copyEnabled', 'pasteEnabled'].some(key => typeof status[key] !== 'boolean')) {
+        this.setPageStatus('status_page_unavailable', 'warning');
+        return;
+      }
+      this.setPageActionsEnabled(true);
+      if (!status.isEnabled || (!status.copyEnabled && !status.pasteEnabled)) {
+        this.setPageStatus('status_inactive', 'inactive');
+      } else if (status.copyEnabled && status.pasteEnabled) {
+        this.setPageStatus('status_active', 'active');
+      } else {
+        this.setPageStatus('status_partial', 'warning');
       }
     } catch (error) {
       console.error('更新页面状态失败:', error);
+      this.setPageStatus('status_page_unavailable', 'warning');
     }
   }
 
@@ -748,9 +759,11 @@ class PopupManager {
       // 更新成功率
       const successRateElement = document.getElementById('successRate');
       if (successRateElement) {
-        const rate = stats.totalAttempts > 0 ? 
-          Math.round((stats.successfulAttempts / stats.totalAttempts) * 100) : 0;
-        successRateElement.textContent = `${rate}%`;
+        const total = stats.totalAttempts;
+        const successes = stats.successfulAttempts;
+        successRateElement.textContent = Number.isFinite(total) && total > 0 &&
+          Number.isFinite(successes) && successes >= 0 && successes <= total
+          ? `${Math.round((successes / total) * 100)}%` : '—';
       }
     } catch (error) {
       console.error('加载统计数据失败:', error);
@@ -793,44 +806,17 @@ class PopupManager {
     });
   }
 
-  /**
-   * 检查是否为首次交互
-   */
-  async checkFirstInteraction() {
-    if (!this.currentTab || !this.currentTab.url) return false;
-    
-    try {
-      const url = new URL(this.currentTab.url);
-      const domain = url.hostname;
-
-      const existingConfig = await StorageUtils.getAutoEnableConfig(domain);
-      const interactionHistory = await StorageUtils.getInteractionHistory();
-
-      return !!existingConfig && !interactionHistory[domain];
-    } catch (error) {
-      console.error('检查首次交互失败:', error);
-      return false;
-    }
-  }
-
   // 自动启用逻辑已移至统一的AutoEnableManager处理
 
   /**
    * 打开反馈页面
    */
   openFeedbackPage() {
-    const currentUrl = this.currentTab ? this.currentTab.url : '';
-    const lastFailedOp = this.getLastFailedOperation();
-    
-    const feedbackUrl = `https://github.com/your-repo/issues/new?` +
-      `title=用户反馈&` +
-      `body=**当前页面:** ${encodeURIComponent(currentUrl)}%0A` +
-      `**操作类型:** ${encodeURIComponent(lastFailedOp || '无')}%0A` +
-      `**问题描述:** %0A%0A` +
-      `**浏览器信息:** ${encodeURIComponent(navigator.userAgent)}%0A` +
-      `**时间:** ${encodeURIComponent(new Date().toISOString())}`;
-    
-    chrome.tabs.create({ url: feedbackUrl });
+    // 只打开待审阅草稿；不自动把浏览地址、查询参数或浏览器明细发送给外部网站。
+    const url = new URL('https://github.com/fenghuashao/EasyCV/issues/new');
+    url.searchParams.set('title', I18nUtils.t('feedback_issue_title'));
+    url.searchParams.set('body', I18nUtils.t('feedback_issue_body', chrome.runtime.getManifest().version));
+    chrome.tabs.create({ url: url.href });
   }
 
   /**
@@ -872,20 +858,30 @@ class PopupManager {
   async updateAutoEnableButton() {
     const addToAutoBtn = document.getElementById('addToAutoBtn');
     const addToAutoBtnText = document.getElementById('addToAutoBtnText');
-    if (!addToAutoBtn || !this.currentTab || !this.currentTab.url) return;
+    if (!addToAutoBtn) return;
+    addToAutoBtn.disabled = true;
+    addToAutoBtn.classList.toggle('disabled', true);
 
     try {
-      const url = new URL(this.currentTab.url);
+      const url = this.getSupportedPageUrl();
+      if (!url?.hostname) {
+        addToAutoBtn.disabled = true;
+        addToAutoBtn.classList.toggle('disabled', true);
+        return;
+      }
       const domain = url.hostname;
 
-      const existingConfig = await StorageUtils.getAutoEnableConfig(domain);
+      const [existingConfig, excluded] = await Promise.all([
+        StorageUtils.getAutoEnableConfig(domain), StorageUtils.getExcludedList()
+      ]);
       const isInList = !!existingConfig;
+      const isDisabled = isInList || StorageUtils.isDomainExcluded(domain, excluded);
 
       if (addToAutoBtnText) {
         addToAutoBtnText.textContent = I18nUtils.t(isInList ? 'btn_in_auto_list' : 'add_to_auto');
       }
-      addToAutoBtn.disabled = isInList;
-      addToAutoBtn.classList.toggle('disabled', isInList);
+      addToAutoBtn.disabled = isDisabled;
+      addToAutoBtn.classList.toggle('disabled', isDisabled);
     } catch (error) {
       console.error('更新自动开启按钮失败:', error);
     }
@@ -902,7 +898,12 @@ class PopupManager {
    * 处理帮助按钮点击
    */
   handleHelp() {
-    chrome.tabs.create({ url: 'https://github.com/your-repo/wiki' });
+    const panel = document.getElementById('helpPanel');
+    const button = document.getElementById('helpBtn');
+    if (!panel) return;
+    panel.hidden = !panel.hidden;
+    if (button) button.setAttribute('aria-expanded', String(!panel.hidden));
+    if (!panel.hidden) panel.scrollIntoView({ block: 'nearest' });
   }
 
   /**

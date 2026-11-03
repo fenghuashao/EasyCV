@@ -9,6 +9,9 @@ class MessageUtils {
   static MESSAGE_TYPES = {
     TOGGLE_PLUGIN: 'toggle_plugin',
     GET_STATUS: 'get_status',
+    GET_PAGE_STATUS: 'GET_PAGE_STATUS',
+    TEST_COPY: 'TEST_COPY',
+    REFRESH_DETECTION: 'REFRESH_DETECTION',
     UPDATE_STATUS: 'update_status',
     ENABLE_FORCE_MODE: 'enable_force_mode',
     DISABLE_FORCE_MODE: 'disable_force_mode',

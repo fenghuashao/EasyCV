@@ -1,0 +1,26 @@
+PASS [en-US] actual enabled page status
+PASS [en-US] requested UI locale and translated copy check
+PASS [en-US] refresh detection traverses the real content receiver
+PASS [en-US] trusted keyboard copy and paste on the restricted fixture
+PASS [en-US] enabled copy check requests manual verification
+PASS [en-US] paste switch immediately updates partial page status
+PASS [en-US] both switches off updates inactive page status
+PASS [en-US] disabled copy check does not claim successful copying
+PASS [en-US] main switch restores enabled page status
+PASS [en-US] local help expands, remains accessible and fits 380px
+PASS [en-US] feedback draft is localized and omits browsing information (tabs.create intercepted)
+PASS [en-US] site exclusion explains the state and disables auto-enable
+PASS [en-US] browser page explains unsupported state and disables page actions
+PASS [zh-CN] actual enabled page status
+PASS [zh-CN] requested UI locale and translated copy check
+PASS [zh-CN] refresh detection traverses the real content receiver
+PASS [zh-CN] trusted keyboard copy and paste on the restricted fixture
+PASS [zh-CN] enabled copy check requests manual verification
+PASS [zh-CN] paste switch immediately updates partial page status
+PASS [zh-CN] both switches off updates inactive page status
+PASS [zh-CN] disabled copy check does not claim successful copying
+PASS [zh-CN] main switch restores enabled page status
+PASS [zh-CN] local help expands, remains accessible and fits 380px
+PASS [zh-CN] feedback draft is localized and omits browsing information (tabs.create intercepted)
+PASS [zh-CN] site exclusion explains the state and disables auto-enable
+PASS [zh-CN] browser page explains unsupported state and disables page actions

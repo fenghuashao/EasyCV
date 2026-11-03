@@ -1,0 +1,54 @@
+{
+  "source": "working tree (manifest version unchanged; no release build)",
+  "platform": "win32",
+  "architecture": "x64",
+  "externalFeedbackNavigation": "tabs.create intercepted in the final test harness; no issue submitted",
+  "results": [
+    {
+      "language": "en-US",
+      "checks": [
+        "actual enabled page status",
+        "requested UI locale and translated copy check",
+        "refresh detection traverses the real content receiver",
+        "trusted keyboard copy and paste on the restricted fixture",
+        "enabled copy check requests manual verification",
+        "paste switch immediately updates partial page status",
+        "both switches off updates inactive page status",
+        "disabled copy check does not claim successful copying",
+        "main switch restores enabled page status",
+        "local help expands, remains accessible and fits 380px",
+        "feedback draft is localized and omits browsing information (tabs.create intercepted)",
+        "site exclusion explains the state and disables auto-enable",
+        "browser page explains unsupported state and disables page actions"
+      ],
+      "popupSurface": "extension HTML tab, not native action popup",
+      "targetTabLookup": "test-only override to the real fixture tab",
+      "browserVersion": "149.0.7827.55",
+      "uiLanguage": "en-US",
+      "pass": true
+    },
+    {
+      "language": "zh-CN",
+      "checks": [
+        "actual enabled page status",
+        "requested UI locale and translated copy check",
+        "refresh detection traverses the real content receiver",
+        "trusted keyboard copy and paste on the restricted fixture",
+        "enabled copy check requests manual verification",
+        "paste switch immediately updates partial page status",
+        "both switches off updates inactive page status",
+        "disabled copy check does not claim successful copying",
+        "main switch restores enabled page status",
+        "local help expands, remains accessible and fits 380px",
+        "feedback draft is localized and omits browsing information (tabs.create intercepted)",
+        "site exclusion explains the state and disables auto-enable",
+        "browser page explains unsupported state and disables page actions"
+      ],
+      "popupSurface": "extension HTML tab, not native action popup",
+      "targetTabLookup": "test-only override to the real fixture tab",
+      "browserVersion": "149.0.7827.55",
+      "uiLanguage": "zh-CN",
+      "pass": true
+    }
+  ]
+}

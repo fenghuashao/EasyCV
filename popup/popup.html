@@ -31,28 +31,39 @@
             <path
               d="M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10A2,2 0 0,1 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6H15A3,3 0 0,0 12,3A3,3 0 0,0 9,6V8H18M12,17A2,2 0 0,0 14,15A2,2 0 0,0 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17Z" />
           </svg>
-          <span class="main-unlock-text" id="mainUnlockText" data-i18n="main_unlock">一键解锁当前页面</span>
+          <span class="main-unlock-text" id="mainUnlockText" data-i18n="main_unlock">开启复制与粘贴解锁</span>
         </button>
-        <div class="page-status">
+        <p class="control-scope" data-i18n="control_scope">开关同步至所有页面，站点排除与自动开启规则优先。</p>
+        <div class="page-status" role="status" aria-live="polite">
           <span class="status-indicator" id="statusIndicator"></span>
           <span class="status-text" id="statusText" data-i18n="status_detecting">检测中...</span>
         </div>
         <p class="page-url" id="currentUrl" data-i18n="url_loading">正在获取...</p>
       </div>
 
+      <section class="help-panel" id="helpPanel" hidden aria-labelledby="helpTitle">
+        <h3 id="helpTitle" data-i18n="help_title">快速使用</h3>
+        <ol>
+          <li data-i18n="help_copy_step">回到网页选中文字，使用 Ctrl+C / ⌘C 复制，Ctrl+V / ⌘V 粘贴。</li>
+          <li data-i18n="help_force_step">普通解锁无效时，再尝试高级选项中的强力模式。</li>
+          <li data-i18n="help_exclude_step">网页功能受影响时，在设置 → 站点排除中添加该网站。</li>
+        </ol>
+        <p data-i18n="help_limits">浏览器内部页面和 Chrome 商店不能解锁；图片和扫描件中的文字需要另用 OCR。</p>
+      </section>
+
       <!-- 高级选项（折叠区） -->
       <details class="advanced-section" id="advancedSection">
         <summary class="advanced-summary" data-i18n="advanced_options">高级选项</summary>
         <div class="advanced-content">
           <div class="control-item">
-            <label class="control-label" data-i18n="unlock_copy">解锁复制</label>
+            <label for="copyToggle" class="control-label" data-i18n="unlock_copy">解锁复制</label>
             <label class="toggle-switch">
               <input type="checkbox" id="copyToggle" checked>
               <span class="slider"></span>
             </label>
           </div>
           <div class="control-item">
-            <label class="control-label" data-i18n="unlock_paste">解锁粘贴</label>
+            <label for="pasteToggle" class="control-label" data-i18n="unlock_paste">解锁粘贴</label>
             <label class="toggle-switch">
               <input type="checkbox" id="pasteToggle" checked>
               <span class="slider"></span>
@@ -93,7 +104,7 @@
               <path
                 d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
             </svg>
-            <span data-i18n="test_copy">测试复制</span>
+            <span data-i18n="test_copy">检查复制状态</span>
           </button>
         </div>
       </div>
@@ -111,7 +122,7 @@
             <span class="stat-label" data-i18n="today_usage">今日使用</span>
           </div>
           <div class="stat-item">
-            <span class="stat-number" id="successRate">0%</span>
+            <span class="stat-number" id="successRate">—</span>
             <span class="stat-label" data-i18n="success_rate">成功率</span>
           </div>
         </div>
@@ -128,7 +139,7 @@
           </svg>
           <span data-i18n="settings">设置</span>
         </button>
-        <button class="footer-btn" id="helpBtn">
+        <button class="footer-btn" id="helpBtn" aria-controls="helpPanel" aria-expanded="false">
           <svg class="btn-icon" viewBox="0 0 24 24">
             <path
               d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M13,19h-2v-2h2V19z M15.07,11.25l-0.9,0.92 C13.45,12.9,13,13.5,13,15h-2v-0.5c0-1.1,0.45-2.1,1.17-2.83l1.24-1.26c0.37-0.36,0.59-0.86,0.59-1.41c0-1.1-0.9-2-2-2 s-2,0.9-2,2H8c0-2.21,1.79-4,4-4s4,1.79,4,4C16,9.89,15.64,10.67,15.07,11.25z" />

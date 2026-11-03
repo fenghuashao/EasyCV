@@ -133,6 +133,8 @@ const originalStyles = DOMUtils.modifyStyles(element, {
 ## 📡 Message Utils API
 
 ### 类: MessageUtils
+2026-11-03 开发态补充：`MESSAGE_TYPES` 显式注册 `GET_PAGE_STATUS`、`TEST_COPY`、`REFRESH_DETECTION`，Popup 与 Content Script 共用常量，经 `isValidMessage` 白名单后路由。保持原有消息字符串及返回结构：页面查询返回 `{success:true,status:{isEnabled,copyEnabled,pasteEnabled,forceMode,restrictions,...}}`；复制检查返回 `{success:true,canCopy,copyEnabled,pasteEnabled,isEnabled,forceMode}`。`success` 仅为请求处理结果，`canCopy` 仅为当前启用开关组合，不保证实际剪贴板效果。完整链路回归见 `test/unit/popup-ux.test.mjs`。
+
 **文件位置**: `utils/message-utils.js`  
 **职责**: 处理Chrome Extension内部通信
 

@@ -1,0 +1,16 @@
+page.waitForFunction: Timeout 30000ms exceeded.
+    at waitStatus (D:\pro\github\EasyCV\test\popup-ux-regression.mjs:56:39)
+    at D:\pro\github\EasyCV\test\popup-ux-regression.mjs:58:55
+    at check (D:\pro\github\EasyCV\test\popup-ux-regression.mjs:43:13)
+    at D:\pro\github\EasyCV\test\popup-ux-regression.mjs:58:13 {
+  log: [],
+  name: 'TimeoutError'
+}
+page.waitForFunction: Timeout 30000ms exceeded.
+    at waitStatus (D:\pro\github\EasyCV\test\popup-ux-regression.mjs:56:39)
+    at D:\pro\github\EasyCV\test\popup-ux-regression.mjs:58:55
+    at check (D:\pro\github\EasyCV\test\popup-ux-regression.mjs:43:13)
+    at D:\pro\github\EasyCV\test\popup-ux-regression.mjs:58:13 {
+  log: [],
+  name: 'TimeoutError'
+}

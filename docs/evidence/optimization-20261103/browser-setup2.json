@@ -1,0 +1,22 @@
+{
+  "source": "working tree (manifest version unchanged; no release build)",
+  "platform": "win32",
+  "architecture": "x64",
+  "externalFeedbackNavigation": "aborted before network; no issue submitted",
+  "results": [
+    {
+      "language": "en-US",
+      "checks": [],
+      "popupSurface": "extension HTML tab, not native action popup",
+      "pass": false,
+      "error": "page.waitForFunction: Timeout 30000ms exceeded.\n    at waitStatus (D:\\pro\\github\\EasyCV\\test\\popup-ux-regression.mjs:56:39)\n    at D:\\pro\\github\\EasyCV\\test\\popup-ux-regression.mjs:58:55\n    at check (D:\\pro\\github\\EasyCV\\test\\popup-ux-regression.mjs:43:13)\n    at D:\\pro\\github\\EasyCV\\test\\popup-ux-regression.mjs:58:13"
+    },
+    {
+      "language": "zh-CN",
+      "checks": [],
+      "popupSurface": "extension HTML tab, not native action popup",
+      "pass": false,
+      "error": "page.waitForFunction: Timeout 30000ms exceeded.\n    at waitStatus (D:\\pro\\github\\EasyCV\\test\\popup-ux-regression.mjs:56:39)\n    at D:\\pro\\github\\EasyCV\\test\\popup-ux-regression.mjs:58:55\n    at check (D:\\pro\\github\\EasyCV\\test\\popup-ux-regression.mjs:43:13)\n    at D:\\pro\\github\\EasyCV\\test\\popup-ux-regression.mjs:58:13"
+    }
+  ]
+}
