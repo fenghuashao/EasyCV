@@ -22,8 +22,23 @@
       <div class="version" id="versionBadge"></div>
     </header>
 
+    <!-- 使用功能前的隐私说明与明确同意 -->
+    <section class="privacy-notice" id="privacyNotice" hidden aria-labelledby="privacyNoticeTitle">
+      <h2 class="privacy-notice-title" id="privacyNoticeTitle" data-i18n="privacy_notice_title">Data notice</h2>
+      <p class="privacy-notice-body" data-i18n="privacy_notice_body">EasyCV reads the current page address to match your site rules and processes the page in your browser to remove copy, paste, selection and right-click restrictions. Your rules and settings may sync through your browser. Activation counts and a backup of older site data stay on this device. Nothing is sent to the developer.</p>
+      <p class="privacy-notice-body" data-i18n="privacy_notice_pending">EasyCV will wait for your consent before using these features or migrating older data. You can close this window and decide later.</p>
+      <p class="privacy-notice-link">
+        <a id="privacyNoticeLink" href="https://github.com/fenghuashao/EasyCV/blob/master/PRIVACY.md" target="_blank" rel="noreferrer noopener" data-i18n="privacy_notice_policy_link">Read the privacy policy</a>
+      </p>
+      <div class="privacy-notice-actions">
+        <button class="privacy-notice-ack" id="privacyNoticeAckBtn" data-i18n="privacy_notice_ack">I agree</button>
+        <button class="privacy-notice-later" id="privacyNoticeLaterBtn" data-i18n="privacy_notice_later">Not now</button>
+      </div>
+      <p id="privacyNoticeError" class="privacy-notice-error" role="alert" hidden data-i18n="privacy_notice_error">Could not save your choice. Please try again.</p>
+    </section>
+
     <!-- 主要控制区域 -->
-    <main class="popup-main">
+    <main class="popup-main" hidden>
       <!-- 主解锁按钮 -->
       <div class="main-unlock-section">
         <button class="main-unlock-btn" id="mainUnlockBtn">
@@ -130,7 +145,7 @@
     </main>
 
     <!-- 底部操作 -->
-    <footer class="popup-footer">
+    <footer class="popup-footer" hidden>
       <div class="footer-buttons">
         <button class="footer-btn" id="settingsBtn">
           <svg class="btn-icon" viewBox="0 0 24 24">

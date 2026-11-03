@@ -9,6 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
+import { acceptPrivacyConsent } from './helpers/privacy-consent.mjs';
 
 // playwright 未列为项目依赖（避免强制下载浏览器），默认解析全局 @playwright/cli 的嵌套依赖
 const require = createRequire(import.meta.url);
@@ -42,6 +43,8 @@ const context = await chromium.launchPersistentContext('', {
 });
 
 try {
+  const initialWorker = context.serviceWorkers()[0] || await context.waitForEvent('serviceworker');
+  await acceptPrivacyConsent(context, `chrome-extension://${new URL(initialWorker.url()).host}`);
   const page = await context.newPage();
   await page.goto(testPageUrl);
 

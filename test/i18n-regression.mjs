@@ -5,6 +5,7 @@ import path from 'node:path';
 import http from 'node:http';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
+import { acceptPrivacyConsent } from './helpers/privacy-consent.mjs';
 
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_PATH || path.join(path.dirname(process.execPath),
@@ -67,6 +68,14 @@ try {
       const worker = context.serviceWorkers()[0] || await context.waitForEvent('serviceworker');
       const extensionOrigin = `chrome-extension://${new URL(worker.url()).host}`;
       result.browserVersion = context.browser().version();
+      await acceptPrivacyConsent(context, extensionOrigin, async notice => {
+        await check('translated consent notice and 380px layout', async () => {
+          assert.equal(await notice.locator('#privacyNoticeAckBtn').innerText(), expected.privacy_notice_ack.message);
+          assert.equal(await notice.locator('#privacyNoticeLaterBtn').innerText(), expected.privacy_notice_later.message);
+          await assertLayout(notice, '.privacy-notice');
+          await notice.screenshot({ path: path.join(outputDir, `consent-${language}.png`), animations: 'disabled' });
+        });
+      });
       const page = await context.newPage();
       await page.goto(origin);
       await page.waitForFunction(() => document.documentElement.dataset.easycvInjected === 'true');

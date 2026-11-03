@@ -31,6 +31,9 @@ class PopupManager {
         versionBadge.textContent = `v${chrome.runtime.getManifest().version}`;
       }
 
+      // No tab URL, settings, statistics or page data is read before consent.
+      if (!await this.initPrivacyNotice()) return;
+
       // 获取当前标签页
       this.currentTab = await this.getCurrentTab();
       
@@ -60,9 +63,49 @@ class PopupManager {
     } catch (error) {
       console.error('Failed to initialize popup:', error);
       // 应用默认状态
-      await this.applyDefaultState();
+      if (await StorageUtils.hasPrivacyConsent()) await this.applyDefaultState();
       this.isInitialized = true;
     }
+  }
+
+  /**
+   * Ask for explicit consent before initializing the rest of the popup.
+   */
+  async initPrivacyNotice() {
+    const notice = document.getElementById('privacyNotice');
+    if (!notice) return false;
+    const main = document.querySelector('.popup-main');
+    const footer = document.querySelector('.popup-footer');
+    const errorMessage = document.getElementById('privacyNoticeError');
+    try {
+      const acknowledged = await StorageUtils.getPrivacyNoticeAck();
+      if (acknowledged === StorageUtils.PRIVACY_NOTICE_VERSION) {
+        notice.hidden = true;
+        if (main) main.hidden = false;
+        if (footer) footer.hidden = false;
+        return true;
+      }
+    } catch (error) {
+      console.error('Failed to read privacy consent:', error);
+      if (errorMessage) errorMessage.hidden = false;
+    }
+    notice.hidden = false;
+    const ackButton = document.getElementById('privacyNoticeAckBtn');
+    if (ackButton) {
+      ackButton.addEventListener('click', async () => {
+        ackButton.disabled = true;
+        try {
+          await StorageUtils.acknowledgePrivacyNotice();
+          window.location.reload();
+        } catch (error) {
+          console.error('Failed to save privacy consent:', error);
+          if (errorMessage) errorMessage.hidden = false;
+          ackButton.disabled = false;
+        }
+      });
+    }
+    document.getElementById('privacyNoticeLaterBtn')?.addEventListener('click', () => window.close());
+    return false;
   }
 
   /**
@@ -915,6 +958,10 @@ class PopupManager {
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', async () => {
   const popupManager = new PopupManager();
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === 'local' && Object.hasOwn(changes, 'privacy_notice_ack') &&
+        changes.privacy_notice_ack.newValue !== StorageUtils.PRIVACY_NOTICE_VERSION) window.location.reload();
+  });
   await popupManager.init();
   
   // 页面卸载时清理资源

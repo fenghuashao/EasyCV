@@ -788,6 +788,24 @@
   "privacy_storage_notice": {
     "message": "設定與手動規則可能透過瀏覽器同步；啟用次數與必要的診斷資料僅儲存在本機。舊有造訪資料保留在本機備份中，可透過「清除所有資料」移除。"
   },
+  "privacy_notice_title": {
+    "message": "EasyCV 如何處理資料"
+  },
+  "privacy_notice_body": {
+    "message": "EasyCV 會讀取目前網頁的網址以比對你的網站規則，並在瀏覽器內處理網頁，以解除複製、貼上、選取和右鍵限制。你設定的規則與設定可能透過瀏覽器同步。啟用次數及舊版網站資料的備份保存在本機。擴充功能不會向開發者傳送這些資料。"
+  },
+  "privacy_notice_policy_link": {
+    "message": "查看隱私權政策"
+  },
+  "privacy_notice_ack": {
+    "message": "我同意"
+  },
+  "privacy_notice_pending": {"message": "同意前，EasyCV 不會啟用上述功能或遷移舊資料；舊資料可能仍保留在瀏覽器同步儲存空間。你可以關閉視窗，稍後再決定。"},
+  "privacy_notice_later": {"message": "稍後決定"},
+  "privacy_notice_error": {"message": "無法儲存你的選擇，請重試。"},
+  "privacy_policy_link": {
+    "message": "查看隱私權政策"
+  },
   "local_statistics_toggle": {
     "message": "統計本機啟用次數（不記錄造訪網域）"
   },

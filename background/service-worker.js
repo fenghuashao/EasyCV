@@ -78,8 +78,9 @@ class StateManager {
    * 设置存储监听器
    */
   setupStorageListener() {
-    StorageUtils.addStorageListener((changes, areaName) => {
+    StorageUtils.addStorageListener(async (changes, areaName) => {
       if (areaName !== 'sync') return;
+      if (!await StorageUtils.hasPrivacyConsent()) return;
       // Reads refresh the cache from authoritative storage, including deleted keys.
       this.notifyListeners({ changes, areaName });
     });
@@ -493,6 +494,9 @@ class BackgroundManager {
     console.log('EasyCV Background Service Worker initialized');
 
     try {
+      if (!await StorageUtils.hasPrivacyConsent()) return;
+      await seedMissingDefaults();
+      if (!await StorageUtils.hasPrivacyConsent()) return;
       // Best-effort startup privacy migration; a failure preserves sync originals for retry.
       await StorageUtils.migratePrivateData().catch(() => console.warn('Local privacy migration pending'));
       await this.stateManager.initialize();
@@ -516,6 +520,9 @@ class BackgroundManager {
       const { type, data } = message;
 
       try {
+        if (!await StorageUtils.hasPrivacyConsent()) {
+          return { success: false, error: 'CONSENT_REQUIRED' };
+        }
         switch (type) {
           case MessageUtils.MESSAGE_TYPES.STORAGE_MUTATION:
             if (sender.id !== chrome.runtime.id || !sender.url?.startsWith(chrome.runtime.getURL(''))) {
@@ -599,8 +606,17 @@ class BackgroundManager {
    * 设置存储同步
    */
   setupStorageSync() {
-    StorageUtils.addStorageListener((changes, areaName) => {
+    StorageUtils.addStorageListener(async (changes, areaName) => {
+      if (areaName === 'local' && Object.hasOwn(changes, 'privacy_notice_ack')) {
+        if (changes.privacy_notice_ack.newValue === StorageUtils.PRIVACY_NOTICE_VERSION) this.initializeExtension();
+        else {
+          this.stateManager.stateCache.clear();
+          this.autoEnableManager.clearDomainCache();
+        }
+        return;
+      }
       if (areaName !== 'sync') return;
+      if (!await StorageUtils.hasPrivacyConsent()) return;
       if (['statistics', 'interaction_history', 'errorReports', 'userFeedback'].some(key => changes[key]?.newValue !== undefined)) {
         StorageUtils.migratePrivateData().catch(() => console.warn('Local privacy migration pending'));
       }
@@ -856,6 +872,7 @@ class BackgroundManager {
    */
   async handleContextMenuClick(info, tab) {
     try {
+      if (!await StorageUtils.hasPrivacyConsent()) return;
       switch (info.menuItemId) {
         case 'easycv-toggle':
           await this.handleTogglePlugin({});
@@ -975,34 +992,31 @@ class BackgroundManager {
   }
 }
 
+// Seed only missing defaults after consent; preserve existing user rules.
+async function seedMissingDefaults() {
+  try {
+    // Perform the read and write in the same worker mutation queue as user edits.
+    await StorageUtils.mutate('seedDefaults');
+  } catch (error) {
+    console.warn('EasyCV default seeding skipped:', error);
+  }
+}
+
 // 监听插件安装和启动
 chrome.runtime.onInstalled.addListener(async (details) => {
   console.log('EasyCV installed:', details);
-
-  if (details.reason === 'install') {
-    // 首次安装，设置默认值
-    // 注意：这里仍使用StorageUtils直接设置，因为StateManager可能还未初始化
-    await StorageUtils.set({
-      [StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED]: true,
-      [StorageUtils.STORAGE_KEYS.FORCE_MODE]: false,
-      [StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: [],
-      [StorageUtils.STORAGE_KEYS.EXCLUDED_LIST]: StorageUtils.DEFAULT_SETTINGS.excludedList,
-      [StorageUtils.STORAGE_KEYS.USER_SETTINGS]: StorageUtils.DEFAULT_SETTINGS
-    });
-  } else if (details.reason === 'update') {
-    // 老版本升级：仅在排除列表键缺席时种子默认敏感域名，不覆盖用户已有列表
-    const existing = await StorageUtils.get(StorageUtils.STORAGE_KEYS.EXCLUDED_LIST);
-    if (existing[StorageUtils.STORAGE_KEYS.EXCLUDED_LIST] === undefined) {
-      await StorageUtils.set({
-        [StorageUtils.STORAGE_KEYS.EXCLUDED_LIST]: StorageUtils.DEFAULT_SETTINGS.excludedList
-      });
-    }
+  if (details.reason !== 'install' && details.reason !== 'update') return;
+  if (!await StorageUtils.hasPrivacyConsent()) {
+    // The extension-owned onboarding page allows the user to decide later.
+    if (chrome.tabs?.create) await chrome.tabs.create({ url: chrome.runtime.getURL('popup/popup.html?onboarding=1') });
+    return;
   }
+  await seedMissingDefaults();
 });
 
 // 监听标签页更新
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-  if (changeInfo.status === 'complete' && tab.url) {
+  if (changeInfo.status === 'complete' && await StorageUtils.hasPrivacyConsent() && tab.url) {
     // 使用统一的AutoEnableManager处理自动启用
     await backgroundManager.autoEnableManager.checkAndApplyAutoEnable(tabId, tab.url);
   }

@@ -9,6 +9,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { createRequire } from 'node:module';
+import { acceptPrivacyConsent } from './helpers/privacy-consent.mjs';
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_PATH);
 const extensionPath = path.resolve(process.env.EASYCV_EXT_PATH || 'dist');
@@ -44,12 +45,13 @@ async function check(name, fn) {
 }
 try {
   context = await chromium.launchPersistentContext(profile, {
-    executablePath: process.env.CHROMIUM_PATH, headless: false, locale: 'zh-CN',
+    executablePath: process.env.CHROMIUM_PATH, headless: process.env.EASYCV_HEADLESS === '1', locale: 'zh-CN',
     args: [`--load-extension=${extensionPath}`, `--disable-extensions-except=${extensionPath}`]
   });
   context.setDefaultTimeout(8000);
   const sw = context.serviceWorkers()[0] || await context.waitForEvent('serviceworker');
   const extensionId = new URL(sw.url()).host;
+  await acceptPrivacyConsent(context, `chrome-extension://${extensionId}`);
   diagnostics.initialInstallLog = await installationLog(context, sw.url());
   const page = await context.newPage();
   const popup = await context.newPage();
@@ -223,7 +225,7 @@ try {
   diagnostics.beforeRestart = expected;
   await context.close(); context = null;
   context = await chromium.launchPersistentContext(profile, {
-    executablePath: process.env.CHROMIUM_PATH, headless: false,
+    executablePath: process.env.CHROMIUM_PATH, headless: process.env.EASYCV_HEADLESS === '1',
     args: [`--load-extension=${extensionPath}`, `--disable-extensions-except=${extensionPath}`]
   });
   const reopened = context.serviceWorkers()[0] || await context.waitForEvent('serviceworker');
@@ -238,7 +240,11 @@ try {
   console.error(error);
 } finally {
   if (context) await context.close();
-  fs.rmSync(profile, { recursive: true, force: true });
+  const resolvedProfile = path.resolve(profile);
+  if (path.dirname(resolvedProfile) !== path.resolve(os.tmpdir()) || !path.basename(resolvedProfile).startsWith('easycv-permission-')) {
+    throw new Error('Unsafe browser profile cleanup target');
+  }
+  fs.rmSync(resolvedProfile, { recursive: true, force: true });
   const output = { version: manifest.version, extensionPath, browser: process.env.CHROMIUM_PATH, results, diagnostics,
     manualNotRun: ['native toolbar popup', 'native context menu clicks', 'real sites/CSP', 'store update installation'] };
   if (process.env.RESULT_PATH) fs.writeFileSync(process.env.RESULT_PATH, JSON.stringify(output, null, 2) + '\n');

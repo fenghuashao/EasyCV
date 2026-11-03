@@ -788,6 +788,24 @@
   "privacy_storage_notice": {
     "message": "設定と手動ルールはブラウザー経由で同期される場合があります。回数と最小限の診断情報はこの端末に保存されます。過去のアクセスデータはローカルのバックアップに残ります。「すべてのデータを削除」で削除できます。"
   },
+  "privacy_notice_title": {
+    "message": "EasyCV によるデータの取り扱い"
+  },
+  "privacy_notice_body": {
+    "message": "EasyCV はサイト別ルールの照合のため現在のページのアドレスを読み取り、コピー・貼り付け・文字選択・右クリックの制限を解除するためブラウザー内でページを処理します。設定したルールや設定はブラウザーを通じて同期される場合があります。利用回数と旧バージョンのサイトデータのバックアップはこの端末に保存されます。開発者にデータは送信されません。"
+  },
+  "privacy_notice_policy_link": {
+    "message": "プライバシーポリシーを読む"
+  },
+  "privacy_notice_ack": {
+    "message": "同意する"
+  },
+  "privacy_notice_pending": {"message": "同意するまで、これらの機能と旧データの移行は停止します。旧データはブラウザーの同期ストレージに残る場合があります。ウィンドウを閉じて後で決めることができます。"},
+  "privacy_notice_later": {"message": "後で決める"},
+  "privacy_notice_error": {"message": "選択を保存できませんでした。もう一度お試しください。"},
+  "privacy_policy_link": {
+    "message": "プライバシーポリシーを読む"
+  },
   "local_statistics_toggle": {
     "message": "この端末での有効化回数を記録（アクセス先のドメインは記録しない）"
   },

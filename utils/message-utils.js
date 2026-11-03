@@ -141,7 +141,7 @@ class MessageUtils {
       throw new Error('Message handler must be a function');
     }
 
-    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    const listener = (message, sender, sendResponse) => {
       try {
         // 验证消息格式
         if (!this.isValidMessage(message)) {
@@ -173,7 +173,9 @@ class MessageUtils {
         sendResponse({ success: false, error: error.message });
         return false;
       }
-    });
+    };
+    chrome.runtime.onMessage.addListener(listener);
+    return () => chrome.runtime.onMessage.removeListener(listener);
   }
 
   /**

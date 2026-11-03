@@ -7,6 +7,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { createRequire } from 'node:module';
+import { acceptPrivacyConsent } from './helpers/privacy-consent.mjs';
 const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_PATH);
 const extensionPath = path.resolve(process.env.EASYCV_EXT_PATH || 'dist');
 const origin = process.env.TEST_ORIGIN || 'http://easycv.localhost:18963';
@@ -22,12 +23,13 @@ async function check(name, run) {
 const modifier = process.platform === 'darwin' ? 'Meta' : 'Control';
 try {
   context = await chromium.launchPersistentContext(profile, {
-    executablePath: process.env.CHROMIUM_PATH, headless: false,
+    executablePath: process.env.CHROMIUM_PATH, headless: process.env.EASYCV_HEADLESS === '1',
     args: [`--load-extension=${extensionPath}`, `--disable-extensions-except=${extensionPath}`]
   });
   context.setDefaultTimeout(6000);
   const sw = context.serviceWorkers()[0] || await context.waitForEvent('serviceworker');
   const id = new URL(sw.url()).host;
+  await acceptPrivacyConsent(context, `chrome-extension://${id}`);
   const set = async data => { await sw.evaluate(data => chrome.storage.sync.set(data), data); await new Promise(r => setTimeout(r, 300)); };
   const get = () => sw.evaluate(() => chrome.storage.sync.get(null));
   const page = await context.newPage();
@@ -152,7 +154,11 @@ try {
 } catch (error) { results.push({ name: 'harness', pass: false, error: error.stack }); }
 finally {
   if (context) await context.close();
-  fs.rmSync(profile, { recursive: true, force: true });
+  const resolvedProfile = path.resolve(profile);
+  if (path.dirname(resolvedProfile) !== path.resolve(os.tmpdir()) || !path.basename(resolvedProfile).startsWith('easycv-state-')) {
+    throw new Error('Unsafe browser profile cleanup target');
+  }
+  fs.rmSync(resolvedProfile, { recursive: true, force: true });
   const result = { extensionPath, browser: process.env.CHROMIUM_PATH, results, evidence,
     notCovered: ['native toolbar/menu', 'normal installed-browser restart', 'store upgrade'] };
   if (process.env.RESULT_PATH) fs.writeFileSync(process.env.RESULT_PATH, JSON.stringify(result, null, 2) + '\n');

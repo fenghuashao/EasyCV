@@ -38,6 +38,19 @@ class StorageUtils {
     return pending;
   }
   static async executeMutation(operation, data) {
+    if (operation === 'seedDefaults') {
+      const existing = await this.get(this.CONFIG_KEYS);
+      const defaults = {
+        plugin_enabled: true,
+        force_mode: false,
+        auto_enable_list: [],
+        excluded_list: this.DEFAULT_SETTINGS.excludedList,
+        user_settings: this.DEFAULT_SETTINGS
+      };
+      const missing = Object.fromEntries(Object.entries(defaults).filter(([key]) => existing[key] === undefined));
+      if (Object.keys(missing).length) await chrome.storage.sync.set(missing);
+      return missing;
+    }
     if (operation === 'clear') {
       await chrome.storage.sync.clear();
       await chrome.storage.local.clear();
@@ -246,6 +259,32 @@ class StorageUtils {
   static recordActivation() { return this.mutate('activation'); }
   static recordDiagnostic() { return this.mutate('diagnostic'); }
   static migratePrivateData() { return this.mutate('privacy'); }
+  /** An earlier acknowledgement was informational and is not consent. */
+  static PRIVACY_NOTICE_VERSION = '2026-11-03-consent-v1';
+  static async getPrivacyNoticeAck() {
+    const { privacy_notice_ack } = await chrome.storage.local.get('privacy_notice_ack');
+    return privacy_notice_ack ?? null;
+  }
+  static async acknowledgePrivacyNotice() {
+    await chrome.storage.local.set({ privacy_notice_ack: this.PRIVACY_NOTICE_VERSION });
+    return this.PRIVACY_NOTICE_VERSION;
+  }
+  static async hasPrivacyConsent() {
+    try { return await this.getPrivacyNoticeAck() === this.PRIVACY_NOTICE_VERSION; }
+    catch { return false; }
+  }
+  /**
+   * Canonical JSON for equality checks. chrome.storage returns object keys in
+   * sorted order, so a plain JSON.stringify comparison reports a false mismatch
+   * between a value we built and the same value read back from storage.
+   */
+  static canonicalJSON(value) {
+    if (Array.isArray(value)) return `[${value.map(item => this.canonicalJSON(item)).join(',')}]`;
+    if (value && typeof value === 'object') {
+      return `{${Object.keys(value).sort().map(key => `${JSON.stringify(key)}:${this.canonicalJSON(value[key])}`).join(',')}}`;
+    }
+    return JSON.stringify(value === undefined ? null : value);
+  }
   static async migratePrivateDataNow() {
     const keys = ['statistics', 'interaction_history', 'errorReports', 'userFeedback'];
     const sync = await chrome.storage.sync.get(keys);
@@ -278,11 +317,11 @@ class StorageUtils {
     if (Object.keys(updates).length) {
       await chrome.storage.local.set(updates);
       const verified = await chrome.storage.local.get(Object.keys(updates));
-      if (Object.keys(updates).some(key => JSON.stringify(verified[key]) !== JSON.stringify(updates[key]))) throw new Error('Local migration verification failed');
+      if (Object.keys(updates).some(key => this.canonicalJSON(verified[key]) !== this.canonicalJSON(updates[key]))) throw new Error('Local migration verification failed');
     }
     if (present.length) {
       const latest = await chrome.storage.sync.get(present);
-      if (present.some(key => JSON.stringify(latest[key]) !== JSON.stringify(sync[key]))) throw new Error('Private data changed during migration; retry required');
+      if (present.some(key => this.canonicalJSON(latest[key]) !== this.canonicalJSON(sync[key]))) throw new Error('Private data changed during migration; retry required');
       await chrome.storage.sync.remove(present);
     }
     if (Object.hasOwn(local, 'interaction_history')) await chrome.storage.local.remove('interaction_history');

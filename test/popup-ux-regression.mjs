@@ -8,11 +8,13 @@ import path from 'node:path';
 import http from 'node:http';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
+import { acceptPrivacyConsent } from './helpers/privacy-consent.mjs';
 
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_PATH || path.join(path.dirname(process.execPath),
   'node_modules/@playwright/cli/node_modules/playwright'));
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const extensionPath = path.resolve(process.env.EASYCV_EXTENSION_PATH || root);
 const executablePath = process.env.CHROMIUM_PATH || path.join(process.env.LOCALAPPDATA,
   'ms-playwright/chromium-1228/chrome-win64/chrome.exe');
 const outputDir = path.resolve(process.env.EASYCV_EVIDENCE_DIR || path.join(root, '.tmp/popup-ux-evidence'));
@@ -35,7 +37,7 @@ try {
   for (const language of ['en-US', 'zh-CN']) {
     const context = await chromium.launchPersistentContext(fs.mkdtempSync(path.join(profileRoot, 'profile-')), {
       executablePath, headless: true, locale: language, viewport: { width: 380, height: 600 },
-      args: [`--load-extension=${root}`, `--disable-extensions-except=${root}`, `--lang=${language}`]
+      args: [`--load-extension=${extensionPath}`, `--disable-extensions-except=${extensionPath}`, `--lang=${language}`]
     });
     const result = { language, checks: [], popupSurface: 'extension HTML tab, not native action popup',
       targetTabLookup: 'test-only override to the real fixture tab' };
@@ -49,6 +51,7 @@ try {
     try {
       const worker = context.serviceWorkers()[0] || await context.waitForEvent('serviceworker');
       const extensionOrigin = `chrome-extension://${new URL(worker.url()).host}`;
+      await acceptPrivacyConsent(context, extensionOrigin);
       const page = await context.newPage();
       await page.goto(`${origin}/?private-test-token=omit#private-fragment`);
       await page.waitForFunction(() => document.documentElement.dataset.easycvInjected === 'true');

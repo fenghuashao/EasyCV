@@ -107,6 +107,10 @@ body {
   overflow-y: auto;
 }
 
+.popup-main[hidden], .popup-footer[hidden] {
+  display: none;
+}
+
 /* 独立控制按钮区域 */
 .control-buttons-section {
   padding: 20px;
@@ -265,6 +269,77 @@ input:checked+.slider:before {
   border-radius: var(--border-radius);
   background: var(--background-secondary);
   font-size: 12px;
+}
+
+/* 数据说明：首次运行时显著展示，位于头部与主控制区之间 */
+.privacy-notice {
+  margin: 0 16px 12px;
+  padding: 12px;
+  min-height: 0;
+  overflow-y: auto;
+  border: 1px solid var(--warning-color);
+  border-left: 4px solid var(--warning-color);
+  border-radius: var(--border-radius);
+  background: var(--background-secondary);
+  font-size: 12px;
+}
+
+.privacy-notice[hidden] {
+  display: none;
+}
+
+.privacy-notice-title {
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.privacy-notice-body {
+  color: var(--text-secondary);
+}
+
+.privacy-notice-link {
+  margin-top: 8px;
+}
+
+.privacy-notice-link a {
+  color: var(--primary-color);
+}
+
+.privacy-notice-actions {
+  margin-top: 10px;
+}
+
+.privacy-notice-ack {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 4px;
+  background: var(--primary-color);
+  color: #ffffff;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.privacy-notice-ack:hover {
+  background: var(--primary-hover);
+}
+
+.privacy-notice-later {
+  margin-left: 8px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--background-secondary);
+  color: var(--text-primary);
+  font: inherit;
+  cursor: pointer;
+}
+
+.privacy-notice-error {
+  margin-top: 8px;
+  color: var(--danger-color, #b42318);
 }
 
 .help-panel ol {

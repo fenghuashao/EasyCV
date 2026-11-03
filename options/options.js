@@ -843,13 +843,8 @@ class OptionsManager {
 
     try {
       await StorageUtils.clear();
-      this.cancelRuleEdit();
-
-      // 重新加载数据
-      await this.loadAllData();
-      this.initializeUI();
-
-      this.showNotification(I18nUtils.t('data_cleared'), 'success');
+      // Clearing local data also clears consent. Do not load settings again.
+      window.location.replace(chrome.runtime.getURL('popup/popup.html?onboarding=1'));
     } catch (error) {
       console.error('Failed to clear data:', error);
       this.showNotification(I18nUtils.t('clear_failed'), 'error');
@@ -958,7 +953,17 @@ class OptionsManager {
 let optionsManager;
 
 // 页面加载完成后初始化
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!await StorageUtils.hasPrivacyConsent()) {
+    window.location.replace(chrome.runtime.getURL('popup/popup.html?onboarding=1'));
+    return;
+  }
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === 'local' && Object.hasOwn(changes, 'privacy_notice_ack') &&
+        changes.privacy_notice_ack.newValue !== StorageUtils.PRIVACY_NOTICE_VERSION) {
+      window.location.replace(chrome.runtime.getURL('popup/popup.html?onboarding=1'));
+    }
+  });
   optionsManager = new OptionsManager();
   
   // 导出到全局作用域供HTML调用

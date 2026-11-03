@@ -1,0 +1,4 @@
+# These existing files use CRLF; a carriage return is part of the line ending.
+_locales/ja/messages.json whitespace=cr-at-eol
+_locales/zh_TW/messages.json whitespace=cr-at-eol
+test/unit/reliability.test.mjs whitespace=cr-at-eol

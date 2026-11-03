@@ -146,8 +146,28 @@ test('failed rule replacement and parallel additions preserve original/latest ru
   assert.equal(h.sync.auto_enable_list.length, 3);
 });
 
+test('worker does not initialize, migrate or accept messages before consent', async () => {
+  const original = { auto_enable_list: ['legacy.example'], statistics: { sitesUnlocked: ['legacy.example'] } };
+  const h = loadStorage(structuredClone(original));
+  let handler; let initialized = false;
+  const { BackgroundManager } = loadBackground(h, { MESSAGE_TYPES: { STORAGE_MUTATION: 'storage_mutation' },
+    addMessageListener(fn) { handler = fn; } });
+  const background = Object.assign(Object.create(BackgroundManager.prototype), {
+    stateManager: { async initialize() { initialized = true; } }, async updateIcon() {}
+  });
+  background.setupMessageHandlers();
+  await background.initializeExtension();
+  const result = await handler({ type: 'storage_mutation', data: { operation: 'clear' } },
+    { id: 'synthetic-extension', url: 'chrome-extension://synthetic-extension/options/options.html' });
+  assert.equal(result.success, false);
+  assert.equal(result.error, 'CONSENT_REQUIRED');
+  assert.equal(initialized, false);
+  assert.deepEqual(h.sync, original);
+});
+
 test('two extension pages write through one worker queue; content-page mutation is rejected', async () => {
   const h = loadStorage({ user_settings: { copyEnabled: true, pasteEnabled: true } });
+  await h.StorageUtils.acknowledgePrivacyNotice();
   let handler;
   const { BackgroundManager } = loadBackground(h, { MESSAGE_TYPES: { STORAGE_MUTATION: 'storage_mutation' },
     addMessageListener(fn) { handler = fn; } });

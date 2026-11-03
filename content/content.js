@@ -9,6 +9,7 @@ const PASTE_EVENTS = ['paste'];
 
 class CopyPasteManager {
   constructor() {
+    this.privacyActive = true;
     this.isEnabled = false;
     this.stateKnown = false;
     this.copyEnabled = true;
@@ -71,6 +72,7 @@ class CopyPasteManager {
       // 优化的状态加载流程（现在不会抛出错误）
       this.debugLog('Loading settings with retry...');
       await this.loadSettingsWithRetry();
+      if (!this.privacyActive || !await StorageUtils.hasPrivacyConsent()) return;
       this.debugLog('Settings loaded successfully');
 
       // 设置消息监听
@@ -106,6 +108,7 @@ class CopyPasteManager {
         initialized: true
       });
     } catch (error) {
+      if (!this.privacyActive || !await StorageUtils.hasPrivacyConsent()) return;
       console.error('Failed to initialize CopyPasteManager:', error);
       console.error('Error stack:', error.stack);
       this.reportError(error);
@@ -125,6 +128,7 @@ class CopyPasteManager {
    */
   async loadSettingsWithRetry() {
     for (let attempt = 0; attempt <= this.maxRetryCount; attempt++) {
+      if (this.privacyActive === false) return;
       try {
         const response = await Promise.race([
           // 携带域名供 background 做排除列表裁决（DEBT-08）：被排除站点收到 enabled=false，
@@ -236,7 +240,8 @@ class CopyPasteManager {
    * 设置消息监听器
    */
   setupMessageListeners() {
-    MessageUtils.addMessageListener(async (message, sender, sendResponse) => {
+    this.removeMessageListener = MessageUtils.addMessageListener(async (message, sender, sendResponse) => {
+      if (this.privacyActive === false) return { success: false, error: 'CONSENT_REQUIRED' };
       const { type, data } = message;
 
       try {
@@ -288,7 +293,7 @@ class CopyPasteManager {
    * 启用复制粘贴功能
    */
   enableCopyPaste() {
-    if (this.stateKnown === false || !this.isEnabled || (!this.copyEnabled && !this.pasteEnabled)) return;
+    if (this.privacyActive === false || this.stateKnown === false || !this.isEnabled || (!this.copyEnabled && !this.pasteEnabled)) return;
     try {
       this.debugLog('启用复制粘贴功能');
       this.debugLog('Current state before enabling:', {
@@ -684,15 +689,16 @@ class CopyPasteManager {
    * 重新渲染的组件可能恢复已解除的限制，需要在 URL 变化后重放解锁流程
    */
   setupSPAListener() {
-    window.addEventListener('popstate', () => this.handleSPANavigation());
+    this.spaPopstateHandler = () => this.handleSPANavigation();
+    window.addEventListener('popstate', this.spaPopstateHandler);
 
     // content script 无法直接拦截 history.pushState，通过 DOM 变化间接感知 URL 变更
-    const urlCheckObserver = new MutationObserver(() => {
+    this.spaObserver = new MutationObserver(() => {
       if (location.href !== this.lastKnownUrl) {
         this.handleSPANavigation();
       }
     });
-    urlCheckObserver.observe(document, { subtree: true, childList: true });
+    this.spaObserver.observe(document, { subtree: true, childList: true });
   }
 
   /**
@@ -1168,9 +1174,16 @@ class CopyPasteManager {
    * 清理资源
    */
   cleanup() {
+    this.privacyActive = false;
+    this.isEnabled = false;
+    this.stateKnown = false;
     if (this.observer) {
       this.observer.disconnect();
     }
+    this.spaObserver?.disconnect();
+    if (this.spaPopstateHandler) window.removeEventListener('popstate', this.spaPopstateHandler);
+    if (typeof this.removeMessageListener === 'function') this.removeMessageListener();
+    clearTimeout(this.spaCheckTimer);
 
     // 清理状态更新队列
     this.stateUpdateQueue.forEach(update => {
@@ -1186,9 +1199,10 @@ class CopyPasteManager {
       clearTimeout(this.processingTimer);
     }
 
-    this.disableCopyPaste();
+    const stopped = this.disableCopyPaste();
     
     this.debugLog('CopyPasteManager cleaned up');
+    return stopped;
   }
 }
 
@@ -1199,11 +1213,46 @@ window.addEventListener('beforeunload', () => {
   }
 });
 
-// 初始化管理器
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    window.copyPasteManager = new CopyPasteManager();
-  });
-} else {
-  window.copyPasteManager = new CopyPasteManager();
+// Do not inspect the page or its URL until the current notice is accepted.
+// Listen before reading to avoid missing a consent change during initialization.
+let consentGeneration = 0;
+let consentAllowed = false;
+let startPending = false;
+let cleanupPromise = Promise.resolve();
+function suspendForPrivacy() {
+  consentAllowed = false;
+  if (window.copyPasteManager) {
+    const manager = window.copyPasteManager;
+    window.copyPasteManager = null;
+    cleanupPromise = Promise.resolve(manager.cleanup()).catch(() => {});
+  }
 }
+async function reconcilePrivacyConsent() {
+  const generation = ++consentGeneration;
+  const allowed = await StorageUtils.hasPrivacyConsent();
+  if (generation !== consentGeneration) return;
+  consentAllowed = allowed;
+  if (!allowed) {
+    suspendForPrivacy();
+    return;
+  }
+  const start = async () => {
+    startPending = false;
+    await cleanupPromise;
+    if (!consentAllowed || window.copyPasteManager) return;
+    window.copyPasteManager = new CopyPasteManager();
+  };
+  if (document.readyState === 'loading') {
+    if (!startPending) {
+      startPending = true;
+      document.addEventListener('DOMContentLoaded', start, { once: true });
+    }
+  } else await start();
+}
+chrome.storage?.onChanged?.addListener((changes, area) => {
+  if (area === 'local' && Object.hasOwn(changes, 'privacy_notice_ack')) {
+    if (changes.privacy_notice_ack.newValue !== StorageUtils.PRIVACY_NOTICE_VERSION) suspendForPrivacy();
+    reconcilePrivacyConsent();
+  }
+});
+reconcilePrivacyConsent();
