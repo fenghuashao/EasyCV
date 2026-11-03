@@ -5,6 +5,7 @@
 
 // 导入工具类（注意：在service worker中需要使用importScripts）
 importScripts('../utils/storage-utils.js', '../utils/message-utils.js', '../utils/i18n-utils.js', 'icon-manager.js', 'auto-enable-manager.js', 'state-confirmation-manager.js', 'monitoring-manager.js');
+StorageUtils.configureMutationHost();
 
 /**
  * 状态管理器
@@ -38,19 +39,14 @@ class StateManager {
   async initialize() {
     if (this.initialized) return;
 
-    try {
-      // 预加载关键状态到缓存
+    if (this.initializing) return this.initializing;
+    this.initializing = (async () => {
       await this.preloadStates();
-
-      // 设置存储监听器
       this.setupStorageListener();
-
       this.initialized = true;
-      console.log('StateManager initialized successfully');
-    } catch (error) {
-      console.error('Failed to initialize StateManager:', error);
-      throw error;
-    }
+    })();
+    try { await this.initializing; }
+    finally { this.initializing = null; }
   }
 
   /**
@@ -66,13 +62,16 @@ class StateManager {
     ];
 
     const data = await StorageUtils.get(keys);
+    this.storageAccessCount++;
 
+    StorageUtils.validateConfigurationKeys(data);
     // 缓存状态数据
     this.stateCache.set('pluginEnabled', data[StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED] ?? StorageUtils.DEFAULT_SETTINGS.pluginEnabled);
     this.stateCache.set('forceMode', data[StorageUtils.STORAGE_KEYS.FORCE_MODE] ?? StorageUtils.DEFAULT_SETTINGS.forceMode);
-    this.stateCache.set('userSettings', { ...StorageUtils.DEFAULT_SETTINGS, ...data[StorageUtils.STORAGE_KEYS.USER_SETTINGS] });
-    this.stateCache.set('autoEnableList', data[StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST] ?? StorageUtils.DEFAULT_SETTINGS.autoEnableList);
-    this.stateCache.set('excludedList', data[StorageUtils.STORAGE_KEYS.EXCLUDED_LIST] ?? StorageUtils.DEFAULT_SETTINGS.excludedList);
+    StorageUtils.validateSettings(data.user_settings ?? {});
+    this.stateCache.set('userSettings', { ...StorageUtils.DEFAULT_SETTINGS, ...data.user_settings });
+    this.stateCache.set('autoEnableList', StorageUtils.normalizeAutoEnableList(data.auto_enable_list ?? []));
+    this.stateCache.set('excludedList', StorageUtils.normalizeExcludedList(data.excluded_list ?? StorageUtils.DEFAULT_SETTINGS.excludedList));
   }
 
   /**
@@ -80,29 +79,8 @@ class StateManager {
    */
   setupStorageListener() {
     StorageUtils.addStorageListener((changes, areaName) => {
-      // 更新缓存
-      for (const [key, change] of Object.entries(changes)) {
-        switch (key) {
-          case StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED:
-            this.stateCache.set('pluginEnabled', change.newValue);
-            break;
-          case StorageUtils.STORAGE_KEYS.FORCE_MODE:
-            this.stateCache.set('forceMode', change.newValue);
-            break;
-          case StorageUtils.STORAGE_KEYS.USER_SETTINGS:
-            this.stateCache.set('userSettings', change.newValue);
-            break;
-          case StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST:
-            this.stateCache.set('autoEnableList', change.newValue);
-            break;
-          case StorageUtils.STORAGE_KEYS.EXCLUDED_LIST:
-            // 键被移除（如清空数据）时回落默认敏感域名，保持账号页保护不裸奔
-            this.stateCache.set('excludedList', change.newValue ?? StorageUtils.DEFAULT_SETTINGS.excludedList);
-            break;
-        }
-      }
-
-      // 通知监听器
+      if (areaName !== 'sync') return;
+      // Reads refresh the cache from authoritative storage, including deleted keys.
       this.notifyListeners({ changes, areaName });
     });
   }
@@ -114,9 +92,9 @@ class StateManager {
    */
   async getPluginState(domain = null) {
     await this.ensureInitialized();
+    await this.preloadStates();
 
-    // 记录缓存命中
-    this.cacheHitCount++;
+    // State is refreshed from storage; do not report this as a cache hit.
     
     const baseState = {
       pluginEnabled: this.stateCache.get('pluginEnabled'),
@@ -129,7 +107,7 @@ class StateManager {
     // 如果指定了域名，获取该域名的特定配置
     if (domain) {
       const autoEnableList = this.stateCache.get('autoEnableList');
-      const domainConfig = autoEnableList.find(item => item.domain === domain);
+      const domainConfig = StorageUtils.matchAutoEnableRule(domain, autoEnableList);
 
       baseState.domainConfig = domainConfig || {
         domain,
@@ -175,9 +153,8 @@ class StateManager {
       this.pendingOperations.set(operationId, operation);
 
       // 操作完成后清理
-      operation.finally(() => {
-        this.pendingOperations.delete(operationId);
-      });
+      operation.then(() => this.pendingOperations.delete(operationId),
+        () => this.pendingOperations.delete(operationId));
     }
 
     return await operation;
@@ -212,7 +189,7 @@ class StateManager {
   async batchUpdateState(updates, operationId) {
     return new Promise((resolve, reject) => {
       // 将更新添加到批处理队列
-      this.batchUpdateQueue.set(operationId || Date.now(), { updates, resolve, reject });
+      this.batchUpdateQueue.set(operationId || Symbol(), { updates, resolve, reject });
 
       // 如果没有正在进行的批处理，启动新的批处理
       if (!this.batchUpdateTimer) {
@@ -268,9 +245,10 @@ class StateManager {
       // 合并所有更新
       const mergedUpdates = {};
       for (const { updates: update } of updates) {
+        const previousSettings = mergedUpdates.userSettings;
         Object.assign(mergedUpdates, update);
         if (update.userSettings) {
-          mergedUpdates.userSettings = { ...mergedUpdates.userSettings, ...update.userSettings };
+          mergedUpdates.userSettings = { ...previousSettings, ...update.userSettings };
         }
       }
 
@@ -296,130 +274,16 @@ class StateManager {
    */
   async performStateUpdate(updates) {
     const startTime = Date.now();
-    let success = false;
-    
     try {
-      // 记录状态变更开始
-      this.monitoringManager.logStateChange('state_update_start', {
-        updates: Object.keys(updates),
-        timestamp: startTime
-      });
-      
-      const storageUpdates = {};
-      const cacheUpdates = new Map();
-
-      // 处理各种状态更新
-      if (updates.hasOwnProperty('pluginEnabled')) {
-        storageUpdates[StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED] = updates.pluginEnabled;
-        cacheUpdates.set('pluginEnabled', updates.pluginEnabled);
-        
-        this.monitoringManager.logStateChange('plugin_enabled_changed', {
-          oldValue: this.stateCache.get('pluginEnabled'),
-          newValue: updates.pluginEnabled
-        });
-      }
-
-      if (updates.hasOwnProperty('forceMode')) {
-        storageUpdates[StorageUtils.STORAGE_KEYS.FORCE_MODE] = updates.forceMode;
-        cacheUpdates.set('forceMode', updates.forceMode);
-        
-        this.monitoringManager.logStateChange('force_mode_changed', {
-          oldValue: this.stateCache.get('forceMode'),
-          newValue: updates.forceMode
-        });
-      }
-
-      // 处理copyEnabled和pasteEnabled更新
-      if (updates.hasOwnProperty('copyEnabled') || updates.hasOwnProperty('pasteEnabled')) {
-        const currentSettings = this.stateCache.get('userSettings') || {};
-        const settingsUpdates = {};
-        
-        if (updates.hasOwnProperty('copyEnabled')) {
-          settingsUpdates.copyEnabled = updates.copyEnabled;
-          this.monitoringManager.logStateChange('copy_enabled_changed', {
-            oldValue: currentSettings.copyEnabled,
-            newValue: updates.copyEnabled
-          });
-        }
-        
-        if (updates.hasOwnProperty('pasteEnabled')) {
-          settingsUpdates.pasteEnabled = updates.pasteEnabled;
-          this.monitoringManager.logStateChange('paste_enabled_changed', {
-            oldValue: currentSettings.pasteEnabled,
-            newValue: updates.pasteEnabled
-          });
-        }
-        
-        const newSettings = { ...currentSettings, ...settingsUpdates };
-        storageUpdates[StorageUtils.STORAGE_KEYS.USER_SETTINGS] = newSettings;
-        cacheUpdates.set('userSettings', newSettings);
-      }
-
-      if (updates.userSettings) {
-        const currentSettings = this.stateCache.get('userSettings');
-        const newSettings = { ...currentSettings, ...updates.userSettings };
-        storageUpdates[StorageUtils.STORAGE_KEYS.USER_SETTINGS] = newSettings;
-        cacheUpdates.set('userSettings', newSettings);
-        
-        this.monitoringManager.logStateChange('user_settings_changed', {
-          changedKeys: Object.keys(updates.userSettings),
-          newValues: updates.userSettings
-        });
-      }
-
-      if (updates.autoEnableList) {
-        storageUpdates[StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST] = updates.autoEnableList;
-        cacheUpdates.set('autoEnableList', updates.autoEnableList);
-        
-        this.monitoringManager.logStateChange('auto_enable_list_changed', {
-          oldCount: (this.stateCache.get('autoEnableList') || []).length,
-          newCount: updates.autoEnableList.length,
-          newList: updates.autoEnableList
-        });
-      }
-
-      // 原子性存储更新
-      if (Object.keys(storageUpdates).length > 0) {
-        // 记录存储访问次数
-        this.storageAccessCount++;
-        
-        await StorageUtils.set(storageUpdates);
-
-        // 更新缓存
-        for (const [key, value] of cacheUpdates) {
-          this.stateCache.set(key, value);
-        }
-        
-        this.monitoringManager.logStateChange('storage_updated', {
-          keys: Object.keys(storageUpdates),
-          storageAccessCount: this.storageAccessCount
-        });
-      }
-
-      // 获取更新后的状态
-      const newState = await this.getPluginState();
-      success = true;
-      
-      // 记录成功完成
-      const duration = Date.now() - startTime;
-      this.monitoringManager.recordPerformance('state_update', duration, true);
-      this.monitoringManager.logStateChange('state_update_completed', {
-        duration,
-        updatedKeys: Object.keys(updates)
-      });
-      
-      return newState;
-      
+      await StorageUtils.mutate('state', updates);
+      this.storageAccessCount++;
+      const state = await this.getPluginState();
+      this.monitoringManager.logStateChange('state_update', { success: true });
+      this.monitoringManager.recordPerformance('state_update', Date.now() - startTime, true);
+      return state;
     } catch (error) {
-      // 记录错误
-      const duration = Date.now() - startTime;
-      this.monitoringManager.recordPerformance('state_update', duration, false);
-      this.monitoringManager.logStateChange('state_update_failed', {
-        error: error.message,
-        duration,
-        updates: Object.keys(updates)
-      }, 'error');
-      
+      this.monitoringManager.logStateChange('state_update', { success: false }, 'error');
+      this.monitoringManager.recordPerformance('state_update', Date.now() - startTime, false);
       throw error;
     }
   }
@@ -629,12 +493,13 @@ class BackgroundManager {
     console.log('EasyCV Background Service Worker initialized');
 
     try {
-      // 初始化状态管理器
+      // Best-effort startup privacy migration; a failure preserves sync originals for retry.
+      await StorageUtils.migratePrivateData().catch(() => console.warn('Local privacy migration pending'));
       await this.stateManager.initialize();
 
       // 获取当前状态
       const state = await this.stateManager.getPluginState();
-      console.log('Current plugin state:', state);
+      // Settings and site rules are not printed to the worker console.
 
       // 更新图标状态
       await this.updateIcon();
@@ -652,6 +517,11 @@ class BackgroundManager {
 
       try {
         switch (type) {
+          case MessageUtils.MESSAGE_TYPES.STORAGE_MUTATION:
+            if (sender.id !== chrome.runtime.id || !sender.url?.startsWith(chrome.runtime.getURL(''))) {
+              throw new Error('Settings mutations require an extension page');
+            }
+            return { success: true, data: await StorageUtils.mutate(data.operation, data.data) };
           case MessageUtils.MESSAGE_TYPES.TOGGLE_PLUGIN:
             return await this.handleTogglePlugin(data);
 
@@ -730,18 +600,16 @@ class BackgroundManager {
    */
   setupStorageSync() {
     StorageUtils.addStorageListener((changes, areaName) => {
-      console.log('Storage changed:', changes, areaName);
-
-      // 如果插件状态改变，更新图标
-      if (changes[StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED]) {
-        this.updateIcon();
+      if (areaName !== 'sync') return;
+      if (['statistics', 'interaction_history', 'errorReports', 'userFeedback'].some(key => changes[key]?.newValue !== undefined)) {
+        StorageUtils.migratePrivateData().catch(() => console.warn('Local privacy migration pending'));
       }
-
-      // 广播设置变更到所有标签页
-      MessageUtils.broadcastToAllTabs(
-        MessageUtils.MESSAGE_TYPES.UPDATE_STATUS,
-        { changes, areaName }
-      );
+      const keys = Object.keys(changes).filter(key => StorageUtils.CONFIG_KEYS.includes(key));
+      if (!keys.length) return;
+      if (keys.includes('plugin_enabled')) this.updateIcon();
+      MessageUtils.broadcastToAllTabs(MessageUtils.MESSAGE_TYPES.UPDATE_STATUS, {
+        changes: Object.fromEntries(keys.map(key => [key, { changed: true }])), areaName
+      });
     });
   }
 
@@ -789,7 +657,7 @@ class BackgroundManager {
     const newStatus = data?.enabled ?? !currentState.pluginEnabled;
 
     // 使用StateManager进行原子性状态更新
-    const operationId = `toggle_${Date.now()}`;
+    const operationId = `toggle_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const updatedState = await this.stateManager.updatePluginState(
       { pluginEnabled: newStatus },
       operationId
@@ -797,18 +665,7 @@ class BackgroundManager {
 
     await this.updateIcon();
 
-    // 更新统计
-    if (newStatus) {
-      const stats = await StorageUtils.getStatistics();
-      const today = new Date().toDateString();
-      await StorageUtils.updateStatistics({
-        totalActivations: stats.totalActivations + 1,
-        // 按自然日滚动的今日使用计数
-        todayUsage: stats.lastUsedDate === today ? (stats.todayUsage || 0) + 1 : 1,
-        lastUsedDate: today,
-        lastUsed: new Date().toISOString()
-      });
-    }
+    if (newStatus) await StorageUtils.recordActivation().catch(() => {});
 
     return { enabled: updatedState.pluginEnabled, state: updatedState };
   }
@@ -825,8 +682,8 @@ class BackgroundManager {
       // 确保所有必需的字段都有有效值；排除站点强制 enabled=false（DEBT-08 逃生通道）
       const responseData = {
         enabled: Boolean(state.pluginEnabled) && !state.excluded,
-        copyEnabled: Boolean(state.userSettings?.copyEnabled !== false),
-        pasteEnabled: Boolean(state.userSettings?.pasteEnabled !== false),
+        copyEnabled: Boolean((state.domainConfig || state.userSettings)?.copyEnabled !== false),
+        pasteEnabled: Boolean((state.domainConfig || state.userSettings)?.pasteEnabled !== false),
         forceMode: Boolean(state.forceMode),
         settings: state.userSettings || {},
         domainConfig: state.domainConfig || null,
@@ -835,7 +692,7 @@ class BackgroundManager {
       };
 
       // 添加调试日志
-      console.log('handleGetStatus response data:', responseData);
+
 
       return {
         success: true,
@@ -844,19 +701,7 @@ class BackgroundManager {
     } catch (error) {
       console.error('Failed to get status:', error);
       
-      // 返回默认状态而不是null
-      return {
-        success: true,
-        data: {
-          enabled: true,
-          copyEnabled: true,
-          pasteEnabled: true,
-          forceMode: false,
-          settings: {},
-          domainConfig: null,
-          timestamp: Date.now()
-        }
-      };
+      return { success: false, error: 'STATUS_UNAVAILABLE' };
     }
   }
 
@@ -879,7 +724,7 @@ class BackgroundManager {
     }
 
     // 使用StateManager进行原子性更新
-    const operationId = `update_${Date.now()}`;
+    const operationId = `update_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const updatedState = await this.stateManager.updatePluginState(updates, operationId);
 
     await this.updateIcon();
@@ -891,7 +736,7 @@ class BackgroundManager {
    */
   async handleEnableForceMode(data) {
     // 使用StateManager进行原子性状态更新
-    const operationId = `enable_force_${Date.now()}`;
+    const operationId = `enable_force_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const updatedState = await this.stateManager.updatePluginState(
       { forceMode: true },
       operationId
@@ -925,7 +770,7 @@ class BackgroundManager {
    */
   async handleDisableForceMode() {
     // 使用StateManager进行原子性状态更新
-    const operationId = `disable_force_${Date.now()}`;
+    const operationId = `disable_force_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const updatedState = await this.stateManager.updatePluginState(
       { forceMode: false },
       operationId
@@ -973,7 +818,7 @@ class BackgroundManager {
    */
   async handleUpdateSettings(data) {
     // 使用StateManager进行原子性设置更新
-    const operationId = `update_settings_${Date.now()}`;
+    const operationId = `update_settings_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const updatedState = await this.stateManager.updatePluginState(
       { userSettings: data },
       operationId
@@ -985,89 +830,24 @@ class BackgroundManager {
   /**
    * 处理错误报告
    */
-  async handleReportError(data, sender) {
-    const errorReport = {
-      error: data,
-      sender: sender,
-      timestamp: new Date().toISOString(),
-      url: data.url || sender.tab?.url || 'unknown',
-      userAgent: navigator.userAgent
-    };
-
-    console.error('Error reported from content script:', errorReport);
-
-    // 保存错误报告到本地存储（用于反馈时参考）
-    try {
-      const existingReports = await StorageUtils.get('errorReports') || { errorReports: [] };
-      const reports = existingReports.errorReports || [];
-
-      // 只保留最近的10个错误报告
-      reports.push(errorReport);
-      if (reports.length > 10) {
-        reports.shift();
-      }
-
-      await StorageUtils.set({ errorReports: reports });
-    } catch (error) {
-      console.error('Failed to save error report:', error);
-    }
-
+  async handleReportError() {
+    await StorageUtils.recordDiagnostic();
     return { received: true };
   }
 
   /**
    * 处理用户反馈提交
    */
-  async handleSubmitFeedback(data, sender) {
-    const feedbackData = {
-      ...data.data,
-      tabId: sender.tab?.id,
-      timestamp: new Date().toISOString()
-    };
-
-    console.log('User feedback submitted:', feedbackData);
-
-    // 保存反馈数据到本地存储
-    try {
-      const existingFeedback = await StorageUtils.get('userFeedback') || { userFeedback: [] };
-      const feedback = existingFeedback.userFeedback || [];
-
-      feedback.push(feedbackData);
-
-      // 只保留最近的20个反馈记录
-      if (feedback.length > 20) {
-        feedback.shift();
-      }
-
-      await StorageUtils.set({ userFeedback: feedback });
-
-      // 可以在这里添加发送到服务器的逻辑
-      // await this.sendFeedbackToServer(feedbackData);
-
-    } catch (error) {
-      console.error('Failed to save feedback:', error);
-    }
-
-    return { success: true };
+  async handleSubmitFeedback() {
+    // Feedback is a user-edited GitHub draft. Do not persist arbitrary page payloads.
+    return { success: false, error: 'Use the feedback link to compose your report' };
   }
 
   /**
    * 处理页面分析结果
    */
-  async handlePageAnalyzed(data, sender) {
-    const { restrictions, domain } = data;
-
-    // 更新统计信息
-    if (restrictions && Object.values(restrictions).some(Boolean)) {
-      const stats = await StorageUtils.getStatistics();
-      const sitesUnlocked = stats.sitesUnlocked || [];
-
-      if (!sitesUnlocked.includes(domain)) {
-        sitesUnlocked.push(domain);
-        await StorageUtils.updateStatistics({ sitesUnlocked });
-      }
-    }
-
+  async handlePageAnalyzed() {
+    // Page detection is not proof of success and must not create browsing records.
     return { received: true };
   }
 
@@ -1102,7 +882,7 @@ class BackgroundManager {
     // 统一走StateManager路径，避免与performStateUpdate的缓存产生双写竞争
     await this.stateManager.updatePluginState(
       { copyEnabled: data.enabled },
-      `copy_status_${Date.now()}`
+      `copy_status_${Date.now()}_${Math.random().toString(36).slice(2)}`
     );
 
     // 广播到所有标签页
@@ -1121,7 +901,7 @@ class BackgroundManager {
     // 统一走StateManager路径，避免与performStateUpdate的缓存产生双写竞争
     await this.stateManager.updatePluginState(
       { pasteEnabled: data.enabled },
-      `paste_status_${Date.now()}`
+      `paste_status_${Date.now()}_${Math.random().toString(36).slice(2)}`
     );
 
     // 广播到所有标签页
@@ -1151,9 +931,7 @@ class BackgroundManager {
         await MessageUtils.broadcastToAllTabs(
           MessageUtils.MESSAGE_TYPES.STATE_UPDATED,
           {
-            requestId: result.requestId,
-            updates,
-            newState: result.result
+            requestId: result.requestId
           }
         );
       }

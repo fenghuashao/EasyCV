@@ -40,13 +40,14 @@ class AutoEnableManager {
       }
 
       const urlObj = new URL(url);
+      if (!['http:', 'https:'].includes(urlObj.protocol)) return false;
       const domain = urlObj.hostname;
 
       // 排除列表（DEBT-08）优先级高于自动启用名单：命中即跳过，
       // 避免用户刚把误伤站点排除又被自动启用配置拉回启用态
       const state = await this.stateManager.getPluginState(domain);
-      if (state.excluded) {
-        console.debug(`AutoEnableManager: ${domain} is in excluded list, skip auto-enable`);
+      if (state.excluded || !state.pluginEnabled) {
+
         return false;
       }
 
@@ -74,14 +75,14 @@ class AutoEnableManager {
           return false;
         }
 
-        console.log(`AutoEnableManager: Auto-enabling for ${domain}:`, config);
+
 
         // 应用自动启用配置
         const success = await this.applyAutoEnableConfig(tabId, config);
         
         if (success) {
           // 记录交互历史
-          await this.recordInteraction(domain);
+          // No automatic domain/timestamp history is recorded.
           
           // 更新图标状态
           if (this.stateManager.backgroundManager) {
@@ -118,17 +119,7 @@ class AutoEnableManager {
       const autoEnableList = state.autoEnableList || [];
       
       // 查找匹配的域名配置
-      const config = autoEnableList.find(item => {
-        if (item.domain === domain) return true;
-        
-        // 支持通配符匹配
-        if (item.domain.startsWith('*.')) {
-          const baseDomain = item.domain.substring(2);
-          return domain.endsWith(baseDomain);
-        }
-        
-        return false;
-      });
+      const config = StorageUtils.matchAutoEnableRule(domain, autoEnableList);
 
       // 更新缓存
       this.domainCache.set(domain, {
@@ -151,43 +142,18 @@ class AutoEnableManager {
    */
   async applyAutoEnableConfig(tabId, config) {
     try {
-      // 获取当前状态
-      const state = await this.stateManager.getPluginState();
-      
-      // 生成操作ID
-      const operationId = `auto_enable_${config.domain}_${Date.now()}`;
-      
-      // 更新插件设置
-      await this.stateManager.updatePluginState({
-        userSettings: {
-          ...state.userSettings,
-          copyEnabled: config.copyEnabled,
-          pasteEnabled: config.pasteEnabled
-        }
-      }, operationId);
-
-      // 使用双方共享的消息协议；内容端重新读取完整状态（包括关闭的子开关）。
+      // The rule is resolved by GET_STATUS for this domain. Never write global defaults.
       await MessageUtils.sendToContent(tabId, MessageUtils.MESSAGE_TYPES.STATE_UPDATED, {}, { silent: true });
-
       return true;
-    } catch (error) {
-      console.error('AutoEnableManager: Failed to apply config:', error);
-      return false;
-    }
+    } catch (error) { return false; }
   }
 
   /**
    * 记录交互历史
    * @param {string} domain - 域名
    */
-  async recordInteraction(domain) {
-    try {
-      const interactionHistory = await StorageUtils.getInteractionHistory();
-      interactionHistory[domain] = Date.now();
-      await StorageUtils.setInteractionHistory(interactionHistory);
-    } catch (error) {
-      console.error('AutoEnableManager: Failed to record interaction:', error);
-    }
+  async recordInteraction() {
+    // Retained as a no-op for older callers; browsing history is no longer collected.
   }
 
   /**
@@ -212,21 +178,10 @@ class AutoEnableManager {
       // 清除相关缓存
       this.clearDomainCache(domain);
       
-      // 通过StateManager更新配置
-      const state = await this.stateManager.getPluginState();
-      const autoEnableList = state.autoEnableList || [];
-      
-      const existingIndex = autoEnableList.findIndex(item => item.domain === domain);
-      if (existingIndex >= 0) {
-        autoEnableList[existingIndex] = { domain, ...config };
-      } else {
-        autoEnableList.push({ domain, ...config });
-      }
-      
-      await this.stateManager.updatePluginState({
-        autoEnableList: autoEnableList
-      });
-      
+      const list = await StorageUtils.getAutoEnableList();
+      if (list.some(item => item.domain === domain)) await StorageUtils.replaceAutoEnableRule(domain, { domain, ...config });
+      else await StorageUtils.addToAutoEnableList({ domain, ...config });
+
       return true;
     } catch (error) {
       console.error('AutoEnableManager: Failed to update config:', error);
@@ -243,16 +198,8 @@ class AutoEnableManager {
       // 清除相关缓存
       this.clearDomainCache(domain);
       
-      // 通过StateManager移除配置
-      const state = await this.stateManager.getPluginState();
-      const autoEnableList = state.autoEnableList || [];
-      
-      const filteredList = autoEnableList.filter(item => item.domain !== domain);
-      
-      await this.stateManager.updatePluginState({
-        autoEnableList: filteredList
-      });
-      
+      await StorageUtils.removeFromAutoEnableList(domain);
+
       return true;
     } catch (error) {
       console.error('AutoEnableManager: Failed to remove config:', error);

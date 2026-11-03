@@ -1,0 +1,10 @@
+
+> easycv@1.1.2 docs:check
+> node scripts/check-docs.js
+
+❌ docs:check 发现 1 个未处理问题：
+1. [path] docs/release-checklist.md
+   行号: 3
+   命中内容: releases/state-fix-20261103/
+   说明: 文档引用了仓库内不存在的路径。
+   建议: 修正文档中的仓库路径，或在后续实现中补齐对应文件/目录。

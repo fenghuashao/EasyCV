@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const Builder = require('./build');
 const Packager = require('./package');
 
@@ -22,9 +23,13 @@ async function main() {
   console.log('='.repeat(50));
 
   const builder = new Builder();
+  const out = fs.mkdtempSync(path.join(builder.sourceDir, '.tmp-quick-'));
+  builder.distDir = path.join(out, 'dist');
   await builder.build();
 
   const packager = new Packager();
+  packager.distDir = builder.distDir;
+  packager.outputDir = out;
   const versionInfo = packager.getVersionInfo();
   packager.ensureDir(packager.outputDir);
 

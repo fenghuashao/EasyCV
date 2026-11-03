@@ -1,0 +1,60 @@
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+📁 创建目录: D:\pro\github\EasyCV\.tmp\native-i18n\verified-build
+📄 复制文件: manifest.json -> .tmp\native-i18n\verified-build\manifest.json
+📁 创建目录: D:\pro\github\EasyCV\.tmp\native-i18n\verified-build\background\
+📄 复制文件: background\auto-enable-manager.js -> .tmp\native-i18n\verified-build\background\auto-enable-manager.js
+📄 复制文件: background\icon-manager.js -> .tmp\native-i18n\verified-build\background\icon-manager.js
+📄 复制文件: background\monitoring-manager.js -> .tmp\native-i18n\verified-build\background\monitoring-manager.js
+📄 复制文件: background\service-worker.js -> .tmp\native-i18n\verified-build\background\service-worker.js
+📄 复制文件: background\state-confirmation-manager.js -> .tmp\native-i18n\verified-build\background\state-confirmation-manager.js
+📁 创建目录: D:\pro\github\EasyCV\.tmp\native-i18n\verified-build\content\
+📄 复制文件: content\content.js -> .tmp\native-i18n\verified-build\content\content.js
+📄 复制文件: content\injector.js -> .tmp\native-i18n\verified-build\content\injector.js
+📁 创建目录: D:\pro\github\EasyCV\.tmp\native-i18n\verified-build\popup\
+📄 复制文件: popup\popup.css -> .tmp\native-i18n\verified-build\popup\popup.css
+📄 复制文件: popup\popup.html -> .tmp\native-i18n\verified-build\popup\popup.html
+📄 复制文件: popup\popup.js -> .tmp\native-i18n\verified-build\popup\popup.js
+📁 创建目录: D:\pro\github\EasyCV\.tmp\native-i18n\verified-build\options\
+📄 复制文件: options\options.css -> .tmp\native-i18n\verified-build\options\options.css
+📄 复制文件: options\options.html -> .tmp\native-i18n\verified-build\options\options.html
+📄 复制文件: options\options.js -> .tmp\native-i18n\verified-build\options\options.js
+📁 创建目录: D:\pro\github\EasyCV\.tmp\native-i18n\verified-build\utils\
+📄 复制文件: utils\dom-utils.js -> .tmp\native-i18n\verified-build\utils\dom-utils.js
+📄 复制文件: utils\i18n-utils.js -> .tmp\native-i18n\verified-build\utils\i18n-utils.js
+📄 复制文件: utils\message-utils.js -> .tmp\native-i18n\verified-build\utils\message-utils.js
+📄 复制文件: utils\notification-utils.js -> .tmp\native-i18n\verified-build\utils\notification-utils.js
+📄 复制文件: utils\storage-utils.js -> .tmp\native-i18n\verified-build\utils\storage-utils.js
+📁 创建目录: D:\pro\github\EasyCV\.tmp\native-i18n\verified-build\icons\
+📄 复制文件: icons\icon-active-128.png -> .tmp\native-i18n\verified-build\icons\icon-active-128.png
+📄 复制文件: icons\icon-active-16.png -> .tmp\native-i18n\verified-build\icons\icon-active-16.png
+📄 复制文件: icons\icon-active-32.png -> .tmp\native-i18n\verified-build\icons\icon-active-32.png
+📄 复制文件: icons\icon-active-48.png -> .tmp\native-i18n\verified-build\icons\icon-active-48.png
+📄 复制文件: icons\icon-default-128.png -> .tmp\native-i18n\verified-build\icons\icon-default-128.png
+📄 复制文件: icons\icon-default-16.png -> .tmp\native-i18n\verified-build\icons\icon-default-16.png
+📄 复制文件: icons\icon-default-32.png -> .tmp\native-i18n\verified-build\icons\icon-default-32.png
+📄 复制文件: icons\icon-default-48.png -> .tmp\native-i18n\verified-build\icons\icon-default-48.png
+📄 复制文件: icons\icon-inactive-128.png -> .tmp\native-i18n\verified-build\icons\icon-inactive-128.png
+📄 复制文件: icons\icon-inactive-16.png -> .tmp\native-i18n\verified-build\icons\icon-inactive-16.png
+📄 复制文件: icons\icon-inactive-32.png -> .tmp\native-i18n\verified-build\icons\icon-inactive-32.png
+📄 复制文件: icons\icon-inactive-48.png -> .tmp\native-i18n\verified-build\icons\icon-inactive-48.png
+📄 复制文件: icons\icon-partial-128.png -> .tmp\native-i18n\verified-build\icons\icon-partial-128.png
+📄 复制文件: icons\icon-partial-16.png -> .tmp\native-i18n\verified-build\icons\icon-partial-16.png
+📄 复制文件: icons\icon-partial-32.png -> .tmp\native-i18n\verified-build\icons\icon-partial-32.png
+📄 复制文件: icons\icon-partial-48.png -> .tmp\native-i18n\verified-build\icons\icon-partial-48.png
+📁 创建目录: D:\pro\github\EasyCV\.tmp\native-i18n\verified-build\_locales\
+📁 创建目录: D:\pro\github\EasyCV\.tmp\native-i18n\verified-build\_locales\en
+📄 复制文件: _locales\en\messages.json -> .tmp\native-i18n\verified-build\_locales\en\messages.json
+📁 创建目录: D:\pro\github\EasyCV\.tmp\native-i18n\verified-build\_locales\ja
+📄 复制文件: _locales\ja\messages.json -> .tmp\native-i18n\verified-build\_locales\ja\messages.json
+📁 创建目录: D:\pro\github\EasyCV\.tmp\native-i18n\verified-build\_locales\zh_CN
+📄 复制文件: _locales\zh_CN\messages.json -> .tmp\native-i18n\verified-build\_locales\zh_CN\messages.json
+📁 创建目录: D:\pro\github\EasyCV\.tmp\native-i18n\verified-build\_locales\zh_TW
+📄 复制文件: _locales\zh_TW\messages.json -> .tmp\native-i18n\verified-build\_locales\zh_TW\messages.json
+==================================================
+✅ 构建完成!
+📦 版本: 1.1.2
+📁 输出目录: D:\pro\github\EasyCV\.tmp\native-i18n\verified-build
+⏰ 构建时间: 2026-11-03T07:45:27.138Z

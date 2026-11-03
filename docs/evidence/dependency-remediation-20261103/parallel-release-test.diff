@@ -1,0 +1,22 @@
+--- dependency-tested/test/unit/release-checks.test.mjs
++++ parallel-current/test/unit/release-checks.test.mjs
+@@ -11,7 +11,7 @@
+ const Packager = require('../../scripts/package.js');
+ const Deployer = require('../../scripts/deploy.js');
+ const VersionManager = require('../../scripts/bump-version.js');
+-const { runtimePaths, verifyBuild, verifyZip, verifyVersions, validateVersion } = require('../../scripts/release-checks.js');
++const { runtimePaths, sourceInventory, verifyBuild, verifyZip, verifyVersions, validateVersion } = require('../../scripts/release-checks.js');
+ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+ 
+ function fixture(t) {
+@@ -65,7 +65,9 @@
+   const result = await packager.createZip(zip);
+   assert.equal(result.path, zip);
+   assert.equal(result.size, fs.statSync(zip).size);
+-  assert.equal(verifyZip(dir, builder.distDir, zip).fileCount, 38);
++  const verified = verifyZip(dir, builder.distDir, zip);
++  assert.deepEqual(Object.keys(verified.files).sort(), [...Object.keys(sourceInventory(dir)), 'build-info.json'].sort());
++  assert.equal(verified.fileCount, Object.keys(verified.files).length);
+ });
+ 
+ test('concurrent ZIP writes cannot overwrite the winner or its receipt', async t => {

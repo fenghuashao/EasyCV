@@ -1,0 +1,228 @@
+{
+  "sourceHead": "9d378b5",
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "win32",
+    "arch": "x64"
+  },
+  "browserOperated": false,
+  "productCodeModified": false,
+  "findings": [
+    {
+      "id": "F01_SYNC_FALLBACK_LOST_ON_READ",
+      "reproduction": "PASS",
+      "productFinding": "FAIL",
+      "observations": {
+        "requested": true,
+        "localFallback": true,
+        "subsequentRead": false
+      }
+    },
+    {
+      "id": "F02_EDIT_DELETES_RULE_BEFORE_SAVE",
+      "reproduction": "PASS",
+      "productFinding": "FAIL",
+      "observations": {
+        "before": [
+          {
+            "domain": "example.com",
+            "copyEnabled": true,
+            "pasteEnabled": false
+          }
+        ],
+        "persistedAfterClickEditWithoutSave": []
+      }
+    },
+    {
+      "id": "F03_LEGACY_LIST_NOT_NORMALIZED_BY_BACKGROUND",
+      "reproduction": "PASS",
+      "productFinding": "FAIL",
+      "observations": {
+        "utilityResult": [
+          {
+            "domain": "example.com",
+            "copyEnabled": true,
+            "pasteEnabled": true
+          }
+        ],
+        "actualBackgroundMatch": null,
+        "rawCache": [
+          "example.com"
+        ]
+      }
+    },
+    {
+      "id": "F04_WILDCARD_MATCHES_UNRELATED_DOMAIN",
+      "reproduction": "PASS",
+      "productFinding": "FAIL",
+      "observations": {
+        "visitedDomain": "notexample.com",
+        "incorrectlyMatched": "*.example.com",
+        "entryRoute": "stored/imported wildcard rule"
+      }
+    },
+    {
+      "id": "F05_SITE_RULE_WRITES_GLOBAL_SETTINGS",
+      "reproduction": "PASS",
+      "productFinding": "FAIL",
+      "observations": {
+        "updatesSentToGlobalStateManager": {
+          "userSettings": {
+            "copyEnabled": true,
+            "pasteEnabled": true
+          }
+        },
+        "tabIdUsedOnlyForNotification": 123
+      }
+    },
+    {
+      "id": "F06_ERROR_RETURNS_SUCCESS_AND_ENABLED",
+      "reproduction": "PASS",
+      "productFinding": "FAIL",
+      "observations": {
+        "domain": "accounts.google.com",
+        "response": {
+          "success": true,
+          "data": {
+            "enabled": true,
+            "copyEnabled": true,
+            "pasteEnabled": true,
+            "forceMode": false,
+            "settings": {},
+            "domainConfig": null,
+            "timestamp": 1793683240094
+          }
+        },
+        "scope": "error path, not normal exclusion behavior"
+      }
+    },
+    {
+      "id": "F07_DIAGNOSTICS_WRITE_FULL_URL_TO_SYNC",
+      "reproduction": "PASS",
+      "productFinding": "FAIL",
+      "observations": {
+        "storageArea": "sync",
+        "savedFields": [
+          "error",
+          "sender",
+          "timestamp",
+          "url",
+          "userAgent"
+        ],
+        "fullSyntheticUrlStoredTwice": true,
+        "externalDeveloperUploadObserved": false
+      }
+    },
+    {
+      "id": "F08_MALFORMED_IMPORT_PERSISTS_INVALID_LIST",
+      "reproduction": "PASS",
+      "productFinding": "FAIL",
+      "observations": {
+        "persistedList": {
+          "bad": true
+        },
+        "laterDomainLookupError": "autoEnableList.find is not a function"
+      }
+    },
+    {
+      "id": "F09_CONCURRENT_SETTINGS_WRITES_LOSE_A_FIELD",
+      "reproduction": "PASS",
+      "productFinding": "FAIL",
+      "observations": {
+        "requested": {
+          "copyEnabled": false,
+          "pasteEnabled": false
+        },
+        "actual": {
+          "pluginEnabled": true,
+          "forceMode": false,
+          "autoEnableList": [],
+          "excludedList": [
+            "accounts.google.com",
+            "login.live.com",
+            "appleid.apple.com"
+          ],
+          "showNotifications": true,
+          "enableStatistics": true,
+          "theme": "auto",
+          "copyEnabled": true,
+          "pasteEnabled": false
+        },
+        "scenario": "overlapping Options/storage utility writes; not proof of frequency in a browser"
+      }
+    },
+    {
+      "id": "F10_CLEAR_LEAVES_INVALID_BACKGROUND_CACHE",
+      "reproduction": "PASS",
+      "productFinding": "FAIL",
+      "observations": {
+        "simulatedEvent": "sync.clear removes keys",
+        "domainLookupError": "Cannot read properties of undefined (reading 'find')"
+      }
+    },
+    {
+      "id": "F11_PARTIAL_SWITCHES_DO_NOT_GATE_MAIN_WORLD",
+      "reproduction": "PASS",
+      "productFinding": "FAIL",
+      "observations": {
+        "contentState": {
+          "copyEnabled": false,
+          "pasteEnabled": true
+        },
+        "contentAction": "enable",
+        "mainWorldNeutralizes": [
+          "copy",
+          "paste"
+        ],
+        "boundary": "two real methods under separate doubles plus source inspection of configuration-free injector bridge; browser effect NOT_RUN"
+      }
+    },
+    {
+      "id": "F12_NORMAL_PAGE_RECORDED_WITH_STATISTICS_DISABLED",
+      "reproduction": "PASS",
+      "productFinding": "FAIL",
+      "observations": {
+        "ordinaryPageWithNoContextMenuHandler": true,
+        "incorrectlyDetected": {
+          "userSelect": false,
+          "contextMenu": true,
+          "selectStart": false,
+          "dragStart": false,
+          "copy": false
+        },
+        "pluginEnabled": false,
+        "enableStatistics": false,
+        "storedInSync": {
+          "totalActivations": 0,
+          "sitesUnlocked": [
+            "example.com"
+          ],
+          "lastUsed": null
+        },
+        "boundary": "real detector and report handler with synthetic input; browser NOT_RUN"
+      }
+    }
+  ],
+  "lifecycleChecks": [
+    {
+      "excludedInput": "missing",
+      "preservedExistingKeys": true,
+      "result": "PASS",
+      "boundary": "mocked lifecycle handler; NOT a same-ID browser upgrade"
+    },
+    {
+      "excludedInput": [],
+      "preservedExistingKeys": true,
+      "result": "PASS",
+      "boundary": "mocked lifecycle handler; NOT a same-ID browser upgrade"
+    },
+    {
+      "excludedInput": [
+        "keep.example"
+      ],
+      "preservedExistingKeys": true,
+      "result": "PASS",
+      "boundary": "mocked lifecycle handler; NOT a same-ID browser upgrade"
+    }
+  ]
+}

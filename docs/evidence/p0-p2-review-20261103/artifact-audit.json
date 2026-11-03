@@ -1,0 +1,379 @@
+{
+  "sourceHead": "9d378b5e731e2e3f5e3513762fab7b36fcb35236",
+  "sourceVersion": "1.1.2",
+  "packageVersion": "1.1.2",
+  "lockVersion": "1.1.2",
+  "lockRootVersion": "1.1.2",
+  "distManifest": {
+    "manifest_version": 3,
+    "name": "__MSG_extension_name__",
+    "version": "1.1.1",
+    "description": "__MSG_extension_description__",
+    "default_locale": "zh_CN",
+    "permissions": [
+      "activeTab",
+      "storage",
+      "scripting",
+      "contextMenus"
+    ],
+    "host_permissions": [
+      "<all_urls>"
+    ],
+    "background": {
+      "service_worker": "background/service-worker.js"
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "<all_urls>"
+        ],
+        "js": [
+          "utils/message-utils.js",
+          "utils/storage-utils.js",
+          "utils/dom-utils.js",
+          "content/content.js"
+        ],
+        "run_at": "document_start",
+        "all_frames": true
+      }
+    ],
+    "action": {
+      "default_popup": "popup/popup.html",
+      "default_title": "__MSG_extension_name__",
+      "default_icon": {
+        "16": "icons/icon-default-16.png",
+        "32": "icons/icon-default-32.png",
+        "48": "icons/icon-default-48.png",
+        "128": "icons/icon-default-128.png"
+      }
+    },
+    "options_page": "options/options.html",
+    "icons": {
+      "16": "icons/icon-default-16.png",
+      "32": "icons/icon-default-32.png",
+      "48": "icons/icon-default-48.png",
+      "128": "icons/icon-default-128.png"
+    },
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "content/injector.js",
+          "icons/*.png",
+          "utils/*.js"
+        ],
+        "matches": [
+          "<all_urls>"
+        ]
+      }
+    ]
+  },
+  "runtimeFileCount": 37,
+  "existingZip": {
+    "path": "releases\\store-submission-20261103\\EasyCV-v1.1.2-20261103.zip",
+    "sha256": "52d58935bad6f40b2fd987ff4d1e9f2b2a81f88e87d333eda42fd52d1a7c49f9",
+    "bytes": 133088,
+    "fileCount": 38,
+    "crc": "PASS",
+    "safeExactAllowlist": "PASS",
+    "manifest": {
+      "manifest_version": 3,
+      "name": "__MSG_extension_name__",
+      "version": "1.1.2",
+      "description": "__MSG_extension_description__",
+      "default_locale": "zh_CN",
+      "permissions": [
+        "storage",
+        "contextMenus"
+      ],
+      "host_permissions": [
+        "<all_urls>"
+      ],
+      "background": {
+        "service_worker": "background/service-worker.js"
+      },
+      "content_scripts": [
+        {
+          "matches": [
+            "<all_urls>"
+          ],
+          "js": [
+            "utils/message-utils.js",
+            "utils/storage-utils.js",
+            "utils/dom-utils.js",
+            "content/content.js"
+          ],
+          "run_at": "document_start",
+          "all_frames": true
+        }
+      ],
+      "action": {
+        "default_popup": "popup/popup.html",
+        "default_title": "__MSG_extension_name__",
+        "default_icon": {
+          "16": "icons/icon-default-16.png",
+          "32": "icons/icon-default-32.png",
+          "48": "icons/icon-default-48.png",
+          "128": "icons/icon-default-128.png"
+        }
+      },
+      "options_page": "options/options.html",
+      "icons": {
+        "16": "icons/icon-default-16.png",
+        "32": "icons/icon-default-32.png",
+        "48": "icons/icon-default-48.png",
+        "128": "icons/icon-default-128.png"
+      },
+      "web_accessible_resources": [
+        {
+          "resources": [
+            "content/injector.js",
+            "icons/*.png",
+            "utils/*.js"
+          ],
+          "matches": [
+            "<all_urls>"
+          ]
+        }
+      ]
+    },
+    "matchesCurrentSource": false,
+    "changedCurrentRuntimeFiles": [
+      "_locales/en/messages.json",
+      "_locales/zh_CN/messages.json",
+      "content/content.js",
+      "popup/popup.css",
+      "popup/popup.html",
+      "popup/popup.js",
+      "utils/message-utils.js"
+    ],
+    "commit02d0681MatchingFiles": 37,
+    "files": [
+      {
+        "file": "_locales/en/messages.json",
+        "zipSha256": "5cc232f982540ba35e20b2b379f1f20a199f7bb6b09fca65064bd3f0f37c2c92",
+        "matchesCurrentSource": false,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "_locales/zh_CN/messages.json",
+        "zipSha256": "b9a30413b51126e507ec4dc666fa7d21bf1c8c2555bc359f1de9b1a395f50bfe",
+        "matchesCurrentSource": false,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "background/auto-enable-manager.js",
+        "zipSha256": "dd73492b289ca6795fc434bc2356bb1d271b78b9cc5260d201e0c5aec2668829",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "background/icon-manager.js",
+        "zipSha256": "d262d8a675162c6c68f2e69de2acf1254635f9ab2c3ca8bb81c9d84b0526ea23",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "background/monitoring-manager.js",
+        "zipSha256": "0eb22e1673ced6f2afcbc61fbc929166dc363271b0931c45d091c760813142dd",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "background/service-worker.js",
+        "zipSha256": "6dca77acddc9fee791ac4f7024eef598a029a3777584c7db07e5da0671a25d70",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "background/state-confirmation-manager.js",
+        "zipSha256": "ee120f28e74b0551dea72692b6c7292d871086befd7464a2442f44c6bfc58d86",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "content/content.js",
+        "zipSha256": "77a8037c3608501ffa6aaf6113fb2592be120b2135dd1eeede050b9b27696673",
+        "matchesCurrentSource": false,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "content/injector.js",
+        "zipSha256": "c96edb23f99d9fc2778bccdfd894033f90087b90d244b0971a984d6c2f77f1a5",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-active-128.png",
+        "zipSha256": "f818ee94242a2c04fecdb07e089a98d484081c1ef0cd461ec0dd75cc95273f02",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-active-16.png",
+        "zipSha256": "e4d0782364e6cdde287001a62efa147fa3afdfb37fbbc4a950cb86926280edd2",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-active-32.png",
+        "zipSha256": "a39c54acc55dea5f4e37fcaf4e303655fb1a56934e1765d888b55f0447949cc5",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-active-48.png",
+        "zipSha256": "a53689373b01a40b3f164cb14d3d9a832cb5d7eed059052a762eb7d97a214074",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-default-128.png",
+        "zipSha256": "56030c3004c31b8a4aa4efe79c61219741419ab7c8a894b01ce39ae3f1669916",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-default-16.png",
+        "zipSha256": "a5d79a0c13c4685d3273a4e7e89051b257c3fa1501d3c15e78ebdd1e0612c594",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-default-32.png",
+        "zipSha256": "2234f2eae86f48f8d35788b9eb4e0475633b51ca09201df1124378e1fa79c942",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-default-48.png",
+        "zipSha256": "26472109aec2a3253a2089e45f563720dff0135918beaad0899966c487e6fe6e",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-inactive-128.png",
+        "zipSha256": "b2ed4bb9c4a8fcdd2037d590e449b63b9f2ddc7b42bf5be82c789f31b69c8589",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-inactive-16.png",
+        "zipSha256": "4ee0d952d8fa17c34e87232567bc2e9ea92de4fa90227a176e6ba75aea36b3b4",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-inactive-32.png",
+        "zipSha256": "fe8544a786463dbdc210a1f6955d1b67199e07cb5b44aa5f8c5a05458b5628ab",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-inactive-48.png",
+        "zipSha256": "0a99374c352870ef3fdbc58dcfa599386d8fbcf33210060d056588199e903e5c",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-partial-128.png",
+        "zipSha256": "4be5199c17ac5b8b104366c8f912fd06f37fef59686770d85a855c81cdd18e7a",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-partial-16.png",
+        "zipSha256": "5b935f53ede7b94a6bb97847a3f2f3cfdb3aed79384f3883f1e544e62e64698c",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-partial-32.png",
+        "zipSha256": "3f133195ea4f6628d4c9afda3eee17b6704079de4bac5b9309f5826650800f65",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "icons/icon-partial-48.png",
+        "zipSha256": "2d241af9329c05f499116389e9b5ee28de9ff70ea3dbfc7664648eefbe802855",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "manifest.json",
+        "zipSha256": "61553936aca48cf3ad9910a5b6b673e5c1e2e3726f354517566d18b5623e2e43",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "options/options.css",
+        "zipSha256": "c320f9a656e6545ef6a857b4fe109fafa42e337d1ca5ac1b8b3c3e973daf8717",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "options/options.html",
+        "zipSha256": "01b5d036f07c50fac76793092ae96aa090486f0aa97e248955959f653584dc39",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "options/options.js",
+        "zipSha256": "be43957fb017a45b3f9b9b49dc406480314979e461d7c3357a52a13e6b54b001",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "popup/popup.css",
+        "zipSha256": "83c9d611c09c699bccea0ef776663a9b5f4e6243f33ab1693615db7437063bf6",
+        "matchesCurrentSource": false,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "popup/popup.html",
+        "zipSha256": "56c51bde9de61cec493f979b8268f7f731bc008a6f1dbb16b169fbdd2fe7c81f",
+        "matchesCurrentSource": false,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "popup/popup.js",
+        "zipSha256": "b1d4012e0bcb9c5b922da8416c985a270b779f5114a4507cbb8dc791697572b9",
+        "matchesCurrentSource": false,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "utils/dom-utils.js",
+        "zipSha256": "c7580ee6a7a8c2fdc9486ebb353ddad915cddaa3301a4524eaff2627c6db2f25",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "utils/i18n-utils.js",
+        "zipSha256": "574feeb437a5fd5196d1084a1688b5ab91e16c2d9854202ddf951ed32b742b82",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "utils/message-utils.js",
+        "zipSha256": "3fd77cf582cfa413fe4faa4425f7685661b1bbf69f9f9c85fcc466f2c0674e98",
+        "matchesCurrentSource": false,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "utils/notification-utils.js",
+        "zipSha256": "e5b610f9f0147129deae0f01b8dd57f4408e0d62d4687b06bb51b8b043a01c3a",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      },
+      {
+        "file": "utils/storage-utils.js",
+        "zipSha256": "a12090dc5a39810c441d1d1bc51b34570c7db529f085097dd041a6b7ee8f6035",
+        "matchesCurrentSource": true,
+        "matchesCommit02d0681": true
+      }
+    ]
+  },
+  "nodeDevDependencyCount": 51,
+  "oldAcceptanceZipExists": false,
+  "browserOperated": false,
+  "storeStateVerified": false
+}

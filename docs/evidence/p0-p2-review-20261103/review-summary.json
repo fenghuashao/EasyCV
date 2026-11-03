@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-03 Asia/Shanghai",
+  "sourceHead": "9d378b5e731e2e3f5e3513762fab7b36fcb35236",
+  "unit": {
+    "status": "PASS",
+    "passed": 77,
+    "failed": 0
+  },
+  "syntax": {
+    "status": "PASS",
+    "files": 48
+  },
+  "localProbes": {
+    "reproduced": 12,
+    "productRequirements": "FAIL",
+    "simulatedUpdateHandlerCases": 3
+  },
+  "isolatedBuild": "PASS: 37 runtime files equal source; not release candidate",
+  "existingZipStructure": "PASS",
+  "existingZipMatchesHEAD": "FAIL: 7 runtime files differ",
+  "browsers": "NOT_RUN per user instruction",
+  "sameIdUpgrade": "NOT_RUN",
+  "store": "NOT_RUN / pending verification",
+  "P0": "PARTIAL: local investigation complete; external verification pending",
+  "P1": "PASS: analysis delivered",
+  "P2": "PASS: plan delivered; awaiting user review",
+  "P3toP5": "NOT_RUN",
+  "productFilesModified": false,
+  "commitCreated": false,
+  "pushPerformed": false,
+  "releaseDecision": "BLOCKED",
+  "planSha256": "cbafb356e13e6ae0b69be9826f4ee05ccc3646c77022bb4ff069e7ba6fee1a1a"
+}

@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-03",
+  "unitTests": {
+    "pass": 132,
+    "fail": 0
+  },
+  "syntaxCheck": "PASS",
+  "docsCheck": "PASS",
+  "sourceBrowser": {
+    "scenarios": 8,
+    "checkGroups": 48,
+    "pass": true
+  },
+  "buildBrowser": {
+    "scenarios": 8,
+    "checkGroups": 48,
+    "pass": true
+  },
+  "version": "1.1.2",
+  "manifestOnlyChangeThisTask": "default_locale: zh_CN -> en",
+  "existingHTMLIdsPreserved": true,
+  "commitOrPublish": false,
+  "sha256": {
+    "manifest.json": "c2711278b2996473c64585d7ce251af61b3d202fa82dcdd7e8646007b60bf081",
+    "utils/i18n-utils.js": "02540f03c84f5238ad0c1b8a36ee537de25288d73d653f68a0b0c82691a48435",
+    "popup/popup.html": "ca0bef600ee4dd7ac22d144191401a4bd4b85886a42b3f893263442d58e9d4ce",
+    "options/options.html": "3ac28eb184621ccaccdeb4588973bdd30b9994b49e7ec4a59a63336924ff3e11",
+    "test/i18n-regression.mjs": "8e52947b5223855c22cb8a03c1fb2ff7c705a0ccf36a5bb8b832c621f093032c",
+    "test/unit/i18n.test.mjs": "139429ef264a4a380dbe074025bc75bb993d28d33152826ccddfb312c3855709",
+    "test/unit/release-checks.test.mjs": "1aa1da6d59c7291a037d92d64d07e55f46956ed1719272ae95193c1aac672861",
+    "_locales/en/messages.json": "9fabd198166269643761ca1e4c46b7f99801465cd070987b17ae4684ef3aa1d4",
+    "_locales/zh_CN/messages.json": "4f200db0f54fe678597a870006130acdbb0ccafcd401cdddc3fe98905b01954d",
+    "_locales/ja/messages.json": "f29a252ddedf985bb0065ae09528c68f68329591bb12b9f5f7c5498fd205fc51",
+    "_locales/zh_TW/messages.json": "39d022b6e5604740caa50d16b409d9c405cd6ffd3cf6209dcf20a8653c5d85df"
+  }
+}

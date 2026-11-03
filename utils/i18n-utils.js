@@ -25,6 +25,7 @@ class I18nUtils {
    * - data-i18n: 元素文本
    * - data-i18n-placeholder: 输入框占位文本
    * - data-i18n-title: title 属性（悬停提示）
+   * - data-i18n-aria-label: 无障碍名称
    * @param {ParentNode} [root] - 扫描根节点，默认 document
    */
   static applyToPage(root = document) {
@@ -43,9 +44,16 @@ class I18nUtils {
       if (message) element.title = message;
     });
 
-    // 同步 <html lang> 与浏览器 UI 语言
+    root.querySelectorAll('[data-i18n-aria-label]').forEach(element => {
+      const message = this.t(element.getAttribute('data-i18n-aria-label'), undefined, '');
+      if (message) element.setAttribute('aria-label', message);
+    });
+
+    // 使用实际消息包的语言。未支持的 UI 语言由 Chrome 回退到英文，
+    // 不能用 getUILanguage() 把英文内容标记成其他语言。
     try {
-      document.documentElement.lang = chrome.i18n.getUILanguage();
+      document.documentElement.lang = this.t('ui_language', undefined, 'en');
+      document.documentElement.dir = 'ltr';
     } catch (error) {
       // 非关键路径，忽略
     }

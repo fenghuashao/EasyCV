@@ -1,0 +1,89 @@
+# EasyCV 四语言支持验收（2026-11-03）
+
+## 物理点击补测：已解除工具阻塞并通过
+
+本节是物理点击专项的最新结论，覆盖下方较早的 BLOCKED_TOOL / NOT_RUN 状态。Windows Chromium 149.0.7827.55、隔离配置、日语环境中，两轮原生鼠标点击均验证通过：点击已固定的 EasyCV 工具栏图标打开原生 popup，点击外部本机网页按钮后 popup 自动消失，再点图标可重新打开。第二轮先刷新 fixture，使按钮文字恢复，再验证外部点击把它改为 `Outside click received`。没有使用 `chrome.action.openPopup()`、`window.close()`、Playwright 或 CDP 连接。
+
+窗口绑定排查的对照结果：原浏览器枚举为通用 `Chrome` 标识，归属校验失败；将已有浏览器复制至任务临时目录、仅将可执行文件改名为 `easycv-native-test.exe` 后，枚举为明确的进程路径标识，绑定与鼠标输入成功。原文件与副本 SHA256 一致。这支持问题与工具的通用 Chrome 身份解析有关；没有工具内部源码证据，不进一步断言具体实现缺陷。原浏览器、全局工具配置和权限边界未修改。
+
+证据：[验证结果及二进制哈希](docs/evidence/i18n-physical-20261103/physical-results.json)、[首次打开的可访问性树](docs/evidence/i18n-physical-20261103/opened-ax.txt)、[重新打开](docs/evidence/i18n-physical-20261103/reopened-ax.txt)、[最终关闭及网页点击结果](docs/evidence/i18n-physical-20261103/verified-dismissed-ax.txt)。截图已在本次工具执行中观察。测试仅覆盖该 Windows/日语环境的物理生命周期，不扩大为跨平台、其他语言物理点击或完整发布验收。
+
+未发现此两项操作的产品缺陷，本轮没有修改产品代码，没有提交、推送或发布。
+
+## 物理点击补测：工具阻塞
+
+后续补测启动了没有远程调试参数、没有 Playwright/CDP 连接的隔离 Chromium。本机 fixture 标题为 `EasyCV Physical Toolbar Test`。窗口工具能枚举准确的测试窗口，但 `cua.getApp` 绑定时报 `window id 1378858 no longer belongs to Chrome; current owner is Chrome`；先前 `sky.get_window` 的重新枚举/绑定也出现同类错误。未修改工具或全局配置绕过边界。
+
+本轮没有发出物理点击；工具栏按钮打开与点击外部自动关闭均为 **NOT_RUN / BLOCKED_TOOL**，不是插件失败，也不是通过。证据见 [阻塞记录](docs/evidence/i18n-physical-20261103/blocked.json)。测试浏览器已关闭，本轮无产品代码修改、Git 提交或发布。
+
+待原生窗口绑定恢复后，应在无调试连接的隔离配置中，从扩展菜单固定 EasyCV，鼠标点击工具栏图标，确认原生 popup；点击本机网页上的按钮，确认 popup 消失且网页收到点击，再次点图标确认重开与状态保留。此步骤不能由 `openPopup()` 或 `window.close()` 的已有通过结果替代。
+
+## 后续补充：原生工具栏弹窗与文案复核
+
+后续授权范围已完成实现与回归：通过 `chrome.action.openPopup()` 打开真正的原生 popup，并用 `chrome.extension.getViews({type:'popup'}).includes(window)` 验证视图类型；没有把 popup 导航为标签页，也没有覆盖当前标签查询。最终结果见 [原生弹窗结果](docs/evidence/i18n-native-20261103/verified/results.json)，脚本为 `test/i18n-native-popup.mjs`。
+
+验证环境为已有 Windows Chromium 149、隔离临时配置，覆盖 en-US、zh-CN、ja、zh-TW 和未支持的 ro。检查真实当前页状态、对应语言、弹窗尺寸、帮助展开及滚动、开关状态更新、关闭原生视图后重开、设置入口与浏览器内部页的禁用提示。打开方式是浏览器原生 API，未进行物理工具栏按钮点击；CDP 附加会影响失焦自动关闭，因此未把点击外部自动关闭列为通过。
+
+修复了入场动画/外层滚动导致部分原生弹窗扩宽至 395px 的问题：根页面禁止外层滚动，内容区独立滚动并允许 flex 收缩。日语主按钮改为简洁的「制限解除をオンにする」「制限解除をオフにする」，避免原生窗口中把「オフ」拆行。最终原生尺寸检查为宽 380px、高度不超过 600px。
+
+逐条复核日语与繁体中文消息：日语统一启用标签，改善「コードの貢献」「スイッチの値」等生硬表达；繁体将「待命中」改为「就緒」、「尚未連接頁面」改为「無法連線至此頁面」，并润色隐私说明、匯入错误与移转重试提示。占位符与参数契约保持不变。这是本轮语言复核，不是外部母语审校或用户签字验收。
+
+最终代码另通过 132 项单元测试、8 种语言标签页回归及独立构建，证据位于 `docs/evidence/i18n-native-20261103/`；构建位于 `.tmp/native-i18n/verified-build/`。下方首轮哈希、截图及浏览器边界保留为历史记录，后续改动以本节和最新证据为准。版本仍为 1.1.2，未提交、推送或发布。
+
+## 结论
+
+本地实现和本轮自动化验证通过。支持英语、简体中文、日语、繁体中文；未支持的语言回退英文。源码及独立构建在 8 种浏览器语言环境中均通过验证，版本保持 1.1.2。本轮未提交 Git、未推送、未提交商店或发布；已有未提交修改保留。
+
+本结论只覆盖下述源码及构建，不代表线上商店版本、原生工具栏弹窗、其他操作系统或人工母语审校已验收。
+
+## 改动
+
+- `manifest.json` 的 `default_locale` 从 `zh_CN` 改为 `en`；对照任务开始时基线，manifest 无其他变化，权限与版本均保留。
+- 新增 `_locales/ja/messages.json` 与 `_locales/zh_TW/messages.json`。四种语言各 200 个消息键（含语言元数据及无障碍名称），覆盖静态页面、帮助、状态、错误、确认、反馈模板、右键菜单及工具栏提示。
+- 修正中英文的统计、启用状态和通知表述：启用开关不等于复制成功，统计是本机启用次数，通知不再宣称为桌面通知。
+- HTML 初始文案使用英文。`ui_language` 由实际匹配的消息包提供，HTML 的 `lang` 与实际内容一致；四种现有语言使用 `dir=ltr`。
+- `I18nUtils.applyToPage()` 新增 `data-i18n-aria-label` 支持，用于设置页通知关闭按钮；保留现有 DOM ID 和交互入口。
+- 新增语言契约与浏览器回归脚本。既有 ZIP 路径测试改为校验实际文件集合，移除固定的 38 文件假设，以容纳两个新语言包。
+- 其他语言暂缓；不新增独立语言选择器或联网翻译，不修改存储/业务协议。
+
+## 验证
+
+| 项目 | 结果 | 证据 |
+| --- | --- | --- |
+| 修改前基线 | 124/124 Node 测试通过 | 本次执行记录 |
+| 修改后全量单元测试 | 132/132 通过 | [测试输出](docs/evidence/i18n-20261103/unit-results.txt) |
+| JavaScript 语法检查 | 55 文件通过 | [检查输出](docs/evidence/i18n-20261103/lint-results.txt) |
+| 文档校验 | 通过 | [检查输出](docs/evidence/i18n-20261103/docs-results.txt) |
+| 独立构建 | 通过，四份语言包均纳入 source/build 哈希校验 | [构建输出](docs/evidence/i18n-20261103/build-results.txt) |
+| 源码浏览器验证 | 8/8 语言环境，48 个检查组通过 | [源码结果](docs/evidence/i18n-20261103/source-browser-results.json) |
+| 独立构建浏览器验证 | 8/8 语言环境，48 个检查组通过 | [构建结果](docs/evidence/i18n-20261103/build-browser-results.json) |
+| 变更范围检查 | manifest 仅默认语言变化；HTML ID 完整保留 | [摘要及文件哈希](docs/evidence/i18n-20261103/verification-summary.json) |
+
+测试使用本机已有 Chromium 149.0.7827.55，独立临时用户配置、无真实账号、本机 HTTP fixture。测试没有模拟 `chrome.i18n` 的语言选择；每种环境逐条核对全部 200 条消息及占位符。反馈创建调用被拦截，仅检查草稿内容，未外跳或发送。
+
+| 浏览器界面语言 | 实际消息包 / HTML lang | 结果 |
+| --- | --- | --- |
+| en-US | en / en | 通过 |
+| en-GB | en / en | 通过 |
+| zh-CN | zh_CN / zh-CN | 通过 |
+| zh-TW | zh_TW / zh-TW | 通过 |
+| zh-HK | zh_TW / zh-TW | 通过，浏览器原生匹配繁体包 |
+| ja | ja / ja | 通过 |
+| ro | en / en | 通过，英文回退 |
+| ar | en / en | 通过，英文回退且布局仍从左到右 |
+
+每种环境检查：本地化名称/全部消息、Popup 静态文案和展开帮助、状态与复制检查通知、反馈占位符、Options 六页签及输入提示、规则新增/编辑/取消、错误提示、通知关闭名称、重置确认、菜单创建标题与实际 toolbar title。Popup 固定 380px、Options 1024px/768px 检查文字矩形是否横向超出容器；不能用隐藏溢出来代替通过。
+
+截图复核示例：[日语弹窗](docs/evidence/i18n-20261103/popup-ja.png)、[日语帮助](docs/evidence/i18n-20261103/popup-help-ja.png)、[繁体弹窗](docs/evidence/i18n-20261103/popup-zh-TW.png)、[繁体设置](docs/evidence/i18n-20261103/options-zh-TW.png)、[日语设置](docs/evidence/i18n-20261103/options-ja.png)、[罗马尼亚语环境的英文回退](docs/evidence/i18n-20261103/popup-ro.png)。弹窗主体允许纵向滚动，固定底栏保持可访问。
+
+## 边界与后续发布检查
+
+- Popup 通过扩展 HTML 标签页验证。测试仅将当前页查询指向真实本机 fixture，未验证原生工具栏 popup 的开关生命周期；右键菜单校验创建参数，未人工点击浏览器原生菜单。
+- 本轮未做 Windows 原生人工操作、其他系统、浏览器最低支持版本、缩放/DPI 和屏幕阅读器验收。
+- 日语、繁体中文已完成文案与界面检查，没有外部母语审校。上述通过项不应标成母语用户验收。
+- 本轮未修改商店默认语言、介绍、截图或已安装的商店版。未来发布前须核对后台默认语言与新的 `en` 一致，并同步四语言商店材料。
+- 独立构建位于 `.tmp/i18n-20261103/build-verified/`；未覆盖已有默认 dist 或锁定发布包。测试过程中产生的 ZIP 仅为临时单元测试 fixture。
+
+## 回滚
+
+任务开始时的相关文件副本位于 `.tmp/i18n-20261103/baseline/`。如需回滚，应对照该基线只撤销本轮文案、默认语言、工具类和文档增量，并移除本轮新增的语言包/测试/报告；不要对已含其他任务修改的文件整体执行 Git 恢复。

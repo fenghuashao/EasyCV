@@ -1,0 +1,276 @@
+{
+  "scope": "Dependency remediation only; parallel UI source/docs excluded",
+  "recordedAt": "2026-11-03T07:37:11.425699+00:00",
+  "head": "9d378b5e731e2e3f5e3513762fab7b36fcb35236",
+  "version": "1.1.2",
+  "tests": {
+    "passed": 124,
+    "failed": 0,
+    "scope": "Frozen fixture"
+  },
+  "syntaxFilesPassed": 53,
+  "officialBulkAdvisories": 0,
+  "npmCliAudit": "TRANSPORT_FAILED_TLS",
+  "combinedWorkspaceAcceptance": "NOT_RUN_CONCURRENT_UI_TASK",
+  "browser": "NOT_RUN",
+  "storeSubmission": "NOT_RUN",
+  "commit": "NOT_RUN",
+  "push": "NOT_RUN",
+  "taskFiles": [
+    {
+      "path": "package.json",
+      "sha256": "ca8ca4294859457c708ded3b8434aea0037fbb91479e285ec528252c094ce6d1"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "892801d01749cca980e808695eaa2cf0659fefbd2f401d5a0807ab0b350a613b"
+    },
+    {
+      "path": "scripts/package.js",
+      "sha256": "22fafa2595f2bf6e4e061773c6f02aff6d9787488d247ee48aa0618781ee810e"
+    },
+    {
+      "path": "test/unit/release-checks.test.mjs",
+      "sha256": "1aa1da6d59c7291a037d92d64d07e55f46956ed1719272ae95193c1aac672861"
+    },
+    {
+      "path": "test/unit/package-dependency.test.mjs",
+      "sha256": "764d7a679ca85cb399bb41a267114db746a20239e3bf4434316535f9d59f496a"
+    },
+    {
+      "path": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "sha256": "cedeac37f7dcf50c17445170d80428c4e7d8c1f1cc05f8d728b72fa938bea7dc"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "1b7396054de3f2aff5fde4a2ddee5f077ade8d6291914b1ed41fe0f36453fcce"
+    },
+    {
+      "path": "docs/release-checklist.md",
+      "sha256": "876b410a08e42ce37a18659f50f113cf294009809b369be3c0d276bb7aa0e2e5"
+    }
+  ],
+  "snapshots": {
+    "package.json": "before-package.json",
+    "package-lock.json": "before-package-lock.json",
+    "scripts/package.js": "before-scripts-package.js",
+    "test/unit/release-checks.test.mjs": "before-test-unit-release-checks.test.mjs",
+    "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md": "before-EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+    "CHANGELOG.md": "before-CHANGELOG.md",
+    "docs/release-checklist.md": "before-docs-release-checklist.md"
+  },
+  "changeDiff": "task-only.diff",
+  "testedReleaseTestSHA256": "a66921e67e34fab31c5c0cb4d68a472d425be5be6de0e18c607792fc324c1556",
+  "parallelReleaseTestDiff": "parallel-release-test.diff",
+  "changelogSnapshotNote": "Includes concurrent UI task text already present before this task inserted its dependency line.",
+  "zip": {
+    "status": "PASS_FROZEN_DEPENDENCY_SCOPE",
+    "verifier": "Python zipfile + hashlib",
+    "zip": "D:\\pro\\github\\EasyCV\\releases\\dependency-remediation-20261103\\EasyCV-DEPENDENCY-TEST-ONLY.zip",
+    "zipSHA256": "abde4ba65db9ee6680d2511ea8ebf245712244c7e83238c98ffe5de13d98bc45",
+    "zipBytes": 138802,
+    "fileCount": 38,
+    "crc": "PASS",
+    "runtimeFilesByteIdenticalToFrozenFixtureAndBaseline": 37,
+    "runtimeFilesByteIdenticalToPreviousW1W6Package": 37,
+    "previousZipSHA256": "25a74f354f4ba17912dc0acccb627b1803a046f7e8103555658e584cd0df461d",
+    "version": "1.1.2",
+    "currentLiveWorkspaceEquivalence": "NOT_CLAIMED; FA confirmed a concurrent UI task after this artifact was built",
+    "browserAcceptance": "NOT_RUN",
+    "storeReady": false
+  },
+  "evidence": [
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/audit-after-ipv4.json",
+      "sha256": "d2cfe4991a5ac2f2565e92eaf1960d955c9592c7d8c359dc62cb1d99815c4ac8"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/audit-after.json",
+      "sha256": "5bb815376ff50c71f4b2709a4b4232b113f10145d64350920a25f608c220be28"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/audit-before-retry.json",
+      "sha256": "047ef24e0ad00cb9fb6362e564f9bcfb0232058f9fc225178a96b786816fdfc8"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/audit-before.json",
+      "sha256": "5bb815376ff50c71f4b2709a4b4232b113f10145d64350920a25f608c220be28"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/audit-verification.json",
+      "sha256": "7f2f2ad9c180a8fce73aa74f1373b729cc218f0335dc21f353029e8405b58a79"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/baseline.json",
+      "sha256": "92cc5b883963e7c3c89466bbc58034e9116156cf3f6d0a2b411a76fa0e0b2be1"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/before-CHANGELOG.md",
+      "sha256": "be234052c9530c181ed0ba04cc84bb57b17e66b709a9306335b8f0e63e7cf637"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/before-docs-release-checklist.md",
+      "sha256": "f7416b7f9283712096454caf6d5d6cff296cf91a54fa48fecd4590152d6557f0"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/before-EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "sha256": "f55bedecf2458607d1cc246977a792688aba9f5edf77f9a0632dec08deb6d189"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/before-package-lock.json",
+      "sha256": "73e8ed94ac741d9183bddcdf1373e6b170982d9a66172956cf06761b45bef749"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/before-package.json",
+      "sha256": "7d6ade710b581bdc8454434ce184d07ea0e5470e522c2fd16c909579f0b3c6b6"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/before-scripts-package.js",
+      "sha256": "ddfa68b129306f8fa27d784f5689398cb3f8a8a12d8859c2b0de987bd9fd5dd2"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/before-test-unit-release-checks.test.mjs",
+      "sha256": "91274749662098a8f559c0383910c63d9a4a94ff497df94eef6843079d5f00c4"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/buffer-crc32-official-metadata.json",
+      "sha256": "bc9a0eed31437f7234a016933c250954e487a8da7ffb06659b4298e0d20f308a"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/build-package-final.txt",
+      "sha256": "239d54c37f505cff98b831c2e90bf98d687ec543cf123c449583885e59320681"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/bulk-after-response.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/bulk-before-response.json",
+      "sha256": "631b4761167f67b5227043a138987e5a9784dc107c982e5269cef56c88369a14"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/bulk-payload-after.json",
+      "sha256": "e7f38dadc37af83fff31527f25db2f0d88218ce119065ed4840310a41a41b7e6"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/bulk-payload-before.json",
+      "sha256": "a48fe0418c91df17bc3e2070b47bc400e4a224c05d70d6be68dfceb372e01ed3"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/clean-install-verification.json",
+      "sha256": "be63dad8ebbf3272ea68364d6c039c1063a7f99ecebb058a02a7e773bbcd08b9"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/clean-install.txt",
+      "sha256": "58dd9f1acac3e8f811a98030b30ca1c6f2063b520b70d4eb7110eb72b060d0e6"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/dependency-snapshot-release-checks.test.mjs",
+      "sha256": "a66921e67e34fab31c5c0cb4d68a472d425be5be6de0e18c607792fc324c1556"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/diff-check-final.txt",
+      "sha256": "1537037a9c7f22540248e94a6f2860d9efed0c9c74bea2c372ab39d47015a7a1"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/diff-check-scoped.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/docs-final.txt",
+      "sha256": "6bb75533996bbe84932fe69f50ccf702428c3c858aa786601002927ce90da5e1"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/document-link-verification.json",
+      "sha256": "623e99867a4a68dff0dc970619f4c9e9c3bd5fa4c1ec293e2f88f668bf981310"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/fixture-setup-missing-clean.txt",
+      "sha256": "c6820451547c057aa6904e3501d1295f59a213628c455493a1ac32c6af05d1da"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/frozen-tests-manifest.json",
+      "sha256": "998dee53406a9d4ba68afe2047e660876bb912adc4675329efedf4f3b67ad72d"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/install.txt",
+      "sha256": "be5959966627df41751f1a4bd4ef3470558ea407175a54893c55a4e68e6816c7"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/integrity-verification.json",
+      "sha256": "b3d287c42eedd6c19498a0eb2758ef514e1669a3ef173d9d7572f4fed0360541"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/observed-workspace-changes.json",
+      "sha256": "7bc59553ab3d249dea2ac80d77759c09f59281d1be556aadba04f9dbca01edd1"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/package-independent.json",
+      "sha256": "704c185f931c760e00efa88fc3cf84d64dac45ed131d8da329cf3488323b892d"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/package-verification.json",
+      "sha256": "00df86db2635929323021da0a7ce94683543e04325c75882d19cae296f5ea268"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/parallel-release-test.diff",
+      "sha256": "db1bc7012f92cf12e3e65b2e1a0483e0bea66f1c3beb840c8dfe2d1e3e9d3a88"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/preservation-final.json",
+      "sha256": "5682d11fa6238c506a658c0dd46879640a587765507712556da1bf814125b25d"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/read-failure-debug.txt",
+      "sha256": "d3370ef7c9e0e08bbdbd35e02d606d126472a58437549216f67909c77b192e7b"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/regression-before.txt",
+      "sha256": "1d177f804eba13359a329a11344d163ee3ea3fe3d6157cda2e30c03a874d72ba"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/syntax-final.txt",
+      "sha256": "aba7bab08b90c2ab5fb092ada102cf92efa008bc0d841ddfc0aa357934d71af7"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/syntax-frozen-final.txt",
+      "sha256": "aba7bab08b90c2ab5fb092ada102cf92efa008bc0d841ddfc0aa357934d71af7"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/targeted-final.txt",
+      "sha256": "b2828bdb23d79b3283001d26c4e12a282d5aeafa58b2ae4a21812ad9748ce672"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/targeted-initial.txt",
+      "sha256": "14ff5d3f912c74f77070404b5a87efa5f90ee3e15cdf0493b48c776eb0480834"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/targeted-parallel-integration.txt",
+      "sha256": "e333c2358985c181c775c2d886d93f2ab590af9ca2eef572b204f66a799c7d3d"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/task-only.diff",
+      "sha256": "71b8fb3c0cfaf4de24e180c09567524be659611221ada1fed22d07fa7622a30c"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/unit-final.txt",
+      "sha256": "910ff75f85a37085a2398b4d1036ce2db5b7d6172dd18fe709fed95c60ba317b"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/unit-frozen-final.txt",
+      "sha256": "ba2738b98e410f91ee901bf6ec985f0a3e78f5c42eba796b72de878a2293a0cf"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/yazl-metadata.json",
+      "sha256": "62348ec18fa2b7214f4d10bcb278db3b25aaa5fcd682719778ef83950f607100"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/yazl-mirror-metadata.json",
+      "sha256": "e577794490d203fdd8647b51f91ce45f3e203a40973e599a91f98a0fd2004423"
+    },
+    {
+      "path": "docs/evidence/dependency-remediation-20261103/yazl-official-metadata.json",
+      "sha256": "6a922b01409880326df07b0248b259f7c60207d25e5f2a66c09b426010902b32"
+    }
+  ]
+}

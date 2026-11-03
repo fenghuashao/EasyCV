@@ -1,0 +1,8 @@
+background/service-worker.js:51: trailing whitespace.
++  
+content/content.js:1080: trailing whitespace.
++  
+content/injector.js:335: trailing whitespace.
++  
+scripts/deploy.js:125: trailing whitespace.
++  

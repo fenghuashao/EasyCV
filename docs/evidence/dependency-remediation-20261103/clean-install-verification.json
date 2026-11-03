@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "fixture": "D:\\pro\\github\\EasyCV\\.tmp\\dependency-remediation-clean-20261103",
+  "install": "npm ci --ignore-scripts --no-audit --no-fund --registry=https://registry.npmmirror.com --fetch-retries=0 --fetch-timeout=20000",
+  "runtimeSourceFiles": 37,
+  "buildScriptBytesMatch": true,
+  "packageJsonBytesMatch": true,
+  "lockBytesMatch": true,
+  "yazlResolved": "D:\\pro\\github\\EasyCV\\.tmp\\dependency-remediation-clean-20261103\\node_modules\\yazl\\index.js",
+  "yazlVersion": "3.3.1",
+  "zipPath": "D:\\pro\\github\\EasyCV\\releases\\dependency-remediation-20261103\\EasyCV-DEPENDENCY-TEST-ONLY.zip"
+}

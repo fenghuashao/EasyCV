@@ -1,0 +1,49 @@
+PASS [en-US] native locale selection, manifest and every catalog message
+PASS [en-US] popup static text, expanded help, advanced controls and 380px layout
+PASS [en-US] translated status, copy check and feedback placeholders
+PASS [en-US] all settings tabs, placeholders and 1024px/768px layouts
+PASS [en-US] rule editing, validation messages, notification label and confirmation dialog
+PASS [en-US] worker context menus and toolbar tooltip use selected translations
+PASS [en-GB] native locale selection, manifest and every catalog message
+PASS [en-GB] popup static text, expanded help, advanced controls and 380px layout
+PASS [en-GB] translated status, copy check and feedback placeholders
+PASS [en-GB] all settings tabs, placeholders and 1024px/768px layouts
+PASS [en-GB] rule editing, validation messages, notification label and confirmation dialog
+PASS [en-GB] worker context menus and toolbar tooltip use selected translations
+PASS [zh-CN] native locale selection, manifest and every catalog message
+PASS [zh-CN] popup static text, expanded help, advanced controls and 380px layout
+PASS [zh-CN] translated status, copy check and feedback placeholders
+PASS [zh-CN] all settings tabs, placeholders and 1024px/768px layouts
+PASS [zh-CN] rule editing, validation messages, notification label and confirmation dialog
+PASS [zh-CN] worker context menus and toolbar tooltip use selected translations
+PASS [zh-TW] native locale selection, manifest and every catalog message
+PASS [zh-TW] popup static text, expanded help, advanced controls and 380px layout
+PASS [zh-TW] translated status, copy check and feedback placeholders
+PASS [zh-TW] all settings tabs, placeholders and 1024px/768px layouts
+PASS [zh-TW] rule editing, validation messages, notification label and confirmation dialog
+PASS [zh-TW] worker context menus and toolbar tooltip use selected translations
+PASS [zh-HK] native locale selection, manifest and every catalog message
+PASS [zh-HK] popup static text, expanded help, advanced controls and 380px layout
+PASS [zh-HK] translated status, copy check and feedback placeholders
+PASS [zh-HK] all settings tabs, placeholders and 1024px/768px layouts
+PASS [zh-HK] rule editing, validation messages, notification label and confirmation dialog
+PASS [zh-HK] worker context menus and toolbar tooltip use selected translations
+PASS [ja] native locale selection, manifest and every catalog message
+PASS [ja] popup static text, expanded help, advanced controls and 380px layout
+PASS [ja] translated status, copy check and feedback placeholders
+PASS [ja] all settings tabs, placeholders and 1024px/768px layouts
+PASS [ja] rule editing, validation messages, notification label and confirmation dialog
+PASS [ja] worker context menus and toolbar tooltip use selected translations
+PASS [ro] native locale selection, manifest and every catalog message
+PASS [ro] popup static text, expanded help, advanced controls and 380px layout
+PASS [ro] translated status, copy check and feedback placeholders
+PASS [ro] all settings tabs, placeholders and 1024px/768px layouts
+PASS [ro] rule editing, validation messages, notification label and confirmation dialog
+PASS [ro] worker context menus and toolbar tooltip use selected translations
+PASS [ar] native locale selection, manifest and every catalog message
+PASS [ar] popup static text, expanded help, advanced controls and 380px layout
+PASS [ar] translated status, copy check and feedback placeholders
+PASS [ar] all settings tabs, placeholders and 1024px/768px layouts
+PASS [ar] rule editing, validation messages, notification label and confirmation dialog
+PASS [ar] worker context menus and toolbar tooltip use selected translations
+8/8 locale scenarios passed

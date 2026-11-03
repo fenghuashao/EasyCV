@@ -3,7 +3,7 @@
   "name": "__MSG_extension_name__",
   "version": "1.1.2",
   "description": "__MSG_extension_description__",
-  "default_locale": "zh_CN",
+  "default_locale": "en",
   "permissions": [
     "storage",
     "contextMenus"
@@ -49,9 +49,7 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "content/injector.js",
-        "icons/*.png",
-        "utils/*.js"
+        "content/injector.js"
       ],
       "matches": [
         "<all_urls>"

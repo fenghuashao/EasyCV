@@ -1,0 +1,1007 @@
+--- before/package.json
++++ after/package.json
+@@ -37,7 +37,7 @@
+   "author": "EasyCV Team",
+   "license": "MIT",
+   "devDependencies": {
+-    "archiver": "^5.3.2"
++    "yazl": "3.3.1"
+   },
+   "repository": {
+     "type": "git",
+--- before/package-lock.json
++++ after/package-lock.json
+@@ -9,609 +9,27 @@
+       "version": "1.1.2",
+       "license": "MIT",
+       "devDependencies": {
+-        "archiver": "^5.3.2"
++        "yazl": "3.3.1"
+       }
+     },
+-    "node_modules/archiver": {
+-      "version": "5.3.2",
+-      "resolved": "https://registry.npmmirror.com/archiver/-/archiver-5.3.2.tgz",
+-      "integrity": "sha512-+25nxyyznAXF7Nef3y0EbBeqmGZgeN/BxHX29Rs39djAfaFalmQ89SE6CWyDCHzGL0yt/ycBtNOmGTW0FyGWNw==",
++    "node_modules/yazl": {
++      "version": "3.3.1",
++      "resolved": "https://registry.npmmirror.com/yazl/-/yazl-3.3.1.tgz",
++      "integrity": "sha512-BbETDVWG+VcMUle37k5Fqp//7SDOK2/1+T7X8TD96M3D9G8jK5VLUdQVdVjGi8im7FGkazX7kk5hkU8X4L5Bng==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+-        "archiver-utils": "^2.1.0",
+-        "async": "^3.2.4",
+-        "buffer-crc32": "^0.2.1",
+-        "readable-stream": "^3.6.0",
+-        "readdir-glob": "^1.1.2",
+-        "tar-stream": "^2.2.0",
+-        "zip-stream": "^4.1.0"
+-      },
+-      "engines": {
+-        "node": ">= 10"
++        "buffer-crc32": "^1.0.0"
+       }
+     },
+-    "node_modules/archiver-utils": {
+-      "version": "2.1.0",
+-      "resolved": "https://registry.npmmirror.com/archiver-utils/-/archiver-utils-2.1.0.tgz",
+-      "integrity": "sha512-bEL/yUb/fNNiNTuUz979Z0Yg5L+LzLxGJz8x79lYmR54fmTIb6ob/hNQgkQnIUDWIFjZVQwl9Xs356I6BAMHfw==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "glob": "^7.1.4",
+-        "graceful-fs": "^4.2.0",
+-        "lazystream": "^1.0.0",
+-        "lodash.defaults": "^4.2.0",
+-        "lodash.difference": "^4.5.0",
+-        "lodash.flatten": "^4.4.0",
+-        "lodash.isplainobject": "^4.0.6",
+-        "lodash.union": "^4.6.0",
+-        "normalize-path": "^3.0.0",
+-        "readable-stream": "^2.0.0"
+-      },
+-      "engines": {
+-        "node": ">= 6"
+-      }
+-    },
+-    "node_modules/archiver-utils/node_modules/readable-stream": {
+-      "version": "2.3.8",
+-      "resolved": "https://registry.npmmirror.com/readable-stream/-/readable-stream-2.3.8.tgz",
+-      "integrity": "sha512-8p0AUk4XODgIewSi0l8Epjs+EVnWiK7NoDIEGU0HhE7+ZyY8D1IMY7odu5lRrFXGg71L15KG8QrPmum45RTtdA==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "core-util-is": "~1.0.0",
+-        "inherits": "~2.0.3",
+-        "isarray": "~1.0.0",
+-        "process-nextick-args": "~2.0.0",
+-        "safe-buffer": "~5.1.1",
+-        "string_decoder": "~1.1.1",
+-        "util-deprecate": "~1.0.1"
+-      }
+-    },
+-    "node_modules/archiver-utils/node_modules/safe-buffer": {
+-      "version": "5.1.2",
+-      "resolved": "https://registry.npmmirror.com/safe-buffer/-/safe-buffer-5.1.2.tgz",
+-      "integrity": "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/archiver-utils/node_modules/string_decoder": {
+-      "version": "1.1.1",
+-      "resolved": "https://registry.npmmirror.com/string_decoder/-/string_decoder-1.1.1.tgz",
+-      "integrity": "sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "safe-buffer": "~5.1.0"
+-      }
+-    },
+-    "node_modules/async": {
+-      "version": "3.2.6",
+-      "resolved": "https://registry.npmmirror.com/async/-/async-3.2.6.tgz",
+-      "integrity": "sha512-htCUDlxyyCLMgaM3xXg0C0LW2xqfuQ6p05pCEIsXuyQ+a1koYKTuBMzRNwmybfLgvJDMd0r1LTn4+E0Ti6C2AA==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/balanced-match": {
+-      "version": "1.0.2",
+-      "resolved": "https://registry.npmmirror.com/balanced-match/-/balanced-match-1.0.2.tgz",
+-      "integrity": "sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/base64-js": {
+-      "version": "1.5.1",
+-      "resolved": "https://registry.npmmirror.com/base64-js/-/base64-js-1.5.1.tgz",
+-      "integrity": "sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==",
+-      "dev": true,
+-      "funding": [
+-        {
+-          "type": "github",
+-          "url": "https://github.com/sponsors/feross"
+-        },
+-        {
+-          "type": "patreon",
+-          "url": "https://www.patreon.com/feross"
+-        },
+-        {
+-          "type": "consulting",
+-          "url": "https://feross.org/support"
+-        }
+-      ],
+-      "license": "MIT"
+-    },
+-    "node_modules/bl": {
+-      "version": "4.1.0",
+-      "resolved": "https://registry.npmmirror.com/bl/-/bl-4.1.0.tgz",
+-      "integrity": "sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "buffer": "^5.5.0",
+-        "inherits": "^2.0.4",
+-        "readable-stream": "^3.4.0"
+-      }
+-    },
+-    "node_modules/brace-expansion": {
+-      "version": "1.1.21",
+-      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.21.tgz",
+-      "integrity": "sha512-9zeA+KLZNNzglF2TPKRQEDyx6Yby7daAkuy8MiPzpXPsYDWi/DRM8jmwUDxokQjYqBpv5DgPiwD4h4ZZSy1Ujw==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "balanced-match": "^1.0.0",
+-        "concat-map": "0.0.1"
+-      }
+-    },
+-    "node_modules/buffer": {
+-      "version": "5.7.1",
+-      "resolved": "https://registry.npmmirror.com/buffer/-/buffer-5.7.1.tgz",
+-      "integrity": "sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==",
+-      "dev": true,
+-      "funding": [
+-        {
+-          "type": "github",
+-          "url": "https://github.com/sponsors/feross"
+-        },
+-        {
+-          "type": "patreon",
+-          "url": "https://www.patreon.com/feross"
+-        },
+-        {
+-          "type": "consulting",
+-          "url": "https://feross.org/support"
+-        }
+-      ],
+-      "license": "MIT",
+-      "dependencies": {
+-        "base64-js": "^1.3.1",
+-        "ieee754": "^1.1.13"
+-      }
+-    },
+-    "node_modules/buffer-crc32": {
+-      "version": "0.2.13",
+-      "resolved": "https://registry.npmmirror.com/buffer-crc32/-/buffer-crc32-0.2.13.tgz",
+-      "integrity": "sha512-VO9Ht/+p3SN7SKWqcrgEzjGbRSJYTx+Q1pTQC0wrWqHx0vpJraQ6GtHx8tvcg1rlK1byhU5gccxgOgj7B0TDkQ==",
++    "node_modules/yazl/node_modules/buffer-crc32": {
++      "version": "1.0.0",
++      "resolved": "https://registry.npmmirror.com/buffer-crc32/-/buffer-crc32-1.0.0.tgz",
++      "integrity": "sha512-Db1SbgBS/fg/392AblrMJk97KggmvYhr4pB5ZIMTWtaivCPMWLkmb7m21cJvpvgK+J3nsU2CmmixNBZx4vFj/w==",
+       "dev": true,
+       "license": "MIT",
+       "engines": {
+-        "node": "*"
+-      }
+-    },
+-    "node_modules/compress-commons": {
+-      "version": "4.1.2",
+-      "resolved": "https://registry.npmmirror.com/compress-commons/-/compress-commons-4.1.2.tgz",
+-      "integrity": "sha512-D3uMHtGc/fcO1Gt1/L7i1e33VOvD4A9hfQLP+6ewd+BvG/gQ84Yh4oftEhAdjSMgBgwGL+jsppT7JYNpo6MHHg==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "buffer-crc32": "^0.2.13",
+-        "crc32-stream": "^4.0.2",
+-        "normalize-path": "^3.0.0",
+-        "readable-stream": "^3.6.0"
+-      },
+-      "engines": {
+-        "node": ">= 10"
+-      }
+-    },
+-    "node_modules/concat-map": {
+-      "version": "0.0.1",
+-      "resolved": "https://registry.npmmirror.com/concat-map/-/concat-map-0.0.1.tgz",
+-      "integrity": "sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/core-util-is": {
+-      "version": "1.0.3",
+-      "resolved": "https://registry.npmmirror.com/core-util-is/-/core-util-is-1.0.3.tgz",
+-      "integrity": "sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/crc-32": {
+-      "version": "1.2.2",
+-      "resolved": "https://registry.npmmirror.com/crc-32/-/crc-32-1.2.2.tgz",
+-      "integrity": "sha512-ROmzCKrTnOwybPcJApAA6WBWij23HVfGVNKqqrZpuyZOHqK2CwHSvpGuyt/UNNvaIjEd8X5IFGp4Mh+Ie1IHJQ==",
+-      "dev": true,
+-      "license": "Apache-2.0",
+-      "bin": {
+-        "crc32": "bin/crc32.njs"
+-      },
+-      "engines": {
+-        "node": ">=0.8"
+-      }
+-    },
+-    "node_modules/crc32-stream": {
+-      "version": "4.0.3",
+-      "resolved": "https://registry.npmmirror.com/crc32-stream/-/crc32-stream-4.0.3.tgz",
+-      "integrity": "sha512-NT7w2JVU7DFroFdYkeq8cywxrgjPHWkdX1wjpRQXPX5Asews3tA+Ght6lddQO5Mkumffp3X7GEqku3epj2toIw==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "crc-32": "^1.2.0",
+-        "readable-stream": "^3.4.0"
+-      },
+-      "engines": {
+-        "node": ">= 10"
+-      }
+-    },
+-    "node_modules/end-of-stream": {
+-      "version": "1.4.4",
+-      "resolved": "https://registry.npmmirror.com/end-of-stream/-/end-of-stream-1.4.4.tgz",
+-      "integrity": "sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "once": "^1.4.0"
+-      }
+-    },
+-    "node_modules/fs-constants": {
+-      "version": "1.0.0",
+-      "resolved": "https://registry.npmmirror.com/fs-constants/-/fs-constants-1.0.0.tgz",
+-      "integrity": "sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/fs.realpath": {
+-      "version": "1.0.0",
+-      "resolved": "https://registry.npmmirror.com/fs.realpath/-/fs.realpath-1.0.0.tgz",
+-      "integrity": "sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==",
+-      "dev": true,
+-      "license": "ISC"
+-    },
+-    "node_modules/glob": {
+-      "version": "7.2.3",
+-      "resolved": "https://registry.npmmirror.com/glob/-/glob-7.2.3.tgz",
+-      "integrity": "sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==",
+-      "deprecated": "Glob versions prior to v9 are no longer supported",
+-      "dev": true,
+-      "license": "ISC",
+-      "dependencies": {
+-        "fs.realpath": "^1.0.0",
+-        "inflight": "^1.0.4",
+-        "inherits": "2",
+-        "minimatch": "^3.1.1",
+-        "once": "^1.3.0",
+-        "path-is-absolute": "^1.0.0"
+-      },
+-      "engines": {
+-        "node": "*"
+-      },
+-      "funding": {
+-        "url": "https://github.com/sponsors/isaacs"
+-      }
+-    },
+-    "node_modules/graceful-fs": {
+-      "version": "4.2.11",
+-      "resolved": "https://registry.npmmirror.com/graceful-fs/-/graceful-fs-4.2.11.tgz",
+-      "integrity": "sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==",
+-      "dev": true,
+-      "license": "ISC"
+-    },
+-    "node_modules/ieee754": {
+-      "version": "1.2.1",
+-      "resolved": "https://registry.npmmirror.com/ieee754/-/ieee754-1.2.1.tgz",
+-      "integrity": "sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==",
+-      "dev": true,
+-      "funding": [
+-        {
+-          "type": "github",
+-          "url": "https://github.com/sponsors/feross"
+-        },
+-        {
+-          "type": "patreon",
+-          "url": "https://www.patreon.com/feross"
+-        },
+-        {
+-          "type": "consulting",
+-          "url": "https://feross.org/support"
+-        }
+-      ],
+-      "license": "BSD-3-Clause"
+-    },
+-    "node_modules/inflight": {
+-      "version": "1.0.6",
+-      "resolved": "https://registry.npmmirror.com/inflight/-/inflight-1.0.6.tgz",
+-      "integrity": "sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==",
+-      "deprecated": "This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.",
+-      "dev": true,
+-      "license": "ISC",
+-      "dependencies": {
+-        "once": "^1.3.0",
+-        "wrappy": "1"
+-      }
+-    },
+-    "node_modules/inherits": {
+-      "version": "2.0.4",
+-      "resolved": "https://registry.npmmirror.com/inherits/-/inherits-2.0.4.tgz",
+-      "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==",
+-      "dev": true,
+-      "license": "ISC"
+-    },
+-    "node_modules/isarray": {
+-      "version": "1.0.0",
+-      "resolved": "https://registry.npmmirror.com/isarray/-/isarray-1.0.0.tgz",
+-      "integrity": "sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/lazystream": {
+-      "version": "1.0.1",
+-      "resolved": "https://registry.npmmirror.com/lazystream/-/lazystream-1.0.1.tgz",
+-      "integrity": "sha512-b94GiNHQNy6JNTrt5w6zNyffMrNkXZb3KTkCZJb2V1xaEGCk093vkZ2jk3tpaeP33/OiXC+WvK9AxUebnf5nbw==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "readable-stream": "^2.0.5"
+-      },
+-      "engines": {
+-        "node": ">= 0.6.3"
+-      }
+-    },
+-    "node_modules/lazystream/node_modules/readable-stream": {
+-      "version": "2.3.8",
+-      "resolved": "https://registry.npmmirror.com/readable-stream/-/readable-stream-2.3.8.tgz",
+-      "integrity": "sha512-8p0AUk4XODgIewSi0l8Epjs+EVnWiK7NoDIEGU0HhE7+ZyY8D1IMY7odu5lRrFXGg71L15KG8QrPmum45RTtdA==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "core-util-is": "~1.0.0",
+-        "inherits": "~2.0.3",
+-        "isarray": "~1.0.0",
+-        "process-nextick-args": "~2.0.0",
+-        "safe-buffer": "~5.1.1",
+-        "string_decoder": "~1.1.1",
+-        "util-deprecate": "~1.0.1"
+-      }
+-    },
+-    "node_modules/lazystream/node_modules/safe-buffer": {
+-      "version": "5.1.2",
+-      "resolved": "https://registry.npmmirror.com/safe-buffer/-/safe-buffer-5.1.2.tgz",
+-      "integrity": "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/lazystream/node_modules/string_decoder": {
+-      "version": "1.1.1",
+-      "resolved": "https://registry.npmmirror.com/string_decoder/-/string_decoder-1.1.1.tgz",
+-      "integrity": "sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "safe-buffer": "~5.1.0"
+-      }
+-    },
+-    "node_modules/lodash.defaults": {
+-      "version": "4.2.0",
+-      "resolved": "https://registry.npmmirror.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz",
+-      "integrity": "sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/lodash.difference": {
+-      "version": "4.5.0",
+-      "resolved": "https://registry.npmmirror.com/lodash.difference/-/lodash.difference-4.5.0.tgz",
+-      "integrity": "sha512-dS2j+W26TQ7taQBGN8Lbbq04ssV3emRw4NY58WErlTO29pIqS0HmoT5aJ9+TUQ1N3G+JOZSji4eugsWwGp9yPA==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/lodash.flatten": {
+-      "version": "4.4.0",
+-      "resolved": "https://registry.npmmirror.com/lodash.flatten/-/lodash.flatten-4.4.0.tgz",
+-      "integrity": "sha512-C5N2Z3DgnnKr0LOpv/hKCgKdb7ZZwafIrsesve6lmzvZIRZRGaZ/l6Q8+2W7NaT+ZwO3fFlSCzCzrDCFdJfZ4g==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/lodash.isplainobject": {
+-      "version": "4.0.6",
+-      "resolved": "https://registry.npmmirror.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz",
+-      "integrity": "sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/lodash.union": {
+-      "version": "4.6.0",
+-      "resolved": "https://registry.npmmirror.com/lodash.union/-/lodash.union-4.6.0.tgz",
+-      "integrity": "sha512-c4pB2CdGrGdjMKYLA+XiRDO7Y0PRQbm/Gzg8qMj+QH+pFVAoTp5sBpO0odL3FjoPCGjK96p6qsP+yQoiLoOBcw==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/minimatch": {
+-      "version": "3.1.5",
+-      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-3.1.5.tgz",
+-      "integrity": "sha512-VgjWUsnnT6n+NUk6eZq77zeFdpW2LWDzP6zFGrCbHXiYNul5Dzqk2HHQ5uFH2DNW5Xbp8+jVzaeNt94ssEEl4w==",
+-      "dev": true,
+-      "license": "ISC",
+-      "dependencies": {
+-        "brace-expansion": "^1.1.7"
+-      },
+-      "engines": {
+-        "node": "*"
+-      }
+-    },
+-    "node_modules/normalize-path": {
+-      "version": "3.0.0",
+-      "resolved": "https://registry.npmmirror.com/normalize-path/-/normalize-path-3.0.0.tgz",
+-      "integrity": "sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==",
+-      "dev": true,
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">=0.10.0"
+-      }
+-    },
+-    "node_modules/once": {
+-      "version": "1.4.0",
+-      "resolved": "https://registry.npmmirror.com/once/-/once-1.4.0.tgz",
+-      "integrity": "sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==",
+-      "dev": true,
+-      "license": "ISC",
+-      "dependencies": {
+-        "wrappy": "1"
+-      }
+-    },
+-    "node_modules/path-is-absolute": {
+-      "version": "1.0.1",
+-      "resolved": "https://registry.npmmirror.com/path-is-absolute/-/path-is-absolute-1.0.1.tgz",
+-      "integrity": "sha512-AVbw3UJ2e9bq64vSaS9Am0fje1Pa8pbGqTTsmXfaIiMpnr5DlDhfJOuLj9Sf95ZPVDAUerDfEk88MPmPe7UCQg==",
+-      "dev": true,
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">=0.10.0"
+-      }
+-    },
+-    "node_modules/process-nextick-args": {
+-      "version": "2.0.1",
+-      "resolved": "https://registry.npmmirror.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz",
+-      "integrity": "sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/readable-stream": {
+-      "version": "3.6.2",
+-      "resolved": "https://registry.npmmirror.com/readable-stream/-/readable-stream-3.6.2.tgz",
+-      "integrity": "sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "inherits": "^2.0.3",
+-        "string_decoder": "^1.1.1",
+-        "util-deprecate": "^1.0.1"
+-      },
+-      "engines": {
+-        "node": ">= 6"
+-      }
+-    },
+-    "node_modules/readdir-glob": {
+-      "version": "1.1.3",
+-      "resolved": "https://registry.npmmirror.com/readdir-glob/-/readdir-glob-1.1.3.tgz",
+-      "integrity": "sha512-v05I2k7xN8zXvPD9N+z/uhXPaj0sUFCe2rcWZIpBsqxfP7xXFQ0tipAd/wjj1YxWyWtUS5IDJpOG82JKt2EAVA==",
+-      "dev": true,
+-      "license": "Apache-2.0",
+-      "dependencies": {
+-        "minimatch": "^5.1.0"
+-      }
+-    },
+-    "node_modules/readdir-glob/node_modules/brace-expansion": {
+-      "version": "2.1.7",
+-      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-2.1.7.tgz",
+-      "integrity": "sha512-uZbew1NqdmPDTMJ8ah1y+b+9QEJrfkXFk3RcTQw3X0jW/xRUvFKsg1CfQdSYGdTbXZWExtU3J3ccxtnfw1Fi0g==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "balanced-match": "^1.0.0"
+-      }
+-    },
+-    "node_modules/readdir-glob/node_modules/minimatch": {
+-      "version": "5.1.9",
+-      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-5.1.9.tgz",
+-      "integrity": "sha512-7o1wEA2RyMP7Iu7GNba9vc0RWWGACJOCZBJX2GJWip0ikV+wcOsgVuY9uE8CPiyQhkGFSlhuSkZPavN7u1c2Fw==",
+-      "dev": true,
+-      "license": "ISC",
+-      "dependencies": {
+-        "brace-expansion": "^2.0.1"
+-      },
+-      "engines": {
+-        "node": ">=10"
+-      }
+-    },
+-    "node_modules/safe-buffer": {
+-      "version": "5.2.1",
+-      "resolved": "https://registry.npmmirror.com/safe-buffer/-/safe-buffer-5.2.1.tgz",
+-      "integrity": "sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==",
+-      "dev": true,
+-      "funding": [
+-        {
+-          "type": "github",
+-          "url": "https://github.com/sponsors/feross"
+-        },
+-        {
+-          "type": "patreon",
+-          "url": "https://www.patreon.com/feross"
+-        },
+-        {
+-          "type": "consulting",
+-          "url": "https://feross.org/support"
+-        }
+-      ],
+-      "license": "MIT"
+-    },
+-    "node_modules/string_decoder": {
+-      "version": "1.3.0",
+-      "resolved": "https://registry.npmmirror.com/string_decoder/-/string_decoder-1.3.0.tgz",
+-      "integrity": "sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "safe-buffer": "~5.2.0"
+-      }
+-    },
+-    "node_modules/tar-stream": {
+-      "version": "2.2.0",
+-      "resolved": "https://registry.npmmirror.com/tar-stream/-/tar-stream-2.2.0.tgz",
+-      "integrity": "sha512-ujeqbceABgwMZxEJnk2HDY2DlnUZ+9oEcb1KzTVfYHio0UE6dG71n60d8D2I4qNvleWrrXpmjpt7vZeF1LnMZQ==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "bl": "^4.0.3",
+-        "end-of-stream": "^1.4.1",
+-        "fs-constants": "^1.0.0",
+-        "inherits": "^2.0.3",
+-        "readable-stream": "^3.1.1"
+-      },
+-      "engines": {
+-        "node": ">=6"
+-      }
+-    },
+-    "node_modules/util-deprecate": {
+-      "version": "1.0.2",
+-      "resolved": "https://registry.npmmirror.com/util-deprecate/-/util-deprecate-1.0.2.tgz",
+-      "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/wrappy": {
+-      "version": "1.0.2",
+-      "resolved": "https://registry.npmmirror.com/wrappy/-/wrappy-1.0.2.tgz",
+-      "integrity": "sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==",
+-      "dev": true,
+-      "license": "ISC"
+-    },
+-    "node_modules/zip-stream": {
+-      "version": "4.1.1",
+-      "resolved": "https://registry.npmmirror.com/zip-stream/-/zip-stream-4.1.1.tgz",
+-      "integrity": "sha512-9qv4rlDiopXg4E69k+vMHjNN63YFMe9sZMrdlvKnCjlCRWeCBswPPMPUfx+ipsAWq1LXHe70RcbaHdJJpS6hyQ==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "archiver-utils": "^3.0.4",
+-        "compress-commons": "^4.1.2",
+-        "readable-stream": "^3.6.0"
+-      },
+-      "engines": {
+-        "node": ">= 10"
+-      }
+-    },
+-    "node_modules/zip-stream/node_modules/archiver-utils": {
+-      "version": "3.0.4",
+-      "resolved": "https://registry.npmmirror.com/archiver-utils/-/archiver-utils-3.0.4.tgz",
+-      "integrity": "sha512-KVgf4XQVrTjhyWmx6cte4RxonPLR9onExufI1jhvw/MQ4BB6IsZD5gT8Lq+u/+pRkWna/6JoHpiQioaqFP5Rzw==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "glob": "^7.2.3",
+-        "graceful-fs": "^4.2.0",
+-        "lazystream": "^1.0.0",
+-        "lodash.defaults": "^4.2.0",
+-        "lodash.difference": "^4.5.0",
+-        "lodash.flatten": "^4.4.0",
+-        "lodash.isplainobject": "^4.0.6",
+-        "lodash.union": "^4.6.0",
+-        "normalize-path": "^3.0.0",
+-        "readable-stream": "^3.6.0"
+-      },
+-      "engines": {
+-        "node": ">= 10"
++        "node": ">=8.0.0"
+       }
+     }
+   }
+--- before/scripts/package.js
++++ after/scripts/package.js
+@@ -1,6 +1,7 @@
+ const fs = require('fs');
+ const path = require('path');
+-const archiver = require('archiver');
++const { ZipFile } = require('yazl');
++const { pipeline } = require('stream/promises');
+ const { execFileSync } = require('child_process');
+ const { verifyBuild, verifyZip } = require('./release-checks');
+ const os = require('os');
+@@ -61,36 +62,44 @@
+    */
+   async createZip(outputPath) {
+     const verified = verifyBuild(this.sourceDir, this.distDir);
+-    if (fs.existsSync(outputPath)) throw Error('Package already exists');
+-    return new Promise((resolve, reject) => {
+-      const output = fs.createWriteStream(outputPath, { flags: 'wx' });
+-      const archive = archiver('zip', {
+-        zlib: { level: 9 } // 最高压缩级别
+-      });
+-
+-      output.on('close', () => {
+-        try {
+-          const verification = verifyZip(this.sourceDir, this.distDir, outputPath);
+-          fs.writeFileSync(outputPath + '.verification.json', JSON.stringify(verification, null, 2), { flag: 'wx' });
+-        const size = this.formatFileSize(archive.pointer());
+-        console.log(`✅ 打包完成: ${path.basename(outputPath)} (${size})`);
+-        resolve({
+-          path: outputPath,
+-          size: archive.pointer()
++    const receiptPath = outputPath + '.verification.json';
++    if (fs.existsSync(outputPath) || fs.existsSync(receiptPath)) throw Error('Package or verification already exists');
++    const archive = new ZipFile();
++    const inputs = new Set();
++    let failure;
++    archive.on('error', error => {
++      failure ||= error;
++      archive.outputStream.destroy(error);
++      for (const input of inputs) input.destroy();
++    });
++    const output = fs.createWriteStream(outputPath, { flags: 'wx' });
++    const writing = pipeline(archive.outputStream, output);
++    try {
++      for (const name of Object.keys(verified.files).sort()) {
++        const source = path.join(this.distDir, name);
++        const stats = fs.statSync(source);
++        // Lazy streams keep only the current file open and allow cleanup on write failures.
++        archive.addReadStreamLazy(name, { compressionLevel: 9, mtime: stats.mtime, mode: stats.mode, size: stats.size }, callback => {
++          if (failure) return callback(failure);
++          const input = fs.createReadStream(source);
++          inputs.add(input);
++          input.once('error', error => archive.emit('error', error));
++          input.once('close', () => inputs.delete(input));
++          callback(null, input);
+         });
+-        } catch (error) { reject(error); }
+-      });
+-
+-      output.on('error', reject);
+-      archive.on('error', reject);
+-
+-      archive.pipe(output);
+-
+-      // 添加dist目录中的所有文件
+-      for (const name of Object.keys(verified.files).sort()) archive.file(path.join(this.distDir, name), { name });
+-
+-      archive.finalize();
+-    });
++      }
++      archive.end();
++      await writing;
++    } catch (error) {
++      failure ||= error;
++      archive.emit('error', error); // Stop queued lazy entries as well as the output pipeline.
++      await writing.catch(() => {});
++      throw error;
++    }
++    const verification = verifyZip(this.sourceDir, this.distDir, outputPath);
++    fs.writeFileSync(receiptPath, JSON.stringify(verification, null, 2), { flag: 'wx' });
++    console.log(`✅ 打包完成: ${path.basename(outputPath)} (${this.formatFileSize(verification.zipBytes)})`);
++    return { path: outputPath, size: verification.zipBytes };
+   }
+ 
+   /**
+@@ -262,4 +271,4 @@
+   packager.package().catch(() => { process.exitCode = 1; });
+ }
+ 
+-module.exports = Packager;+module.exports = Packager;
+--- before/test/unit/release-checks.test.mjs
++++ after/test/unit/release-checks.test.mjs
+@@ -5,6 +5,7 @@
+ import path from 'node:path';
+ import { createRequire } from 'node:module';
+ import { fileURLToPath } from 'node:url';
++import { PassThrough, Writable } from 'node:stream';
+ const require = createRequire(import.meta.url);
+ const Builder = require('../../scripts/build.js');
+ const Packager = require('../../scripts/package.js');
+@@ -56,6 +57,68 @@
+   assert.throws(() => verifyBuild(dir, builder.distDir), /permission/);
+ });
+ 
++test('ZIP writer supports Unicode/space paths and preserves all runtime bytes', async t => {
++  const { dir, builder, packager } = fixture(t);
++  builder.distDir = path.join(dir, '构建 with spaces'); packager.distDir = builder.distDir;
++  await builder.build();
++  const zip = path.join(dir, '测试 archive.zip');
++  const result = await packager.createZip(zip);
++  assert.equal(result.path, zip);
++  assert.equal(result.size, fs.statSync(zip).size);
++  assert.equal(verifyZip(dir, builder.distDir, zip).fileCount, 38);
++});
++
++test('concurrent ZIP writes cannot overwrite the winner or its receipt', async t => {
++  const { dir, builder, packager } = fixture(t);
++  await builder.build();
++  const zip = path.join(dir, 'concurrent.zip');
++  const results = await Promise.allSettled([packager.createZip(zip), packager.createZip(zip)]);
++  assert.equal(results.filter(result => result.status === 'fulfilled').length, 1);
++  assert.equal(results.filter(result => result.status === 'rejected').length, 1);
++  const verified = verifyZip(dir, builder.distDir, zip);
++  assert.equal(JSON.parse(fs.readFileSync(zip + '.verification.json')).zipSHA256, verified.zipSHA256);
++});
++
++test('an existing verification receipt prevents creation of a conflicting ZIP', async t => {
++  const { dir, builder, packager } = fixture(t);
++  await builder.build();
++  const zip = path.join(dir, 'receipt-conflict.zip');
++  fs.writeFileSync(zip + '.verification.json', 'keep this receipt');
++  await assert.rejects(packager.createZip(zip), /already exists/);
++  assert.equal(fs.existsSync(zip), false);
++  assert.equal(fs.readFileSync(zip + '.verification.json', 'utf8'), 'keep this receipt');
++});
++
++for (const failure of ['source read', 'output write']) {
++  test(`ZIP ${failure} failure rejects, closes streams and never creates a success receipt`, { timeout: 5000 }, async t => {
++    const { dir, builder, packager } = fixture(t);
++    await builder.build();
++    const zip = path.join(dir, 'failed.zip');
++    const inputs = []; let output;
++    const createReadStream = fs.createReadStream;
++    const createWriteStream = fs.createWriteStream;
++    t.mock.method(fs, 'createReadStream', function (file, options) {
++      if (failure === 'source read' && file === path.join(builder.distDir, 'manifest.json')) {
++        const input = new PassThrough(); inputs.push(input);
++        setImmediate(() => input.destroy(Error('synthetic source read failure')));
++        return input;
++      }
++      const input = createReadStream(file, options); inputs.push(input); return input;
++    });
++    t.mock.method(fs, 'createWriteStream', function (file, options) {
++      output = failure === 'output write'
++        ? new Writable({ write(chunk, encoding, callback) { callback(Error('synthetic output write failure')); } })
++        : createWriteStream(file, options);
++      return output;
++    });
++    await assert.rejects(packager.createZip(zip), new RegExp(`synthetic ${failure} failure`));
++    await new Promise(resolve => setImmediate(resolve));
++    assert.equal(output.destroyed, true);
++    assert.ok(inputs.every(input => input.destroyed));
++    assert.equal(fs.existsSync(zip + '.verification.json'), false);
++  });
++}
++
+ test('version operation synchronizes manifest/package/both lock fields in an isolated fixture', t => {
+   const { dir } = fixture(t);
+   const manager = Object.assign(new VersionManager(), { sourceDir: dir,
+--- before/test/unit/package-dependency.test.mjs
++++ after/test/unit/package-dependency.test.mjs
+@@ -0,0 +1,13 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++
++test('locked build dependencies exclude the affected minimatch range in GHSA-g3hv-75wg-m249', () => {
++  const lock = JSON.parse(fs.readFileSync(new URL('../../package-lock.json', import.meta.url), 'utf8'));
++  for (const [name, entry] of Object.entries(lock.packages)) {
++    if (!name.endsWith('/minimatch')) continue;
++    const [major, minor, patch] = entry.version.split('.').map(Number);
++    assert.ok(major > 11 || (major === 11 && (minor > 0 || patch >= 1)),
++      `${name}@${entry.version} remains in the audited affected range (<11.0.1)`);
++  }
++});
+--- before/EASYCV-W1-W6-LOCAL-ACCEPTANCE.md
++++ after/EASYCV-W1-W6-LOCAL-ACCEPTANCE.md
+@@ -1,31 +1,33 @@
+ # EasyCV W1–W6 本地整改与验收报告
+ 
+-日期：2026-11-03。执行：FX；依据 FA 对 [下一版计划](EASYCV-NEXT-VERSION-PLAN.md) W1–W6 的批准。
++日期：2026-11-03。执行：FX；依据 FA 对 [下一版计划](EASYCV-NEXT-VERSION-PLAN.md) W1–W6 及剩余 6 个中风险依赖整改的批准。
+ 
+-**结论：W1–W6 的本地代码、必要界面和回归测试已完成。118 项测试、52 个脚本语法检查、文档检查及隔离包校验通过。最终发布验收仍为 PARTIAL / 不可提交商店。** 浏览器与同 ID 升级未运行；依赖审计仍有 6 个中风险依赖条目，版本和后台状态待核实。
++**结论：依赖整改本地验收 PASS。原 6 项中风险依赖链已移除；官方 npm 审计接口对全部锁定依赖返回零告警。冻结快照内 124 项测试、53 个脚本语法检查、干净安装及隔离 ZIP 校验通过。最终发布验收仍为 PARTIAL / 不可提交商店。** npm CLI 的 TLS 连接失败单列，不伪称 `npm audit` 成功退出；浏览器、同 ID 升级、版本及后台状态仍待核实。
+ 
+-本轮没有操作浏览器（包括无头浏览器）、安装扩展、读取或迁移真实浏览器配置、上传或提交商店，也没有 commit、push、fetch、升版或修改全局 npm 配置。真实数据迁移代码只在内存 fixtures 中验证，尚未在 FA 的浏览器上执行。
++**并行任务边界：** 打包后 FA 确认另一个任务正在修改语言包、manifest、Options/Popup 与 i18n 工具。本轮没有覆盖这些变更。以下依赖包及 124 项结果以界面并行修改开始前的冻结源码为准，不代表当前正在变动的工作区或并行界面成果已整体通过。合流后的重新构建与完整验收为 **NOT_RUN**。
++
++本轮没有操作浏览器（包括无头浏览器）、安装扩展、读取或迁移真实浏览器配置、上传或提交商店，也没有 commit、push、fetch、升版或修改全局 npm 配置。真实数据迁移代码仍只在内存 fixtures 中验证。
+ 
+ ## 1. 基线、保全与产物身份
+ 
+ | 项目 | 结果 |
+ | --- | --- |
+-| 仓库 | `D:\pro\github\EasyCV`，`master` |
+-| HEAD | `9d378b5e731e2e3f5e3513762fab7b36fcb35236`，前后相同 |
++| 仓库 / HEAD | `D:\pro\github\EasyCV`，`master`；`9d378b5e731e2e3f5e3513762fab7b36fcb35236` 未变 |
+ | 版本 | manifest、package、lock 顶层及根包均保持 **1.1.2**；没有锁定下一版 |
+-| 工作区 | 保留原先未跟踪方案、调查证据及商店送审证据目录；本轮新改动留在工作区，未暂存或提交 |
+-| 保全校验 | **475 个既有文件哈希未变**，包括原方案、历史证据、默认 dist 与旧 ZIP；见 [保全结果](docs/evidence/w1-w6-local-20261103/preservation-final.json) |
+-| 检查环境 | Windows / Node v24.21.0 x64；不是浏览器、Windows ARM64 或跨平台验收 |
++| 工作区 | 保留既有改动、方案与证据；并行界面变更单列；本轮未暂存或提交 |
++| 保全 | 上轮 475 个文件保全结果保留；本轮以 888 个既有文件为基线，区分依赖整改、并行界面变更及其余保全文件，见 [本轮保全记录](docs/evidence/dependency-remediation-20261103/preservation-final.json) |
++| 检查环境 | Windows / Node v24.21.0 x64；不代表其他 Node、操作系统或浏览器通过 |
+ 
+-最终本地测试包：
++依赖整改冻结快照测试包：
+ 
+-- 路径：`D:\pro\github\EasyCV\releases\w1-w6-local-final-20261103\EasyCV-W1-W6-TEST-ONLY.zip`
+-- SHA256：`25a74f354f4ba17912dc0acccb627b1803a046f7e8103555658e584cd0df461d`
+-- 大小：**138460 bytes**；**38 个文件**，其中 37 个运行文件与源码逐字节相同，另一个是 build-info。
+-- 内部版本：1.1.2；**TEST ONLY，不是已锁定的下一版，也不是商店送审包。**
+-- 证据：[包校验](docs/evidence/w1-w6-local-20261103/package-verification.json)、[独立 Python 校验](docs/evidence/w1-w6-local-20261103/package-independent.json)、[构建日志](docs/evidence/w1-w6-local-20261103/build-package-final.txt)。
++- 路径：`D:\pro\github\EasyCV\releases\dependency-remediation-20261103\EasyCV-DEPENDENCY-TEST-ONLY.zip`
++- SHA256：`abde4ba65db9ee6680d2511ea8ebf245712244c7e83238c98ffe5de13d98bc45`
++- 大小：**138802 bytes**；**38 个文件**。37 个运行文件与本轮初始源码、冻结 fixture 和上轮 W1–W6 最终 ZIP 逐字节相同；另一个是 build-info。
++- 内部版本：**1.1.2**；**TEST ONLY，不是已锁定的下一版，也不是并行界面任务的合流包。**
++- 在全新 fixture 执行 `npm ci --ignore-scripts --no-audit --no-fund`，使用 fixture 内依赖构建打包，没有借用工作区旧 node_modules。
++- 证据：[包校验](docs/evidence/dependency-remediation-20261103/package-verification.json)、[独立 Python 校验](docs/evidence/dependency-remediation-20261103/package-independent.json)、[干净安装](docs/evidence/dependency-remediation-20261103/clean-install-verification.json)、[构建日志](docs/evidence/dependency-remediation-20261103/build-package-final.txt)。
+ 
+-`releases/w1-w6-local-test-20261103/` 是过程中的较早自测产物；当前报告只接受上述 `local-final` 包。默认 `dist/` 仍是原有旧目录，没有清理或覆盖。旧 `store-submission-20261103` ZIP 保持原字节，不可混用其验收结果。
++上轮 `releases/w1-w6-local-final-20261103/EasyCV-W1-W6-TEST-ONLY.zip` 保留（138460 bytes，SHA256 `25a74f354f4ba17912dc0acccb627b1803a046f7e8103555658e584cd0df461d`）。早期 local-test、默认旧 dist 与旧商店 ZIP 均未清理或覆盖；其历史证据不升级为当前合流或商店验收。
+ 
+ ## 2. W1–W6 完成情况
+ 
+@@ -35,7 +37,7 @@
+ | W2 配置可靠性 | 各界面通过 worker 串行写；sync 失败报错；草稿编辑/取消；最新值合并；整体导入验证；本机副本导出/显式恢复 | PASS | 真实多窗口、配额、断连、worker 重启及跨设备行为 |
+ | W3 站点规则 | 旧字符串/混合格式统一；精确优先与点边界；排除/总关闭优先；自动访问不改全局默认 | PASS | 双站多标签、已有用户规则升级及真实页面 |
+ | W4 独立开关 | copy/paste 四组合按模式处理；关闭还原原型/样式/内联处理器；保留监听器注册；快捷键限范围 | PASS（VM） | 编辑器、播放器、iframe、Shadow、SPA、严格 CSP 的真实效果 |
+-| W5 构建与门禁 | 真正执行检查；版本一致性；独立输出；拒绝旧构建/覆盖；ZIP 文件、CRC 与 hash 验证；兼容依赖修复 | PASS（本地构建）；依赖审计未通过 | 中风险依赖处置、最终版本重建及最终包浏览器验收 |
++| W5 构建与门禁 | 真正执行检查；版本一致性；独立输出；拒绝旧构建/覆盖；ZIP 文件、CRC 与 hash 验证；最小打包依赖替换 | PASS（冻结快照/官方审计接口）；npm CLI 传输失败单列 | 并行任务合流检查、最终版本重建及最终包浏览器验收 |
+ | W6 必要 UI/双语 | 保存/导入错误、编辑取消、本机恢复、迁移重试说明；只展示启用计数；保留今日 Popup 功能 | PASS（结构/方法/locale） | 中英显示、键盘、焦点及用户操作体验 |
+ 
+ 这些 PASS 表示本轮对应的本地检查通过，不表示 W1–W6 的真实浏览器验收已经关闭。
+@@ -94,7 +96,7 @@
+ | F11 单项关闭仍被通用 injector 干预 | 四组合模式门控，关闭恢复，保留监听器注册 | LOCAL_FIXED（VM） |
+ | F12 普通页误报且记录访问域 | 修正 null 判定，停止域名采集，统计不伪称成功 | LOCAL_FIXED |
+ 
+-最初的 17 项回归在修改前全部出现预期失败，证据见 [red baseline](docs/evidence/w1-w6-local-20261103/regression-before.txt)。原有 77 项测试保留并按批准后的契约更新必要断言，新增 41 项后总计 118 项。
++最初的 17 项回归在修改前全部出现预期失败，证据见 [red baseline](docs/evidence/w1-w6-local-20261103/regression-before.txt)。原有 77 项测试保留并按批准后的契约更新必要断言，新增 41 项后总计 118 项；本轮依赖整改再新增 6 项，总计 124 项。
+ 
+ 调整旧断言的原因包括：不再期待永久吞掉监听器；快捷键测试指定具体键；损坏排除列表应失败而非变空；自动配置不应改全局 paste；没有真实采样就不显示成功率。没有通过删除失败测试来获得通过结果。
+ 
+@@ -102,55 +104,63 @@
+ 
+ | 验证 | 结果 | 证据 |
+ | --- | --- | --- |
+-| `node --test "test/unit/*.test.mjs"` | **118/118 PASS**，无 skipped/todo | [最终测试日志](docs/evidence/w1-w6-local-20261103/unit-final.txt) |
+-| `node scripts/lint.js` | **52 个文件 PASS** | [语法检查](docs/evidence/w1-w6-local-20261103/syntax-final.txt) |
+-| `node scripts/check-docs.js` | PASS | [文档检查](docs/evidence/w1-w6-local-20261103/docs-final.txt) |
+-| `git diff --check` | PASS | [差异检查](docs/evidence/w1-w6-local-20261103/diff-check-final.txt) |
+-| 构建及 Node ZIP 验证器 | PASS，38 文件、source/build/ZIP 一致 | [包验证](docs/evidence/w1-w6-local-20261103/package-verification.json) |
+-| Python zipfile 独立校验 | PASS，CRC、唯一文件名、每文件字节及 manifest | [独立验证](docs/evidence/w1-w6-local-20261103/package-independent.json) |
+-| 保全 | PASS，475 个既有文件、HEAD、版本未变 | [保全结果](docs/evidence/w1-w6-local-20261103/preservation-final.json) |
+-| Chrome / Edge / 无头 / 原生安装 | **NOT_RUN**，遵守本轮范围 | 无浏览器验收记录 |
++| `node --test "test/unit/*.test.mjs"` | **124/124 PASS**，无 skipped/todo；冻结 fixture 复跑 | [测试日志](docs/evidence/dependency-remediation-20261103/unit-frozen-final.txt) |
++| `node scripts/lint.js` | **53 个文件 PASS**；冻结 fixture 复跑 | [语法检查](docs/evidence/dependency-remediation-20261103/syntax-frozen-final.txt) |
++| 文档及本轮链接检查 | PASS；不覆盖并行界面验收 | [文档检查](docs/evidence/dependency-remediation-20261103/docs-final.txt) |
++| 本轮路径 `git diff --check` | PASS；全工作区检查另发现并行任务需求文档的行尾空白，未覆盖其文件 | [本轮差异检查](docs/evidence/dependency-remediation-20261103/diff-check-scoped.txt)、[全工作区当时结果](docs/evidence/dependency-remediation-20261103/diff-check-final.txt) |
++| 全新目录 `npm ci` | PASS，仅安装 2 个开发依赖；integrity 与官方元数据一致 | [安装日志](docs/evidence/dependency-remediation-20261103/clean-install.txt)、[完整性核对](docs/evidence/dependency-remediation-20261103/integrity-verification.json) |
++| npm 官方 bulk 审计接口 | PASS，全部锁定依赖返回 `{}`，0 条已知告警 | [审计核对](docs/evidence/dependency-remediation-20261103/audit-verification.json) |
++| `npm audit` CLI | **TRANSPORT_FAILED**，TLS 建连失败；不声称退出码 0 | [CLI 原始结果](docs/evidence/dependency-remediation-20261103/audit-after.json) |
++| 构建 / Node ZIP 验证器 | PASS，冻结快照 38 文件 source/build/ZIP 一致 | [包验证](docs/evidence/dependency-remediation-20261103/package-verification.json) |
++| Python zipfile 独立校验 | PASS，CRC、唯一名称、每文件字节及 manifest；37 个运行文件与上轮包相同 | [独立验证](docs/evidence/dependency-remediation-20261103/package-independent.json) |
++| 并行界面变更后的打包专项回归 | **10/10 PASS**；仅验证依赖、构建及打包门禁，不覆盖界面完整回归 | [专项日志](docs/evidence/dependency-remediation-20261103/targeted-parallel-integration.txt) |
++| 保全 | PASS（按归属核对），既有证据与旧产物保留；并行界面变更另列 | [保全记录](docs/evidence/dependency-remediation-20261103/preservation-final.json) |
++| 并行界面修改后的合流包 | **NOT_RUN**，该任务仍在修改 | 不混用冻结快照结果 |
++| Chrome / Edge / 无头 / 原生安装 | **NOT_RUN** | 遵守本轮范围 |
+ | 同 ID 升级、商店后台与公开政策 | **待核实 / NOT_RUN** | 不以历史证据替代 |
+ 
+-`release-checks.test.mjs` 使用独立临时项目，真正运行一个会失败的 Node 测试，确认部署检查停止并不继续文档步骤；再运行通过样例确认继续。日志内的 synthetic failure 是预期负例，不是最终 118 项测试失败。它也发现并解决了嵌套 Node 测试环境可能跳过子测试的情况。
++本轮新增 6 项：锁文件禁止已知受影响 minimatch 范围；中文/空格路径；并发写同名 ZIP；已有校验记录冲突；源文件读失败；目标写失败。保留并复跑原有 118 项。读失败回归发现新依赖不自动转发输入流错误，现已显式传播错误、关闭流并停止队列。失败不生成成功收据，残留文件不冒险删除或覆盖。
+ 
+-中英文 key 一致、静态引用齐全；Options 的取消、错误保留及单次事件委托有方法测试。界面没有截图或视觉验收，不能称为中英文浏览器 UX 已通过。
++修改前依赖回归出现预期失败，见 [red baseline](docs/evidence/dependency-remediation-20261103/regression-before.txt)；错误传播修复负例见 [读失败定位](docs/evidence/dependency-remediation-20261103/read-failure-debug.txt)。冻结 fixture 首次遗漏 deploy 导入的 clean 模块，补齐准备文件后复跑通过，没有修改产品代码绕过失败。脚本和测试清单见 [fixture 清单](docs/evidence/dependency-remediation-20261103/frozen-tests-manifest.json)。
++
++`release-checks.test.mjs` 中 synthetic failure 专门验证发布脚本遇到真实 Node 测试失败就停止，不是最终 124 项测试失败。W1–W6 方法/VM/locale 测试继续保留；没有浏览器视觉证据，不能称为中英文浏览器 UX 已通过。
+ 
+ ## 6. 构建与依赖审计
+ 
+-W5 新增 `scripts/release-checks.js`，校验 manifest/package/lock 版本、允许的权限和 WAR、运行文件集合及 hash。Builder 不覆盖非空输出目录，默认旧 dist 会被拒绝；deploy/quick 使用独立目录，ZIP 和说明拒绝同名覆盖。所有产物校验明确记录 browserAcceptance:NOT_RUN、storeReady:false。
++### 6.1 历史结果与最小替换
+ 
+-版本脚本只在执行时统一更新三个文件中的四处版本；本轮只在临时 fixture 验证，源码版本未更新。项目脚本继续采用三段数字版本，不把这一项目约定误称为 Chrome 只允许三段。
++上轮 W5 已增加 source/build/ZIP 文件清单、CRC、hash、版本和权限门禁；独立输出且不覆盖旧构建。版本脚本仅在临时 fixture 验证，源码四处版本未更新。项目仍采用三段数字版本，不把项目约定误称为 Chrome 只允许三段。
+ 
+-依赖审计过程：
++上轮兼容更新四个传递依赖节点后 high/critical 为 0，但 **moderate=6**；[原审计](docs/evidence/w1-w6-local-20261103/dependency-audit-after.json) 与 [原更新日志](docs/evidence/w1-w6-local-20261103/dependency-fix-result.txt) 保持原字节。六项属于同一 [GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249) 的链条：archiver、archiver-utils、glob、minimatch、readdir-glob、zip-stream，受影响 minimatch 范围为 `<11.0.1`。这些依赖本来就不进入扩展 ZIP；本轮通过移除整条依赖链消除告警来源。
+ 
+-1. 当前 npm 镜像的审计端点返回 404 / NOT_IMPLEMENTED，见 [初次审计](docs/evidence/w1-w6-local-20261103/dependency-audit.json)。
+-2. 使用一次性 `--registry=https://registry.npmjs.org`，没有修改全局配置；官方审计发现 brace-expansion/minimatch 的高风险条目，见 [修复前](docs/evidence/w1-w6-local-20261103/dependency-audit-official.json)。
+-3. 执行兼容范围内的 `npm audit fix --ignore-scripts`，未使用 force，未升级 archiver 主版本；lock 和本机 node_modules 更新四个节点：
++| 选择 | 核对与决定 |
++| --- | --- |
++| archiver 5 兼容更新 | 仍受旧 minimatch 依赖范围约束，不能消除本次告警 |
++| archiver 7 / 8 | 7 仍含旧 glob 链；[8 改用 ESM](https://github.com/archiverjs/node-archiver/blob/master/package.json)，readdir-glob 3 仍使用 minimatch 10 范围，增加模块迁移仍不能关闭告警 |
++| 强制 override minimatch 11 / 自动建议降级 archiver 4 | 跨 API/Node 兼容边界或破坏性降级，不采用 |
++| **仅替换 ZIP 写入器为 yazl 3.3.1** | [CommonJS 接口](https://github.com/thejoshwolfe/yazl)，不依赖 glob，仅一个传递依赖；保留打包入口、白名单、压缩级别、返回值和独立验证器 |
+ 
+-| 依赖节点 | 原版本 | 当前版本 |
+-| --- | --- | --- |
+-| brace-expansion | 1.1.11 | 1.1.21 |
+-| minimatch | 3.1.2 | 3.1.5 |
+-| readdir-glob 下 brace-expansion | 2.0.1 | 2.1.7 |
+-| readdir-glob 下 minimatch | 5.1.6 | 5.1.9 |
++改动限于 `package.json`、lock、`scripts/package.js`、回归测试及相关文档，没有改写扩展架构或引入运行时依赖。开发依赖节点 **51 → 2**：固定 `yazl@3.3.1`，lock 固定 `buffer-crc32@1.0.0`。未使用 `npm audit fix --force`，未修改版本号或全局 npm 配置。
+ 
+-修复后 **high=0、critical=0、moderate=6，npm audit 仍返回 1**。六项是同一 minimatch globparts 放大问题及其反向依赖链：archiver、archiver-utils、glob、minimatch、readdir-glob、zip-stream。它们是构建开发依赖，未打入扩展 ZIP；当前打包按已校验文件逐项添加，不接受用户 glob 输入，但这不等于依赖漏洞已消除。
++安装沿用现有镜像并使用锁文件 integrity 校验；另从官方 registry 读取两项元数据，确认 integrity 完全一致。新打包器继续逐项添加已校验文件，懒加载输入流并使用 pipeline；独占创建 ZIP 与收据，拒绝已有文件，读写失败关闭流并拒绝 Promise，不生成成功收据。
+ 
+-证据：[审计结果](docs/evidence/w1-w6-local-20261103/dependency-audit-after.json)、[更新结果](docs/evidence/w1-w6-local-20261103/dependency-fix-result.txt)。上游记录为 [GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249)，来源是本次 npm 官方审计返回。自动建议涉及 archiver 4.0.2 的破坏性降级，本轮未直接采用。
++### 6.2 当前审计结果与限制
+ 
+-**剩余门禁：** 对构建链做独立的兼容性迁移/最小替换，或由 FA 明确接受该开发依赖风险后再评估发布。不能把“0 high”写成“审计通过”，也不能在未审核时使用 force 更改依赖大版本。
++- npm CLI 对官方 registry 多次请求在 TLS 建连前失败，见 [修复前](docs/evidence/dependency-remediation-20261103/audit-before.json) 和 [修复后](docs/evidence/dependency-remediation-20261103/audit-after.json)。未关闭 TLS 校验或更改全局代理/网络配置。
++- 使用 `curl.exe --fail`，保持 TLS 校验，对同一官方 bulk 审计接口发送完整锁文件包名/版本。旧清单复现 minimatch 中风险告警：[旧响应](docs/evidence/dependency-remediation-20261103/bulk-before-response.json)；新锁文件返回 `{}`：[新响应](docs/evidence/dependency-remediation-20261103/bulk-after-response.json)。[请求清单](docs/evidence/dependency-remediation-20261103/bulk-payload-after.json) 与当前锁文件逐项比对一致。
++- **6 项已知受影响链条已移除；官方端点当前返回零告警。** 这是当前已知漏洞数据快照，不承诺未来没有新公告，也不把替代传输结果写成 npm CLI 成功。
++- 兼容性证据限于 Windows / Node v24.21.0 的干净安装、124 项回归和 ZIP 独立解析；浏览器、其他 Node/操作系统及并行界面合流验收不由此覆盖。
+ 
+ ## 7. 改动范围、回退与下一步
+ 
+-本轮主要改动位于 background、StorageUtils、content/injector、Options、必要 Popup 文案/统计、locale 和发布脚本；新增两组回归测试及 helper/包校验器。更新 CHANGELOG、隐私本地草稿、API/测试/部署说明、发布清单和文档索引。
++W1–W6 上轮代码与文档改动保留。本轮仅追加依赖替换、6 项回归与验收记录；FA 确认的并行界面修改归属另一任务，本轮没有覆盖或认领。旧报告原文保留为 [修改前快照](docs/evidence/dependency-remediation-20261103/before-EASYCV-W1-W6-LOCAL-ACCEPTANCE.md)。
+ 
+-为实现 W5 的 source→build→ZIP 校验，除了计划列出的 deploy/package/version 脚本，还修改了 `scripts/build.js` 和 `scripts/quick-package.js`，并增加统一校验模块；为处理本次审计结果更新了 lock 的四个依赖节点。均为任务内的本地可审阅改动，没有新增产品功能或外部发布。
++共享文件中的并行修改也已保留：CHANGELOG 的四语言说明，以及打包测试将固定文件数改为按运行文件清单计算的断言。后者差异见 [共享测试差异](docs/evidence/dependency-remediation-20261103/parallel-release-test.diff)，专项 10 项复跑通过；冻结快照测试原文仍单独留存，不替换其证据身份。
+ 
+-- 本地回退：按本轮 [工作区收据](docs/evidence/w1-w6-local-20261103/workspace-receipt.json) 和逐文件 diff 审阅撤销；不要使用整仓 reset/clean，以免删除 FA 原有未跟踪材料。旧 dist/ZIP/证据无须回退。
+-- 真实浏览器未被改动，目前没有运行数据回退事项。后续安装若执行诊断脱敏，不应为了回退功能恢复完整敏感 URL；设置恢复与诊断隐私清理分开处理，历史统计备份保持本机。
+-- 浏览器验收获准后，优先做：升级保存与迁移失败重试、多窗口并发保存、规则 A/B 隔离、四开关组合与关闭负对照、编辑器/播放器/SPA/Shadow/iframe/严格 CSP、中英 UI 及正常重启。
+-- 后台核实当前发布/草稿/待审版本、商品 ID、Purple Potassium 警告状态/截止期及发布模式；这些均为**待核实**，不根据本地 1.1.2 推断后台状态。
+-- 最终版本锁定后重新构建、固定最终 ZIP 身份并完成真实验收；公开政策、商店声明与送审分别等待对应授权。
++- 本地回退按 [依赖整改收据](docs/evidence/dependency-remediation-20261103/workspace-receipt.json)、修改前快照和本轮差异逐项审阅；[上轮收据](docs/evidence/w1-w6-local-20261103/workspace-receipt.json) 保留。不使用整仓 reset/clean，不覆盖并行界面文件；恢复旧依赖会重新引入已知告警。
++- 真实浏览器未被改动，无运行数据回退事项。后续回退功能也不应恢复完整敏感 URL；设置恢复与诊断隐私清理分开处理，历史统计备份保持本机。
++- 并行界面任务完成后先做合流回归与打包。浏览器验收获准后，优先验证升级保存、迁移失败重试、多窗口写入、站点规则隔离、四开关组合、关闭负对照及编辑器/播放器/SPA/Shadow/iframe/CSP、中英 UI 和重启。
++- 后台当前发布/草稿/待审版本、商品 ID、Purple Potassium 警告状态/截止期和发布模式仍为**待核实**，不根据本地 1.1.2 推断后台状态。
++- 最终版本锁定后重新构建、固定最终 ZIP 身份并完成真实验收；公开政策、商店声明和送审分别等待对应授权。
+ 
+-当前停在本地整改与报告交付。**不提交商店，不 commit 或 push。**
++当前停在本地依赖整改与报告交付。**不操作浏览器，不提交商店，不 commit 或 push。**
+--- before/CHANGELOG.md
++++ after/CHANGELOG.md
+@@ -16,6 +16,7 @@
+ - 设置写入统一排队合并，sync 失败明确报错；规则编辑改为草稿保存，导入整体验证，旧名单与通配域语义统一。
+ - 状态不可确认时停止页面干预；复制/粘贴独立作用，保留页面监听器注册并在关闭时恢复内联处理器。
+ - 发布脚本改为真实检查，校验版本/文件/ZIP，独立输出并拒绝旧构建与覆盖；兼容更新四个构建依赖节点。
++- 依赖整改：仅将 ZIP 写入器替换为固定的 yazl 3.3.1，开发依赖从 51 个减至 2 个，移除原 6 项中风险链；补齐并发、路径及读写失败回归，官方审计接口返回零告警。
+ - 中英界面增加恢复及迁移提示，统计只称启用次数；[本地验收报告](./EASYCV-W1-W6-LOCAL-ACCEPTANCE.md) 记录浏览器、依赖及商店的剩余门禁。
+ 
+ ## [1.1.2] - 2026-11-01
+--- before/docs/release-checklist.md
++++ after/docs/release-checklist.md
+@@ -3,7 +3,8 @@
+ 当前本地整改见 [W1–W6 验收报告](../EASYCV-W1-W6-LOCAL-ACCEPTANCE.md)。以下历史清单保留其原始身份。
+ 
+ - [ ] 后台核实发布/草稿/待审版本、商品 ID、警告/截止期及渠道，再锁版本。
+-- [ ] 审阅本地整改和隐私披露草稿；处理依赖审计剩余告警或明确风险决定。
++- [x] 本地依赖整改移除原 6 项中风险链；官方 bulk 审计接口零告警，npm CLI TLS 失败单列。
++- [ ] 审阅本地整改和隐私披露草稿；并行界面任务完成后重新执行合流回归与打包。
+ - [ ] 使用最终版本重新运行真实本地检查，固定 source/build/ZIP 清单与 SHA256。
+ - [ ] 获准后完成 Chrome/Edge、真实页面、升级/重启与中英 UI 验收。
+ - [ ] 核对公开政策、商店数据声明、权限理由与实际包一致。

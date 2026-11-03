@@ -1,0 +1,826 @@
+{
+  "extension_name": {
+    "message": "EasyCV - コピー・貼り付け制限を解除",
+    "description": "Extension name"
+  },
+  "extension_description": {
+    "message": "ウェブページのコピー・貼り付け制限をワンクリックで解除するブラウザー拡張機能",
+    "description": "Extension description"
+  },
+  "popup_title": {
+    "message": "EasyCV - コピー・貼り付けアシスタント",
+    "description": "Popup page title"
+  },
+  "header_subtitle": {
+    "message": "コピー・貼り付けアシスタント",
+    "description": "Popup header subtitle"
+  },
+  "main_unlock": {
+    "message": "制限解除をオンにする",
+    "description": "Enable global copy and paste switches"
+  },
+  "main_lock_off": {
+    "message": "制限解除をオフにする",
+    "description": "Disable global copy and paste switches"
+  },
+  "control_scope": {
+    "message": "設定はすべてのページに反映されます。除外設定とサイト別の自動有効化ルールが優先されます。",
+    "description": "Explain global switch scope and site rules"
+  },
+  "main_unlock_processing": {
+    "message": "処理中…",
+    "description": "Main button processing"
+  },
+  "unlock_active": {
+    "message": "制限解除をオンにしました",
+    "description": "Unlock turned on notification"
+  },
+  "unlock_closed": {
+    "message": "制限解除をオフにしました",
+    "description": "Unlock turned off notification"
+  },
+  "unlock_toggle_failed": {
+    "message": "制限解除を切り替えられませんでした。もう一度お試しください。",
+    "description": "Unlock failure notification"
+  },
+  "advanced_options": {
+    "message": "詳細オプション",
+    "description": "Collapsible section title"
+  },
+  "unlock_copy": {
+    "message": "コピー制限を解除",
+    "description": "Copy toggle label"
+  },
+  "unlock_paste": {
+    "message": "貼り付け制限を解除",
+    "description": "Paste toggle label"
+  },
+  "force_mode": {
+    "message": "強力モード",
+    "description": "Force mode toggle label"
+  },
+  "force_mode_desc": {
+    "message": "通常の方法では解除できない制限に、より強力な方法を試します",
+    "description": "Force mode description"
+  },
+  "current_page": {
+    "message": "現在のページ",
+    "description": "Current page section title"
+  },
+  "url_loading": {
+    "message": "読み込み中…",
+    "description": "URL loading"
+  },
+  "status_detecting": {
+    "message": "確認中…",
+    "description": "Page status detecting"
+  },
+  "quick_actions": {
+    "message": "クイック操作",
+    "description": "Quick actions section title"
+  },
+  "refresh_detection": {
+    "message": "再検出",
+    "description": "Refresh detection button"
+  },
+  "add_to_auto": {
+    "message": "自動有効化に追加",
+    "description": "Add to auto-enable button"
+  },
+  "test_copy": {
+    "message": "コピー状態を確認",
+    "description": "Check the switch without using the clipboard"
+  },
+  "copy_check_enabled": {
+    "message": "コピー制限の解除はオンです。ページに戻り、文字を選択して実際にコピーできるか確認してください。",
+    "description": "Switch check, not proof of clipboard success"
+  },
+  "copy_check_disabled": {
+    "message": "このページのコピー制限解除はオフです。スイッチやサイトの除外設定を確認してください。",
+    "description": "Switch check result"
+  },
+  "usage_stats": {
+    "message": "利用統計",
+    "description": "Statistics section title"
+  },
+  "total_sites": {
+    "message": "有効化の累計回数",
+    "description": "Stat label: sites processed"
+  },
+  "today_usage": {
+    "message": "今日の有効化回数",
+    "description": "Stat label: today's usage"
+  },
+  "success_rate": {
+    "message": "成功率",
+    "description": "Stat label: success rate"
+  },
+  "settings": {
+    "message": "設定",
+    "description": "Settings button"
+  },
+  "help": {
+    "message": "ヘルプ",
+    "description": "Help button"
+  },
+  "feedback": {
+    "message": "フィードバック",
+    "description": "Feedback button"
+  },
+  "help_title": {
+    "message": "使い方",
+    "description": "Local help heading"
+  },
+  "help_copy_step": {
+    "message": "ページに戻って文字を選択し、Ctrl+C / ⌘C でコピー、Ctrl+V / ⌘V で貼り付けます。",
+    "description": "Verify a real copy and paste"
+  },
+  "help_force_step": {
+    "message": "通常の制限解除で改善しない場合は、詳細オプションの強力モードをお試しください。",
+    "description": "When to use force mode"
+  },
+  "help_exclude_step": {
+    "message": "サイトが正常に動作しなくなった場合は、「設定 → 除外サイト」に追加してください。",
+    "description": "Website compatibility recovery path"
+  },
+  "help_limits": {
+    "message": "ブラウザーの内部ページと Chrome ウェブストアでは使用できません。画像やスキャン内の文字には別途 OCR ツールが必要です。",
+    "description": "Explain feature limits"
+  },
+  "feedback_issue_title": {
+    "message": "EasyCV の不具合報告",
+    "description": "GitHub draft title"
+  },
+  "feedback_issue_body": {
+    "message": "EasyCV バージョン: $VERSION$\n\n問題の内容:\n\n再現手順:\n\n期待した結果と実際の結果:\n\nウェブサイト（任意。アカウント、トークン、クエリパラメーター、非公開の内容は含めないでください）:\n\nブラウザーと OS（任意）:\n\n送信前に内容を確認し、個人情報を削除してください。",
+    "description": "Draft with version only, no browsing information",
+    "placeholders": {
+      "version": {
+        "content": "$1",
+        "example": "1.1.2"
+      }
+    }
+  },
+  "copy_enabled": {
+    "message": "コピー制限の解除をオンにしました",
+    "description": "Notification"
+  },
+  "copy_disabled": {
+    "message": "コピー制限の解除をオフにしました",
+    "description": "Notification"
+  },
+  "paste_enabled": {
+    "message": "貼り付け制限の解除をオンにしました",
+    "description": "Notification"
+  },
+  "paste_disabled": {
+    "message": "貼り付け制限の解除をオフにしました",
+    "description": "Notification"
+  },
+  "force_mode_enabled": {
+    "message": "強力モードをオンにしました",
+    "description": "Notification"
+  },
+  "force_mode_disabled": {
+    "message": "強力モードをオフにしました",
+    "description": "Notification"
+  },
+  "copy_toggle_failed": {
+    "message": "コピー制限の解除を切り替えられませんでした。もう一度お試しください。",
+    "description": "Notification"
+  },
+  "paste_toggle_failed": {
+    "message": "貼り付け制限の解除を切り替えられませんでした。もう一度お試しください。",
+    "description": "Notification"
+  },
+  "force_toggle_failed": {
+    "message": "強力モードを切り替えられませんでした。もう一度お試しください。",
+    "description": "Notification"
+  },
+  "refresh_success": {
+    "message": "再検出しました",
+    "description": "Notification"
+  },
+  "refresh_failed": {
+    "message": "再検出できませんでした。もう一度お試しください。",
+    "description": "Notification"
+  },
+  "test_copy_success": {
+    "message": "コピー設定を確認しました。実際にコピーできるかはページ上で確認してください。",
+    "description": "Notification"
+  },
+  "test_copy_failed": {
+    "message": "コピー状態を確認できません。ページを再読み込みし、サイトへのアクセス権限を確認してください。",
+    "description": "Copy status query failure"
+  },
+  "cannot_get_page_info": {
+    "message": "現在のページ情報を取得できません",
+    "description": "Notification"
+  },
+  "already_in_auto_list": {
+    "message": "このサイトはすでに自動有効化リストに登録されています",
+    "description": "Notification"
+  },
+  "added_to_auto_list": {
+    "message": "$DOMAIN$ を自動有効化リストに追加しました",
+    "description": "Notification",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "example.com"
+      }
+    }
+  },
+  "add_failed": {
+    "message": "追加できませんでした。入力内容を確認して、もう一度お試しください。",
+    "description": "Notification"
+  },
+  "btn_in_auto_list": {
+    "message": "自動有効化に登録済み",
+    "description": "Auto-enable button added state"
+  },
+  "status_plugin_disabled": {
+    "message": "拡張機能は無効です",
+    "description": "Page status"
+  },
+  "status_first_visit": {
+    "message": "初回アクセスです。ページを再読み込みしてください",
+    "description": "Page status"
+  },
+  "status_active_restricted": {
+    "message": "有効（制限を検出）",
+    "description": "Page status"
+  },
+  "status_active": {
+    "message": "このページのコピー・貼り付け制限解除はオンです",
+    "description": "Enabled state, not proof of success"
+  },
+  "status_inactive": {
+    "message": "このページの制限解除はオフです",
+    "description": "Page status"
+  },
+  "status_partial": {
+    "message": "片方の制限解除のみオンです。詳細オプションを確認してください。",
+    "description": "Only copy or paste is enabled"
+  },
+  "status_excluded": {
+    "message": "このサイトは除外されています。設定から変更できます。",
+    "description": "Site exclusion takes priority"
+  },
+  "status_unsupported": {
+    "message": "このページでは使用できません。通常のウェブページを開いてください。",
+    "description": "Browser or store page"
+  },
+  "status_page_unavailable": {
+    "message": "ページに接続できません。再読み込みして、サイトへのアクセス権限を確認してください。",
+    "description": "Content script unavailable, not necessarily disabled"
+  },
+  "local_file": {
+    "message": "ローカルファイル",
+    "description": "Do not display the local path"
+  },
+  "options_title": {
+    "message": "EasyCV 設定",
+    "description": "Options page title"
+  },
+  "nav_general": {
+    "message": "基本設定",
+    "description": "Sidebar navigation"
+  },
+  "nav_whitelist": {
+    "message": "自動有効化サイト",
+    "description": "Sidebar navigation"
+  },
+  "nav_excluded": {
+    "message": "除外サイト",
+    "description": "Sidebar navigation"
+  },
+  "nav_advanced": {
+    "message": "詳細設定",
+    "description": "Sidebar navigation"
+  },
+  "nav_statistics": {
+    "message": "統計",
+    "description": "Sidebar navigation"
+  },
+  "nav_about": {
+    "message": "EasyCV について",
+    "description": "Sidebar navigation"
+  },
+  "general_description": {
+    "message": "拡張機能の基本機能と動作を設定します",
+    "description": "General settings description"
+  },
+  "basic_functions": {
+    "message": "基本機能",
+    "description": "Settings group title"
+  },
+  "unlock_copy_desc": {
+    "message": "コピー制限の解除をオンまたはオフにします",
+    "description": "Setting description"
+  },
+  "unlock_paste_desc": {
+    "message": "貼り付け制限の解除をオンまたはオフにします",
+    "description": "Setting description"
+  },
+  "auto_detect": {
+    "message": "自動検出",
+    "description": "Setting label"
+  },
+  "auto_detect_desc": {
+    "message": "ページの読み込み時にコピー・貼り付け制限を自動検出して解除します",
+    "description": "Setting description"
+  },
+  "force_mode_desc_options": {
+    "message": "通常の方法では解除できない制限に、より強力な方法を試します",
+    "description": "Setting description"
+  },
+  "show_notifications": {
+    "message": "通知を表示",
+    "description": "Setting label"
+  },
+  "show_notifications_desc": {
+    "message": "操作結果の通知を表示します",
+    "description": "Setting description"
+  },
+  "auto_add_to_whitelist": {
+    "message": "手動で有効にしたサイトを自動有効化に追加",
+    "description": "Setting label"
+  },
+  "auto_add_to_whitelist_desc": {
+    "message": "手動で制限解除を有効にしたサイトをリストに追加します。実際にコピーできたかは判定しません。",
+    "description": "Setting description"
+  },
+  "detection_settings": {
+    "message": "検出設定",
+    "description": "Settings group title"
+  },
+  "detection_delay": {
+    "message": "検出までの待ち時間",
+    "description": "Setting label"
+  },
+  "detection_delay_desc": {
+    "message": "ページの読み込みから検出開始までの待ち時間（ミリ秒）",
+    "description": "Setting description"
+  },
+  "max_retries": {
+    "message": "再試行回数の上限",
+    "description": "Setting label"
+  },
+  "max_retries_desc": {
+    "message": "検出に失敗した場合の最大再試行回数",
+    "description": "Setting description"
+  },
+  "suffix_times": {
+    "message": "回",
+    "description": "Input suffix"
+  },
+  "whitelist_description": {
+    "message": "サイト別ルールはコピー・貼り付けの初期設定より優先されます。除外設定と全体のスイッチが最優先です。*.example.com はサブドメインのみに一致します。",
+    "description": "Auto-unlock management description"
+  },
+  "add_website": {
+    "message": "サイトを追加",
+    "description": "Add website group title"
+  },
+  "domain_placeholder": {
+    "message": "ドメインを入力（例：example.com）",
+    "description": "Domain input placeholder"
+  },
+  "feature_selection": {
+    "message": "機能を選択",
+    "description": "Feature selection title"
+  },
+  "unlock_copy_site_desc": {
+    "message": "このサイトでコピー制限の解除を有効にします",
+    "description": "Feature description"
+  },
+  "unlock_paste_site_desc": {
+    "message": "このサイトで入力欄への貼り付け制限の解除を有効にします",
+    "description": "Feature description"
+  },
+  "at_least_one_feature": {
+    "message": "自動有効化に追加する機能を1つ以上選んでください",
+    "description": "Feature selection hint"
+  },
+  "add_btn": {
+    "message": "追加",
+    "description": "Add button"
+  },
+  "auto_unlock_sites": {
+    "message": "自動有効化サイト",
+    "description": "List title"
+  },
+  "empty_whitelist": {
+    "message": "自動有効化するサイトはまだありません",
+    "description": "List empty state"
+  },
+  "excluded_description": {
+    "message": "EasyCV を完全に無効にするサイトを管理します（自動有効化と強力モードより優先）",
+    "description": "Site exclusions description"
+  },
+  "excluded_placeholder": {
+    "message": "除外するドメインを入力（例：example.com）",
+    "description": "Input placeholder"
+  },
+  "excluded_sites_title": {
+    "message": "除外サイト",
+    "description": "Exclusion list title"
+  },
+  "excluded_hint": {
+    "message": "除外サイトでは EasyCV は動作しません。サイトの機能（独自の右クリックメニューなど）に影響が出た場合は、ここに追加してください。主なログインページは初期登録されており、自由に編集できます。",
+    "description": "Exclusion list hint"
+  },
+  "empty_excluded": {
+    "message": "除外サイトはまだありません",
+    "description": "List empty state"
+  },
+  "advanced_description": {
+    "message": "詳細機能とデバッグの設定を行います",
+    "description": "Advanced settings description"
+  },
+  "debug_options": {
+    "message": "デバッグ設定",
+    "description": "Settings group title"
+  },
+  "debug_mode": {
+    "message": "デバッグモード",
+    "description": "Setting label"
+  },
+  "debug_mode_desc": {
+    "message": "コンソールに詳細なログを出力します",
+    "description": "Setting description"
+  },
+  "perf_monitoring": {
+    "message": "パフォーマンス監視",
+    "description": "Setting label"
+  },
+  "perf_monitoring_desc": {
+    "message": "拡張機能のパフォーマンスを監視し、統計を記録します",
+    "description": "Setting description"
+  },
+  "data_management": {
+    "message": "データ管理",
+    "description": "Settings group title"
+  },
+  "export_settings": {
+    "message": "設定をエクスポート",
+    "description": "Button"
+  },
+  "import_settings": {
+    "message": "設定をインポート",
+    "description": "Button"
+  },
+  "reset_settings": {
+    "message": "設定をリセット",
+    "description": "Button"
+  },
+  "clear_all_data": {
+    "message": "すべてのデータを削除",
+    "description": "Button"
+  },
+  "stats_description": {
+    "message": "この端末での有効化回数のみを集計します。制限解除の成功回数ではありません。",
+    "description": "Statistics description"
+  },
+  "total_sites_count": {
+    "message": "今日の有効化回数",
+    "description": "Stat card"
+  },
+  "successful_count": {
+    "message": "有効化の累計回数",
+    "description": "Stat card"
+  },
+  "detailed_stats": {
+    "message": "統計について",
+    "description": "Detailed statistics title"
+  },
+  "th_site": {
+    "message": "サイト",
+    "description": "Table header"
+  },
+  "th_visits": {
+    "message": "アクセス回数",
+    "description": "Table header"
+  },
+  "th_processes": {
+    "message": "処理回数",
+    "description": "Table header"
+  },
+  "th_last_visit": {
+    "message": "最終アクセス",
+    "description": "Table header"
+  },
+  "empty_stats": {
+    "message": "統計データはまだありません",
+    "description": "Statistics empty state"
+  },
+  "about_title": {
+    "message": "EasyCV について",
+    "description": "About title"
+  },
+  "about_description": {
+    "message": "拡張機能の情報とヘルプ",
+    "description": "About description"
+  },
+  "version_label": {
+    "message": "バージョン $VERSION$",
+    "description": "Version number",
+    "placeholders": {
+      "version": {
+        "content": "$1",
+        "example": "1.0.0"
+      }
+    }
+  },
+  "about_slogan": {
+    "message": "ウェブページのコピー・貼り付け制限をワンクリックで解除する Chrome 拡張機能",
+    "description": "About page intro"
+  },
+  "main_features": {
+    "message": "主な機能",
+    "description": "About page group"
+  },
+  "feature_1": {
+    "message": "ウェブページのコピー・貼り付け制限を自動検出して解除",
+    "description": "Feature list"
+  },
+  "feature_2": {
+    "message": "解除しにくい制限に対応する強力モード",
+    "description": "Feature list"
+  },
+  "feature_3": {
+    "message": "サイト別の自動有効化と除外設定",
+    "description": "Feature list"
+  },
+  "feature_4": {
+    "message": "この端末での有効化回数を集計（制限解除の成功率ではありません）",
+    "description": "Feature list"
+  },
+  "feature_5": {
+    "message": "シンプルで使いやすい画面",
+    "description": "Feature list"
+  },
+  "tech_support": {
+    "message": "サポート",
+    "description": "About page group"
+  },
+  "github_repo": {
+    "message": "GitHub リポジトリ",
+    "description": "Link"
+  },
+  "issue_feedback": {
+    "message": "不具合を報告",
+    "description": "Link"
+  },
+  "user_docs": {
+    "message": "ドキュメント",
+    "description": "Link"
+  },
+  "open_source": {
+    "message": "オープンソースライセンス",
+    "description": "About page group"
+  },
+  "license_text": {
+    "message": "このプロジェクトは MIT ライセンスで公開されています。コードの提供やご提案を歓迎します。",
+    "description": "License text"
+  },
+  "init_failed": {
+    "message": "初期化できませんでした",
+    "description": "Notification"
+  },
+  "settings_saved": {
+    "message": "設定を保存しました",
+    "description": "Notification"
+  },
+  "save_failed": {
+    "message": "保存を確認できませんでした。再試行してください。再読み込み前にバックアップをエクスポートしてください。",
+    "description": "Notification"
+  },
+  "invalid_domain_empty": {
+    "message": "有効なドメインを入力してください",
+    "description": "Notification"
+  },
+  "invalid_domain_format": {
+    "message": "ドメインの形式が正しくありません",
+    "description": "Notification"
+  },
+  "domain_exists": {
+    "message": "このドメインはすでに登録されています",
+    "description": "Notification"
+  },
+  "select_at_least_one": {
+    "message": "機能を1つ以上選んでください",
+    "description": "Notification"
+  },
+  "domain_added": {
+    "message": "ドメインを追加しました",
+    "description": "Notification"
+  },
+  "config_updated": {
+    "message": "$DOMAIN$ の設定を更新しました",
+    "description": "Notification",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "example.com"
+      }
+    }
+  },
+  "update_failed": {
+    "message": "更新できませんでした。元のルールと編集中の内容は保持されています。",
+    "description": "Notification"
+  },
+  "domain_deleted": {
+    "message": "ドメインを削除しました",
+    "description": "Notification"
+  },
+  "delete_failed": {
+    "message": "削除できませんでした",
+    "description": "Notification"
+  },
+  "editing_config": {
+    "message": "$DOMAIN$ の設定を編集中です",
+    "description": "Notification",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "example.com"
+      }
+    }
+  },
+  "update_config_btn": {
+    "message": "更新",
+    "description": "Button"
+  },
+  "tag_all_unlocked": {
+    "message": "両方有効",
+    "description": "Status tag"
+  },
+  "tag_copy_only": {
+    "message": "コピーのみ",
+    "description": "Status tag"
+  },
+  "tag_paste_only": {
+    "message": "貼り付けのみ",
+    "description": "Status tag"
+  },
+  "enabled_features": {
+    "message": "有効：$FEATURES$",
+    "description": "Enabled features summary for a domain",
+    "placeholders": {
+      "features": {
+        "content": "$1",
+        "example": "Copy + Paste"
+      }
+    }
+  },
+  "feature_copy": {
+    "message": "コピー",
+    "description": "Feature name"
+  },
+  "feature_paste": {
+    "message": "貼り付け",
+    "description": "Feature name"
+  },
+  "edit_title": {
+    "message": "設定を編集",
+    "description": "Button tooltip"
+  },
+  "delete_title": {
+    "message": "サイトを削除",
+    "description": "Button tooltip"
+  },
+  "edit_btn": {
+    "message": "編集",
+    "description": "Button"
+  },
+  "delete_btn": {
+    "message": "削除",
+    "description": "Button"
+  },
+  "settings_exported": {
+    "message": "設定をエクスポートしました",
+    "description": "Notification"
+  },
+  "export_failed": {
+    "message": "エクスポートできませんでした",
+    "description": "Notification"
+  },
+  "settings_imported": {
+    "message": "設定をインポートしました",
+    "description": "Notification"
+  },
+  "import_failed": {
+    "message": "インポートできませんでした。ファイル形式、ドメイン、オン・オフ設定の値を確認してください。保存は確認できていません。",
+    "description": "Notification"
+  },
+  "confirm_reset": {
+    "message": "すべての設定をリセットしますか？この操作は元に戻せません。",
+    "description": "Confirmation dialog"
+  },
+  "settings_reset": {
+    "message": "設定をリセットしました",
+    "description": "Notification"
+  },
+  "reset_failed": {
+    "message": "リセットできませんでした",
+    "description": "Notification"
+  },
+  "confirm_clear": {
+    "message": "設定、サイトリスト、統計など、すべてのデータを削除しますか？この操作は元に戻せません。",
+    "description": "Confirmation dialog"
+  },
+  "data_cleared": {
+    "message": "すべてのデータを削除しました",
+    "description": "Notification"
+  },
+  "clear_failed": {
+    "message": "データを削除できませんでした",
+    "description": "Notification"
+  },
+  "context_toggle": {
+    "message": "EasyCV を有効／無効にする",
+    "description": "Context menu"
+  },
+  "context_force_mode": {
+    "message": "強力モードを有効にする",
+    "description": "Context menu"
+  },
+  "context_add_to_auto": {
+    "message": "自動有効化リストに追加",
+    "description": "Context menu"
+  },
+  "icon_title_active": {
+    "message": "EasyCV - 有効",
+    "description": "Icon tooltip"
+  },
+  "icon_title_active_force": {
+    "message": "EasyCV - 有効（強力モード）",
+    "description": "Icon tooltip"
+  },
+  "icon_title_partial": {
+    "message": "EasyCV - 一部有効",
+    "description": "Icon tooltip"
+  },
+  "icon_title_partial_copy": {
+    "message": "EasyCV - 一部有効（コピーのみ）",
+    "description": "Icon tooltip"
+  },
+  "icon_title_partial_paste": {
+    "message": "EasyCV - 一部有効（貼り付けのみ）",
+    "description": "Icon tooltip"
+  },
+  "icon_title_inactive": {
+    "message": "EasyCV - 無効",
+    "description": "Icon tooltip"
+  },
+  "icon_title_default": {
+    "message": "EasyCV - 待機中",
+    "description": "Icon tooltip"
+  },
+  "today_use": {
+    "message": "今日の有効化回数"
+  },
+  "local_stats_notice": {
+    "message": "この端末での有効化回数のみを集計します。制限解除の成功回数ではありません。サイトのアクセス履歴は記録しません。"
+  },
+  "privacy_storage_notice": {
+    "message": "設定と手動ルールはブラウザー経由で同期される場合があります。回数と最小限の診断情報はこの端末に保存されます。過去のアクセスデータはローカルのバックアップに残ります。「すべてのデータを削除」で削除できます。"
+  },
+  "local_statistics_toggle": {
+    "message": "この端末での有効化回数を記録（アクセス先のドメインは記録しない）"
+  },
+  "local_recovery_notice": {
+    "message": "以前のローカル設定が見つかりました。同期設定が優先され、不足する項目のみローカル設定を使用します。復元前にバックアップをエクスポートしてください。"
+  },
+  "export_local_recovery": {
+    "message": "ローカル設定をエクスポート"
+  },
+  "restore_local_recovery": {
+    "message": "ローカル設定から復元"
+  },
+  "confirm_restore_local": {
+    "message": "ローカル設定に含まれる項目で同期設定を上書きしますか？その他の項目とローカル設定は保持されます。先に両方をエクスポートしてください。"
+  },
+  "cancel_edit": {
+    "message": "編集をキャンセル"
+  },
+  "load_failed": {
+    "message": "設定を一時的に読み込めません。もう一度お試しください。"
+  },
+  "privacy_migration_pending": {
+    "message": "過去のデータの移行が完了していないため、同期先のコピーは保持されています。後でもう一度お試しください。"
+  },
+  "retry_migration": {
+    "message": "移行を再試行"
+  },
+  "ui_language": {
+    "message": "ja",
+    "description": "BCP 47 language of this message catalog, used for the document lang attribute"
+  },
+  "close_notification": {
+    "message": "通知を閉じる",
+    "description": "Accessible name for the notification close button"
+  }
+}

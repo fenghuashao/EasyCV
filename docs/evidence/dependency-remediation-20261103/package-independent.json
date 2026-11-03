@@ -1,0 +1,16 @@
+{
+  "status": "PASS_FROZEN_DEPENDENCY_SCOPE",
+  "verifier": "Python zipfile + hashlib",
+  "zip": "D:\\pro\\github\\EasyCV\\releases\\dependency-remediation-20261103\\EasyCV-DEPENDENCY-TEST-ONLY.zip",
+  "zipSHA256": "abde4ba65db9ee6680d2511ea8ebf245712244c7e83238c98ffe5de13d98bc45",
+  "zipBytes": 138802,
+  "fileCount": 38,
+  "crc": "PASS",
+  "runtimeFilesByteIdenticalToFrozenFixtureAndBaseline": 37,
+  "runtimeFilesByteIdenticalToPreviousW1W6Package": 37,
+  "previousZipSHA256": "25a74f354f4ba17912dc0acccb627b1803a046f7e8103555658e584cd0df461d",
+  "version": "1.1.2",
+  "currentLiveWorkspaceEquivalence": "NOT_CLAIMED; FA confirmed a concurrent UI task after this artifact was built",
+  "browserAcceptance": "NOT_RUN",
+  "storeReady": false
+}

@@ -62,11 +62,11 @@ test('getExcludedList 尊重用户清空（空数组不回落默认值）', asyn
   assert.deepEqual(await StorageUtils.getExcludedList(), []);
 });
 
-test('getExcludedList 对损坏的非数组值兜底为空列表而非抛错', async () => {
+test('getExcludedList 损坏的非数组值必须报告失败以阻止未知排除状态启用', async () => {
   const chrome = createChromeMock({ excluded_list: 'not-an-array' });
   const StorageUtils = loadStorageUtils({ chrome });
 
-  assert.deepEqual(await StorageUtils.getExcludedList(), []);
+  await assert.rejects(StorageUtils.getExcludedList());
 });
 
 test('addToExcludedList 按域名去重', async () => {

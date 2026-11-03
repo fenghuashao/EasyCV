@@ -1,0 +1,826 @@
+{
+  "extension_name": {
+    "message": "EasyCV - 解除網頁複製貼上限制",
+    "description": "Extension name"
+  },
+  "extension_description": {
+    "message": "一鍵解除網頁複製貼上限制，提升工作效率的瀏覽器擴充功能",
+    "description": "Extension description"
+  },
+  "popup_title": {
+    "message": "EasyCV - 複製貼上助手",
+    "description": "Popup page title"
+  },
+  "header_subtitle": {
+    "message": "複製貼上助手",
+    "description": "Popup header subtitle"
+  },
+  "main_unlock": {
+    "message": "開啟複製與貼上解鎖",
+    "description": "Enable global copy and paste switches"
+  },
+  "main_lock_off": {
+    "message": "關閉複製與貼上解鎖",
+    "description": "Disable global copy and paste switches"
+  },
+  "control_scope": {
+    "message": "開關會同步至所有頁面，網站排除與自動啟用規則優先。",
+    "description": "Explain global switch scope and site rules"
+  },
+  "main_unlock_processing": {
+    "message": "處理中…",
+    "description": "Main button processing"
+  },
+  "unlock_active": {
+    "message": "已開啟解鎖",
+    "description": "Unlock turned on notification"
+  },
+  "unlock_closed": {
+    "message": "已關閉解鎖",
+    "description": "Unlock turned off notification"
+  },
+  "unlock_toggle_failed": {
+    "message": "解鎖切換失敗，請重試",
+    "description": "Unlock failure notification"
+  },
+  "advanced_options": {
+    "message": "進階選項",
+    "description": "Collapsible section title"
+  },
+  "unlock_copy": {
+    "message": "解鎖複製",
+    "description": "Copy toggle label"
+  },
+  "unlock_paste": {
+    "message": "解鎖貼上",
+    "description": "Paste toggle label"
+  },
+  "force_mode": {
+    "message": "強力模式",
+    "description": "Force mode toggle label"
+  },
+  "force_mode_desc": {
+    "message": "使用更強力的方法處理頑固限制",
+    "description": "Force mode description"
+  },
+  "current_page": {
+    "message": "目前頁面",
+    "description": "Current page section title"
+  },
+  "url_loading": {
+    "message": "載入中…",
+    "description": "URL loading"
+  },
+  "status_detecting": {
+    "message": "檢查中…",
+    "description": "Page status detecting"
+  },
+  "quick_actions": {
+    "message": "快速操作",
+    "description": "Quick actions section title"
+  },
+  "refresh_detection": {
+    "message": "重新檢查",
+    "description": "Refresh detection button"
+  },
+  "add_to_auto": {
+    "message": "加入自動啟用",
+    "description": "Add to auto-enable button"
+  },
+  "test_copy": {
+    "message": "檢查複製狀態",
+    "description": "Check the switch without using the clipboard"
+  },
+  "copy_check_enabled": {
+    "message": "複製解鎖已開啟。請回到網頁選取文字並實際複製，確認效果。",
+    "description": "Switch check, not proof of clipboard success"
+  },
+  "copy_check_disabled": {
+    "message": "目前頁面的複製解鎖尚未開啟，請檢查開關或網站排除設定。",
+    "description": "Switch check result"
+  },
+  "usage_stats": {
+    "message": "使用統計",
+    "description": "Statistics section title"
+  },
+  "total_sites": {
+    "message": "累計啟用次數",
+    "description": "Stat label: sites processed"
+  },
+  "today_usage": {
+    "message": "今日啟用次數",
+    "description": "Stat label: today's usage"
+  },
+  "success_rate": {
+    "message": "成功率",
+    "description": "Stat label: success rate"
+  },
+  "settings": {
+    "message": "設定",
+    "description": "Settings button"
+  },
+  "help": {
+    "message": "說明",
+    "description": "Help button"
+  },
+  "feedback": {
+    "message": "意見回饋",
+    "description": "Feedback button"
+  },
+  "help_title": {
+    "message": "快速入門",
+    "description": "Local help heading"
+  },
+  "help_copy_step": {
+    "message": "回到網頁選取文字，使用 Ctrl+C / ⌘C 複製、Ctrl+V / ⌘V 貼上。",
+    "description": "Verify a real copy and paste"
+  },
+  "help_force_step": {
+    "message": "一般解鎖無效時，可嘗試進階選項中的強力模式。",
+    "description": "When to use force mode"
+  },
+  "help_exclude_step": {
+    "message": "網站功能受到影響時，請在「設定 → 網站排除」中加入該網站。",
+    "description": "Website compatibility recovery path"
+  },
+  "help_limits": {
+    "message": "瀏覽器內部頁面與 Chrome 線上應用程式商店無法解鎖；圖片或掃描文件中的文字需另用 OCR 工具。",
+    "description": "Explain feature limits"
+  },
+  "feedback_issue_title": {
+    "message": "EasyCV 問題回報",
+    "description": "GitHub draft title"
+  },
+  "feedback_issue_body": {
+    "message": "EasyCV 版本：$VERSION$\n\n問題描述：\n\n重現步驟：\n\n預期與實際結果：\n\n網站（選填；請勿包含帳號、權杖、查詢參數或私人內容）：\n\n瀏覽器與作業系統（選填）：\n\n送出前請檢查並移除私人資訊。",
+    "description": "Draft with version only, no browsing information",
+    "placeholders": {
+      "version": {
+        "content": "$1",
+        "example": "1.1.2"
+      }
+    }
+  },
+  "copy_enabled": {
+    "message": "已開啟複製解鎖",
+    "description": "Notification"
+  },
+  "copy_disabled": {
+    "message": "已關閉複製解鎖",
+    "description": "Notification"
+  },
+  "paste_enabled": {
+    "message": "已開啟貼上解鎖",
+    "description": "Notification"
+  },
+  "paste_disabled": {
+    "message": "已關閉貼上解鎖",
+    "description": "Notification"
+  },
+  "force_mode_enabled": {
+    "message": "已開啟強力模式",
+    "description": "Notification"
+  },
+  "force_mode_disabled": {
+    "message": "已關閉強力模式",
+    "description": "Notification"
+  },
+  "copy_toggle_failed": {
+    "message": "複製解鎖切換失敗，請重試",
+    "description": "Notification"
+  },
+  "paste_toggle_failed": {
+    "message": "貼上解鎖切換失敗，請重試",
+    "description": "Notification"
+  },
+  "force_toggle_failed": {
+    "message": "強力模式切換失敗，請重試",
+    "description": "Notification"
+  },
+  "refresh_success": {
+    "message": "已重新檢查",
+    "description": "Notification"
+  },
+  "refresh_failed": {
+    "message": "重新檢查失敗，請重試",
+    "description": "Notification"
+  },
+  "test_copy_success": {
+    "message": "已檢查複製設定，請回到網頁實際複製以確認效果。",
+    "description": "Notification"
+  },
+  "test_copy_failed": {
+    "message": "無法取得複製狀態。請重新載入網頁並檢查網站存取權限。",
+    "description": "Copy status query failure"
+  },
+  "cannot_get_page_info": {
+    "message": "無法取得目前頁面的資訊",
+    "description": "Notification"
+  },
+  "already_in_auto_list": {
+    "message": "此網站已在自動啟用清單中",
+    "description": "Notification"
+  },
+  "added_to_auto_list": {
+    "message": "已將 $DOMAIN$ 加入自動啟用清單",
+    "description": "Notification",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "example.com"
+      }
+    }
+  },
+  "add_failed": {
+    "message": "新增失敗，請檢查輸入內容後重試",
+    "description": "Notification"
+  },
+  "btn_in_auto_list": {
+    "message": "已加入自動啟用",
+    "description": "Auto-enable button added state"
+  },
+  "status_plugin_disabled": {
+    "message": "擴充功能已停用",
+    "description": "Page status"
+  },
+  "status_first_visit": {
+    "message": "首次造訪，請重新載入網頁",
+    "description": "Page status"
+  },
+  "status_active_restricted": {
+    "message": "已啟用（偵測到限制）",
+    "description": "Page status"
+  },
+  "status_active": {
+    "message": "此頁面的複製與貼上解鎖已開啟",
+    "description": "Enabled state, not proof of success"
+  },
+  "status_inactive": {
+    "message": "此頁面的解鎖已關閉",
+    "description": "Page status"
+  },
+  "status_partial": {
+    "message": "目前僅開啟一項解鎖，請查看進階選項。",
+    "description": "Only copy or paste is enabled"
+  },
+  "status_excluded": {
+    "message": "此網站已排除，可在設定中管理。",
+    "description": "Site exclusion takes priority"
+  },
+  "status_unsupported": {
+    "message": "此頁面無法解鎖，請開啟一般網頁。",
+    "description": "Browser or store page"
+  },
+  "status_page_unavailable": {
+    "message": "無法連線至此頁面。請重新載入網頁並檢查網站存取權限。",
+    "description": "Content script unavailable, not necessarily disabled"
+  },
+  "local_file": {
+    "message": "本機檔案",
+    "description": "Do not display the local path"
+  },
+  "options_title": {
+    "message": "EasyCV 設定",
+    "description": "Options page title"
+  },
+  "nav_general": {
+    "message": "一般設定",
+    "description": "Sidebar navigation"
+  },
+  "nav_whitelist": {
+    "message": "自動解鎖管理",
+    "description": "Sidebar navigation"
+  },
+  "nav_excluded": {
+    "message": "網站排除",
+    "description": "Sidebar navigation"
+  },
+  "nav_advanced": {
+    "message": "進階設定",
+    "description": "Sidebar navigation"
+  },
+  "nav_statistics": {
+    "message": "統計資料",
+    "description": "Sidebar navigation"
+  },
+  "nav_about": {
+    "message": "關於",
+    "description": "Sidebar navigation"
+  },
+  "general_description": {
+    "message": "設定擴充功能的基本功能與行為",
+    "description": "General settings description"
+  },
+  "basic_functions": {
+    "message": "基本功能",
+    "description": "Settings group title"
+  },
+  "unlock_copy_desc": {
+    "message": "開啟或關閉複製限制解除功能",
+    "description": "Setting description"
+  },
+  "unlock_paste_desc": {
+    "message": "開啟或關閉貼上限制解除功能",
+    "description": "Setting description"
+  },
+  "auto_detect": {
+    "message": "自動偵測",
+    "description": "Setting label"
+  },
+  "auto_detect_desc": {
+    "message": "網頁載入時自動偵測並解除複製貼上限制",
+    "description": "Setting description"
+  },
+  "force_mode_desc_options": {
+    "message": "使用更強力的方法處理頑固限制",
+    "description": "Setting description"
+  },
+  "show_notifications": {
+    "message": "顯示通知",
+    "description": "Setting label"
+  },
+  "show_notifications_desc": {
+    "message": "顯示操作結果通知",
+    "description": "Setting description"
+  },
+  "auto_add_to_whitelist": {
+    "message": "手動開啟後加入自動啟用清單",
+    "description": "Setting label"
+  },
+  "auto_add_to_whitelist_desc": {
+    "message": "手動開啟解鎖後，將網站加入自動啟用清單；不代表已驗證實際複製成功。",
+    "description": "Setting description"
+  },
+  "detection_settings": {
+    "message": "偵測設定",
+    "description": "Settings group title"
+  },
+  "detection_delay": {
+    "message": "偵測延遲",
+    "description": "Setting label"
+  },
+  "detection_delay_desc": {
+    "message": "網頁載入後開始偵測前的等待時間（毫秒）",
+    "description": "Setting description"
+  },
+  "max_retries": {
+    "message": "重試次數上限",
+    "description": "Setting label"
+  },
+  "max_retries_desc": {
+    "message": "偵測失敗時的重試次數上限",
+    "description": "Setting description"
+  },
+  "suffix_times": {
+    "message": "次",
+    "description": "Input suffix"
+  },
+  "whitelist_description": {
+    "message": "網站規則會覆蓋複製與貼上的預設設定；排除規則與全域開關優先。*.example.com 僅比對子網域。",
+    "description": "Auto-unlock management description"
+  },
+  "add_website": {
+    "message": "新增網站",
+    "description": "Add website group title"
+  },
+  "domain_placeholder": {
+    "message": "輸入網站網域，例如 example.com",
+    "description": "Domain input placeholder"
+  },
+  "feature_selection": {
+    "message": "選擇功能",
+    "description": "Feature selection title"
+  },
+  "unlock_copy_site_desc": {
+    "message": "在此網站開啟複製限制解除功能",
+    "description": "Feature description"
+  },
+  "unlock_paste_site_desc": {
+    "message": "在此網站開啟輸入欄位的貼上限制解除功能",
+    "description": "Feature description"
+  },
+  "at_least_one_feature": {
+    "message": "請至少選擇一項功能，再加入自動啟用清單",
+    "description": "Feature selection hint"
+  },
+  "add_btn": {
+    "message": "新增",
+    "description": "Add button"
+  },
+  "auto_unlock_sites": {
+    "message": "自動解鎖網站",
+    "description": "List title"
+  },
+  "empty_whitelist": {
+    "message": "尚未設定自動解鎖網站",
+    "description": "List empty state"
+  },
+  "excluded_description": {
+    "message": "管理完全停用 EasyCV 的網站（優先於自動解鎖與強力模式）",
+    "description": "Site exclusions description"
+  },
+  "excluded_placeholder": {
+    "message": "輸入要排除的網域，例如 example.com",
+    "description": "Input placeholder"
+  },
+  "excluded_sites_title": {
+    "message": "已排除的網站",
+    "description": "Exclusion list title"
+  },
+  "excluded_hint": {
+    "message": "EasyCV 在排除的網站上會完全停用。若網站功能受到影響（例如自訂右鍵選單失效），請將它加入此處。已內建常見帳號登入頁面，可自由編輯。",
+    "description": "Exclusion list hint"
+  },
+  "empty_excluded": {
+    "message": "尚未排除任何網站",
+    "description": "List empty state"
+  },
+  "advanced_description": {
+    "message": "設定進階功能與偵錯選項",
+    "description": "Advanced settings description"
+  },
+  "debug_options": {
+    "message": "偵錯選項",
+    "description": "Settings group title"
+  },
+  "debug_mode": {
+    "message": "偵錯模式",
+    "description": "Setting label"
+  },
+  "debug_mode_desc": {
+    "message": "在主控台輸出詳細記錄",
+    "description": "Setting description"
+  },
+  "perf_monitoring": {
+    "message": "效能監控",
+    "description": "Setting label"
+  },
+  "perf_monitoring_desc": {
+    "message": "監控擴充功能的效能並記錄統計資料",
+    "description": "Setting description"
+  },
+  "data_management": {
+    "message": "資料管理",
+    "description": "Settings group title"
+  },
+  "export_settings": {
+    "message": "匯出設定",
+    "description": "Button"
+  },
+  "import_settings": {
+    "message": "匯入設定",
+    "description": "Button"
+  },
+  "reset_settings": {
+    "message": "重設設定",
+    "description": "Button"
+  },
+  "clear_all_data": {
+    "message": "清除所有資料",
+    "description": "Button"
+  },
+  "stats_description": {
+    "message": "僅統計本機啟用次數，不代表實際解鎖成功次數",
+    "description": "Statistics description"
+  },
+  "total_sites_count": {
+    "message": "今日啟用次數",
+    "description": "Stat card"
+  },
+  "successful_count": {
+    "message": "累計啟用次數",
+    "description": "Stat card"
+  },
+  "detailed_stats": {
+    "message": "統計說明",
+    "description": "Detailed statistics title"
+  },
+  "th_site": {
+    "message": "網站",
+    "description": "Table header"
+  },
+  "th_visits": {
+    "message": "造訪次數",
+    "description": "Table header"
+  },
+  "th_processes": {
+    "message": "處理次數",
+    "description": "Table header"
+  },
+  "th_last_visit": {
+    "message": "上次造訪",
+    "description": "Table header"
+  },
+  "empty_stats": {
+    "message": "尚無統計資料",
+    "description": "Statistics empty state"
+  },
+  "about_title": {
+    "message": "關於 EasyCV",
+    "description": "About title"
+  },
+  "about_description": {
+    "message": "擴充功能資訊與說明文件",
+    "description": "About description"
+  },
+  "version_label": {
+    "message": "版本 $VERSION$",
+    "description": "Version number",
+    "placeholders": {
+      "version": {
+        "content": "$1",
+        "example": "1.0.0"
+      }
+    }
+  },
+  "about_slogan": {
+    "message": "一鍵解除網頁複製貼上限制的 Chrome 擴充功能",
+    "description": "About page intro"
+  },
+  "main_features": {
+    "message": "主要功能",
+    "description": "About page group"
+  },
+  "feature_1": {
+    "message": "自動偵測並解除網頁複製貼上限制",
+    "description": "Feature list"
+  },
+  "feature_2": {
+    "message": "使用強力模式處理頑固限制",
+    "description": "Feature list"
+  },
+  "feature_3": {
+    "message": "管理網站自動啟用與排除規則",
+    "description": "Feature list"
+  },
+  "feature_4": {
+    "message": "統計本機啟用次數，不代表解鎖成功率",
+    "description": "Feature list"
+  },
+  "feature_5": {
+    "message": "簡潔易用的介面",
+    "description": "Feature list"
+  },
+  "tech_support": {
+    "message": "技術支援",
+    "description": "About page group"
+  },
+  "github_repo": {
+    "message": "GitHub 儲存庫",
+    "description": "Link"
+  },
+  "issue_feedback": {
+    "message": "回報問題",
+    "description": "Link"
+  },
+  "user_docs": {
+    "message": "使用文件",
+    "description": "Link"
+  },
+  "open_source": {
+    "message": "開放原始碼授權",
+    "description": "About page group"
+  },
+  "license_text": {
+    "message": "本專案採用 MIT 授權條款開放原始碼，歡迎貢獻程式碼與提供建議。",
+    "description": "License text"
+  },
+  "init_failed": {
+    "message": "初始化失敗",
+    "description": "Notification"
+  },
+  "settings_saved": {
+    "message": "設定已儲存",
+    "description": "Notification"
+  },
+  "save_failed": {
+    "message": "無法確認是否已儲存。請重試；重新載入前請先匯出備份。",
+    "description": "Notification"
+  },
+  "invalid_domain_empty": {
+    "message": "請輸入有效的網域",
+    "description": "Notification"
+  },
+  "invalid_domain_format": {
+    "message": "網域格式不正確",
+    "description": "Notification"
+  },
+  "domain_exists": {
+    "message": "此網域已存在",
+    "description": "Notification"
+  },
+  "select_at_least_one": {
+    "message": "請至少選擇一項功能",
+    "description": "Notification"
+  },
+  "domain_added": {
+    "message": "已新增網域",
+    "description": "Notification"
+  },
+  "config_updated": {
+    "message": "已更新 $DOMAIN$ 的設定",
+    "description": "Notification",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "example.com"
+      }
+    }
+  },
+  "update_failed": {
+    "message": "更新失敗，原有規則與編輯中的內容已保留。",
+    "description": "Notification"
+  },
+  "domain_deleted": {
+    "message": "已刪除網域",
+    "description": "Notification"
+  },
+  "delete_failed": {
+    "message": "刪除失敗",
+    "description": "Notification"
+  },
+  "editing_config": {
+    "message": "正在編輯 $DOMAIN$ 的設定",
+    "description": "Notification",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "example.com"
+      }
+    }
+  },
+  "update_config_btn": {
+    "message": "更新",
+    "description": "Button"
+  },
+  "tag_all_unlocked": {
+    "message": "兩項皆開啟",
+    "description": "Status tag"
+  },
+  "tag_copy_only": {
+    "message": "僅複製",
+    "description": "Status tag"
+  },
+  "tag_paste_only": {
+    "message": "僅貼上",
+    "description": "Status tag"
+  },
+  "enabled_features": {
+    "message": "已啟用：$FEATURES$",
+    "description": "Enabled features summary for a domain",
+    "placeholders": {
+      "features": {
+        "content": "$1",
+        "example": "Copy + Paste"
+      }
+    }
+  },
+  "feature_copy": {
+    "message": "複製",
+    "description": "Feature name"
+  },
+  "feature_paste": {
+    "message": "貼上",
+    "description": "Feature name"
+  },
+  "edit_title": {
+    "message": "編輯設定",
+    "description": "Button tooltip"
+  },
+  "delete_title": {
+    "message": "刪除網站",
+    "description": "Button tooltip"
+  },
+  "edit_btn": {
+    "message": "編輯",
+    "description": "Button"
+  },
+  "delete_btn": {
+    "message": "刪除",
+    "description": "Button"
+  },
+  "settings_exported": {
+    "message": "設定已匯出",
+    "description": "Notification"
+  },
+  "export_failed": {
+    "message": "匯出失敗",
+    "description": "Notification"
+  },
+  "settings_imported": {
+    "message": "設定已匯入",
+    "description": "Notification"
+  },
+  "import_failed": {
+    "message": "匯入失敗。請檢查檔案格式、網域與開關設定值；尚未確認儲存成功。",
+    "description": "Notification"
+  },
+  "confirm_reset": {
+    "message": "確定要重設所有設定嗎？此操作無法復原。",
+    "description": "Confirmation dialog"
+  },
+  "settings_reset": {
+    "message": "設定已重設",
+    "description": "Notification"
+  },
+  "reset_failed": {
+    "message": "重設失敗",
+    "description": "Notification"
+  },
+  "confirm_clear": {
+    "message": "確定要清除所有資料嗎？包括設定、網站清單與統計資料。此操作無法復原。",
+    "description": "Confirmation dialog"
+  },
+  "data_cleared": {
+    "message": "已清除所有資料",
+    "description": "Notification"
+  },
+  "clear_failed": {
+    "message": "清除失敗",
+    "description": "Notification"
+  },
+  "context_toggle": {
+    "message": "啟用／停用 EasyCV",
+    "description": "Context menu"
+  },
+  "context_force_mode": {
+    "message": "啟用強力模式",
+    "description": "Context menu"
+  },
+  "context_add_to_auto": {
+    "message": "加入自動啟用清單",
+    "description": "Context menu"
+  },
+  "icon_title_active": {
+    "message": "EasyCV - 已啟用",
+    "description": "Icon tooltip"
+  },
+  "icon_title_active_force": {
+    "message": "EasyCV - 已啟用（強力模式）",
+    "description": "Icon tooltip"
+  },
+  "icon_title_partial": {
+    "message": "EasyCV - 部分啟用",
+    "description": "Icon tooltip"
+  },
+  "icon_title_partial_copy": {
+    "message": "EasyCV - 部分啟用（僅複製）",
+    "description": "Icon tooltip"
+  },
+  "icon_title_partial_paste": {
+    "message": "EasyCV - 部分啟用（僅貼上）",
+    "description": "Icon tooltip"
+  },
+  "icon_title_inactive": {
+    "message": "EasyCV - 已停用",
+    "description": "Icon tooltip"
+  },
+  "icon_title_default": {
+    "message": "EasyCV - 就緒",
+    "description": "Icon tooltip"
+  },
+  "today_use": {
+    "message": "今日啟用次數"
+  },
+  "local_stats_notice": {
+    "message": "僅統計本機啟用操作，不代表解鎖成功；不再記錄網站造訪明細。"
+  },
+  "privacy_storage_notice": {
+    "message": "設定與手動規則可能透過瀏覽器同步；啟用次數與必要的診斷資料僅儲存在本機。舊有造訪資料保留在本機備份中，可透過「清除所有資料」移除。"
+  },
+  "local_statistics_toggle": {
+    "message": "統計本機啟用次數（不記錄造訪網域）"
+  },
+  "local_recovery_notice": {
+    "message": "找到舊的本機設定。同步設定優先，缺少的項目才使用本機副本。還原前請先匯出備份。"
+  },
+  "export_local_recovery": {
+    "message": "匯出本機設定副本"
+  },
+  "restore_local_recovery": {
+    "message": "從本機設定還原"
+  },
+  "confirm_restore_local": {
+    "message": "要以本機副本中的項目覆蓋同步設定嗎？其他項目與本機副本會保留。請先匯出兩份備份。"
+  },
+  "cancel_edit": {
+    "message": "取消編輯"
+  },
+  "load_failed": {
+    "message": "暫時無法讀取設定，請重試。"
+  },
+  "privacy_migration_pending": {
+    "message": "舊資料尚未完成移轉，同步副本仍保留，請稍後再試。"
+  },
+  "retry_migration": {
+    "message": "重新嘗試移轉"
+  },
+  "ui_language": {
+    "message": "zh-TW",
+    "description": "BCP 47 language of this message catalog, used for the document lang attribute"
+  },
+  "close_notification": {
+    "message": "關閉通知",
+    "description": "Accessible name for the notification close button"
+  }
+}

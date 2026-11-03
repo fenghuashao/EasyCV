@@ -1,0 +1,197 @@
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-TbWoGu\build
+📄 复制文件: manifest.json -> build\manifest.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-TbWoGu\build\background\
+📄 复制文件: background\auto-enable-manager.js -> build\background\auto-enable-manager.js
+📄 复制文件: background\icon-manager.js -> build\background\icon-manager.js
+📄 复制文件: background\monitoring-manager.js -> build\background\monitoring-manager.js
+📄 复制文件: background\service-worker.js -> build\background\service-worker.js
+📄 复制文件: background\state-confirmation-manager.js -> build\background\state-confirmation-manager.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-TbWoGu\build\content\
+📄 复制文件: content\content.js -> build\content\content.js
+📄 复制文件: content\injector.js -> build\content\injector.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-TbWoGu\build\popup\
+📄 复制文件: popup\popup.css -> build\popup\popup.css
+📄 复制文件: popup\popup.html -> build\popup\popup.html
+📄 复制文件: popup\popup.js -> build\popup\popup.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-TbWoGu\build\options\
+📄 复制文件: options\options.css -> build\options\options.css
+📄 复制文件: options\options.html -> build\options\options.html
+📄 复制文件: options\options.js -> build\options\options.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-TbWoGu\build\utils\
+📄 复制文件: utils\dom-utils.js -> build\utils\dom-utils.js
+📄 复制文件: utils\i18n-utils.js -> build\utils\i18n-utils.js
+📄 复制文件: utils\message-utils.js -> build\utils\message-utils.js
+📄 复制文件: utils\notification-utils.js -> build\utils\notification-utils.js
+📄 复制文件: utils\storage-utils.js -> build\utils\storage-utils.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-TbWoGu\build\icons\
+📄 复制文件: icons\icon-active-128.png -> build\icons\icon-active-128.png
+📄 复制文件: icons\icon-active-16.png -> build\icons\icon-active-16.png
+📄 复制文件: icons\icon-active-32.png -> build\icons\icon-active-32.png
+📄 复制文件: icons\icon-active-48.png -> build\icons\icon-active-48.png
+📄 复制文件: icons\icon-default-128.png -> build\icons\icon-default-128.png
+📄 复制文件: icons\icon-default-16.png -> build\icons\icon-default-16.png
+📄 复制文件: icons\icon-default-32.png -> build\icons\icon-default-32.png
+📄 复制文件: icons\icon-default-48.png -> build\icons\icon-default-48.png
+📄 复制文件: icons\icon-inactive-128.png -> build\icons\icon-inactive-128.png
+📄 复制文件: icons\icon-inactive-16.png -> build\icons\icon-inactive-16.png
+📄 复制文件: icons\icon-inactive-32.png -> build\icons\icon-inactive-32.png
+📄 复制文件: icons\icon-inactive-48.png -> build\icons\icon-inactive-48.png
+📄 复制文件: icons\icon-partial-128.png -> build\icons\icon-partial-128.png
+📄 复制文件: icons\icon-partial-16.png -> build\icons\icon-partial-16.png
+📄 复制文件: icons\icon-partial-32.png -> build\icons\icon-partial-32.png
+📄 复制文件: icons\icon-partial-48.png -> build\icons\icon-partial-48.png
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-TbWoGu\build\_locales\
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-TbWoGu\build\_locales\en
+📄 复制文件: _locales\en\messages.json -> build\_locales\en\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-TbWoGu\build\_locales\zh_CN
+📄 复制文件: _locales\zh_CN\messages.json -> build\_locales\zh_CN\messages.json
+==================================================
+✅ 构建完成!
+📦 版本: 1.1.2
+📁 输出目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-TbWoGu\build
+⏰ 构建时间: 2026-11-03T06:17:50.823Z
+✅ 打包完成: test-only.zip (134.93 KB)
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+❌ 构建失败: Build output already exists; choose a new --out directory
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-xwuOCs\build
+📄 复制文件: manifest.json -> build\manifest.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-xwuOCs\build\background\
+📄 复制文件: background\auto-enable-manager.js -> build\background\auto-enable-manager.js
+📄 复制文件: background\icon-manager.js -> build\background\icon-manager.js
+📄 复制文件: background\monitoring-manager.js -> build\background\monitoring-manager.js
+📄 复制文件: background\service-worker.js -> build\background\service-worker.js
+📄 复制文件: background\state-confirmation-manager.js -> build\background\state-confirmation-manager.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-xwuOCs\build\content\
+📄 复制文件: content\content.js -> build\content\content.js
+📄 复制文件: content\injector.js -> build\content\injector.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-xwuOCs\build\popup\
+📄 复制文件: popup\popup.css -> build\popup\popup.css
+📄 复制文件: popup\popup.html -> build\popup\popup.html
+📄 复制文件: popup\popup.js -> build\popup\popup.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-xwuOCs\build\options\
+📄 复制文件: options\options.css -> build\options\options.css
+📄 复制文件: options\options.html -> build\options\options.html
+📄 复制文件: options\options.js -> build\options\options.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-xwuOCs\build\utils\
+📄 复制文件: utils\dom-utils.js -> build\utils\dom-utils.js
+📄 复制文件: utils\i18n-utils.js -> build\utils\i18n-utils.js
+📄 复制文件: utils\message-utils.js -> build\utils\message-utils.js
+📄 复制文件: utils\notification-utils.js -> build\utils\notification-utils.js
+📄 复制文件: utils\storage-utils.js -> build\utils\storage-utils.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-xwuOCs\build\icons\
+📄 复制文件: icons\icon-active-128.png -> build\icons\icon-active-128.png
+📄 复制文件: icons\icon-active-16.png -> build\icons\icon-active-16.png
+📄 复制文件: icons\icon-active-32.png -> build\icons\icon-active-32.png
+📄 复制文件: icons\icon-active-48.png -> build\icons\icon-active-48.png
+📄 复制文件: icons\icon-default-128.png -> build\icons\icon-default-128.png
+📄 复制文件: icons\icon-default-16.png -> build\icons\icon-default-16.png
+📄 复制文件: icons\icon-default-32.png -> build\icons\icon-default-32.png
+📄 复制文件: icons\icon-default-48.png -> build\icons\icon-default-48.png
+📄 复制文件: icons\icon-inactive-128.png -> build\icons\icon-inactive-128.png
+📄 复制文件: icons\icon-inactive-16.png -> build\icons\icon-inactive-16.png
+📄 复制文件: icons\icon-inactive-32.png -> build\icons\icon-inactive-32.png
+📄 复制文件: icons\icon-inactive-48.png -> build\icons\icon-inactive-48.png
+📄 复制文件: icons\icon-partial-128.png -> build\icons\icon-partial-128.png
+📄 复制文件: icons\icon-partial-16.png -> build\icons\icon-partial-16.png
+📄 复制文件: icons\icon-partial-32.png -> build\icons\icon-partial-32.png
+📄 复制文件: icons\icon-partial-48.png -> build\icons\icon-partial-48.png
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-xwuOCs\build\_locales\
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-xwuOCs\build\_locales\en
+📄 复制文件: _locales\en\messages.json -> build\_locales\en\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-xwuOCs\build\_locales\zh_CN
+📄 复制文件: _locales\zh_CN\messages.json -> build\_locales\zh_CN\messages.json
+==================================================
+✅ 构建完成!
+📦 版本: 1.1.2
+📁 输出目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-xwuOCs\build
+⏰ 构建时间: 2026-11-03T06:17:51.239Z
+(node:33752) Warning: node:test run() is being called recursively within a test file. skipping running files.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Local checks passed; browser/upgrade acceptance: NOT_RUN
+✔ fresh build and ZIP match every source file; overwrites, stale builds and corrupt ZIPs are rejected (414.1508ms)
+✔ unexpected build entries and unapproved permission changes block packaging (196.0137ms)
+✔ version operation synchronizes manifest/package/both lock fields in an isolated fixture (80.5895ms)
+✖ deploy executes real checks and stops on failing unit tests (356.4182ms)
+✔ F01 failed sync write rejects and never reports local fallback as saved (4.5415ms)
+✔ F02 editing a rule without saving preserves its persisted value (2.8188ms)
+✔ F03 legacy and mixed lists normalize on the background read path without rewriting storage (5.2735ms)
+✔ F04 wildcard is subdomain-only, boundary-safe and exact rules win (3.6263ms)
+✔ F05 automatic site visit never writes global defaults (2.0413ms)
+✔ F06 failed status lookup returns a failure, never enabled success (3.2317ms)
+✔ F07 diagnostics contain only fixed non-sensitive fields and live in local (3.8533ms)
+✔ F08 malformed import changes neither settings nor rules (2.6561ms)
+✔ F09 concurrent settings updates merge rather than lose unrelated fields (1.3702ms)
+✔ F10 deleted storage keys normalize to safe defaults in background cache (2.323ms)
+✔ F11 copy-disabled injector preserves copy preventDefault but neutralizes paste (1.8143ms)
+✔ F12 ordinary page is not restricted and analysis never saves visited domains (4.1191ms)
+✔ site settings apply per-domain while global off and exclusions dominate (2.3153ms)
+✔ privacy migration is idempotent, preserves history locally and removes sync copies only after verified write (1.9299ms)
+✔ migration local write failure preserves original sync data (1.1468ms)
+✔ atomic imported settings preserve excluded list when absent and reject unsafe domains (1.335ms)
+✔ failed rule replacement and parallel additions preserve original/latest rules (1.1932ms)
+✖ two extension pages write through one worker queue; content-page mutation is rejected (4.3931ms)
+✖ worker state updates and direct options updates share the same serialization queue (2.1697ms)
+✔ failed write does not poison the next queued write (0.9713ms)
+✔ local fallback is readable only for missing sync keys; restore is explicit and preserves original (1.0309ms)
+✔ invalid local recovery and prototype-polluting import never alter sync (0.9237ms)
+✔ valid import preserves future fields, normalizes domains, and reports sync failure (1.189ms)
+✔ failed save keeps the options rule draft and original; cancel performs no storage write (2.1868ms)
+✔ whitelist delegate binds once and HTML escaping protects attributes as well as text (1.9377ms)
+✔ disabled statistics never write counters, and stale daily counts reset on read (0.9693ms)
+✔ migration verification failure and sync removal failure preserve source for retry (1.19ms)
+✔ malformed legacy diagnostics are sanitized and repeat migration stays stable (0.9666ms)
+✔ content fails closed after known-enabled state and can recover on a later status refresh (1.2634ms)
+✔ injector mode true/true scopes events, shortcuts and styles; off restores originals (1.376ms)
+✔ injector mode true/false scopes events, shortcuts and styles; off restores originals (0.2713ms)
+✔ injector mode false/true scopes events, shortcuts and styles; off restores originals (0.1506ms)
+✔ injector mode false/false scopes events, shortcuts and styles; off restores originals (0.1122ms)
+✔ main-world dynamic attributes and document properties restore across repeated mode changes (0.5312ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 35
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1317.6548
+
+✖ failing tests:
+
+test at test\unit\release-checks.test.mjs:74:1
+✖ deploy executes real checks and stops on failing unit tests (356.4182ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/release-checks.test.mjs:81:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /unit check failed/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test\unit\reliability.test.mjs:147:1
+✖ two extension pages write through one worker queue; content-page mutation is rejected (4.3931ms)
+  Error: Settings mutations require an extension page
+      at evalmachine.<anonymous>:525:21
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:162:26)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at test\unit\reliability.test.mjs:170:1
+✖ worker state updates and direct options updates share the same serialization queue (2.1697ms)
+  TypeError: Cannot read properties of undefined (reading 'recordPerformance')
+      at StateManager.performStateUpdate (evalmachine.<anonymous>:289:30)

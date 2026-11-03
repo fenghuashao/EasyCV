@@ -184,6 +184,7 @@ class OptionsManager {
    * 绑定白名单事件
    */
   bindWhitelistEvents() {
+    document.getElementById('cancelRuleEditBtn')?.addEventListener('click', () => this.cancelRuleEdit());
     // 添加白名单
     const addBtn = document.getElementById('addWhitelistBtn');
     const input = document.getElementById('whitelistInput');
@@ -256,6 +257,10 @@ class OptionsManager {
       });
     }
     
+    document.getElementById('retryPrivacyMigrationBtn')?.addEventListener('click', () => this.retryPrivacyMigration());
+    document.getElementById('exportRecoveryBtn')?.addEventListener('click', () => this.exportRecovery());
+    document.getElementById('restoreRecoveryBtn')?.addEventListener('click', () => this.restoreRecovery());
+    document.getElementById('enableStatistics')?.addEventListener('change', e => this.updateSetting('enableStatistics', e.target.checked));
     // 数据管理按钮
     const exportBtn = document.getElementById('exportSettingsBtn');
     const importBtn = document.getElementById('importSettingsBtn');
@@ -359,7 +364,7 @@ class OptionsManager {
       this.statistics = await StorageUtils.getStatistics();
       
     } catch (error) {
-      console.error('Failed to load data:', error);
+      throw error;
     }
   }
   
@@ -367,6 +372,7 @@ class OptionsManager {
    * 初始化UI
    */
   initializeUI() {
+    this.refreshRecoveryNotice().catch(() => this.showNotification(I18nUtils.t('load_failed'), 'error'));
     // 设置表单值
     this.updateFormValues();
     
@@ -409,6 +415,8 @@ class OptionsManager {
     const maxRetries = document.getElementById('maxRetries');
     if (maxRetries) maxRetries.value = this.settings.maxRetries ?? 3;
     
+    const enableStatistics = document.getElementById('enableStatistics');
+    if (enableStatistics) enableStatistics.checked = this.settings.enableStatistics !== false;
     // 高级设置
     const debugMode = document.getElementById('debugMode');
     if (debugMode) debugMode.checked = this.settings.debugMode ?? false;
@@ -422,15 +430,12 @@ class OptionsManager {
    */
   async updateSetting(key, value) {
     try {
-      this.settings[key] = value;
-      // 只保存本次编辑的字段，避免覆盖 Popup/其他标签刚修改的设置。
       await StorageUtils.setPluginSettings({ [key]: value });
-
-      // 无需显式通知 background：StateManager 的 storage 监听器会自动同步缓存
-
+      this.settings = await StorageUtils.getPluginSettings();
+      this.updateFormValues();
       this.showNotification(I18nUtils.t('settings_saved'), 'success');
     } catch (error) {
-      console.error('Failed to update setting:', error);
+      this.updateFormValues();
       this.showNotification(I18nUtils.t('save_failed'), 'error');
     }
   }
@@ -439,78 +444,33 @@ class OptionsManager {
    * 添加自动解锁域名
    */
   async addWhitelistDomain(domain) {
-    if (!domain) {
-      this.showNotification(I18nUtils.t('invalid_domain_empty'), 'warning');
-      return;
-    }
-
-    // 验证域名格式
-    if (!this.isValidDomain(domain)) {
-      this.showNotification(I18nUtils.t('invalid_domain_format'), 'warning');
-      return;
-    }
-
-    // 检查是否已存在
-    if (this.whitelist.find(item => item.domain === domain)) {
-      this.showNotification(I18nUtils.t('domain_exists'), 'warning');
-      return;
-    }
-
-    // 获取精细化控制选项
-    const copyEnabled = document.getElementById('enableCopyOption').checked;
-    const pasteEnabled = document.getElementById('enablePasteOption').checked;
-
-    if (!copyEnabled && !pasteEnabled) {
-      this.showNotification(I18nUtils.t('select_at_least_one'), 'warning');
-      return;
-    }
-    
+    const isEditing = Boolean(this.editingDomain);
     try {
-      const config = {
-        domain,
-        copyEnabled,
-        pasteEnabled
-      };
-      
-      // 检查是否为编辑模式
-      const input = document.getElementById('whitelistInput');
-      const isEditing = input && input.hasAttribute('data-editing');
-      const editingDomain = isEditing ? input.getAttribute('data-editing') : null;
-      
-      this.whitelist.push(config);
-      await StorageUtils.set({ [StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: this.whitelist });
-      
-      // 清空输入框和重置选项
-      if (input) {
-        input.value = '';
-        input.removeAttribute('data-editing');
-      }
-      document.getElementById('enableCopyOption').checked = true;
-      document.getElementById('enablePasteOption').checked = true;
-      
-      // 重置按钮状态
-      const addBtn = document.getElementById('addWhitelistBtn');
-      if (addBtn) {
-        addBtn.textContent = I18nUtils.t('add_btn');
-        addBtn.classList.remove('updating');
-      }
-
-      // 移除编辑高亮
-      const editingItems = document.querySelectorAll('.whitelist-item.editing');
-      editingItems.forEach(item => item.classList.remove('editing'));
-
-      // 重新渲染列表
+      domain = StorageUtils.normalizeDomain(domain, true);
+      const config = { domain, copyEnabled: document.getElementById('enableCopyOption').checked,
+        pasteEnabled: document.getElementById('enablePasteOption').checked };
+      if (isEditing) await StorageUtils.replaceAutoEnableRule(this.editingDomain, config);
+      else await StorageUtils.addToAutoEnableList(config);
+      this.whitelist = await StorageUtils.getAutoEnableList();
+      this.cancelRuleEdit();
       this.renderWhitelist();
-
-      if (isEditing && editingDomain) {
-        this.showNotification(I18nUtils.t('config_updated', editingDomain), 'success');
-      } else {
-        this.showNotification(I18nUtils.t('domain_added'), 'success');
-      }
+      this.showNotification(I18nUtils.t(isEditing ? 'settings_saved' : 'domain_added'), 'success');
     } catch (error) {
-      console.error('Failed to add whitelist domain:', error);
+      // The draft and persisted rule remain intact so the user can retry.
       this.showNotification(I18nUtils.t(isEditing ? 'update_failed' : 'add_failed'), 'error');
     }
+  }
+
+  cancelRuleEdit() {
+    this.editingDomain = null;
+    document.getElementById('whitelistInput').value = '';
+    document.getElementById('enableCopyOption').checked = true;
+    document.getElementById('enablePasteOption').checked = true;
+    const button = document.getElementById('addWhitelistBtn');
+    button.textContent = I18nUtils.t('add_btn');
+    button.classList.remove('updating');
+    const cancel = document.getElementById('cancelRuleEditBtn');
+    if (cancel) cancel.hidden = true;
   }
   
   /**
@@ -518,15 +478,12 @@ class OptionsManager {
    */
   async removeWhitelistDomain(domain) {
     try {
-      this.whitelist = this.whitelist.filter(item => item.domain !== domain);
-      await StorageUtils.set({ [StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: this.whitelist });
-      
-      // 重新渲染列表
+      await StorageUtils.removeFromAutoEnableList(domain);
+      this.whitelist = await StorageUtils.getAutoEnableList();
+      if (this.editingDomain === domain) this.cancelRuleEdit();
       this.renderWhitelist();
-
       this.showNotification(I18nUtils.t('domain_deleted'), 'success');
     } catch (error) {
-      console.error('Failed to remove whitelist domain:', error);
       this.showNotification(I18nUtils.t('delete_failed'), 'error');
     }
   }
@@ -539,7 +496,7 @@ class OptionsManager {
     if (!config) return;
     
     // 高亮正在编辑的项目
-    const editingItem = document.querySelector(`[data-domain="${domain}"]`);
+    const editingItem = document.querySelector(`[data-domain="${this.escapeHTML(domain)}"]`);
     if (editingItem) {
       editingItem.classList.add('editing');
     }
@@ -564,8 +521,10 @@ class OptionsManager {
     // 显示编辑提示
     this.showNotification(I18nUtils.t('editing_config', domain), 'info');
     
-    // 先删除原配置
-    await this.removeWhitelistDomain(domain);
+    // Editing is an in-memory draft; only Save performs an atomic replacement.
+    this.editingDomain = domain;
+    const cancel = document.getElementById('cancelRuleEditBtn');
+    if (cancel) cancel.hidden = false;
     
     // 滚动到添加表单
     const addForm = document.querySelector('.add-whitelist');
@@ -619,11 +578,11 @@ class OptionsManager {
       const featureText = I18nUtils.t('enabled_features', featureList.join(' + '));
 
       return `
-        <div class="whitelist-item" data-domain="${domain}">
+        <div class="whitelist-item" data-domain="${this.escapeHTML(domain)}">
           <div class="whitelist-info">
             <div class="domain-header">
               ${statusIcon}
-              <span class="whitelist-domain">${domain}</span>
+              <span class="whitelist-domain">${this.escapeHTML(domain)}</span>
             </div>
             <div class="whitelist-status">
               ${statusTags}
@@ -631,11 +590,11 @@ class OptionsManager {
             </div>
           </div>
           <div class="whitelist-actions">
-            <button class="action-btn-small edit" data-domain="${domain}" title="${I18nUtils.t('edit_title')}">
+            <button class="action-btn-small edit" data-domain="${this.escapeHTML(domain)}" title="${I18nUtils.t('edit_title')}">
               <svg viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/></svg>
               ${I18nUtils.t('edit_btn')}
             </button>
-            <button class="action-btn-small delete" data-domain="${domain}" title="${I18nUtils.t('delete_title')}">
+            <button class="action-btn-small delete" data-domain="${this.escapeHTML(domain)}" title="${I18nUtils.t('delete_title')}">
               <svg viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
               ${I18nUtils.t('delete_btn')}
             </button>
@@ -654,6 +613,9 @@ class OptionsManager {
    * 设置白名单事件监听器
    */
   setupWhitelistEventListeners(container) {
+    this.boundWhitelistContainers ||= new WeakSet();
+    if (this.boundWhitelistContainers.has(container)) return;
+    this.boundWhitelistContainers.add(container);
     // 事件委托处理编辑按钮
     container.addEventListener('click', (e) => {
       const editBtn = e.target.closest('.action-btn-small.edit');
@@ -697,8 +659,8 @@ class OptionsManager {
     }
 
     try {
-      this.excludedList.push(domain);
-      await StorageUtils.setExcludedList(this.excludedList);
+      await StorageUtils.addToExcludedList(domain);
+      this.excludedList = await StorageUtils.getExcludedList();
 
       const input = document.getElementById('excludedInput');
       if (input) input.value = '';
@@ -716,8 +678,8 @@ class OptionsManager {
    */
   async removeExcludedDomain(domain) {
     try {
-      this.excludedList = this.excludedList.filter(item => item !== domain);
-      await StorageUtils.setExcludedList(this.excludedList);
+      await StorageUtils.removeFromExcludedList(domain);
+      this.excludedList = await StorageUtils.getExcludedList();
 
       this.renderExcludedList();
       this.showNotification(I18nUtils.t('domain_deleted'), 'success');
@@ -747,14 +709,14 @@ class OptionsManager {
     }
 
     container.innerHTML = this.excludedList.map(domain => `
-      <div class="whitelist-item" data-domain="${domain}">
+      <div class="whitelist-item" data-domain="${this.escapeHTML(domain)}">
         <div class="whitelist-info">
           <div class="domain-header">
-            <span class="whitelist-domain">${domain}</span>
+            <span class="whitelist-domain">${this.escapeHTML(domain)}</span>
           </div>
         </div>
         <div class="whitelist-actions">
-          <button class="action-btn-small delete" data-domain="${domain}" title="${I18nUtils.t('delete_title')}">
+          <button class="action-btn-small delete" data-domain="${this.escapeHTML(domain)}" title="${I18nUtils.t('delete_title')}">
             <svg viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
             ${I18nUtils.t('delete_btn')}
           </button>
@@ -767,8 +729,11 @@ class OptionsManager {
    * 验证域名格式
    */
   isValidDomain(domain) {
-    const domainRegex = /^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]?\.[a-zA-Z]{2,}$/;
-    return domainRegex.test(domain);
+    try { StorageUtils.normalizeDomain(domain); return true; } catch { return false; }
+  }
+
+  escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
   }
   
   /**
@@ -776,14 +741,8 @@ class OptionsManager {
    */
   async exportSettings() {
     try {
-      const data = {
-        settings: this.settings,
-        whitelist: this.whitelist,
-        excludedList: this.excludedList,
-        exportDate: new Date().toISOString(),
-        version: chrome.runtime.getManifest().version
-      };
-      
+      const data = await StorageUtils.exportSettings();
+
       const blob = new Blob([JSON.stringify(data, null, 2)], {
         type: 'application/json'
       });
@@ -818,39 +777,22 @@ class OptionsManager {
    */
   async handleFileImport(file) {
     if (!file) return;
-    
     try {
+      if (file.size > 1000000) throw new Error('File too large');
       const text = await file.text();
-      const data = JSON.parse(text);
-      
-      // 验证数据格式
-      if (!data.settings || !data.whitelist) {
-        throw new Error('Invalid file format');
-      }
-      
-      // 导入设置
-      this.settings = { ...this.settings, ...data.settings };
-      await StorageUtils.setPluginSettings(this.settings);
-      
-      // 导入白名单
-      this.whitelist = data.whitelist;
-      await StorageUtils.setAutoEnableList(this.whitelist);
-
-      // 导入站点排除列表（旧版导出文件无此字段时跳过，保留现状）
-      if (Array.isArray(data.excludedList)) {
-        this.excludedList = data.excludedList;
-        await StorageUtils.setExcludedList(this.excludedList);
-      }
-
-      // 更新UI
+      if (text.length > 1000000) throw new Error('File too large');
+      await StorageUtils.importConfiguration(JSON.parse(text));
+      await this.loadAllData();
+      this.cancelRuleEdit();
       this.updateFormValues();
       this.renderWhitelist();
       this.renderExcludedList();
-      
       this.showNotification(I18nUtils.t('settings_imported'), 'success');
     } catch (error) {
-      console.error('Failed to import settings:', error);
       this.showNotification(I18nUtils.t('import_failed'), 'error');
+    } finally {
+      const input = document.getElementById('importFileInput');
+      if (input) input.value = '';
     }
   }
   
@@ -864,7 +806,7 @@ class OptionsManager {
 
     try {
       // 重置为默认设置
-      this.settings = {
+      const defaults = {
         enabled: true,
         copyEnabled: true,
         pasteEnabled: true,
@@ -878,7 +820,8 @@ class OptionsManager {
         performanceMonitoring: false
       };
 
-      await StorageUtils.setPluginSettings(this.settings);
+      await StorageUtils.setPluginSettings(defaults);
+      this.settings = await StorageUtils.getPluginSettings();
 
       // 更新UI
       this.updateFormValues();
@@ -899,8 +842,8 @@ class OptionsManager {
     }
 
     try {
-      await chrome.storage.sync.clear();
-      await chrome.storage.local.clear();
+      await StorageUtils.clear();
+      this.cancelRuleEdit();
 
       // 重新加载数据
       await this.loadAllData();
@@ -923,7 +866,7 @@ class OptionsManager {
       // 更新统计卡片（statistics 中真实存在的字段：sitesUnlocked / totalActivations）
       const totalSitesElement = document.getElementById('totalSitesCount');
       if (totalSitesElement) {
-        totalSitesElement.textContent = (this.statistics.sitesUnlocked || []).length;
+        totalSitesElement.textContent = this.statistics.todayUsage || 0;
       }
 
       const successfulElement = document.getElementById('successfulCount');
@@ -934,10 +877,7 @@ class OptionsManager {
       // 成功率暂无数据来源（未追踪尝试次数），显示占位符而非误导性的 0%
       const successRateElement = document.getElementById('successRate');
       if (successRateElement) {
-        const total = this.statistics.totalAttempts || 0;
-        successRateElement.textContent = total > 0
-          ? `${Math.round((this.statistics.successfulAttempts / total) * 100)}%`
-          : '—';
+        successRateElement.textContent = '—';
       }
       
       // 更新详细统计表格
@@ -953,33 +893,40 @@ class OptionsManager {
    */
   renderStatisticsTable() {
     const tbody = document.getElementById('statsTableBody');
-    if (!tbody) return;
-    
-    const siteStats = this.statistics.siteStats || {};
-    const sites = Object.keys(siteStats);
-    
-    if (sites.length === 0) {
-      tbody.innerHTML = `<tr class="empty-row"><td colspan="5">${I18nUtils.t('empty_stats')}</td></tr>`;
-      return;
-    }
-    
-    const html = sites.map(site => {
-      const stats = siteStats[site];
-      const successRate = stats.attempts > 0 ? Math.round((stats.successes / stats.attempts) * 100) : 0;
-      const lastVisit = new Date(stats.lastVisit).toLocaleDateString();
-      
-      return `
-        <tr>
-          <td>${site}</td>
-          <td>${stats.visits || 0}</td>
-          <td>${stats.attempts || 0}</td>
-          <td>${successRate}%</td>
-          <td>${lastVisit}</td>
-        </tr>
-      `;
-    }).join('');
-    
-    tbody.innerHTML = html;
+    if (tbody) tbody.textContent = I18nUtils.t('local_stats_notice');
+  }
+
+  async refreshRecoveryNotice() {
+    const data = await StorageUtils.getRecoveryData();
+    const panel = document.getElementById('localRecovery');
+    if (panel) panel.hidden = Object.keys(data).length === 0;
+    const pending = document.getElementById('privacyMigrationPending');
+    if (pending) pending.hidden = !(await StorageUtils.hasPendingPrivacyMigration());
+  }
+
+  async retryPrivacyMigration() {
+    try { await StorageUtils.migratePrivateData(); await this.refreshRecoveryNotice(); }
+    catch { this.showNotification(I18nUtils.t('privacy_migration_pending'), 'error'); }
+  }
+
+  async exportRecovery() {
+    try {
+      const data = await StorageUtils.getRecoveryData();
+      const url = URL.createObjectURL(new Blob([JSON.stringify({ schemaVersion: 1, kind: 'easycv-local-recovery', configuration: data }, null, 2)], { type: 'application/json' }));
+      const a = document.createElement('a');
+      a.href = url; a.download = 'easycv-local-recovery.json'; a.click();
+      URL.revokeObjectURL(url);
+    } catch { this.showNotification(I18nUtils.t('export_failed'), 'error'); }
+  }
+
+  async restoreRecovery() {
+    if (!confirm(I18nUtils.t('confirm_restore_local'))) return;
+    try {
+      await StorageUtils.restoreLocalSettings();
+      await this.loadAllData();
+      this.initializeUI();
+      this.showNotification(I18nUtils.t('settings_saved'), 'success');
+    } catch { this.showNotification(I18nUtils.t('save_failed'), 'error'); }
   }
   
   /**

@@ -744,10 +744,10 @@ class PopupManager {
     try {
       const stats = await StorageUtils.getStatistics();
       
-      // 更新总网站数（statistics 中以 sitesUnlocked 数组记录）
+      // Local activation count does not imply unique sites or successful unlocking.
       const totalSitesElement = document.getElementById('totalSites');
       if (totalSitesElement) {
-        totalSitesElement.textContent = (stats.sitesUnlocked || []).length;
+        totalSitesElement.textContent = stats.totalActivations || 0;
       }
 
       // 更新今日使用次数（对应 HTML 中的 #todayCount）
@@ -759,11 +759,7 @@ class PopupManager {
       // 更新成功率
       const successRateElement = document.getElementById('successRate');
       if (successRateElement) {
-        const total = stats.totalAttempts;
-        const successes = stats.successfulAttempts;
-        successRateElement.textContent = Number.isFinite(total) && total > 0 &&
-          Number.isFinite(successes) && successes >= 0 && successes <= total
-          ? `${Math.round((successes / total) * 100)}%` : '—';
+        successRateElement.textContent = '—';
       }
     } catch (error) {
       console.error('加载统计数据失败:', error);

@@ -1,0 +1,58 @@
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+📁 创建目录: D:\pro\github\EasyCV\.tmp\dependency-remediation-clean-20261103\verified-build
+📄 复制文件: manifest.json -> verified-build\manifest.json
+📁 创建目录: D:\pro\github\EasyCV\.tmp\dependency-remediation-clean-20261103\verified-build\background\
+📄 复制文件: background\auto-enable-manager.js -> verified-build\background\auto-enable-manager.js
+📄 复制文件: background\icon-manager.js -> verified-build\background\icon-manager.js
+📄 复制文件: background\monitoring-manager.js -> verified-build\background\monitoring-manager.js
+📄 复制文件: background\service-worker.js -> verified-build\background\service-worker.js
+📄 复制文件: background\state-confirmation-manager.js -> verified-build\background\state-confirmation-manager.js
+📁 创建目录: D:\pro\github\EasyCV\.tmp\dependency-remediation-clean-20261103\verified-build\content\
+📄 复制文件: content\content.js -> verified-build\content\content.js
+📄 复制文件: content\injector.js -> verified-build\content\injector.js
+📁 创建目录: D:\pro\github\EasyCV\.tmp\dependency-remediation-clean-20261103\verified-build\popup\
+📄 复制文件: popup\popup.css -> verified-build\popup\popup.css
+📄 复制文件: popup\popup.html -> verified-build\popup\popup.html
+📄 复制文件: popup\popup.js -> verified-build\popup\popup.js
+📁 创建目录: D:\pro\github\EasyCV\.tmp\dependency-remediation-clean-20261103\verified-build\options\
+📄 复制文件: options\options.css -> verified-build\options\options.css
+📄 复制文件: options\options.html -> verified-build\options\options.html
+📄 复制文件: options\options.js -> verified-build\options\options.js
+📁 创建目录: D:\pro\github\EasyCV\.tmp\dependency-remediation-clean-20261103\verified-build\utils\
+📄 复制文件: utils\dom-utils.js -> verified-build\utils\dom-utils.js
+📄 复制文件: utils\i18n-utils.js -> verified-build\utils\i18n-utils.js
+📄 复制文件: utils\message-utils.js -> verified-build\utils\message-utils.js
+📄 复制文件: utils\notification-utils.js -> verified-build\utils\notification-utils.js
+📄 复制文件: utils\storage-utils.js -> verified-build\utils\storage-utils.js
+📁 创建目录: D:\pro\github\EasyCV\.tmp\dependency-remediation-clean-20261103\verified-build\icons\
+📄 复制文件: icons\icon-active-128.png -> verified-build\icons\icon-active-128.png
+📄 复制文件: icons\icon-active-16.png -> verified-build\icons\icon-active-16.png
+📄 复制文件: icons\icon-active-32.png -> verified-build\icons\icon-active-32.png
+📄 复制文件: icons\icon-active-48.png -> verified-build\icons\icon-active-48.png
+📄 复制文件: icons\icon-default-128.png -> verified-build\icons\icon-default-128.png
+📄 复制文件: icons\icon-default-16.png -> verified-build\icons\icon-default-16.png
+📄 复制文件: icons\icon-default-32.png -> verified-build\icons\icon-default-32.png
+📄 复制文件: icons\icon-default-48.png -> verified-build\icons\icon-default-48.png
+📄 复制文件: icons\icon-inactive-128.png -> verified-build\icons\icon-inactive-128.png
+📄 复制文件: icons\icon-inactive-16.png -> verified-build\icons\icon-inactive-16.png
+📄 复制文件: icons\icon-inactive-32.png -> verified-build\icons\icon-inactive-32.png
+📄 复制文件: icons\icon-inactive-48.png -> verified-build\icons\icon-inactive-48.png
+📄 复制文件: icons\icon-partial-128.png -> verified-build\icons\icon-partial-128.png
+📄 复制文件: icons\icon-partial-16.png -> verified-build\icons\icon-partial-16.png
+📄 复制文件: icons\icon-partial-32.png -> verified-build\icons\icon-partial-32.png
+📄 复制文件: icons\icon-partial-48.png -> verified-build\icons\icon-partial-48.png
+📁 创建目录: D:\pro\github\EasyCV\.tmp\dependency-remediation-clean-20261103\verified-build\_locales\
+📁 创建目录: D:\pro\github\EasyCV\.tmp\dependency-remediation-clean-20261103\verified-build\_locales\en
+📄 复制文件: _locales\en\messages.json -> verified-build\_locales\en\messages.json
+📁 创建目录: D:\pro\github\EasyCV\.tmp\dependency-remediation-clean-20261103\verified-build\_locales\zh_CN
+📄 复制文件: _locales\zh_CN\messages.json -> verified-build\_locales\zh_CN\messages.json
+==================================================
+✅ 构建完成!
+📦 版本: 1.1.2
+📁 输出目录: D:\pro\github\EasyCV\.tmp\dependency-remediation-clean-20261103\verified-build
+⏰ 构建时间: 2026-11-03T07:23:05.330Z
+✅ 打包完成: EasyCV-DEPENDENCY-TEST-ONLY.zip (135.55 KB)
+{"sha256":"abde4ba65db9ee6680d2511ea8ebf245712244c7e83238c98ffe5de13d98bc45","bytes":138802,"fileCount":38}

@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { spawnSync } = require('child_process');
 const Builder = require('./build');
 const Packager = require('./package');
 const Cleaner = require('./clean');
@@ -109,31 +110,24 @@ class Deployer {
    * 运行测试
    */
   async runTests() {
-    console.log('🧪 运行测试...');
-    
-    // 这里可以集成实际的测试框架
-    // 目前只是模拟测试过程
-    
-    const tests = [
-      { name: '代码语法检查', duration: 1000 },
-      { name: '功能单元测试', duration: 2000 },
-      { name: '集成测试', duration: 1500 }
-    ];
-    
-    for (const test of tests) {
-      process.stdout.write(`   ${test.name}... `);
-      await new Promise(resolve => setTimeout(resolve, test.duration));
-      console.log('✅ 通过');
+    const env = { ...process.env };
+    delete env.NODE_TEST_CONTEXT; // A nested invocation must run real child tests as well.
+    for (const [name, args] of [
+      ['syntax', ['scripts/lint.js']],
+      ['unit', ['--test', 'test/unit/*.test.mjs']],
+      ['docs', ['scripts/check-docs.js']]
+    ]) {
+      const result = spawnSync(process.execPath, args, { cwd: this.sourceDir, stdio: 'inherit', windowsHide: true, env });
+      if (result.error || result.status !== 0) throw Error(`${name} check failed (exit ${result.status})`);
     }
-    
-    console.log('✅ 所有测试通过');
+    console.log('Local checks passed; browser/upgrade acceptance: NOT_RUN');
   }
 
   /**
    * 生成部署报告
    */
   generateDeployReport(results) {
-    const reportPath = path.join(this.sourceDir, 'releases', 'deploy-report.json');
+    const reportPath = path.join(this.outputDir, 'deploy-report.json');
     
     const report = {
       deployTime: new Date().toISOString(),
@@ -143,10 +137,12 @@ class Deployer {
       packagePath: results.packagePath,
       packageSize: results.packageSize,
       steps: results.steps,
+      browserAcceptance: 'NOT_RUN',
+      storeReady: false,
       duration: results.duration
     };
     
-    fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
+    fs.writeFileSync(reportPath, JSON.stringify(report, null, 2), { flag: 'wx' });
     console.log(`📊 生成部署报告: ${path.relative(this.sourceDir, reportPath)}`);
     
     return reportPath;
@@ -157,6 +153,10 @@ class Deployer {
    */
   async deploy(options = {}) {
     const startTime = Date.now();
+    this.outputDir = fs.mkdtempSync(path.join(this.sourceDir, '.tmp-deploy-'));
+    this.builder.distDir = path.join(this.outputDir, 'dist');
+    this.packager.distDir = this.builder.distDir;
+    this.packager.outputDir = this.outputDir;
     const steps = [];
     const results = {
       buildSuccess: false,
@@ -194,12 +194,6 @@ class Deployer {
       
       // 获取版本信息
       results.version = this.versionManager.getCurrentVersion();
-      
-      // 清理旧文件
-      steps.push({ name: '清理构建', status: 'running', startTime: Date.now() });
-      await this.cleaner.clean();
-      steps[steps.length - 1].status = 'success';
-      steps[steps.length - 1].duration = Date.now() - steps[steps.length - 1].startTime;
       
       // 构建项目
       steps.push({ name: '项目构建', status: 'running', startTime: Date.now() });
@@ -252,7 +246,7 @@ class Deployer {
       results.duration = Date.now() - startTime;
       this.generateDeployReport(results);
       
-      process.exit(1);
+      throw error;
     }
   }
 
@@ -319,7 +313,7 @@ if (require.main === module) {
   }
   
   // 执行部署
-  deployer.deploy(options);
+  deployer.deploy(options).catch(() => { process.exitCode = 1; });
 }
 
 module.exports = Deployer;

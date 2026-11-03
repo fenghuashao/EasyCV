@@ -1,0 +1,141 @@
+{
+  "extensionPath": "D:\\pro\\github\\EasyCV\\.tmp\\i18n-20261103\\build-verified",
+  "results": [
+    {
+      "language": "en-US",
+      "expectedLocale": "en",
+      "checks": [
+        "native locale selection, manifest and every catalog message",
+        "popup static text, expanded help, advanced controls and 380px layout",
+        "translated status, copy check and feedback placeholders",
+        "all settings tabs, placeholders and 1024px/768px layouts",
+        "rule editing, validation messages, notification label and confirmation dialog",
+        "worker context menus and toolbar tooltip use selected translations"
+      ],
+      "popupSurface": "extension HTML tab, not native action popup",
+      "browserVersion": "149.0.7827.55",
+      "actualUILanguage": "en-US",
+      "documentLanguage": "en",
+      "pass": true
+    },
+    {
+      "language": "en-GB",
+      "expectedLocale": "en",
+      "checks": [
+        "native locale selection, manifest and every catalog message",
+        "popup static text, expanded help, advanced controls and 380px layout",
+        "translated status, copy check and feedback placeholders",
+        "all settings tabs, placeholders and 1024px/768px layouts",
+        "rule editing, validation messages, notification label and confirmation dialog",
+        "worker context menus and toolbar tooltip use selected translations"
+      ],
+      "popupSurface": "extension HTML tab, not native action popup",
+      "browserVersion": "149.0.7827.55",
+      "actualUILanguage": "en-GB",
+      "documentLanguage": "en",
+      "pass": true
+    },
+    {
+      "language": "zh-CN",
+      "expectedLocale": "zh_CN",
+      "checks": [
+        "native locale selection, manifest and every catalog message",
+        "popup static text, expanded help, advanced controls and 380px layout",
+        "translated status, copy check and feedback placeholders",
+        "all settings tabs, placeholders and 1024px/768px layouts",
+        "rule editing, validation messages, notification label and confirmation dialog",
+        "worker context menus and toolbar tooltip use selected translations"
+      ],
+      "popupSurface": "extension HTML tab, not native action popup",
+      "browserVersion": "149.0.7827.55",
+      "actualUILanguage": "zh-CN",
+      "documentLanguage": "zh-CN",
+      "pass": true
+    },
+    {
+      "language": "zh-TW",
+      "expectedLocale": "zh_TW",
+      "checks": [
+        "native locale selection, manifest and every catalog message",
+        "popup static text, expanded help, advanced controls and 380px layout",
+        "translated status, copy check and feedback placeholders",
+        "all settings tabs, placeholders and 1024px/768px layouts",
+        "rule editing, validation messages, notification label and confirmation dialog",
+        "worker context menus and toolbar tooltip use selected translations"
+      ],
+      "popupSurface": "extension HTML tab, not native action popup",
+      "browserVersion": "149.0.7827.55",
+      "actualUILanguage": "zh-TW",
+      "documentLanguage": "zh-TW",
+      "pass": true
+    },
+    {
+      "language": "zh-HK",
+      "expectedLocale": "zh_TW",
+      "checks": [
+        "native locale selection, manifest and every catalog message",
+        "popup static text, expanded help, advanced controls and 380px layout",
+        "translated status, copy check and feedback placeholders",
+        "all settings tabs, placeholders and 1024px/768px layouts",
+        "rule editing, validation messages, notification label and confirmation dialog",
+        "worker context menus and toolbar tooltip use selected translations"
+      ],
+      "popupSurface": "extension HTML tab, not native action popup",
+      "browserVersion": "149.0.7827.55",
+      "actualUILanguage": "zh-HK",
+      "documentLanguage": "zh-TW",
+      "pass": true
+    },
+    {
+      "language": "ja",
+      "expectedLocale": "ja",
+      "checks": [
+        "native locale selection, manifest and every catalog message",
+        "popup static text, expanded help, advanced controls and 380px layout",
+        "translated status, copy check and feedback placeholders",
+        "all settings tabs, placeholders and 1024px/768px layouts",
+        "rule editing, validation messages, notification label and confirmation dialog",
+        "worker context menus and toolbar tooltip use selected translations"
+      ],
+      "popupSurface": "extension HTML tab, not native action popup",
+      "browserVersion": "149.0.7827.55",
+      "actualUILanguage": "ja",
+      "documentLanguage": "ja",
+      "pass": true
+    },
+    {
+      "language": "ro",
+      "expectedLocale": "en",
+      "checks": [
+        "native locale selection, manifest and every catalog message",
+        "popup static text, expanded help, advanced controls and 380px layout",
+        "translated status, copy check and feedback placeholders",
+        "all settings tabs, placeholders and 1024px/768px layouts",
+        "rule editing, validation messages, notification label and confirmation dialog",
+        "worker context menus and toolbar tooltip use selected translations"
+      ],
+      "popupSurface": "extension HTML tab, not native action popup",
+      "browserVersion": "149.0.7827.55",
+      "actualUILanguage": "ro",
+      "documentLanguage": "en",
+      "pass": true
+    },
+    {
+      "language": "ar",
+      "expectedLocale": "en",
+      "checks": [
+        "native locale selection, manifest and every catalog message",
+        "popup static text, expanded help, advanced controls and 380px layout",
+        "translated status, copy check and feedback placeholders",
+        "all settings tabs, placeholders and 1024px/768px layouts",
+        "rule editing, validation messages, notification label and confirmation dialog",
+        "worker context menus and toolbar tooltip use selected translations"
+      ],
+      "popupSurface": "extension HTML tab, not native action popup",
+      "browserVersion": "149.0.7827.55",
+      "actualUILanguage": "ar",
+      "documentLanguage": "en",
+      "pass": true
+    }
+  ]
+}

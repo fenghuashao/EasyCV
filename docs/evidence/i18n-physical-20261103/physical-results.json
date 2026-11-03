@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-03",
+  "status": "PASS",
+  "environment": "Windows, Chromium 149.0.7827.55, Japanese UI, isolated profile",
+  "input": "sky native mouse coordinate clicks",
+  "debuggerAttached": false,
+  "popupOpenOrCloseAPIUsed": false,
+  "cycles": 2,
+  "toolbarClickOpens": "PASS",
+  "outsideClickDismisses": "PASS",
+  "fixtureReceivedOutsideClick": "PASS",
+  "reopenAfterDismissal": "PASS",
+  "identityDiagnosis": {
+    "originalAppId": "Chrome",
+    "originalBinding": "owner mismatch error",
+    "copiedProcessAppId": "process:<workspace>/.tmp/physical-browser-copy/easycv-native-test.exe",
+    "copiedProcessBinding": "PASS",
+    "binarySHA256": "b798f9e53a98d29eb7f36f8c409f905d3184780a04d2bcb56989067194784bd1",
+    "binaryUnmodified": true,
+    "interpretation": "Failure is associated with generic Chrome identity resolution; exact internal resolver defect not proven."
+  },
+  "productCodeChanged": false,
+  "globalToolsChanged": false,
+  "commitOrPublish": false
+}

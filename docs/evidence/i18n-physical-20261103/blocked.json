@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-03",
+  "status": "BLOCKED_TOOL",
+  "testWindowTitle": "EasyCV Physical Toolbar Test - Google Chrome for Testing",
+  "debuggerAttached": false,
+  "physicalClicksIssued": 0,
+  "toolbarClick": "NOT_RUN",
+  "outsideClickDismissal": "NOT_RUN",
+  "error": "window id 1378858 no longer belongs to Chrome; current owner is Chrome",
+  "attempts": [
+    "cua.listWindows found exact test window",
+    "cua.getApp({windowId:1378858}) rejected binding",
+    "prior sky get_window recovery returned the same owner mismatch"
+  ],
+  "productChanges": false,
+  "commitOrPublish": false
+}

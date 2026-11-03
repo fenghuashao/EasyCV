@@ -20,7 +20,7 @@
     "bump:patch": "node scripts/bump-version.js patch",
     "bump:minor": "node scripts/bump-version.js minor",
     "bump:major": "node scripts/bump-version.js major",
-    "release": "npm run clean && npm run build && npm run package",
+    "release": "node scripts/deploy.js",
     "deploy": "node scripts/deploy.js",
     "deploy:patch": "node scripts/deploy.js --bump patch",
     "deploy:minor": "node scripts/deploy.js --bump minor",
@@ -37,7 +37,7 @@
   "author": "EasyCV Team",
   "license": "MIT",
   "devDependencies": {
-    "archiver": "^5.3.2"
+    "yazl": "3.3.1"
   },
   "repository": {
     "type": "git",

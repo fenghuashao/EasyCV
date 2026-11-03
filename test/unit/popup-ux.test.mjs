@@ -162,8 +162,8 @@ test('Feedback opens the real issue draft without sending browsing URLs or brows
   assert.equal(url.searchParams.get('body').includes('1.1.2'), true);
 });
 
-for (const [statistics, expected] of [[{}, '—'], [{ totalAttempts: 5, successfulAttempts: 2 }, '40%']]) {
-  test(`Success-rate display uses measured attempts: ${JSON.stringify(statistics)}`, async () => {
+for (const [statistics, expected] of [[{}, '—'], [{ totalAttempts: 5, successfulAttempts: 2 }, '—']]) {
+  test(`Success-rate display stays unmeasured even with legacy counters: ${JSON.stringify(statistics)}`, async () => {
     const h = popup();
     h.elements.set('successRate', { textContent: '' });
     h.storage.getStatistics = async () => statistics;

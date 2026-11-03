@@ -1,0 +1,182 @@
+{
+  "status": "PASS",
+  "checkedRelativeLinks": 44,
+  "links": [
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "EASYCV-NEXT-VERSION-PLAN.md"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/preservation-final.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/package-verification.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/package-independent.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/clean-install-verification.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/build-package-final.txt"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "PRIVACY.md"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/w1-w6-local-20261103/regression-before.txt"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/unit-frozen-final.txt"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/syntax-frozen-final.txt"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/docs-final.txt"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/diff-check-scoped.txt"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/diff-check-final.txt"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/clean-install.txt"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/integrity-verification.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/audit-verification.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/audit-after.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/package-verification.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/package-independent.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/targeted-parallel-integration.txt"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/preservation-final.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/regression-before.txt"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/read-failure-debug.txt"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/frozen-tests-manifest.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/w1-w6-local-20261103/dependency-audit-after.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/w1-w6-local-20261103/dependency-fix-result.txt"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/audit-before.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/audit-after.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/bulk-before-response.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/bulk-after-response.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/bulk-payload-after.json"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/before-EASYCV-W1-W6-LOCAL-ACCEPTANCE.md"
+    },
+    {
+      "file": "EASYCV-W1-W6-LOCAL-ACCEPTANCE.md",
+      "target": "docs/evidence/dependency-remediation-20261103/parallel-release-test.diff"
+    },
+    {
+      "file": "CHANGELOG.md",
+      "target": "./EASYCV-W1-W6-LOCAL-ACCEPTANCE.md"
+    },
+    {
+      "file": "CHANGELOG.md",
+      "target": "./EASYCV-1.1.2-PERMISSION-FIX.md"
+    },
+    {
+      "file": "CHANGELOG.md",
+      "target": "./EASYCV-1.1.2-STATE-FIX-ACCEPTANCE.md"
+    },
+    {
+      "file": "docs/release-checklist.md",
+      "target": "../EASYCV-W1-W6-LOCAL-ACCEPTANCE.md"
+    },
+    {
+      "file": "docs/release-checklist.md",
+      "target": "../EASYCV-1.1.2-STATE-FIX-ACCEPTANCE.md"
+    },
+    {
+      "file": "docs/release-checklist.md",
+      "target": "../EASYCV-OPTIMIZATION-20261103.md"
+    },
+    {
+      "file": "docs/release-checklist.md",
+      "target": "../EASYCV-OPTIMIZATION-20261103.md"
+    },
+    {
+      "file": "docs/release-checklist.md",
+      "target": "./\u6d4b\u8bd5\u62a5\u544a-\u771f\u5b9e\u7ad9\u70b9\u56de\u5f52-2026-08-v2.md"
+    },
+    {
+      "file": "docs/release-checklist.md",
+      "target": "./\u5f85\u4fee\u590d\u4efb\u52a1\u6e05\u5355.md"
+    },
+    {
+      "file": "docs/release-checklist.md",
+      "target": "./API\u8bbe\u8ba1\u6587\u6863.md"
+    },
+    {
+      "file": "docs/release-checklist.md",
+      "target": "./\u7528\u6237\u4f7f\u7528\u624b\u518c.md"
+    }
+  ]
+}

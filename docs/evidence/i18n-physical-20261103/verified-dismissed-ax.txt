@@ -1,0 +1,67 @@
+Window: "EasyCV Physical Toolbar Test - Google Chrome for Testing", App: easycv-native-test.exe.
+	0 窗口 EasyCV Physical Toolbar Test - Google Chrome for Testing Secondary Actions: Raise
+		1 窗格 (disabled)
+		2 区域 EasyCV Physical Toolbar Test - Google Chrome for Testing
+			3 区域
+				4 区域
+					5 区域
+						6 按钮 最小化 ID: view_1
+						7 按钮 最大化 ID: view_2
+						8 按钮 閉じる ID: view_4
+					9 区域
+						10 区域
+						11 区域
+							12 工具栏 ID: view_1000
+								13 按钮 (disabled) 戻る ID: view_1001
+								14 按钮 (disabled) 進む ID: view_1002
+								15 按钮 再読み込み ID: view_1003
+								16 组
+									17 按钮 サイト情報を表示 ID: view_1011
+									18 编辑 (settable, string) アドレス検索バー Description: Google で検索または URL を入力 Value: 127.0.0.1:55393 ID: view_1012
+									19 区域
+										20 按钮 このタブをブックマークに追加します
+									21 区域
+								22 区域
+									103 按钮 EasyCV - 有効 このサイトへのアクセスが許可されています ID: view_1009
+									23 按钮 拡張機能はこのサイトで許可されています。メニューを開くには選択してください。 ID: view_1006
+								24 区域
+								25 按钮 あなた ID: view_1018
+								26 按钮 Chromium ID: view_1007
+							27 区域
+						28 区域
+							29 区域
+								30 区域
+									155 文档 EasyCV Physical Toolbar Test Value: http://127.0.0.1:55393/ ID: RootWebArea
+										168 组
+											156 标题 EasyCV physical popup test
+											157 按钮 Outside click received ID: outside
+											169 组
+												158 文本 Local fixture only.
+						37 组 情報バー コンテナ ID: view_1039
+							159 警报 情報バー Secondary Actions: Raise
+								160 区域
+								161 区域
+								162 区域
+									163 文本 すぐにブラウジングを開始: Windows の起動時に Chromium を自動で起動できるようになりました。
+									164 按钮 許可する
+								165 区域
+								166 区域
+									167 按钮 閉じる
+							43 区域
+						44 选项卡
+							45 区域
+								46 按钮 タブ検索
+							47 区域 ID: view_21
+								48 区域
+									49 选项卡项目 (selectable) EasyCV Physical Toolbar Test ID: view_20
+										50 按钮 閉じる
+								51 区域
+							52 按钮 新しいタブ
+							53 区域
+						54 区域
+
+Document text: ```
+EasyCV physical popup test
+Outside click received
+Local fixture only.
+```

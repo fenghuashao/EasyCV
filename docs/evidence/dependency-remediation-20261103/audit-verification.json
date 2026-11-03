@@ -1,0 +1,25 @@
+{
+  "recordedAt": "2026-11-03T07:26:23.309756+00:00",
+  "status": "PASS_OFFICIAL_BULK_ENDPOINT",
+  "endpoint": "https://registry.npmjs.org/-/npm/v1/security/advisories/bulk",
+  "method": "POST",
+  "transport": "curl.exe --fail; TLS verification enabled; exit 0",
+  "queryScope": "all packages and versions in package-lock.json, including dev dependencies",
+  "lockDependencyCount": 2,
+  "payloadMatchesLock": true,
+  "knownAdvisoryCount": 0,
+  "response": {},
+  "beforeResponseReproducesMinimatchAdvisory": true,
+  "removedAffectedChain": [
+    "archiver",
+    "archiver-utils",
+    "glob",
+    "minimatch",
+    "readdir-glob",
+    "zip-stream"
+  ],
+  "npmCliStatus": "TRANSPORT_FAILED_TLS; not reported as npm audit exit 0",
+  "payloadSHA256": "e7f38dadc37af83fff31527f25db2f0d88218ce119065ed4840310a41a41b7e6",
+  "responseSHA256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+  "lockSHA256": "892801d01749cca980e808695eaa2cf0659fefbd2f401d5a0807ab0b350a613b"
+}

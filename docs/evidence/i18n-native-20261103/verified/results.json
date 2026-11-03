@@ -1,0 +1,104 @@
+{
+  "results": [
+    {
+      "language": "en-US",
+      "checks": [
+        "native popup view, real active tab, locale and initial state",
+        "native dimensions, help expansion and scroll reachability",
+        "switch updates fixture and localized state",
+        "closing native view and reopening preserves state",
+        "native settings action opens options",
+        "unsupported browser page is explained in native popup"
+      ],
+      "opening": "chrome.action.openPopup()",
+      "currentTabOverride": false,
+      "dimensions": {
+        "width": 380,
+        "height": 500,
+        "scroll": 380
+      },
+      "pass": true,
+      "browserVersion": "149.0.7827.55"
+    },
+    {
+      "language": "zh-CN",
+      "checks": [
+        "native popup view, real active tab, locale and initial state",
+        "native dimensions, help expansion and scroll reachability",
+        "switch updates fixture and localized state",
+        "closing native view and reopening preserves state",
+        "native settings action opens options",
+        "unsupported browser page is explained in native popup"
+      ],
+      "opening": "chrome.action.openPopup()",
+      "currentTabOverride": false,
+      "dimensions": {
+        "width": 380,
+        "height": 500,
+        "scroll": 380
+      },
+      "pass": true,
+      "browserVersion": "149.0.7827.55"
+    },
+    {
+      "language": "ja",
+      "checks": [
+        "native popup view, real active tab, locale and initial state",
+        "native dimensions, help expansion and scroll reachability",
+        "switch updates fixture and localized state",
+        "closing native view and reopening preserves state",
+        "native settings action opens options",
+        "unsupported browser page is explained in native popup"
+      ],
+      "opening": "chrome.action.openPopup()",
+      "currentTabOverride": false,
+      "dimensions": {
+        "width": 380,
+        "height": 500,
+        "scroll": 380
+      },
+      "pass": true,
+      "browserVersion": "149.0.7827.55"
+    },
+    {
+      "language": "zh-TW",
+      "checks": [
+        "native popup view, real active tab, locale and initial state",
+        "native dimensions, help expansion and scroll reachability",
+        "switch updates fixture and localized state",
+        "closing native view and reopening preserves state",
+        "native settings action opens options",
+        "unsupported browser page is explained in native popup"
+      ],
+      "opening": "chrome.action.openPopup()",
+      "currentTabOverride": false,
+      "dimensions": {
+        "width": 380,
+        "height": 500,
+        "scroll": 380
+      },
+      "pass": true,
+      "browserVersion": "149.0.7827.55"
+    },
+    {
+      "language": "ro",
+      "checks": [
+        "native popup view, real active tab, locale and initial state",
+        "native dimensions, help expansion and scroll reachability",
+        "switch updates fixture and localized state",
+        "closing native view and reopening preserves state",
+        "native settings action opens options",
+        "unsupported browser page is explained in native popup"
+      ],
+      "opening": "chrome.action.openPopup()",
+      "currentTabOverride": false,
+      "dimensions": {
+        "width": 380,
+        "height": 500,
+        "scroll": 380
+      },
+      "pass": true,
+      "browserVersion": "149.0.7827.55"
+    }
+  ]
+}

@@ -7,6 +7,7 @@ class MessageUtils {
    * 消息类型常量
    */
   static MESSAGE_TYPES = {
+    STORAGE_MUTATION: 'storage_mutation',
     TOGGLE_PLUGIN: 'toggle_plugin',
     GET_STATUS: 'get_status',
     GET_PAGE_STATUS: 'GET_PAGE_STATUS',

@@ -1,5 +1,23 @@
 # EasyCV API设计文档
 
+## 国际化接口（2026-11-03，当前源码）
+
+`I18nUtils.t(key, substitutions?, fallback?)` 保持原签名；语言选择和缺失消息回退由原生 `chrome.i18n` 处理，manifest 默认语言为英文。资源目录为 `en`、`zh_CN`、`ja`、`zh_TW`。
+
+`I18nUtils.applyToPage(root = document)` 支持 `data-i18n`、`data-i18n-placeholder`、`data-i18n-title` 与新增的 `data-i18n-aria-label`。其中 `ui_language` 是译文包自己的 BCP 47 标签；HTML `lang` 使用该值，避免未支持语言回退英文时与实际内容不一致。当前四种语言统一使用从左到右的布局。
+
+## W1–W6 当前存储契约（2026-11-03）
+
+当前实现以 `utils/storage-utils.js` 与 [验收报告](../EASYCV-W1-W6-LOCAL-ACCEPTANCE.md) 为准。下文旧接口示例中的自动域名历史与 sync 统计不再适用。
+
+- Popup/Options 的 StorageUtils 写入经 `storage_mutation` 发送到 worker；worker 校验扩展页面发送者后，和 StateManager 一起进入单一串行队列。内容页无此通用写权限。
+- sync 为配置权威；缺键才读取保留的旧 local 副本。sync 读失败报告状态不可确认，写失败不回退成 local 成功。`getRecoveryData` / `restoreLocalSettings` 支持显式恢复。
+- `addToAutoEnableList`、`replaceAutoEnableRule`、`removeFromAutoEnableList` 从队列中的最新名单执行操作。站点精确规则优先，`*.example.com` 只匹配子域；旧字符串在读取时规范化，不自动覆盖原值。
+- `exportSettings` 返回 `schemaVersion:1` 的设置/名单/排除格式；旧文件无 schemaVersion 仍可导入。`importConfiguration` 先整体验证，再单次 sync.set；本机恢复导出使用 `{schemaVersion:1,kind:'easycv-local-recovery',configuration:{...原键}}`，导入时只覆盖包含的键。
+- `recordDiagnostic` / `recordActivation` 写 local；后者尊重 enableStatistics=false。`migratePrivateData` 先备份/脱敏并校验，再清理旧 sync 键；失败可重试，`hasPendingPrivacyMigration` 供 UI 提示。
+- `GET_STATUS` 失败明确返回 success:false；内容脚本休眠，后续通知重新取权威状态。变化广播只携带变化键或请求 ID，不携带完整配置或诊断。
+
+
 ## 📋 文档概述
 
 **项目名称**: EasyCV - 解除网页复制粘贴限制插件  

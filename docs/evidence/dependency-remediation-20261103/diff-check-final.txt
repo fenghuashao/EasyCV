@@ -1,0 +1,8 @@
+warning: in the working copy of '_locales/en/messages.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of '_locales/zh_CN/messages.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'options/options.html', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'popup/popup.html', CRLF will be replaced by LF the next time Git touches it
+docs/EasyCV插件功能需求文档 .txt:6: trailing whitespace.
++* 当前源码支持英文、简体中文、日语、繁体中文，跟随浏览器界面语言；未支持语言回退英文，其他语言暂缓。帮助为本地四语言指南，不使用联网翻译。
+docs/EasyCV插件功能需求文档 .txt:7: trailing whitespace.
++* 反馈打开 GitHub 待编辑草稿；仅预填扩展版本，网站/复现步骤由用户填写并自行提交。下文 4.3 自动附带页面 URL 和提交后自动感谢的早期设想不适用于当前流程。

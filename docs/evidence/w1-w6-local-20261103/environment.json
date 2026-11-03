@@ -1,0 +1,6 @@
+{
+  "node": "v24.21.0",
+  "platform": "win32",
+  "arch": "x64",
+  "python": "3.9.12"
+}

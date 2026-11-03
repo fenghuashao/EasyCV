@@ -1,0 +1,204 @@
+{
+  "fixture": "D:\\pro\\github\\EasyCV\\.tmp\\dependency-remediation-clean-20261103",
+  "files": [
+    {
+      "path": "scripts/bump-version.js",
+      "sha256": "6c7629f1e0ad4cb3e5b7e3a9176b99ed4687f5e615d18d374907f982e96bf2e9",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "scripts/check-docs.js",
+      "sha256": "9a08a35ea6e91a4261f768d555ddfb5817406966a69f70830f5df309717abf4f",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "scripts/deploy.js",
+      "sha256": "cbb27bd8cb78b5cbe4c8c54409f78a82176fcc894b3ec880dc86fde71adcad62",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "scripts/lint.js",
+      "sha256": "31e94b089b2565648b35162e8ed797cf38710dd4476de367da63c43143b947b7",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "test/unit/content-allowdefault.test.mjs",
+      "sha256": "3e8b20a91849a99d737cbeb45856a5c552c435a1c130d763e30b3c95a7e99976",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "test/unit/content-exclusion.test.mjs",
+      "sha256": "6e393e29b0403c8cf244f1babc421fd1554ff966f50efd6c77002c6f6e59f4f2",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "test/unit/docs-check.test.mjs",
+      "sha256": "ac523e24cb45fe2638214cc90bebcb8b0dfa66881080eaeca4bb9e46b576dc20",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "test/unit/helpers/content-harness.mjs",
+      "sha256": "be6b77b765ff330aba01d3f3d01b92bbd43b44782e08324fd19e950dbd1d9099",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "test/unit/helpers/injector-harness.mjs",
+      "sha256": "fe4503049e3bb27329a0d8f6532fba1e94744fa9bd79da134b65aa6f4084c96d",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "test/unit/helpers/reliability-harness.mjs",
+      "sha256": "87ad8c7498dc2f103990e6b3fa219fff4d6e1e1010ffbfd1a6c9161ff11cc5d8",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "test/unit/injector-neutralize.test.mjs",
+      "sha256": "14604c5ac48dd65ad220d4e3afec583421fd53c6bea3ed9e0ba6283405897a1f",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "test/unit/injector-robustness.test.mjs",
+      "sha256": "76cca5c8a799048021914dbef023995ebacdc541cd3f0a8143810aed6ccb6670",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "test/unit/popup-ux.test.mjs",
+      "sha256": "0b31f38da1b72b3434e29a6fc1be1660251db49336369ab124a18d64e95cc5a8",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "test/unit/release-checks.test.mjs",
+      "sha256": "a66921e67e34fab31c5c0cb4d68a472d425be5be6de0e18c607792fc324c1556",
+      "matchesTaskBaseline": false
+    },
+    {
+      "path": "test/unit/reliability.test.mjs",
+      "sha256": "ee99824ff0ca94e93cebd8117905d017567a6b7f4055984f9b9d93f9cfc845d5",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "test/unit/smoke.test.mjs",
+      "sha256": "5dbd4a223324013299ad716ef3c42b790a8bf52f516d2d7b8d8f25b904045eb7",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "test/unit/state-sync.test.mjs",
+      "sha256": "9bb856ca75bb8e5880873660a7b45fb12589842a7238ddf7690e846e618d3b42",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "test/unit/storage-exclusion.test.mjs",
+      "sha256": "245818b63ab901301182329fc7c9b8c41142e2282ad307cd32f813eca6c15c42",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "test/unit/package-dependency.test.mjs",
+      "sha256": "764d7a679ca85cb399bb41a267114db746a20239e3bf4434316535f9d59f496a",
+      "matchesTaskBaseline": false
+    },
+    {
+      "path": "scripts/clean.js",
+      "sha256": "8f151a237da1ab18ceb6a0c5d63582318165b716d7211d02a1e11b0624b3be4f",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "scripts/docs-check-baseline.json",
+      "sha256": "7c7e0fd5f968795ab1bee17caccf9ba6d78f465250be7ed059a825141deb070c",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "scripts/generate-icons.js",
+      "sha256": "a5f7b4d5baee5349e0ea00e48d077468e0ec4bc9136937d5fc33e8633e93d452",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "scripts/quick-package.js",
+      "sha256": "b22890a7789059a7f9eb6df47b8243baa6347df31f95a7b6af989d1f67fcee4e",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "scripts/screenshot-popup.js",
+      "sha256": "1e9bb386729fb8b08aebacd4599c26e8a200018c5539fed1d42a152133046f17",
+      "matchesTaskBaseline": true
+    },
+    {
+      "path": "test/e2e-extension.mjs",
+      "sha256": "158967c9f08b8cbb8d754130e8f0a66c2d856c436df59fa803ede50af78e07fd",
+      "matchesTaskBaseline": true,
+      "verification": "SYNTAX_ONLY; browser scripts were not executed"
+    },
+    {
+      "path": "test/permission-regression.mjs",
+      "sha256": "8cda7953520b6ca319cc00b1c10b76295652cc2fa81f2a1c5038a1a18df8e6e4",
+      "matchesTaskBaseline": true,
+      "verification": "SYNTAX_ONLY; browser scripts were not executed"
+    },
+    {
+      "path": "test/popup-ux-regression.mjs",
+      "sha256": "658f55c97f776d0c5b8b044cff48c35125ba3ee56e1089db96c25c89cd6a7010",
+      "matchesTaskBaseline": true,
+      "verification": "SYNTAX_ONLY; browser scripts were not executed"
+    },
+    {
+      "path": "test/real-sites/bilibili-contextmenu.mjs",
+      "sha256": "59eabe08e2f393dd01d7c2228c34649c62d196bc94e96f8462b6e7e5e2cb8c76",
+      "matchesTaskBaseline": true,
+      "verification": "SYNTAX_ONLY; browser scripts were not executed"
+    },
+    {
+      "path": "test/real-sites/doc88-rootcause.mjs",
+      "sha256": "22de85e824201d52c0249185f4141c40be8391a6cadc597bde22f39a81e40268",
+      "matchesTaskBaseline": true,
+      "verification": "SYNTAX_ONLY; browser scripts were not executed"
+    },
+    {
+      "path": "test/real-sites/lib/context.mjs",
+      "sha256": "9509be3824766ff00f28c999834cbab85dea1fdaff865bcacd9782484082946a",
+      "matchesTaskBaseline": true,
+      "verification": "SYNTAX_ONLY; browser scripts were not executed"
+    },
+    {
+      "path": "test/real-sites/real-sites-exclusion.mjs",
+      "sha256": "9525eee715fe74d63d9c4a10b72258088fe8d0357b0f8644f138340968551231",
+      "matchesTaskBaseline": true,
+      "verification": "SYNTAX_ONLY; browser scripts were not executed"
+    },
+    {
+      "path": "test/real-sites/real-sites-login.mjs",
+      "sha256": "d0f3c899e106f029102e91d859dbf56fbce7cb4ad32c6242a8c0c4c822c85372",
+      "matchesTaskBaseline": true,
+      "verification": "SYNTAX_ONLY; browser scripts were not executed"
+    },
+    {
+      "path": "test/real-sites/real-sites-probes.mjs",
+      "sha256": "aa38c590bd4d1be6db46a4322f2a3c6e0ce4dbfe52e74d1493e494cfe7a4b5f0",
+      "matchesTaskBaseline": true,
+      "verification": "SYNTAX_ONLY; browser scripts were not executed"
+    },
+    {
+      "path": "test/real-sites/real-sites-regression.mjs",
+      "sha256": "20822ddd3b210b263ff5db25997c079092b442f1d2aaa6266b3eca5f1b953308",
+      "matchesTaskBaseline": true,
+      "verification": "SYNTAX_ONLY; browser scripts were not executed"
+    },
+    {
+      "path": "test/real-sites/real-sites-retry.mjs",
+      "sha256": "3a324071ec0e7e56a666633e62fb3ef75f23ecb8f524439d3715500ddf95540e",
+      "matchesTaskBaseline": true,
+      "verification": "SYNTAX_ONLY; browser scripts were not executed"
+    },
+    {
+      "path": "test/state-sync-regression.mjs",
+      "sha256": "3adcfa73c21d1cba3786f314a053e357e8cad526f6d974b34fc3549b7c0d14f2",
+      "matchesTaskBaseline": true,
+      "verification": "SYNTAX_ONLY; browser scripts were not executed"
+    },
+    {
+      "path": "test/static-server.mjs",
+      "sha256": "3b46529ce0ae9e86b88a78836133b6013d0368894287cf15535026bfcae87053",
+      "matchesTaskBaseline": true,
+      "verification": "SYNTAX_ONLY; browser scripts were not executed"
+    }
+  ],
+  "scope": "Baseline tests plus the six dependency regressions; concurrent UI tests excluded"
+}

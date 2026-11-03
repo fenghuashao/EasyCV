@@ -1,0 +1,5 @@
+
+> easycv@1.1.2 lint
+> node scripts/lint.js
+
+✅ 55 个文件语法检查通过

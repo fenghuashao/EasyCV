@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "registry": "https://registry.npmjs.org",
+  "packages": [
+    {
+      "name": "yazl",
+      "version": "3.3.1",
+      "officialIntegrityMatch": true,
+      "integrity": "sha512-BbETDVWG+VcMUle37k5Fqp//7SDOK2/1+T7X8TD96M3D9G8jK5VLUdQVdVjGi8im7FGkazX7kk5hkU8X4L5Bng=="
+    },
+    {
+      "name": "buffer-crc32",
+      "version": "1.0.0",
+      "officialIntegrityMatch": true,
+      "integrity": "sha512-Db1SbgBS/fg/392AblrMJk97KggmvYhr4pB5ZIMTWtaivCPMWLkmb7m21cJvpvgK+J3nsU2CmmixNBZx4vFj/w=="
+    }
+  ]
+}

@@ -1,479 +1,290 @@
-/**
- * 存储工具类
- * 处理插件的数据存储和同步
- */
+/** Existing setting keys, one background mutation queue, no silent sync/local fork. */
 class StorageUtils {
-  /**
-   * 存储键名常量
-   */
   static STORAGE_KEYS = {
-    PLUGIN_ENABLED: 'plugin_enabled',
-    FORCE_MODE: 'force_mode',
-    AUTO_ENABLE_LIST: 'auto_enable_list',
-    EXCLUDED_LIST: 'excluded_list',
-    USER_SETTINGS: 'user_settings',
-    STATISTICS: 'statistics',
-    LAST_UPDATE: 'last_update',
-    INTERACTION_HISTORY: 'interaction_history'
+    PLUGIN_ENABLED: 'plugin_enabled', FORCE_MODE: 'force_mode', AUTO_ENABLE_LIST: 'auto_enable_list',
+    EXCLUDED_LIST: 'excluded_list', USER_SETTINGS: 'user_settings', STATISTICS: 'statistics',
+    LAST_UPDATE: 'last_update', INTERACTION_HISTORY: 'interaction_history'
   };
-
-  /**
-   * 默认设置
-   */
   static DEFAULT_SETTINGS = {
-    pluginEnabled: true,
-    forceMode: false,
-    autoEnableList: [],
-    // 敏感账号登录页默认排除：injector 的原型重写暴露面不应覆盖高价值账号页
-    // （依据 docs/测试报告-真实站点回归-2026-08.md R5）
+    pluginEnabled: true, forceMode: false, autoEnableList: [],
     excludedList: ['accounts.google.com', 'login.live.com', 'appleid.apple.com'],
-    showNotifications: true,
-    enableStatistics: true,
-    theme: 'auto',
-    copyEnabled: true,
-    pasteEnabled: true
+    showNotifications: true, enableStatistics: true, theme: 'auto', copyEnabled: true, pasteEnabled: true
   };
+  static CONFIG_KEYS = ['plugin_enabled', 'force_mode', 'user_settings', 'auto_enable_list', 'excluded_list'];
+  static mutationHost = false;
+  static mutationQueue = Promise.resolve();
+  static configureMutationHost() { this.mutationHost = true; }
 
-  /**
-   * 获取存储数据
-   * @param {string|Array<string>} keys - 存储键名
-   * @returns {Promise<Object>} 存储数据
-   */
   static async get(keys) {
-    try {
-      if (typeof keys === 'string') {
-        keys = [keys];
-      }
-
-      const result = await chrome.storage.sync.get(keys);
-      return result;
-    } catch (error) {
-      console.error('Failed to get storage data:', error);
-      // 降级到本地存储
-      return await chrome.storage.local.get(keys);
+    const names = typeof keys === 'string' ? [keys] : keys;
+    let sync;
+    try { sync = await chrome.storage.sync.get(names); }
+    catch (error) { throw new Error('Authoritative settings unavailable'); }
+    const missing = names.filter(key => this.CONFIG_KEYS.includes(key) && !Object.hasOwn(sync, key));
+    if (missing.length) {
+      const local = await chrome.storage.local.get(missing);
+      for (const key of missing) if (Object.hasOwn(local, key)) sync[key] = local[key];
     }
+    return sync;
   }
-
-  /**
-   * 设置存储数据
-   * @param {Object} data - 要存储的数据
-   * @returns {Promise<void>}
-   */
-  static async set(data) {
-    try {
-      await chrome.storage.sync.set(data);
-    } catch (error) {
-      console.error('Failed to set sync storage, falling back to local:', error);
-      // 降级到本地存储
-      await chrome.storage.local.set(data);
+  static async mutate(operation, data = {}) {
+    if (!this.mutationHost && typeof window !== 'undefined' && chrome.runtime?.sendMessage) {
+      const response = await chrome.runtime.sendMessage({ type: 'storage_mutation', data: { operation, data } });
+      if (!response?.success) throw new Error('Settings could not be saved');
+      return response.data;
     }
+    const pending = this.mutationQueue.then(() => this.executeMutation(operation, data));
+    this.mutationQueue = pending.catch(() => {});
+    return pending;
   }
-
-  /**
-   * 删除存储数据
-   * @param {string|Array<string>} keys - 要删除的键名
-   * @returns {Promise<void>}
-   */
-  static async remove(keys) {
-    try {
-      await chrome.storage.sync.remove(keys);
-    } catch (error) {
-      console.error('Failed to remove from sync storage:', error);
-      await chrome.storage.local.remove(keys);
-    }
-  }
-
-  /**
-   * 清空所有存储数据
-   * @returns {Promise<void>}
-   */
-  static async clear() {
-    try {
+  static async executeMutation(operation, data) {
+    if (operation === 'clear') {
       await chrome.storage.sync.clear();
       await chrome.storage.local.clear();
-    } catch (error) {
-      console.error('Failed to clear storage:', error);
+      return;
     }
-  }
-
-  /**
-   * 获取插件启用状态
-   * @returns {Promise<boolean>} 是否启用
-   */
-  static async getPluginEnabled() {
-    const result = await this.get(this.STORAGE_KEYS.PLUGIN_ENABLED);
-    return result[this.STORAGE_KEYS.PLUGIN_ENABLED] ?? this.DEFAULT_SETTINGS.pluginEnabled;
-  }
-
-  /**
-   * 设置插件启用状态
-   * @param {boolean} enabled - 是否启用
-   * @returns {Promise<void>}
-   */
-  static async setPluginEnabled(enabled) {
-    await this.set({ [this.STORAGE_KEYS.PLUGIN_ENABLED]: enabled });
-  }
-
-  /**
-   * 获取强力模式状态
-   * @returns {Promise<boolean>} 是否启用强力模式
-   */
-  static async getForceMode() {
-    const result = await this.get(this.STORAGE_KEYS.FORCE_MODE);
-    return result[this.STORAGE_KEYS.FORCE_MODE] ?? this.DEFAULT_SETTINGS.forceMode;
-  }
-
-  /**
-   * 设置强力模式状态
-   * @param {boolean} enabled - 是否启用强力模式
-   * @returns {Promise<void>}
-   */
-  static async setForceMode(enabled) {
-    await this.set({ [this.STORAGE_KEYS.FORCE_MODE]: enabled });
-  }
-
-  /**
-   * 获取自动启用列表
-   * @returns {Promise<Array<Object>>} 域名配置列表
-   */
-  static async getAutoEnableList() {
-    const result = await this.get(this.STORAGE_KEYS.AUTO_ENABLE_LIST);
-    const list = result[this.STORAGE_KEYS.AUTO_ENABLE_LIST] ?? this.DEFAULT_SETTINGS.autoEnableList;
-
-    // 兼容旧版本的字符串数组格式
-    if (list.length > 0 && typeof list[0] === 'string') {
-      return list.map(domain => ({
-        domain,
-        copyEnabled: true,
-        pasteEnabled: true
-      }));
+    if (operation === 'remove') return chrome.storage.sync.remove(data);
+    if (operation === 'privacy') return this.migratePrivateDataNow();
+    if (operation === 'diagnostic') {
+      await this.migratePrivateDataNow();
+      const { errorReports = [] } = await chrome.storage.local.get(['errorReports']);
+      const reports = Array.isArray(errorReports) ? errorReports : [];
+      const entry = { code: 'CONTENT_OPERATION_FAILED', module: 'content', timestamp: new Date().toISOString(),
+        version: chrome.runtime?.getManifest?.().version || 'unknown' };
+      await chrome.storage.local.set({ errorReports: [...reports, entry].slice(-10) });
+      return;
     }
-
-    return list;
-  }
-
-  /**
-   * 添加域名到自动启用列表
-   * @param {string|Object} domainOrConfig - 域名字符串或配置对象
-   * @param {boolean} copyEnabled - 是否启用复制（当第一个参数为字符串时使用）
-   * @param {boolean} pasteEnabled - 是否启用粘贴（当第一个参数为字符串时使用）
-   * @returns {Promise<void>}
-   */
-  static async addToAutoEnableList(domainOrConfig, copyEnabled = true, pasteEnabled = true) {
-    const list = await this.getAutoEnableList();
-
-    let config;
-    if (typeof domainOrConfig === 'string') {
-      config = {
-        domain: domainOrConfig,
-        copyEnabled,
-        pasteEnabled
-      };
-    } else {
-      config = domainOrConfig;
+    if (operation === 'activation') {
+      if ((await this.getUserSettings()).enableStatistics === false) return;
+      await this.migratePrivateDataNow();
+      const stats = await this.getStatistics();
+      const today = new Date().toDateString();
+      await chrome.storage.local.set({ statistics: { totalActivations: stats.totalActivations + 1,
+        todayUsage: stats.lastUsedDate === today ? stats.todayUsage + 1 : 1, lastUsedDate: today } });
+      return;
     }
-
-    // 检查是否已存在该域名
-    const existingIndex = list.findIndex(item => item.domain === config.domain);
-    if (existingIndex === -1) {
-      list.push(config);
-      await this.set({ [this.STORAGE_KEYS.AUTO_ENABLE_LIST]: list });
+    let updates = {};
+    if (operation === 'set') updates = data;
+    else if (operation === 'settings' || operation === 'state') {
+      this.validateSettings(data.userSettings || (operation === 'settings' ? data : {}));
+      const settings = operation === 'settings' ? { ...data } : { ...data.userSettings };
+      for (const key of ['copyEnabled', 'pasteEnabled']) if (Object.hasOwn(data, key)) settings[key] = data[key];
+      const allowed = ['copyEnabled', 'pasteEnabled', 'showNotifications', 'enableStatistics', 'theme', 'autoDetect', 'debugMode', 'performanceMonitoring', 'autoAddToWhitelist', 'detectionDelay', 'maxRetries'];
+      for (const key of Object.keys(settings)) if (!allowed.includes(key)) delete settings[key];
+      delete settings.enabled; delete settings.forceMode; delete settings.pluginEnabled;
+      if (Object.keys(settings).length) updates.user_settings = { ...await this.getUserSettings(), ...settings };
+      if (Object.hasOwn(data, 'enabled')) updates.plugin_enabled = data.enabled;
+      if (Object.hasOwn(data, 'pluginEnabled')) updates.plugin_enabled = data.pluginEnabled;
+      if (Object.hasOwn(data, 'forceMode')) updates.force_mode = data.forceMode;
+      if (Object.hasOwn(data, 'autoEnableList')) updates.auto_enable_list = data.autoEnableList;
+    } else if (['addRule', 'replaceRule', 'removeRule'].includes(operation)) {
+      const list = await this.getAutoEnableList();
+      const oldDomain = this.normalizeDomain(data.originalDomain || data.domain, true);
+      const index = list.findIndex(item => item.domain === oldDomain);
+      if (operation === 'removeRule') updates.auto_enable_list = list.filter(item => item.domain !== oldDomain);
+      else {
+        const rule = this.normalizeAutoEnableList([data.rule])[0];
+        if (operation === 'replaceRule' && index < 0) throw new Error('Rule changed; reload before editing');
+        const duplicate = list.findIndex(item => item.domain === rule.domain);
+        if (duplicate >= 0 && (operation === 'addRule' || duplicate !== index)) {
+          if (operation === 'addRule') return list;
+          throw new Error('Domain already exists');
+        }
+        if (operation === 'replaceRule') list[index] = { ...list[index], ...rule };
+        else list.push(rule);
+        updates.auto_enable_list = list;
+      }
+    } else if (operation === 'addExcluded' || operation === 'removeExcluded') {
+      const list = await this.getExcludedList();
+      const domain = this.normalizeDomain(data.domain);
+      updates.excluded_list = operation === 'removeExcluded' ? list.filter(item => item !== domain) : [...new Set([...list, domain])];
+    } else if (operation === 'import' || operation === 'restoreLocal') {
+      if (operation === 'restoreLocal') {
+        updates = this.validateConfigurationKeys(await chrome.storage.local.get(this.CONFIG_KEYS));
+        if (updates.user_settings) updates.user_settings = { ...await this.getUserSettings(), ...updates.user_settings };
+      } else if (data?.kind === 'easycv-local-recovery') {
+        this.validateJSON(data);
+        if (data.schemaVersion !== 1) throw new Error('Unsupported recovery schema');
+        updates = this.validateConfigurationKeys(data.configuration);
+        if (updates.user_settings) updates.user_settings = { ...await this.getUserSettings(), ...updates.user_settings };
+      } else {
+        this.validateJSON(data);
+        if (data.schemaVersion !== undefined && data.schemaVersion !== 1) throw new Error('Unsupported settings schema');
+        if (!data.settings || !Array.isArray(data.whitelist)) throw new Error('Invalid settings file');
+        this.validateSettings(data.settings);
+        const { enabled, pluginEnabled, forceMode, ...settings } = data.settings;
+        updates.user_settings = { ...await this.getUserSettings(), ...settings };
+        if (enabled !== undefined || pluginEnabled !== undefined) updates.plugin_enabled = enabled ?? pluginEnabled;
+        if (forceMode !== undefined) updates.force_mode = forceMode;
+        updates.auto_enable_list = this.normalizeAutoEnableList(data.whitelist);
+        if (Object.hasOwn(data, 'excludedList')) updates.excluded_list = this.normalizeExcludedList(data.excludedList);
+      }
+    } else throw new Error('Unknown settings operation');
+    updates = this.validateConfigurationKeys(updates);
+    await chrome.storage.sync.set(updates);
+    return updates;
+  }
+  static validateJSON(data) {
+    if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Invalid settings object');
+    if (JSON.stringify(data).length > 1000000) throw new Error('Settings file is too large');
+    const inspect = (value, depth = 0) => {
+      if (depth > 20) throw new Error('Settings nesting is too deep');
+      if (value && typeof value === 'object') for (const [key, item] of Object.entries(value)) {
+        if (['__proto__', 'prototype', 'constructor'].includes(key)) throw new Error('Invalid settings key');
+        inspect(item, depth + 1);
+      }
+    };
+    inspect(data);
+  }
+  static validateSettings(settings) {
+    this.validateJSON(settings);
+    for (const key of ['enabled', 'pluginEnabled', 'forceMode', 'copyEnabled', 'pasteEnabled', 'showNotifications',
+      'enableStatistics', 'autoDetect', 'debugMode', 'performanceMonitoring', 'autoAddToWhitelist']) {
+      if (Object.hasOwn(settings, key) && typeof settings[key] !== 'boolean') throw new Error('Invalid setting: ' + key);
     }
-  }
-
-  /**
-   * 从自动启用列表移除域名
-   * @param {string} domain - 域名
-   * @returns {Promise<void>}
-   */
-  static async removeFromAutoEnableList(domain) {
-    const list = await this.getAutoEnableList();
-    const index = list.findIndex(item => item.domain === domain);
-    if (index > -1) {
-      list.splice(index, 1);
-      await this.set({ [this.STORAGE_KEYS.AUTO_ENABLE_LIST]: list });
+    for (const [key, max] of [['detectionDelay', 60000], ['maxRetries', 100]]) {
+      if (Object.hasOwn(settings, key) && (!Number.isInteger(settings[key]) || settings[key] < 0 || settings[key] > max)) throw new Error('Invalid setting: ' + key);
     }
+    if (Object.hasOwn(settings, 'theme') && !['auto', 'light', 'dark'].includes(settings.theme)) throw new Error('Invalid theme');
   }
-
-  /**
-   * 更新自动启用列表中域名的配置
-   * @param {string} domain - 域名
-   * @param {boolean} copyEnabled - 是否启用复制
-   * @param {boolean} pasteEnabled - 是否启用粘贴
-   * @returns {Promise<void>}
-   */
-  static async updateAutoEnableConfig(domain, copyEnabled, pasteEnabled) {
-    const list = await this.getAutoEnableList();
-    const index = list.findIndex(item => item.domain === domain);
-    if (index > -1) {
-      list[index].copyEnabled = copyEnabled;
-      list[index].pasteEnabled = pasteEnabled;
-      await this.set({ [this.STORAGE_KEYS.AUTO_ENABLE_LIST]: list });
-    }
+  static normalizeDomain(value, wildcard = false) {
+    if (typeof value !== 'string') throw new Error('Invalid domain');
+    const domain = value.trim().toLowerCase();
+    const host = wildcard && domain.startsWith('*.') ? domain.slice(2) : domain;
+    if (!host || host.length > 253 || !host.split('.').every(label => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(label))) throw new Error('Invalid domain');
+    return domain;
   }
-
-  /**
-   * 获取特定域名的自动启用配置
-   * @param {string} domain - 域名
-   * @returns {Promise<Object|null>} 配置对象或null
-   */
-  static async getAutoEnableConfig(domain) {
-    const list = await this.getAutoEnableList();
-    return list.find(item => item.domain === domain) || null;
+  static normalizeAutoEnableList(list) {
+    if (!Array.isArray(list) || list.length > 1000) throw new Error('Invalid site list');
+    const seen = new Set();
+    return list.map(value => {
+      const item = typeof value === 'string' ? { domain: value, copyEnabled: true, pasteEnabled: true } : value;
+      this.validateJSON(item);
+      const domain = this.normalizeDomain(item.domain, true);
+      if (seen.has(domain) || typeof item.copyEnabled !== 'boolean' || typeof item.pasteEnabled !== 'boolean') throw new Error('Invalid or duplicate site rule');
+      seen.add(domain);
+      return { ...item, domain };
+    });
   }
-
-  /**
-   * 设置自动启用列表（静态方法）
-   * @param {Array<Object>} list - 域名配置列表
-   * @returns {Promise<void>}
-   */
-  static async setAutoEnableList(list) {
-    await StorageUtils.set({ [StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: list });
+  static normalizeExcludedList(list) {
+    if (!Array.isArray(list) || list.length > 1000) throw new Error('Invalid excluded list');
+    return [...new Set(list.map(domain => this.normalizeDomain(domain)))];
   }
-
-  /**
-   * 获取站点排除列表
-   * 键缺席时回落到默认敏感域名；用户清空（存入空数组）则尊重用户选择
-   * @returns {Promise<Array<string>>} 域名列表
-   */
-  static async getExcludedList() {
-    const result = await this.get(this.STORAGE_KEYS.EXCLUDED_LIST);
-    const list = result[this.STORAGE_KEYS.EXCLUDED_LIST] ?? this.DEFAULT_SETTINGS.excludedList;
-    return Array.isArray(list) ? list : [];
+  static validateConfigurationKeys(data) {
+    this.validateJSON(data);
+    const result = { ...data };
+    for (const key of Object.keys(result)) if (!this.CONFIG_KEYS.includes(key)) throw new Error('Invalid configuration key');
+    for (const key of ['plugin_enabled', 'force_mode']) if (Object.hasOwn(result, key) && typeof result[key] !== 'boolean') throw new Error('Invalid switch');
+    if (Object.hasOwn(result, 'user_settings')) this.validateSettings(result.user_settings);
+    if (Object.hasOwn(result, 'auto_enable_list')) result.auto_enable_list = this.normalizeAutoEnableList(result.auto_enable_list);
+    if (Object.hasOwn(result, 'excluded_list')) result.excluded_list = this.normalizeExcludedList(result.excluded_list);
+    return result;
   }
-
-  /**
-   * 添加域名到站点排除列表
-   * @param {string} domain - 域名
-   * @returns {Promise<void>}
-   */
-  static async addToExcludedList(domain) {
-    const list = await this.getExcludedList();
-    if (!list.includes(domain)) {
-      list.push(domain);
-      await this.set({ [this.STORAGE_KEYS.EXCLUDED_LIST]: list });
-    }
+  static matchAutoEnableRule(domain, list) {
+    const host = this.normalizeDomain(domain);
+    const rules = this.normalizeAutoEnableList(list);
+    return rules.find(item => item.domain === host) || rules.filter(item => item.domain.startsWith('*.') && host.endsWith('.' + item.domain.slice(2)))
+      .sort((a, b) => b.domain.length - a.domain.length)[0] || null;
   }
-
-  /**
-   * 从站点排除列表移除域名
-   * @param {string} domain - 域名
-   * @returns {Promise<void>}
-   */
-  static async removeFromExcludedList(domain) {
-    const list = await this.getExcludedList();
-    const index = list.indexOf(domain);
-    if (index > -1) {
-      list.splice(index, 1);
-      await this.set({ [this.STORAGE_KEYS.EXCLUDED_LIST]: list });
-    }
-  }
-
-  /**
-   * 设置站点排除列表
-   * @param {Array<string>} list - 域名列表
-   * @returns {Promise<void>}
-   */
-  static async setExcludedList(list) {
-    await this.set({ [this.STORAGE_KEYS.EXCLUDED_LIST]: list });
-  }
-
-  /**
-   * 判断主机名是否被排除列表命中（纯函数，供 background/content 共用判定语义）
-   * 精确匹配或子域后缀匹配：排除 bilibili.com 即覆盖 www.bilibili.com；
-   * 按点分段拼接避免误伤相似域名（排除 google.com 不覆盖 notgoogle.com）
-   * @param {string} hostname - 主机名
-   * @param {Array<string>} excludedList - 排除域名列表
-   * @returns {boolean} 是否被排除
-   */
   static isDomainExcluded(hostname, excludedList) {
     if (!hostname || !Array.isArray(excludedList)) return false;
     const host = String(hostname).toLowerCase();
-    return excludedList.some(entry => {
-      const domain = String(entry).toLowerCase();
-      return host === domain || host.endsWith('.' + domain);
-    });
+    return excludedList.some(entry => { const domain = String(entry).toLowerCase(); return host === domain || host.endsWith('.' + domain); });
   }
-
-  /**
-   * 获取用户设置
-   * @returns {Promise<Object>} 用户设置对象
-   */
+  static set(data) { return this.mutate('set', data); }
+  static remove(keys) { return this.mutate('remove', keys); }
+  static clear() { return this.mutate('clear'); }
+  static async getPluginEnabled() { return (await this.get('plugin_enabled')).plugin_enabled ?? true; }
+  static setPluginEnabled(enabled) { return this.set({ plugin_enabled: enabled }); }
+  static async getForceMode() { return (await this.get('force_mode')).force_mode ?? false; }
+  static setForceMode(enabled) { return this.set({ force_mode: enabled }); }
+  static async getAutoEnableList() { return this.normalizeAutoEnableList((await this.get('auto_enable_list')).auto_enable_list ?? []); }
+  static setAutoEnableList(list) { return this.set({ auto_enable_list: list }); }
+  static addToAutoEnableList(value, copyEnabled = true, pasteEnabled = true) {
+    const rule = typeof value === 'string' ? { domain: value, copyEnabled, pasteEnabled } : value;
+    return this.mutate('addRule', { domain: rule.domain, rule });
+  }
+  static replaceAutoEnableRule(originalDomain, rule) { return this.mutate('replaceRule', { originalDomain, rule }); }
+  static removeFromAutoEnableList(domain) { return this.mutate('removeRule', { domain }); }
+  static updateAutoEnableConfig(domain, copyEnabled, pasteEnabled) { return this.replaceAutoEnableRule(domain, { domain, copyEnabled, pasteEnabled }); }
+  static async getAutoEnableConfig(domain) { return this.matchAutoEnableRule(domain, await this.getAutoEnableList()); }
+  static async getExcludedList() { return this.normalizeExcludedList((await this.get('excluded_list')).excluded_list ?? this.DEFAULT_SETTINGS.excludedList); }
+  static addToExcludedList(domain) { return this.mutate('addExcluded', { domain }); }
+  static removeFromExcludedList(domain) { return this.mutate('removeExcluded', { domain }); }
+  static setExcludedList(list) { return this.set({ excluded_list: list }); }
   static async getUserSettings() {
-    const result = await this.get(this.STORAGE_KEYS.USER_SETTINGS);
-    return { ...this.DEFAULT_SETTINGS, ...result[this.STORAGE_KEYS.USER_SETTINGS] };
+    const stored = (await this.get('user_settings')).user_settings ?? {};
+    this.validateSettings(stored);
+    return { ...this.DEFAULT_SETTINGS, ...stored };
   }
-
-  /**
-   * 更新用户设置
-   * @param {Object} settings - 设置对象
-   * @returns {Promise<void>}
-   */
-  static async updateUserSettings(settings) {
-    const currentSettings = await this.getUserSettings();
-    const newSettings = { ...currentSettings, ...settings };
-    await this.set({ [this.STORAGE_KEYS.USER_SETTINGS]: newSettings });
-  }
-
-  /**
-   * 获取统计数据
-   * @returns {Promise<Object>} 统计数据
-   */
-  static async getStatistics() {
-    const result = await this.get(this.STORAGE_KEYS.STATISTICS);
-    return result[this.STORAGE_KEYS.STATISTICS] ?? {
-      totalActivations: 0,
-      sitesUnlocked: [],
-      lastUsed: null
-    };
-  }
-
-  /**
-   * 更新统计数据
-   * @param {Object} stats - 统计数据
-   * @returns {Promise<void>}
-   */
-  static async updateStatistics(stats) {
-    const currentStats = await this.getStatistics();
-    const newStats = { ...currentStats, ...stats };
-    await this.set({ [this.STORAGE_KEYS.STATISTICS]: newStats });
-  }
-
-  /**
-   * 监听存储变化
-   * @param {Function} callback - 回调函数
-   */
-  static addStorageListener(callback) {
-    if (typeof callback !== 'function') {
-      throw new Error('Storage listener must be a function');
-    }
-
-    chrome.storage.onChanged.addListener((changes, areaName) => {
-      callback(changes, areaName);
-    });
-  }
-
-  /**
-   * 导出所有设置
-   * @returns {Promise<Object>} 所有设置数据
-   */
-  static async exportSettings() {
-    const allKeys = Object.values(this.STORAGE_KEYS);
-    const data = await this.get(allKeys);
-    return {
-      ...data,
-      exportTime: new Date().toISOString(),
-      version: '1.1.0'
-    };
-  }
-
-  /**
-   * 导入设置
-   * @param {Object} data - 设置数据
-   * @returns {Promise<void>}
-   */
-  static async importSettings(data) {
-    if (!data || typeof data !== 'object') {
-      throw new Error('Invalid import data');
-    }
-
-    // 验证数据格式
-    const validKeys = Object.values(this.STORAGE_KEYS);
-    const importData = {};
-
-    validKeys.forEach(key => {
-      if (data.hasOwnProperty(key)) {
-        importData[key] = data[key];
-      }
-    });
-
-    await this.set(importData);
-  }
-
-  /**
-   * 获取插件设置（静态方法）
-   * @returns {Promise<Object>} 插件设置对象
-   */
+  static updateUserSettings(settings) { return this.mutate('settings', settings); }
   static async getPluginSettings() {
-    const [enabled, forceMode, userSettings] = await Promise.all([
-      this.getPluginEnabled(),
-      this.getForceMode(),
-      this.getUserSettings()
-    ]);
-
-    return {
-      ...userSettings,
-      enabled,
-      forceMode
-    };
+    const [enabled, forceMode, settings] = await Promise.all([this.getPluginEnabled(), this.getForceMode(), this.getUserSettings()]);
+    return { ...settings, enabled, forceMode };
   }
-
-  /**
-   * 设置插件配置（静态方法）
-   * @param {Object} settings - 插件设置对象
-   * @returns {Promise<void>}
-   */
-  static async setPluginSettings(settings) {
-    const updates = [];
-
-    if (settings.hasOwnProperty('enabled')) {
-      updates.push(StorageUtils.setPluginEnabled(settings.enabled));
-    }
-
-    if (settings.hasOwnProperty('forceMode')) {
-      updates.push(StorageUtils.setForceMode(settings.forceMode));
-    }
-
-    // 处理其他用户设置，包括复制粘贴控制与检测/调试选项
-    const userSettingsKeys = [
-      'showNotifications', 'enableStatistics', 'theme', 'copyEnabled', 'pasteEnabled',
-      'autoDetect', 'detectionDelay', 'maxRetries', 'debugMode', 'performanceMonitoring',
-      'autoAddToWhitelist'
-    ];
-    const userSettingsUpdate = {};
-    let hasUserSettings = false;
-
-    userSettingsKeys.forEach(key => {
-      if (settings.hasOwnProperty(key)) {
-        userSettingsUpdate[key] = settings[key];
-        hasUserSettings = true;
-      }
-    });
-
-    if (hasUserSettings) {
-      updates.push(StorageUtils.updateUserSettings(userSettingsUpdate));
-    }
-
-    await Promise.all(updates);
+  static setPluginSettings(settings) { return this.mutate('settings', settings); }
+  static addStorageListener(callback) { chrome.storage.onChanged.addListener(callback); }
+  static async exportSettings() {
+    return { schemaVersion: 1, settings: await this.getPluginSettings(), whitelist: await this.getAutoEnableList(),
+      excludedList: await this.getExcludedList(), version: chrome.runtime?.getManifest?.().version || 'unknown', exportDate: new Date().toISOString() };
   }
-
-  /**
-   * 获取交互历史记录
-   * @returns {Promise<Object>} 交互历史记录
-   */
-  static async getInteractionHistory() {
-    try {
-      const result = await StorageUtils.get(StorageUtils.STORAGE_KEYS.INTERACTION_HISTORY);
-      return result[StorageUtils.STORAGE_KEYS.INTERACTION_HISTORY] || {};
-    } catch (error) {
-      console.error('Failed to get interaction history:', error);
-      return {};
-    }
+  static importConfiguration(data) { return this.mutate('import', data); }
+  static importSettings(data) { return this.importConfiguration(data); }
+  static async hasPendingPrivacyMigration() {
+    const data = await chrome.storage.sync.get(['statistics', 'interaction_history', 'errorReports', 'userFeedback']);
+    return Object.keys(data).length > 0;
   }
-
-  /**
-   * 设置交互历史记录
-   * @param {Object} history - 交互历史记录
-   * @returns {Promise<void>}
-   */
-  static async setInteractionHistory(history) {
-    try {
-      await StorageUtils.set({
-        [StorageUtils.STORAGE_KEYS.INTERACTION_HISTORY]: history
+  static async getRecoveryData() { return chrome.storage.local.get(this.CONFIG_KEYS); }
+  static restoreLocalSettings() { return this.mutate('restoreLocal'); }
+  static async getStatistics() {
+    const local = await chrome.storage.local.get(['statistics']);
+    const statistics = local.statistics || {};
+    const count = value => Number.isSafeInteger(value) && value >= 0 ? value : 0;
+    return { totalActivations: count(statistics.totalActivations), todayUsage: statistics.lastUsedDate === new Date().toDateString() ? count(statistics.todayUsage) : 0,
+      lastUsedDate: typeof statistics.lastUsedDate === 'string' ? statistics.lastUsedDate : null };
+  }
+  static recordActivation() { return this.mutate('activation'); }
+  static recordDiagnostic() { return this.mutate('diagnostic'); }
+  static migratePrivateData() { return this.mutate('privacy'); }
+  static async migratePrivateDataNow() {
+    const keys = ['statistics', 'interaction_history', 'errorReports', 'userFeedback'];
+    const sync = await chrome.storage.sync.get(keys);
+    const local = await chrome.storage.local.get([...keys, 'legacy_private_backup']);
+    const present = keys.filter(key => Object.hasOwn(sync, key));
+    const updates = {};
+    const backup = { ...local.legacy_private_backup };
+    for (const key of ['statistics', 'interaction_history']) {
+      if (Object.hasOwn(sync, key)) backup['sync_' + key] = sync[key];
+      if (Object.hasOwn(local, key) && (key === 'interaction_history' || (local.statistics?.sitesUnlocked || local.statistics?.siteStats))) backup['local_' + key] = local[key];
+    }
+    if (Object.keys(backup).length) updates.legacy_private_backup = backup;
+    if (sync.statistics || local.statistics) {
+      const old = local.statistics || sync.statistics;
+      const count = value => Number.isSafeInteger(value) && value >= 0 ? value : 0;
+      updates.statistics = { totalActivations: Math.max(count(local.statistics?.totalActivations), count(sync.statistics?.totalActivations)),
+        todayUsage: count(old.todayUsage), lastUsedDate: typeof old.lastUsedDate === 'string' ? old.lastUsedDate : null };
+    }
+    // Never retain arbitrary payload fields, even in old local error records.
+    if (Object.hasOwn(sync, 'errorReports') || Object.hasOwn(local, 'errorReports')) {
+      const reports = [...(Array.isArray(sync.errorReports) ? sync.errorReports : []), ...(Array.isArray(local.errorReports) ? local.errorReports : [])];
+      updates.errorReports = reports.slice(-10).map(report => {
+        const entry = { code: report?.code === 'CONTENT_OPERATION_FAILED' ? report.code : 'LEGACY_ERROR', module: 'content' };
+        if (/^\d{4}-\d{2}-\d{2}T[\d:.]+Z$/.test(report?.timestamp)) entry.timestamp = report.timestamp;
+        if (/^\d{1,5}(?:\.\d{1,5}){0,3}$/.test(report?.version)) entry.version = report.version;
+        return entry;
       });
-    } catch (error) {
-      console.error('Failed to set interaction history:', error);
-      throw error;
     }
+    if (Object.hasOwn(sync, 'userFeedback') || Object.hasOwn(local, 'userFeedback')) updates.userFeedback = [];
+    if (Object.keys(updates).length) {
+      await chrome.storage.local.set(updates);
+      const verified = await chrome.storage.local.get(Object.keys(updates));
+      if (Object.keys(updates).some(key => JSON.stringify(verified[key]) !== JSON.stringify(updates[key]))) throw new Error('Local migration verification failed');
+    }
+    if (present.length) {
+      const latest = await chrome.storage.sync.get(present);
+      if (present.some(key => JSON.stringify(latest[key]) !== JSON.stringify(sync[key]))) throw new Error('Private data changed during migration; retry required');
+      await chrome.storage.sync.remove(present);
+    }
+    if (Object.hasOwn(local, 'interaction_history')) await chrome.storage.local.remove('interaction_history');
   }
 }

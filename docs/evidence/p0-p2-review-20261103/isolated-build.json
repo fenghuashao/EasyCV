@@ -1,0 +1,240 @@
+{
+  "status": "PASS",
+  "output": "D:\\pro\\github\\EasyCV\\.tmp\\p0-p2-review-20261103-build",
+  "sourceHead": "9d378b5",
+  "node": "v24.21.0",
+  "fileCount": 38,
+  "runtimeFilesMatchingSource": 37,
+  "releaseCandidate": false,
+  "defaultDistModified": false,
+  "files": [
+    {
+      "file": "background/auto-enable-manager.js",
+      "bytes": 8794,
+      "sha256": "dd73492b289ca6795fc434bc2356bb1d271b78b9cc5260d201e0c5aec2668829",
+      "matchesSource": true
+    },
+    {
+      "file": "background/icon-manager.js",
+      "bytes": 7558,
+      "sha256": "d262d8a675162c6c68f2e69de2acf1254635f9ab2c3ca8bb81c9d84b0526ea23",
+      "matchesSource": true
+    },
+    {
+      "file": "background/monitoring-manager.js",
+      "bytes": 9845,
+      "sha256": "0eb22e1673ced6f2afcbc61fbc929166dc363271b0931c45d091c760813142dd",
+      "matchesSource": true
+    },
+    {
+      "file": "background/service-worker.js",
+      "bytes": 37511,
+      "sha256": "6dca77acddc9fee791ac4f7024eef598a029a3777584c7db07e5da0671a25d70",
+      "matchesSource": true
+    },
+    {
+      "file": "background/state-confirmation-manager.js",
+      "bytes": 12783,
+      "sha256": "ee120f28e74b0551dea72692b6c7292d871086befd7464a2442f44c6bfc58d86",
+      "matchesSource": true
+    },
+    {
+      "file": "build-info.json",
+      "bytes": 99,
+      "sha256": "92fd65d7b02c2151fb10c8f8e4779301454264ca9958af0eaf1021bc624ccdd8",
+      "matchesSource": null
+    },
+    {
+      "file": "content/content.js",
+      "bytes": 37651,
+      "sha256": "6aaec325a8b030946321b41551bbaf2e2e49f4232d319b7e6f48271ce2dd57fc",
+      "matchesSource": true
+    },
+    {
+      "file": "content/injector.js",
+      "bytes": 25587,
+      "sha256": "c96edb23f99d9fc2778bccdfd894033f90087b90d244b0971a984d6c2f77f1a5",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-active-128.png",
+      "bytes": 6225,
+      "sha256": "f818ee94242a2c04fecdb07e089a98d484081c1ef0cd461ec0dd75cc95273f02",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-active-16.png",
+      "bytes": 451,
+      "sha256": "e4d0782364e6cdde287001a62efa147fa3afdfb37fbbc4a950cb86926280edd2",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-active-32.png",
+      "bytes": 1017,
+      "sha256": "a39c54acc55dea5f4e37fcaf4e303655fb1a56934e1765d888b55f0447949cc5",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-active-48.png",
+      "bytes": 1674,
+      "sha256": "a53689373b01a40b3f164cb14d3d9a832cb5d7eed059052a762eb7d97a214074",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-default-128.png",
+      "bytes": 6140,
+      "sha256": "56030c3004c31b8a4aa4efe79c61219741419ab7c8a894b01ce39ae3f1669916",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-default-16.png",
+      "bytes": 451,
+      "sha256": "a5d79a0c13c4685d3273a4e7e89051b257c3fa1501d3c15e78ebdd1e0612c594",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-default-32.png",
+      "bytes": 1012,
+      "sha256": "2234f2eae86f48f8d35788b9eb4e0475633b51ca09201df1124378e1fa79c942",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-default-48.png",
+      "bytes": 1652,
+      "sha256": "26472109aec2a3253a2089e45f563720dff0135918beaad0899966c487e6fe6e",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-inactive-128.png",
+      "bytes": 6833,
+      "sha256": "b2ed4bb9c4a8fcdd2037d590e449b63b9f2ddc7b42bf5be82c789f31b69c8589",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-inactive-16.png",
+      "bytes": 522,
+      "sha256": "4ee0d952d8fa17c34e87232567bc2e9ea92de4fa90227a176e6ba75aea36b3b4",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-inactive-32.png",
+      "bytes": 1216,
+      "sha256": "fe8544a786463dbdc210a1f6955d1b67199e07cb5b44aa5f8c5a05458b5628ab",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-inactive-48.png",
+      "bytes": 2049,
+      "sha256": "0a99374c352870ef3fdbc58dcfa599386d8fbcf33210060d056588199e903e5c",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-partial-128.png",
+      "bytes": 7076,
+      "sha256": "4be5199c17ac5b8b104366c8f912fd06f37fef59686770d85a855c81cdd18e7a",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-partial-16.png",
+      "bytes": 528,
+      "sha256": "5b935f53ede7b94a6bb97847a3f2f3cfdb3aed79384f3883f1e544e62e64698c",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-partial-32.png",
+      "bytes": 1224,
+      "sha256": "3f133195ea4f6628d4c9afda3eee17b6704079de4bac5b9309f5826650800f65",
+      "matchesSource": true
+    },
+    {
+      "file": "icons/icon-partial-48.png",
+      "bytes": 2084,
+      "sha256": "2d241af9329c05f499116389e9b5ee28de9ff70ea3dbfc7664648eefbe802855",
+      "matchesSource": true
+    },
+    {
+      "file": "manifest.json",
+      "bytes": 1362,
+      "sha256": "61553936aca48cf3ad9910a5b6b673e5c1e2e3726f354517566d18b5623e2e43",
+      "matchesSource": true
+    },
+    {
+      "file": "options/options.css",
+      "bytes": 20086,
+      "sha256": "c320f9a656e6545ef6a857b4fe109fafa42e337d1ca5ac1b8b3c3e973daf8717",
+      "matchesSource": true
+    },
+    {
+      "file": "options/options.html",
+      "bytes": 25980,
+      "sha256": "01b5d036f07c50fac76793092ae96aa090486f0aa97e248955959f653584dc39",
+      "matchesSource": true
+    },
+    {
+      "file": "options/options.js",
+      "bytes": 31127,
+      "sha256": "be43957fb017a45b3f9b9b49dc406480314979e461d7c3357a52a13e6b54b001",
+      "matchesSource": true
+    },
+    {
+      "file": "popup/popup.css",
+      "bytes": 13220,
+      "sha256": "a746ca570604ad41842fe7db1bec1b5e796f085e194e5d91074168760a5f5921",
+      "matchesSource": true
+    },
+    {
+      "file": "popup/popup.html",
+      "bytes": 9012,
+      "sha256": "4ae8daab9bd9533da3754be2869146a4866cb43fb264e0ecd7261f37483ef409",
+      "matchesSource": true
+    },
+    {
+      "file": "popup/popup.js",
+      "bytes": 27165,
+      "sha256": "8415d66db1015380721df66671c3ece86eacc4d7580be288d7f2f1c3fee2778a",
+      "matchesSource": true
+    },
+    {
+      "file": "utils/dom-utils.js",
+      "bytes": 5745,
+      "sha256": "c7580ee6a7a8c2fdc9486ebb353ddad915cddaa3301a4524eaff2627c6db2f25",
+      "matchesSource": true
+    },
+    {
+      "file": "utils/i18n-utils.js",
+      "bytes": 2117,
+      "sha256": "574feeb437a5fd5196d1084a1688b5ab91e16c2d9854202ddf951ed32b742b82",
+      "matchesSource": true
+    },
+    {
+      "file": "utils/message-utils.js",
+      "bytes": 8837,
+      "sha256": "f56bdf9610b3bb1fd5aa97a796d6191e47db641eb517a036d54d69480c7d3251",
+      "matchesSource": true
+    },
+    {
+      "file": "utils/notification-utils.js",
+      "bytes": 2286,
+      "sha256": "e5b610f9f0147129deae0f01b8dd57f4408e0d62d4687b06bb51b8b043a01c3a",
+      "matchesSource": true
+    },
+    {
+      "file": "utils/storage-utils.js",
+      "bytes": 13699,
+      "sha256": "a12090dc5a39810c441d1d1bc51b34570c7db529f085097dd041a6b7ee8f6035",
+      "matchesSource": true
+    },
+    {
+      "file": "_locales/en/messages.json",
+      "bytes": 20518,
+      "sha256": "8e6a9db25094666dafcf5692c35292e4199d046045f17fac1835ced531252d25",
+      "matchesSource": true
+    },
+    {
+      "file": "_locales/zh_CN/messages.json",
+      "bytes": 19538,
+      "sha256": "9957a25fdf72fa08566fa93dfbf1699268fc2c2d46f69c874ed72b20329870b2",
+      "matchesSource": true
+    }
+  ]
+}

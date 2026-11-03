@@ -103,7 +103,7 @@ class DOMUtils {
     }
 
     // 检查是否禁用了右键菜单
-    if (element.oncontextmenu === null ||
+    if (typeof element.oncontextmenu === 'function' ||
       element.getAttribute('oncontextmenu') === 'return false') {
       restrictions.contextMenu = true;
     }

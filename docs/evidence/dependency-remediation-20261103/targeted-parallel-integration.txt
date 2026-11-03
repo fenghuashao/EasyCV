@@ -1,0 +1,476 @@
+✔ locked build dependencies exclude the affected minimatch range in GHSA-g3hv-75wg-m249 (1.2735ms)
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-KMgi3d\build
+📄 复制文件: manifest.json -> build\manifest.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-KMgi3d\build\background\
+📄 复制文件: background\auto-enable-manager.js -> build\background\auto-enable-manager.js
+📄 复制文件: background\icon-manager.js -> build\background\icon-manager.js
+📄 复制文件: background\monitoring-manager.js -> build\background\monitoring-manager.js
+📄 复制文件: background\service-worker.js -> build\background\service-worker.js
+📄 复制文件: background\state-confirmation-manager.js -> build\background\state-confirmation-manager.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-KMgi3d\build\content\
+📄 复制文件: content\content.js -> build\content\content.js
+📄 复制文件: content\injector.js -> build\content\injector.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-KMgi3d\build\popup\
+📄 复制文件: popup\popup.css -> build\popup\popup.css
+📄 复制文件: popup\popup.html -> build\popup\popup.html
+📄 复制文件: popup\popup.js -> build\popup\popup.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-KMgi3d\build\options\
+📄 复制文件: options\options.css -> build\options\options.css
+📄 复制文件: options\options.html -> build\options\options.html
+📄 复制文件: options\options.js -> build\options\options.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-KMgi3d\build\utils\
+📄 复制文件: utils\dom-utils.js -> build\utils\dom-utils.js
+📄 复制文件: utils\i18n-utils.js -> build\utils\i18n-utils.js
+📄 复制文件: utils\message-utils.js -> build\utils\message-utils.js
+📄 复制文件: utils\notification-utils.js -> build\utils\notification-utils.js
+📄 复制文件: utils\storage-utils.js -> build\utils\storage-utils.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-KMgi3d\build\icons\
+📄 复制文件: icons\icon-active-128.png -> build\icons\icon-active-128.png
+📄 复制文件: icons\icon-active-16.png -> build\icons\icon-active-16.png
+📄 复制文件: icons\icon-active-32.png -> build\icons\icon-active-32.png
+📄 复制文件: icons\icon-active-48.png -> build\icons\icon-active-48.png
+📄 复制文件: icons\icon-default-128.png -> build\icons\icon-default-128.png
+📄 复制文件: icons\icon-default-16.png -> build\icons\icon-default-16.png
+📄 复制文件: icons\icon-default-32.png -> build\icons\icon-default-32.png
+📄 复制文件: icons\icon-default-48.png -> build\icons\icon-default-48.png
+📄 复制文件: icons\icon-inactive-128.png -> build\icons\icon-inactive-128.png
+📄 复制文件: icons\icon-inactive-16.png -> build\icons\icon-inactive-16.png
+📄 复制文件: icons\icon-inactive-32.png -> build\icons\icon-inactive-32.png
+📄 复制文件: icons\icon-inactive-48.png -> build\icons\icon-inactive-48.png
+📄 复制文件: icons\icon-partial-128.png -> build\icons\icon-partial-128.png
+📄 复制文件: icons\icon-partial-16.png -> build\icons\icon-partial-16.png
+📄 复制文件: icons\icon-partial-32.png -> build\icons\icon-partial-32.png
+📄 复制文件: icons\icon-partial-48.png -> build\icons\icon-partial-48.png
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-KMgi3d\build\_locales\
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-KMgi3d\build\_locales\en
+📄 复制文件: _locales\en\messages.json -> build\_locales\en\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-KMgi3d\build\_locales\ja
+📄 复制文件: _locales\ja\messages.json -> build\_locales\ja\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-KMgi3d\build\_locales\zh_CN
+📄 复制文件: _locales\zh_CN\messages.json -> build\_locales\zh_CN\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-KMgi3d\build\_locales\zh_TW
+📄 复制文件: _locales\zh_TW\messages.json -> build\_locales\zh_TW\messages.json
+==================================================
+✅ 构建完成!
+📦 版本: 1.1.2
+📁 输出目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-KMgi3d\build
+⏰ 构建时间: 2026-11-03T07:36:26.061Z
+✅ 打包完成: test-only.zip (147.3 KB)
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+❌ 构建失败: Build output already exists; choose a new --out directory
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-RhQnGt\build
+📄 复制文件: manifest.json -> build\manifest.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-RhQnGt\build\background\
+📄 复制文件: background\auto-enable-manager.js -> build\background\auto-enable-manager.js
+📄 复制文件: background\icon-manager.js -> build\background\icon-manager.js
+📄 复制文件: background\monitoring-manager.js -> build\background\monitoring-manager.js
+📄 复制文件: background\service-worker.js -> build\background\service-worker.js
+📄 复制文件: background\state-confirmation-manager.js -> build\background\state-confirmation-manager.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-RhQnGt\build\content\
+📄 复制文件: content\content.js -> build\content\content.js
+📄 复制文件: content\injector.js -> build\content\injector.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-RhQnGt\build\popup\
+📄 复制文件: popup\popup.css -> build\popup\popup.css
+📄 复制文件: popup\popup.html -> build\popup\popup.html
+📄 复制文件: popup\popup.js -> build\popup\popup.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-RhQnGt\build\options\
+📄 复制文件: options\options.css -> build\options\options.css
+📄 复制文件: options\options.html -> build\options\options.html
+📄 复制文件: options\options.js -> build\options\options.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-RhQnGt\build\utils\
+📄 复制文件: utils\dom-utils.js -> build\utils\dom-utils.js
+📄 复制文件: utils\i18n-utils.js -> build\utils\i18n-utils.js
+📄 复制文件: utils\message-utils.js -> build\utils\message-utils.js
+📄 复制文件: utils\notification-utils.js -> build\utils\notification-utils.js
+📄 复制文件: utils\storage-utils.js -> build\utils\storage-utils.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-RhQnGt\build\icons\
+📄 复制文件: icons\icon-active-128.png -> build\icons\icon-active-128.png
+📄 复制文件: icons\icon-active-16.png -> build\icons\icon-active-16.png
+📄 复制文件: icons\icon-active-32.png -> build\icons\icon-active-32.png
+📄 复制文件: icons\icon-active-48.png -> build\icons\icon-active-48.png
+📄 复制文件: icons\icon-default-128.png -> build\icons\icon-default-128.png
+📄 复制文件: icons\icon-default-16.png -> build\icons\icon-default-16.png
+📄 复制文件: icons\icon-default-32.png -> build\icons\icon-default-32.png
+📄 复制文件: icons\icon-default-48.png -> build\icons\icon-default-48.png
+📄 复制文件: icons\icon-inactive-128.png -> build\icons\icon-inactive-128.png
+📄 复制文件: icons\icon-inactive-16.png -> build\icons\icon-inactive-16.png
+📄 复制文件: icons\icon-inactive-32.png -> build\icons\icon-inactive-32.png
+📄 复制文件: icons\icon-inactive-48.png -> build\icons\icon-inactive-48.png
+📄 复制文件: icons\icon-partial-128.png -> build\icons\icon-partial-128.png
+📄 复制文件: icons\icon-partial-16.png -> build\icons\icon-partial-16.png
+📄 复制文件: icons\icon-partial-32.png -> build\icons\icon-partial-32.png
+📄 复制文件: icons\icon-partial-48.png -> build\icons\icon-partial-48.png
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-RhQnGt\build\_locales\
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-RhQnGt\build\_locales\en
+📄 复制文件: _locales\en\messages.json -> build\_locales\en\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-RhQnGt\build\_locales\ja
+📄 复制文件: _locales\ja\messages.json -> build\_locales\ja\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-RhQnGt\build\_locales\zh_CN
+📄 复制文件: _locales\zh_CN\messages.json -> build\_locales\zh_CN\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-RhQnGt\build\_locales\zh_TW
+📄 复制文件: _locales\zh_TW\messages.json -> build\_locales\zh_TW\messages.json
+==================================================
+✅ 构建完成!
+📦 版本: 1.1.2
+📁 输出目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-RhQnGt\build
+⏰ 构建时间: 2026-11-03T07:36:26.533Z
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-L5rca6\构建 with spaces
+📄 复制文件: manifest.json -> 构建 with spaces\manifest.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-L5rca6\构建 with spaces\background\
+📄 复制文件: background\auto-enable-manager.js -> 构建 with spaces\background\auto-enable-manager.js
+📄 复制文件: background\icon-manager.js -> 构建 with spaces\background\icon-manager.js
+📄 复制文件: background\monitoring-manager.js -> 构建 with spaces\background\monitoring-manager.js
+📄 复制文件: background\service-worker.js -> 构建 with spaces\background\service-worker.js
+📄 复制文件: background\state-confirmation-manager.js -> 构建 with spaces\background\state-confirmation-manager.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-L5rca6\构建 with spaces\content\
+📄 复制文件: content\content.js -> 构建 with spaces\content\content.js
+📄 复制文件: content\injector.js -> 构建 with spaces\content\injector.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-L5rca6\构建 with spaces\popup\
+📄 复制文件: popup\popup.css -> 构建 with spaces\popup\popup.css
+📄 复制文件: popup\popup.html -> 构建 with spaces\popup\popup.html
+📄 复制文件: popup\popup.js -> 构建 with spaces\popup\popup.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-L5rca6\构建 with spaces\options\
+📄 复制文件: options\options.css -> 构建 with spaces\options\options.css
+📄 复制文件: options\options.html -> 构建 with spaces\options\options.html
+📄 复制文件: options\options.js -> 构建 with spaces\options\options.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-L5rca6\构建 with spaces\utils\
+📄 复制文件: utils\dom-utils.js -> 构建 with spaces\utils\dom-utils.js
+📄 复制文件: utils\i18n-utils.js -> 构建 with spaces\utils\i18n-utils.js
+📄 复制文件: utils\message-utils.js -> 构建 with spaces\utils\message-utils.js
+📄 复制文件: utils\notification-utils.js -> 构建 with spaces\utils\notification-utils.js
+📄 复制文件: utils\storage-utils.js -> 构建 with spaces\utils\storage-utils.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-L5rca6\构建 with spaces\icons\
+📄 复制文件: icons\icon-active-128.png -> 构建 with spaces\icons\icon-active-128.png
+📄 复制文件: icons\icon-active-16.png -> 构建 with spaces\icons\icon-active-16.png
+📄 复制文件: icons\icon-active-32.png -> 构建 with spaces\icons\icon-active-32.png
+📄 复制文件: icons\icon-active-48.png -> 构建 with spaces\icons\icon-active-48.png
+📄 复制文件: icons\icon-default-128.png -> 构建 with spaces\icons\icon-default-128.png
+📄 复制文件: icons\icon-default-16.png -> 构建 with spaces\icons\icon-default-16.png
+📄 复制文件: icons\icon-default-32.png -> 构建 with spaces\icons\icon-default-32.png
+📄 复制文件: icons\icon-default-48.png -> 构建 with spaces\icons\icon-default-48.png
+📄 复制文件: icons\icon-inactive-128.png -> 构建 with spaces\icons\icon-inactive-128.png
+📄 复制文件: icons\icon-inactive-16.png -> 构建 with spaces\icons\icon-inactive-16.png
+📄 复制文件: icons\icon-inactive-32.png -> 构建 with spaces\icons\icon-inactive-32.png
+📄 复制文件: icons\icon-inactive-48.png -> 构建 with spaces\icons\icon-inactive-48.png
+📄 复制文件: icons\icon-partial-128.png -> 构建 with spaces\icons\icon-partial-128.png
+📄 复制文件: icons\icon-partial-16.png -> 构建 with spaces\icons\icon-partial-16.png
+📄 复制文件: icons\icon-partial-32.png -> 构建 with spaces\icons\icon-partial-32.png
+📄 复制文件: icons\icon-partial-48.png -> 构建 with spaces\icons\icon-partial-48.png
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-L5rca6\构建 with spaces\_locales\
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-L5rca6\构建 with spaces\_locales\en
+📄 复制文件: _locales\en\messages.json -> 构建 with spaces\_locales\en\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-L5rca6\构建 with spaces\_locales\ja
+📄 复制文件: _locales\ja\messages.json -> 构建 with spaces\_locales\ja\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-L5rca6\构建 with spaces\_locales\zh_CN
+📄 复制文件: _locales\zh_CN\messages.json -> 构建 with spaces\_locales\zh_CN\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-L5rca6\构建 with spaces\_locales\zh_TW
+📄 复制文件: _locales\zh_TW\messages.json -> 构建 with spaces\_locales\zh_TW\messages.json
+==================================================
+✅ 构建完成!
+📦 版本: 1.1.2
+📁 输出目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-L5rca6\构建 with spaces
+⏰ 构建时间: 2026-11-03T07:36:26.739Z
+✔ fresh build and ZIP match every source file; overwrites, stale builds and corrupt ZIPs are rejected (441.0516ms)
+✔ unexpected build entries and unapproved permission changes block packaging (246.9633ms)
+✅ 打包完成: 测试 archive.zip (147.3 KB)
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JokIO9\build
+📄 复制文件: manifest.json -> build\manifest.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JokIO9\build\background\
+📄 复制文件: background\auto-enable-manager.js -> build\background\auto-enable-manager.js
+📄 复制文件: background\icon-manager.js -> build\background\icon-manager.js
+📄 复制文件: background\monitoring-manager.js -> build\background\monitoring-manager.js
+📄 复制文件: background\service-worker.js -> build\background\service-worker.js
+📄 复制文件: background\state-confirmation-manager.js -> build\background\state-confirmation-manager.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JokIO9\build\content\
+📄 复制文件: content\content.js -> build\content\content.js
+📄 复制文件: content\injector.js -> build\content\injector.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JokIO9\build\popup\
+📄 复制文件: popup\popup.css -> build\popup\popup.css
+📄 复制文件: popup\popup.html -> build\popup\popup.html
+📄 复制文件: popup\popup.js -> build\popup\popup.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JokIO9\build\options\
+📄 复制文件: options\options.css -> build\options\options.css
+📄 复制文件: options\options.html -> build\options\options.html
+📄 复制文件: options\options.js -> build\options\options.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JokIO9\build\utils\
+📄 复制文件: utils\dom-utils.js -> build\utils\dom-utils.js
+📄 复制文件: utils\i18n-utils.js -> build\utils\i18n-utils.js
+📄 复制文件: utils\message-utils.js -> build\utils\message-utils.js
+📄 复制文件: utils\notification-utils.js -> build\utils\notification-utils.js
+📄 复制文件: utils\storage-utils.js -> build\utils\storage-utils.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JokIO9\build\icons\
+📄 复制文件: icons\icon-active-128.png -> build\icons\icon-active-128.png
+📄 复制文件: icons\icon-active-16.png -> build\icons\icon-active-16.png
+📄 复制文件: icons\icon-active-32.png -> build\icons\icon-active-32.png
+📄 复制文件: icons\icon-active-48.png -> build\icons\icon-active-48.png
+📄 复制文件: icons\icon-default-128.png -> build\icons\icon-default-128.png
+📄 复制文件: icons\icon-default-16.png -> build\icons\icon-default-16.png
+📄 复制文件: icons\icon-default-32.png -> build\icons\icon-default-32.png
+📄 复制文件: icons\icon-default-48.png -> build\icons\icon-default-48.png
+📄 复制文件: icons\icon-inactive-128.png -> build\icons\icon-inactive-128.png
+📄 复制文件: icons\icon-inactive-16.png -> build\icons\icon-inactive-16.png
+📄 复制文件: icons\icon-inactive-32.png -> build\icons\icon-inactive-32.png
+📄 复制文件: icons\icon-inactive-48.png -> build\icons\icon-inactive-48.png
+📄 复制文件: icons\icon-partial-128.png -> build\icons\icon-partial-128.png
+📄 复制文件: icons\icon-partial-16.png -> build\icons\icon-partial-16.png
+📄 复制文件: icons\icon-partial-32.png -> build\icons\icon-partial-32.png
+📄 复制文件: icons\icon-partial-48.png -> build\icons\icon-partial-48.png
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JokIO9\build\_locales\
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JokIO9\build\_locales\en
+📄 复制文件: _locales\en\messages.json -> build\_locales\en\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JokIO9\build\_locales\ja
+📄 复制文件: _locales\ja\messages.json -> build\_locales\ja\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JokIO9\build\_locales\zh_CN
+📄 复制文件: _locales\zh_CN\messages.json -> build\_locales\zh_CN\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JokIO9\build\_locales\zh_TW
+📄 复制文件: _locales\zh_TW\messages.json -> build\_locales\zh_TW\messages.json
+==================================================
+✅ 构建完成!
+📦 版本: 1.1.2
+📁 输出目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JokIO9\build
+⏰ 构建时间: 2026-11-03T07:36:27.063Z
+✔ ZIP writer supports Unicode/space paths and preserves all runtime bytes (325.7884ms)
+✅ 打包完成: concurrent.zip (147.3 KB)
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JKp0SK\build
+📄 复制文件: manifest.json -> build\manifest.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JKp0SK\build\background\
+📄 复制文件: background\auto-enable-manager.js -> build\background\auto-enable-manager.js
+📄 复制文件: background\icon-manager.js -> build\background\icon-manager.js
+📄 复制文件: background\monitoring-manager.js -> build\background\monitoring-manager.js
+📄 复制文件: background\service-worker.js -> build\background\service-worker.js
+📄 复制文件: background\state-confirmation-manager.js -> build\background\state-confirmation-manager.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JKp0SK\build\content\
+📄 复制文件: content\content.js -> build\content\content.js
+📄 复制文件: content\injector.js -> build\content\injector.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JKp0SK\build\popup\
+📄 复制文件: popup\popup.css -> build\popup\popup.css
+📄 复制文件: popup\popup.html -> build\popup\popup.html
+📄 复制文件: popup\popup.js -> build\popup\popup.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JKp0SK\build\options\
+📄 复制文件: options\options.css -> build\options\options.css
+📄 复制文件: options\options.html -> build\options\options.html
+📄 复制文件: options\options.js -> build\options\options.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JKp0SK\build\utils\
+📄 复制文件: utils\dom-utils.js -> build\utils\dom-utils.js
+📄 复制文件: utils\i18n-utils.js -> build\utils\i18n-utils.js
+📄 复制文件: utils\message-utils.js -> build\utils\message-utils.js
+📄 复制文件: utils\notification-utils.js -> build\utils\notification-utils.js
+📄 复制文件: utils\storage-utils.js -> build\utils\storage-utils.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JKp0SK\build\icons\
+📄 复制文件: icons\icon-active-128.png -> build\icons\icon-active-128.png
+📄 复制文件: icons\icon-active-16.png -> build\icons\icon-active-16.png
+📄 复制文件: icons\icon-active-32.png -> build\icons\icon-active-32.png
+📄 复制文件: icons\icon-active-48.png -> build\icons\icon-active-48.png
+📄 复制文件: icons\icon-default-128.png -> build\icons\icon-default-128.png
+📄 复制文件: icons\icon-default-16.png -> build\icons\icon-default-16.png
+📄 复制文件: icons\icon-default-32.png -> build\icons\icon-default-32.png
+📄 复制文件: icons\icon-default-48.png -> build\icons\icon-default-48.png
+📄 复制文件: icons\icon-inactive-128.png -> build\icons\icon-inactive-128.png
+📄 复制文件: icons\icon-inactive-16.png -> build\icons\icon-inactive-16.png
+📄 复制文件: icons\icon-inactive-32.png -> build\icons\icon-inactive-32.png
+📄 复制文件: icons\icon-inactive-48.png -> build\icons\icon-inactive-48.png
+📄 复制文件: icons\icon-partial-128.png -> build\icons\icon-partial-128.png
+📄 复制文件: icons\icon-partial-16.png -> build\icons\icon-partial-16.png
+📄 复制文件: icons\icon-partial-32.png -> build\icons\icon-partial-32.png
+📄 复制文件: icons\icon-partial-48.png -> build\icons\icon-partial-48.png
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JKp0SK\build\_locales\
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JKp0SK\build\_locales\en
+📄 复制文件: _locales\en\messages.json -> build\_locales\en\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JKp0SK\build\_locales\ja
+📄 复制文件: _locales\ja\messages.json -> build\_locales\ja\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JKp0SK\build\_locales\zh_CN
+📄 复制文件: _locales\zh_CN\messages.json -> build\_locales\zh_CN\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JKp0SK\build\_locales\zh_TW
+📄 复制文件: _locales\zh_TW\messages.json -> build\_locales\zh_TW\messages.json
+==================================================
+✅ 构建完成!
+📦 版本: 1.1.2
+📁 输出目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-JKp0SK\build
+⏰ 构建时间: 2026-11-03T07:36:27.382Z
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-Lo4FYm\build
+📄 复制文件: manifest.json -> build\manifest.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-Lo4FYm\build\background\
+📄 复制文件: background\auto-enable-manager.js -> build\background\auto-enable-manager.js
+📄 复制文件: background\icon-manager.js -> build\background\icon-manager.js
+📄 复制文件: background\monitoring-manager.js -> build\background\monitoring-manager.js
+📄 复制文件: background\service-worker.js -> build\background\service-worker.js
+📄 复制文件: background\state-confirmation-manager.js -> build\background\state-confirmation-manager.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-Lo4FYm\build\content\
+📄 复制文件: content\content.js -> build\content\content.js
+📄 复制文件: content\injector.js -> build\content\injector.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-Lo4FYm\build\popup\
+📄 复制文件: popup\popup.css -> build\popup\popup.css
+📄 复制文件: popup\popup.html -> build\popup\popup.html
+📄 复制文件: popup\popup.js -> build\popup\popup.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-Lo4FYm\build\options\
+📄 复制文件: options\options.css -> build\options\options.css
+📄 复制文件: options\options.html -> build\options\options.html
+📄 复制文件: options\options.js -> build\options\options.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-Lo4FYm\build\utils\
+📄 复制文件: utils\dom-utils.js -> build\utils\dom-utils.js
+📄 复制文件: utils\i18n-utils.js -> build\utils\i18n-utils.js
+📄 复制文件: utils\message-utils.js -> build\utils\message-utils.js
+📄 复制文件: utils\notification-utils.js -> build\utils\notification-utils.js
+📄 复制文件: utils\storage-utils.js -> build\utils\storage-utils.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-Lo4FYm\build\icons\
+📄 复制文件: icons\icon-active-128.png -> build\icons\icon-active-128.png
+📄 复制文件: icons\icon-active-16.png -> build\icons\icon-active-16.png
+📄 复制文件: icons\icon-active-32.png -> build\icons\icon-active-32.png
+📄 复制文件: icons\icon-active-48.png -> build\icons\icon-active-48.png
+📄 复制文件: icons\icon-default-128.png -> build\icons\icon-default-128.png
+📄 复制文件: icons\icon-default-16.png -> build\icons\icon-default-16.png
+📄 复制文件: icons\icon-default-32.png -> build\icons\icon-default-32.png
+📄 复制文件: icons\icon-default-48.png -> build\icons\icon-default-48.png
+📄 复制文件: icons\icon-inactive-128.png -> build\icons\icon-inactive-128.png
+📄 复制文件: icons\icon-inactive-16.png -> build\icons\icon-inactive-16.png
+📄 复制文件: icons\icon-inactive-32.png -> build\icons\icon-inactive-32.png
+📄 复制文件: icons\icon-inactive-48.png -> build\icons\icon-inactive-48.png
+📄 复制文件: icons\icon-partial-128.png -> build\icons\icon-partial-128.png
+📄 复制文件: icons\icon-partial-16.png -> build\icons\icon-partial-16.png
+📄 复制文件: icons\icon-partial-32.png -> build\icons\icon-partial-32.png
+📄 复制文件: icons\icon-partial-48.png -> build\icons\icon-partial-48.png
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-Lo4FYm\build\_locales\
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-Lo4FYm\build\_locales\en
+📄 复制文件: _locales\en\messages.json -> build\_locales\en\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-Lo4FYm\build\_locales\ja
+📄 复制文件: _locales\ja\messages.json -> build\_locales\ja\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-Lo4FYm\build\_locales\zh_CN
+📄 复制文件: _locales\zh_CN\messages.json -> build\_locales\zh_CN\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-Lo4FYm\build\_locales\zh_TW
+📄 复制文件: _locales\zh_TW\messages.json -> build\_locales\zh_TW\messages.json
+==================================================
+✅ 构建完成!
+📦 版本: 1.1.2
+📁 输出目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-Lo4FYm\build
+⏰ 构建时间: 2026-11-03T07:36:27.596Z
+✔ concurrent ZIP writes cannot overwrite the winner or its receipt (304.4659ms)
+✔ an existing verification receipt prevents creation of a conflicting ZIP (217.9466ms)
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-uKlgSt\build
+📄 复制文件: manifest.json -> build\manifest.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-uKlgSt\build\background\
+📄 复制文件: background\auto-enable-manager.js -> build\background\auto-enable-manager.js
+📄 复制文件: background\icon-manager.js -> build\background\icon-manager.js
+📄 复制文件: background\monitoring-manager.js -> build\background\monitoring-manager.js
+📄 复制文件: background\service-worker.js -> build\background\service-worker.js
+📄 复制文件: background\state-confirmation-manager.js -> build\background\state-confirmation-manager.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-uKlgSt\build\content\
+📄 复制文件: content\content.js -> build\content\content.js
+📄 复制文件: content\injector.js -> build\content\injector.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-uKlgSt\build\popup\
+📄 复制文件: popup\popup.css -> build\popup\popup.css
+📄 复制文件: popup\popup.html -> build\popup\popup.html
+📄 复制文件: popup\popup.js -> build\popup\popup.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-uKlgSt\build\options\
+📄 复制文件: options\options.css -> build\options\options.css
+📄 复制文件: options\options.html -> build\options\options.html
+📄 复制文件: options\options.js -> build\options\options.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-uKlgSt\build\utils\
+📄 复制文件: utils\dom-utils.js -> build\utils\dom-utils.js
+📄 复制文件: utils\i18n-utils.js -> build\utils\i18n-utils.js
+📄 复制文件: utils\message-utils.js -> build\utils\message-utils.js
+📄 复制文件: utils\notification-utils.js -> build\utils\notification-utils.js
+📄 复制文件: utils\storage-utils.js -> build\utils\storage-utils.js
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-uKlgSt\build\icons\
+📄 复制文件: icons\icon-active-128.png -> build\icons\icon-active-128.png
+📄 复制文件: icons\icon-active-16.png -> build\icons\icon-active-16.png
+📄 复制文件: icons\icon-active-32.png -> build\icons\icon-active-32.png
+📄 复制文件: icons\icon-active-48.png -> build\icons\icon-active-48.png
+📄 复制文件: icons\icon-default-128.png -> build\icons\icon-default-128.png
+📄 复制文件: icons\icon-default-16.png -> build\icons\icon-default-16.png
+📄 复制文件: icons\icon-default-32.png -> build\icons\icon-default-32.png
+📄 复制文件: icons\icon-default-48.png -> build\icons\icon-default-48.png
+📄 复制文件: icons\icon-inactive-128.png -> build\icons\icon-inactive-128.png
+📄 复制文件: icons\icon-inactive-16.png -> build\icons\icon-inactive-16.png
+📄 复制文件: icons\icon-inactive-32.png -> build\icons\icon-inactive-32.png
+📄 复制文件: icons\icon-inactive-48.png -> build\icons\icon-inactive-48.png
+📄 复制文件: icons\icon-partial-128.png -> build\icons\icon-partial-128.png
+📄 复制文件: icons\icon-partial-16.png -> build\icons\icon-partial-16.png
+📄 复制文件: icons\icon-partial-32.png -> build\icons\icon-partial-32.png
+📄 复制文件: icons\icon-partial-48.png -> build\icons\icon-partial-48.png
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-uKlgSt\build\_locales\
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-uKlgSt\build\_locales\en
+📄 复制文件: _locales\en\messages.json -> build\_locales\en\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-uKlgSt\build\_locales\ja
+📄 复制文件: _locales\ja\messages.json -> build\_locales\ja\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-uKlgSt\build\_locales\zh_CN
+📄 复制文件: _locales\zh_CN\messages.json -> build\_locales\zh_CN\messages.json
+📁 创建目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-uKlgSt\build\_locales\zh_TW
+📄 复制文件: _locales\zh_TW\messages.json -> build\_locales\zh_TW\messages.json
+==================================================
+✅ 构建完成!
+📦 版本: 1.1.2
+📁 输出目录: C:\Users\fengh\AppData\Local\Temp\easycv-local-tests-uKlgSt\build
+⏰ 构建时间: 2026-11-03T07:36:27.828Z
+✔ ZIP source read failure rejects, closes streams and never creates a success receipt (244.9253ms)
+✖ synthetic failure (0.4556ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 110.9445
+
+✖ failing tests:
+
+test at test\unit\failing.test.mjs:1:31
+✖ synthetic failure (0.4556ms)
+  Error: expected negative fixture
+      at TestContext.<anonymous> (file:///C:/Users/fengh/AppData/Local/Temp/easycv-local-tests-EKrFP8/test/unit/failing.test.mjs:1:71)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+✔ synthetic success (0.4913ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 105.729
+Local checks passed; browser/upgrade acceptance: NOT_RUN
+✔ ZIP output write failure rejects, closes streams and never creates a success receipt (209.7292ms)
+✔ version operation synchronizes manifest/package/both lock fields in an isolated fixture (92.8977ms)
+✔ deploy executes real checks and stops on failing unit tests (735.3273ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3002.1116

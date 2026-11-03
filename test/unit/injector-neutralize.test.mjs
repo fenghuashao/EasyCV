@@ -9,7 +9,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { runInjector } from './helpers/injector-harness.mjs';
 
-test('注册吞没名单收窄：keydown/mousedown/mouseup 不再被吞，copy/selectstart 仍吞没', () => {
+test('所有监听器均保留注册，限制仅在运行时按开关中和', () => {
   const { registrations, EventTarget } = runInjector();
   const restrictive = function (e) { e.preventDefault(); };
 
@@ -20,17 +20,17 @@ test('注册吞没名单收窄：keydown/mousedown/mouseup 不再被吞，copy/s
 
   EventTarget.prototype.addEventListener.call(new EventTarget(), 'copy', restrictive);
   EventTarget.prototype.addEventListener.call(new EventTarget(), 'selectstart', restrictive);
-  assert.equal(registrations.length, 3);
+  assert.equal(registrations.length, 5);
 });
 
 test('keydown/keyup 仅组合键（ctrl/meta）时中和 preventDefault', () => {
   const { eventMethodCalls, Event } = runInjector();
 
-  Event.prototype.preventDefault.call({ type: 'keydown', ctrlKey: true }); // 中和（Ctrl+C 封锁场景）
-  Event.prototype.preventDefault.call({ type: 'keydown', metaKey: true }); // 中和
+  Event.prototype.preventDefault.call({ type: 'keydown', ctrlKey: true, key: 'c' }); // 中和（Ctrl+C 封锁场景）
+  Event.prototype.preventDefault.call({ type: 'keydown', metaKey: true, key: 'v' }); // 中和
   Event.prototype.preventDefault.call({ type: 'keydown' });                // 放行（播放器空格/方向键）
   Event.prototype.preventDefault.call({ type: 'keyup' });                  // 放行
-  Event.prototype.preventDefault.call({ type: 'keyup', ctrlKey: true });   // 中和
+  Event.prototype.preventDefault.call({ type: 'keyup', ctrlKey: true, key: 'c' });   // 中和
 
   assert.equal(eventMethodCalls.preventDefault.length, 2);
   assert.deepEqual(

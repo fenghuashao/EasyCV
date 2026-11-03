@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { loadStorage } from './helpers/reliability-harness.mjs';
 import { createCopyPasteManager } from './helpers/content-harness.mjs';
 
 const source = name => fs.readFileSync(new URL(`../../${name}`, import.meta.url), 'utf8');
@@ -130,7 +131,8 @@ test('auto-enable sends a validated state notification and invalidates cached do
   const MessageUtils = new Function('chrome', `${source('utils/message-utils.js')};return MessageUtils;`)(chrome);
   const AutoEnableManager = new Function('chrome', 'MessageUtils', 'StorageUtils',
     `${source('background/auto-enable-manager.js')};return AutoEnableManager;`)(chrome, MessageUtils, {
-      STORAGE_KEYS: { AUTO_ENABLE_LIST: 'auto_enable_list' }
+      STORAGE_KEYS: { AUTO_ENABLE_LIST: 'auto_enable_list' },
+      matchAutoEnableRule: (domain, list) => loadStorage().StorageUtils.matchAutoEnableRule(domain, list)
     });
   const listeners = [];
   const state = { autoEnableList: [], userSettings: { copyEnabled: false, pasteEnabled: false } };
@@ -140,10 +142,10 @@ test('auto-enable sends a validated state notification and invalidates cached do
   assert.equal(await manager.getDomainConfig('example.com'), null);
   state.autoEnableList = [{ domain: 'example.com', copyEnabled: false, pasteEnabled: true }];
   for (const listener of listeners) listener({ changes: { auto_enable_list: { newValue: state.autoEnableList } } });
-  assert.deepEqual(await manager.getDomainConfig('example.com'), state.autoEnableList[0]);
+  assert.deepEqual(JSON.parse(JSON.stringify(await manager.getDomainConfig('example.com'))), state.autoEnableList[0]);
   await manager.applyAutoEnableConfig(12, state.autoEnableList[0]);
   assert.ok(messages.length > 0);
   for (const message of messages) assert.equal(MessageUtils.isValidMessage(message), true);
   assert.equal(state.userSettings.copyEnabled, false);
-  assert.equal(state.userSettings.pasteEnabled, true);
+  assert.equal(state.userSettings.pasteEnabled, false);
 });

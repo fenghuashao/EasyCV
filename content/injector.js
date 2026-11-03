@@ -21,7 +21,7 @@
   }
   
   debugLog('Starting EasyCV Injector initialization...');
-  debugLog('Current URL:', window.location.href);
+
   debugLog('Document readyState:', document.readyState);
   
   window.EasyCVInjected = true;
@@ -46,8 +46,8 @@
   debugLog('✓ Original functions saved');
   
   /**
-   * 注册吞没名单：命中源码正则的监听器直接不予注册，破坏性最强，只保留纯限制向事件。
-   * B站实测 keydown/mousedown 类吞没是播放器快捷键等功能的主要死因，故退出本名单；
+   * 受保护的内联事件名单。addEventListener 始终保留注册，仅在运行时按模式解除限制。
+   * 键盘和鼠标事件使用下方的精确门控，保护播放器快捷键与表单交互；
    * mouseup 无主流站点用于复制限制，整体移除
    */
   const swallowEvents = [
@@ -65,6 +65,9 @@
    * （mousedown 级选择封锁、Ctrl+C/V/X 快捷键封锁）
    */
   const neutralizeEvents = [...swallowEvents, 'mousedown', 'keydown', 'keyup'];
+  let copyEnabled = document.documentElement.dataset.easycvCopyEnabled === '1';
+  let pasteEnabled = document.documentElement.dataset.easycvPasteEnabled === '1';
+  const modeAllows = type => type === 'paste' ? pasteEnabled : copyEnabled;
 
   // on* 内联事件属性选择器与名称列表（供 querySelectorAll 与 MutationObserver attributeFilter）
   const onAttributeSelector = swallowEvents.map(event => `[on${event}]`).join(',');
@@ -76,16 +79,18 @@
   function shouldNeutralize(event) {
     try {
       const type = String(event.type).toLowerCase();
-      if (!neutralizeEvents.includes(type)) return false;
+      if (!injectorActive || !neutralizeEvents.includes(type)) return false;
 
       // keydown/keyup 仅在组合键时中和：精准击穿 Ctrl+C/V/X 封锁（文库类），
       // 放行播放器空格/方向键等单键 preventDefault（B站实测误伤来源）
       if (type === 'keydown' || type === 'keyup') {
-        return Boolean(event.ctrlKey || event.metaKey);
+        const key = String(event.key || '').toLowerCase();
+        return Boolean(event.ctrlKey || event.metaKey) && ((copyEnabled && ['c', 'x', 'a'].includes(key)) || (pasteEnabled && key === 'v'));
       }
 
       // mousedown 中和用于击穿 mousedown 级选择封锁；目标在输入域内时不中和，
       // 保护输入框与富文本编辑器工具栏的焦点保持（toolbar 靠 mousedown preventDefault 防失焦）
+      if (!modeAllows(type)) return false;
       if (type === 'mousedown') {
         const target = event.target;
         return !(target && typeof target.closest === 'function'
@@ -123,7 +128,7 @@
   let restrictiveCheckErrorCount = 0;
   
   // 注入即视为激活；EASYCV_DISABLE / EASYCV_ENABLE 消息翻转此标志
-  let injectorActive = true;
+  let injectorActive = copyEnabled || pasteEnabled;
 
   /**
    * 重写addEventListener以拦截限制性事件监听器
@@ -131,7 +136,7 @@
   const overriddenAddEventListener = function(type, listener, options) {
     // String() coercion 与原生 WebIDL 行为一致（原生会把 null 等转为字符串），
     // 避免拦截判断本身比原生方法先抛错
-    if (swallowEvents.includes(String(type).toLowerCase())) {
+    if (injectorActive && modeAllows(String(type).toLowerCase()) && swallowEvents.includes(String(type).toLowerCase())) {
       // 检查监听器是否可能是限制性的
       if (isRestrictiveListener(listener)) {
         debugLog(`EasyCV: Intercepted restrictive ${type} listener`);
@@ -147,11 +152,11 @@
             interceptedListeners.get(this).set(type, { listener, options });
           }
         } catch (error) {
-          console.warn('EasyCV: Failed to record intercepted listener (swallow still applied):', error);
+          console.warn('EasyCV: Failed to record intercepted listener (runtime protection still active):', error);
         }
 
-        // 不添加限制性监听器
-        return;
+        // Preserve registration, identity, once/signal and removal semantics.
+        // Restrictions are neutralized at dispatch time only while the selected mode is on.
       }
     }
     
@@ -247,7 +252,18 @@
    * 应用原型级重写。必须在页面脚本注册监听器之前执行（document_start 时机），
    * 禁用后重新启用时需再次调用以恢复重写
    */
+  const eventDescriptors = {};
+  for (const prop of ['returnValue', 'cancelBubble']) {
+    eventDescriptors[prop] = Object.getOwnPropertyDescriptor(Event.prototype, prop);
+  }
   function applyPrototypeOverrides() {
+    for (const [prop, descriptor] of Object.entries(eventDescriptors)) {
+      if (!descriptor?.configurable || !descriptor.set) continue;
+      Object.defineProperty(Event.prototype, prop, { ...descriptor, set(value) {
+        if (shouldNeutralize(this) && (prop === 'returnValue' ? value === false : value === true)) return;
+        descriptor.set.call(this, value);
+      } });
+    }
     EventTarget.prototype.addEventListener = overriddenAddEventListener;
     Event.prototype.preventDefault = overriddenPreventDefault;
     Event.prototype.stopPropagation = overriddenStopPropagation;
@@ -266,111 +282,54 @@
   }
 
   // 注入即应用（此时处于 document_start，页面脚本尚未注册限制性监听器）
-  applyPrototypeOverrides();
+  if (injectorActive) applyPrototypeOverrides();
   
   /**
    * 移除现有的限制性事件监听器（增强安全版本）
    */
   function removeExistingRestrictiveListeners() {
-    try {
-      // 限制查询范围，避免性能问题
-      const selectors = [
-        'body', 'html', 'div', 'p', 'span', 'article', 'section',
-        'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'td', 'th'
-      ];
-      
-      selectors.forEach(selector => {
-        try {
-          const elements = document.querySelectorAll(selector);
-          
-          elements.forEach(element => {
-            if (!element || !element.nodeType) return;
-            
-            swallowEvents.forEach(eventType => {
-              try {
-                const handlerProperty = `on${eventType}`;
-                const inlineHandler = element[handlerProperty];
-                
-                if (inlineHandler && isRestrictiveListener(inlineHandler)) {
-                  debugLog(`EasyCV: Removed restrictive inline ${eventType} handler`);
-                  element[handlerProperty] = null;
-                }
-                
-                // 同时检查属性形式的处理器
-                if (element.hasAttribute(handlerProperty)) {
-                  const attrHandler = element.getAttribute(handlerProperty);
-                  if (attrHandler && isRestrictiveListener(attrHandler)) {
-                    debugLog(`EasyCV: Removed restrictive ${handlerProperty} attribute`);
-                    element.removeAttribute(handlerProperty);
-                  }
-                }
-              } catch (error) {
-                console.warn(`EasyCV: Error processing ${eventType} on element:`, error);
-              }
-            });
-          });
-        } catch (error) {
-          console.warn(`EasyCV: Error querying ${selector} elements:`, error);
-        }
-      });
-    } catch (error) {
-      console.error('EasyCV: Error in removeExistingRestrictiveListeners:', error);
-    }
+    document.querySelectorAll('*').forEach(cleanElementRestrictiveAttributes);
   }
   
   /**
    * 重写常见的禁用函数
    */
+  const documentHandlers = {};
   function overrideCommonDisableFunctions() {
-    // 重写document.onselectstart
-    Object.defineProperty(document, 'onselectstart', {
-      get: function() { return null; },
-      set: function(value) {
-        debugLog('EasyCV: Blocked attempt to set document.onselectstart');
-        // 不设置限制性处理器
-      },
-      configurable: true
-    });
-    
-    // 重写document.oncontextmenu
-    Object.defineProperty(document, 'oncontextmenu', {
-      get: function() { return null; },
-      set: function(value) {
-        debugLog('EasyCV: Blocked attempt to set document.oncontextmenu');
-      },
-      configurable: true
-    });
-    
-    // 重写document.ondragstart
-    Object.defineProperty(document, 'ondragstart', {
-      get: function() { return null; },
-      set: function(value) {
-        debugLog('EasyCV: Blocked attempt to set document.ondragstart');
-      },
-      configurable: true
+    if (!copyEnabled) return;
+    ['onselectstart', 'oncontextmenu', 'ondragstart'].forEach(prop => {
+      if (Object.hasOwn(documentHandlers, prop)) return;
+      const descriptor = Object.getOwnPropertyDescriptor(document, prop);
+      let current = document[prop];
+      documentHandlers[prop] = { descriptor, getValue: () => current };
+      Object.defineProperty(document, prop, {
+        get: () => isRestrictiveListener(current) ? null : current,
+        set: value => { current = value; }, configurable: true
+      });
     });
   }
+
+  // An array avoids depending on page-provided Map implementations for restoration.
+  const cleanedHandlers = [];
 
   /**
    * 清理单个元素上的限制性 on* 属性/属性值
    */
   function cleanElementRestrictiveAttributes(el) {
-    swallowEvents.forEach(eventType => {
-      const attrName = `on${eventType}`;
+    if (!injectorActive) return;
+    swallowEvents.forEach(type => {
+      if (!modeAllows(type)) return;
+      const name = `on${type}`;
       try {
-        if (el.hasAttribute && el.hasAttribute(attrName)) {
-          const handler = el.getAttribute(attrName);
-          if (handler && isRestrictiveListener(handler)) {
-            el.removeAttribute(attrName);
-          }
-        }
-        const propHandler = el[attrName];
-        if (typeof propHandler === 'function' && isRestrictiveListener(propHandler)) {
-          el[attrName] = null;
-        }
-      } catch (error) {
-        console.warn(`EasyCV: Error cleaning ${attrName}:`, error);
-      }
+        const attr = el.getAttribute?.(name) ?? null;
+        const handler = el[name];
+        if (!isRestrictiveListener(attr) && !isRestrictiveListener(handler)) return;
+        let saved = cleanedHandlers.find(item => item.el === el && item.name === name);
+        if (!saved) { saved = { el, name }; cleanedHandlers.push(saved); }
+        saved.attr = attr; saved.handler = handler;
+        el.removeAttribute?.(name);
+        el[name] = null;
+      } catch (error) { console.warn('EasyCV: Inline cleanup skipped'); }
     });
   }
 
@@ -452,6 +411,7 @@
    * 强制启用文本选择（增强版本）
    */
   function forceEnableTextSelection() {
+    if (!copyEnabled) return;
     try {
       // 检查是否已经注入过样式
       if (document.querySelector('style[data-easycv-injected="text-selection"]')) {
@@ -519,6 +479,7 @@
       // 全局样式穿不透 shadow 边界，必须在 root 内部注入。
       // 用 adoptedStyleSheets 而非 <style> 子元素：root.innerHTML 赋值会清空全部
       // 子节点（包括注入的 style），但 adoptedStyleSheets 不受其影响
+      if (copyEnabled && shadowSheets && processedShadowRoots) {
       const sheet = new CSSStyleSheet();
       sheet.replaceSync(`
         * {
@@ -529,6 +490,7 @@
       `);
       root.adoptedStyleSheets = [...root.adoptedStyleSheets, sheet];
       if (shadowSheets) shadowSheets.set(root, sheet);
+      }
 
       // 清理已有的内联限制属性，并对 shadow 树挂动态保护
       if (root.querySelectorAll) {
@@ -586,6 +548,9 @@
         dynamicObserver = null;
       }
       
+      for (const [prop, descriptor] of Object.entries(eventDescriptors)) {
+        if (descriptor?.configurable) Object.defineProperty(Event.prototype, prop, descriptor);
+      }
       // 恢复原始的事件方法
       if (originalFunctions.addEventListener) {
         EventTarget.prototype.addEventListener = originalFunctions.addEventListener;
@@ -633,8 +598,20 @@
 
       // 解除 document.on* 属性劫持（这些以 own property 形式定义在 document 上，
       // delete 后原型链上的原始描述符自然生效）
-      ['onselectstart', 'oncontextmenu', 'ondragstart'].forEach(prop => {
-        try { delete document[prop]; } catch (e) { /* 属性不可删除时忽略 */ }
+      Object.entries(documentHandlers).forEach(([prop, saved]) => {
+        try {
+          if (saved.descriptor) Object.defineProperty(document, prop, saved.descriptor);
+          else delete document[prop];
+          document[prop] = saved.getValue();
+          delete documentHandlers[prop];
+        } catch { /* A page may make its property non-configurable. */ }
+      });
+      cleanedHandlers.splice(0).forEach(({ el, name, attr, handler }) => {
+        try {
+          if (el[name] != null || el.getAttribute?.(name) != null) return;
+          if (attr !== null) el.setAttribute(name, attr);
+          else el[name] = handler;
+        } catch { /* A detached or replaced node needs no intervention. */ }
       });
       
       // 清理拦截的监听器映射（页面可能篡改 Map，单独容错以免中断后续样式清理）
@@ -698,12 +675,11 @@
       restoreOriginalFunctions();
       window.postMessage({ type: 'EASYCV_DISABLED' }, '*');
     } else if (event.data?.type === 'EASYCV_ENABLE') {
-      debugLog('EasyCV: Re-enabling injector');
-      // 禁用后重新启用时，原型重写已被 restoreOriginalFunctions 还原，需要重新应用
-      if (!injectorActive) {
-        injectorActive = true;
-        applyPrototypeOverrides();
-      }
+      restoreOriginalFunctions();
+      copyEnabled = event.data.copyEnabled === true;
+      pasteEnabled = event.data.pasteEnabled === true;
+      injectorActive = copyEnabled || pasteEnabled;
+      if (injectorActive) applyPrototypeOverrides();
       initializeInjector();
     }
   });

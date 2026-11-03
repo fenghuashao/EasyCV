@@ -1,7 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const archiver = require('archiver');
-const { execSync } = require('child_process');
+const { ZipFile } = require('yazl');
+const { pipeline } = require('stream/promises');
+const { execFileSync } = require('child_process');
+const { verifyBuild, verifyZip } = require('./release-checks');
 const os = require('os');
 
 /**
@@ -59,31 +61,45 @@ class Packager {
    * 创建ZIP包
    */
   async createZip(outputPath) {
-    return new Promise((resolve, reject) => {
-      const output = fs.createWriteStream(outputPath);
-      const archive = archiver('zip', {
-        zlib: { level: 9 } // 最高压缩级别
-      });
-
-      output.on('close', () => {
-        const size = this.formatFileSize(archive.pointer());
-        console.log(`✅ 打包完成: ${path.basename(outputPath)} (${size})`);
-        resolve({
-          path: outputPath,
-          size: archive.pointer()
-        });
-      });
-
-      output.on('error', reject);
-      archive.on('error', reject);
-
-      archive.pipe(output);
-
-      // 添加dist目录中的所有文件
-      archive.directory(this.distDir, false);
-
-      archive.finalize();
+    const verified = verifyBuild(this.sourceDir, this.distDir);
+    const receiptPath = outputPath + '.verification.json';
+    if (fs.existsSync(outputPath) || fs.existsSync(receiptPath)) throw Error('Package or verification already exists');
+    const archive = new ZipFile();
+    const inputs = new Set();
+    let failure;
+    archive.on('error', error => {
+      failure ||= error;
+      archive.outputStream.destroy(error);
+      for (const input of inputs) input.destroy();
     });
+    const output = fs.createWriteStream(outputPath, { flags: 'wx' });
+    const writing = pipeline(archive.outputStream, output);
+    try {
+      for (const name of Object.keys(verified.files).sort()) {
+        const source = path.join(this.distDir, name);
+        const stats = fs.statSync(source);
+        // Lazy streams keep only the current file open and allow cleanup on write failures.
+        archive.addReadStreamLazy(name, { compressionLevel: 9, mtime: stats.mtime, mode: stats.mode, size: stats.size }, callback => {
+          if (failure) return callback(failure);
+          const input = fs.createReadStream(source);
+          inputs.add(input);
+          input.once('error', error => archive.emit('error', error));
+          input.once('close', () => inputs.delete(input));
+          callback(null, input);
+        });
+      }
+      archive.end();
+      await writing;
+    } catch (error) {
+      failure ||= error;
+      archive.emit('error', error); // Stop queued lazy entries as well as the output pipeline.
+      await writing.catch(() => {});
+      throw error;
+    }
+    const verification = verifyZip(this.sourceDir, this.distDir, outputPath);
+    fs.writeFileSync(receiptPath, JSON.stringify(verification, null, 2), { flag: 'wx' });
+    console.log(`✅ 打包完成: ${path.basename(outputPath)} (${this.formatFileSize(verification.zipBytes)})`);
+    return { path: outputPath, size: verification.zipBytes };
   }
 
   /**
@@ -105,25 +121,20 @@ class Packager {
 
       // 如果解压目录已存在，先删除
       if (fs.existsSync(extractDir)) {
-        console.log(`🗑️  删除已存在的解压目录: ${path.basename(extractDir)}`);
-        fs.rmSync(extractDir, { recursive: true, force: true });
+        throw Error('Extraction directory already exists');
       }
 
       console.log(`📂 正在解压到: ${path.basename(extractDir)}`);
       
-      let command;
       if (platform === 'win32') {
-        // Windows环境：使用PowerShell的Expand-Archive命令解压
-        command = `powershell -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${extractDir}' -Force"`;
-      } else if (platform === 'darwin') {
-        // macOS环境：使用内置的unzip命令解压
-        // 先创建目标目录
-        fs.mkdirSync(extractDir, { recursive: true });
-        command = `unzip -q "${zipPath}" -d "${extractDir}"`;
+        const quote = value => "'" + value.replace(/'/g, "''") + "'";
+        execFileSync('powershell', ['-NoProfile', '-NonInteractive', '-Command',
+          `Expand-Archive -LiteralPath ${quote(zipPath)} -DestinationPath ${quote(extractDir)}`], { stdio: 'pipe', windowsHide: true });
+      } else {
+        fs.mkdirSync(extractDir);
+        execFileSync('unzip', ['-q', zipPath, '-d', extractDir], { stdio: 'pipe' });
       }
-      
-      execSync(command, { stdio: 'pipe' });
-      
+
       console.log(`✅ 解压完成: ${path.relative(this.sourceDir, extractDir)}`);
       return extractDir;
       
@@ -138,7 +149,9 @@ class Packager {
    * 生成发布说明
    */
   generateReleaseNotes(versionInfo, packageInfo) {
-    const releaseNotes = `# EasyCV v${versionInfo.version} 发布包
+    const releaseNotes = `# EasyCV v${versionInfo.version} 本地候选包
+
+> 本地构建产物；浏览器、同 ID 升级及商店验收未由此脚本完成，不代表可以发布。
 
 ## 📦 包信息
 - **版本**: ${versionInfo.version}
@@ -178,11 +191,11 @@ class Packager {
 - **网站访问范围**: ${versionInfo.hostPermissions.join(', ')}
 
 ---
-*此发布包由自动化脚本生成*
+*此候选包由本地脚本生成，发布验收须单独完成*
 `;
 
-    const notesPath = path.join(this.outputDir, `EasyCV-v${versionInfo.version}-README.md`);
-    fs.writeFileSync(notesPath, releaseNotes);
+    const notesPath = path.join(this.outputDir, path.basename(packageInfo.path, '.zip') + '-README.md');
+    fs.writeFileSync(notesPath, releaseNotes, { flag: 'wx' });
     console.log(`📝 生成发布说明: ${path.basename(notesPath)}`);
     
     return notesPath;
@@ -247,7 +260,7 @@ class Packager {
       
     } catch (error) {
       console.error('❌ 打包失败:', error.message);
-      process.exit(1);
+      throw error;
     }
   }
 }
@@ -255,7 +268,7 @@ class Packager {
 // 执行打包
 if (require.main === module) {
   const packager = new Packager();
-  packager.package();
+  packager.package().catch(() => { process.exitCode = 1; });
 }
 
 module.exports = Packager;

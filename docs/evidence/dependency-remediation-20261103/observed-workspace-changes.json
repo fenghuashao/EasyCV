@@ -1,0 +1,52 @@
+[
+  {
+    "path": "_locales/en/messages.json",
+    "before": "5733defed4f6e6684a009d3b591d7ebf327ba617c4b0ef3ce697c6bed18b87ab",
+    "current": "9fabd198166269643761ca1e4c46b7f99801465cd070987b17ae4684ef3aa1d4"
+  },
+  {
+    "path": "_locales/zh_CN/messages.json",
+    "before": "1dce4a7ca492333f752c3cca7fdd823f42b51f4eb717d10b228b56a8f2b67ec6",
+    "current": "4f200db0f54fe678597a870006130acdbb0ccafcd401cdddc3fe98905b01954d"
+  },
+  {
+    "path": "manifest.json",
+    "before": "d51cf18e632ca3821c9efc36d54b9a3b62f5fcd58671e7979cc1bba720a03805",
+    "current": "c2711278b2996473c64585d7ce251af61b3d202fa82dcdd7e8646007b60bf081"
+  },
+  {
+    "path": "options/options.html",
+    "before": "b7b1e750fbf599076db6d18d1a3a176d72e4f2b56073a633188ac6bd5187be66",
+    "current": "3ac28eb184621ccaccdeb4588973bdd30b9994b49e7ec4a59a63336924ff3e11"
+  },
+  {
+    "path": "package-lock.json",
+    "before": "73e8ed94ac741d9183bddcdf1373e6b170982d9a66172956cf06761b45bef749",
+    "current": "892801d01749cca980e808695eaa2cf0659fefbd2f401d5a0807ab0b350a613b"
+  },
+  {
+    "path": "package.json",
+    "before": "7d6ade710b581bdc8454434ce184d07ea0e5470e522c2fd16c909579f0b3c6b6",
+    "current": "ca8ca4294859457c708ded3b8434aea0037fbb91479e285ec528252c094ce6d1"
+  },
+  {
+    "path": "popup/popup.html",
+    "before": "8d753a761d393e6e5ffd9a6245fe5d4c9498d9bb27e44b17bb260911e0ce5734",
+    "current": "ca0bef600ee4dd7ac22d144191401a4bd4b85886a42b3f893263442d58e9d4ce"
+  },
+  {
+    "path": "scripts/package.js",
+    "before": "ddfa68b129306f8fa27d784f5689398cb3f8a8a12d8859c2b0de987bd9fd5dd2",
+    "current": "22fafa2595f2bf6e4e061773c6f02aff6d9787488d247ee48aa0618781ee810e"
+  },
+  {
+    "path": "test/unit/release-checks.test.mjs",
+    "before": "91274749662098a8f559c0383910c63d9a4a94ff497df94eef6843079d5f00c4",
+    "current": "a66921e67e34fab31c5c0cb4d68a472d425be5be6de0e18c607792fc324c1556"
+  },
+  {
+    "path": "utils/i18n-utils.js",
+    "before": "574feeb437a5fd5196d1084a1688b5ab91e16c2d9854202ddf951ed32b742b82",
+    "current": "02540f03c84f5238ad0c1b8a36ee537de25288d73d653f68a0b0c82691a48435"
+  }
+]

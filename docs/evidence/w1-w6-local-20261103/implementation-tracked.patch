@@ -1,0 +1,3704 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index c2f1bf1..ca939e0 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -6,6 +6,13 @@
+ 
+ ## [Unreleased]
+ 
++### W1–W6 本地可靠性整改（2026-11-03，版本待核实）
++- 简化诊断改为本机存储；旧数据先验证迁移，停止自动域名访问记录，保留用户手工规则及恢复副本。
++- 设置写入统一排队合并，sync 失败明确报错；规则编辑改为草稿保存，导入整体验证，旧名单与通配域语义统一。
++- 状态不可确认时停止页面干预；复制/粘贴独立作用，保留页面监听器注册并在关闭时恢复内联处理器。
++- 发布脚本改为真实检查，校验版本/文件/ZIP，独立输出并拒绝旧构建与覆盖；兼容更新四个构建依赖节点。
++- 中英界面增加恢复及迁移提示，统计只称启用次数；[本地验收报告](./EASYCV-W1-W6-LOCAL-ACCEPTANCE.md) 记录浏览器、依赖及商店的剩余门禁。
++
+ ## [1.1.2] - 2026-11-01
+ 
+ ### 权限整改（本地候选，尚未提交商店）
+diff --git a/PRIVACY.md b/PRIVACY.md
+index f81b869..42acca5 100644
+--- a/PRIVACY.md
++++ b/PRIVACY.md
+@@ -1,65 +1,57 @@
+-# EasyCV 隐私政策
++# EasyCV 隐私说明（下一版本地草稿）
+ 
+-生效日期：2026-11-01
++更新日期：2026-11-03。**这是 W1–W6 本地整改源码的披露草稿，版本号待后台核实；尚未发布，不代表当前商店版本或公开隐私页面已更新。**
+ 
+-EasyCV（以下简称"本扩展"）尊重并保护用户隐私。本政策说明本扩展如何处理信息。
++## 数据如何处理
+ 
+-## 我们不收集任何数据
++EasyCV 在页面中处理选择、复制和粘贴相关的样式及事件限制，不读取或保存剪贴板内容，不把页面正文、完整浏览 URL、查询参数或浏览器标识写入诊断。没有开发者遥测、广告或自动上传诊断的服务。
+ 
+-本扩展不收集、存储（在开发者服务器上）、传输或共享任何用户数据，包括但不限于：浏览历史、页面内容、个人身份信息、位置信息。本扩展没有任何遥测、统计上报或广告组件，代码中不存在任何网络请求。
++不同的数据使用不同的浏览器存储区域：
+ 
+-## 本地存储说明
++| 数据 | 存储与用途 |
++| --- | --- |
++| 功能开关、用户设置、手工自动启用规则、排除规则 | `chrome.storage.sync`，可能由浏览器按账号设置同步到其他设备；包含用户配置的域名，不是开发者服务器收集的浏览历史 |
++| 启用次数、当日计数及日期 | `chrome.storage.local`，只在本机展示；可关闭计数，不记录访问域名，不代表真实复制成功次数或成功率 |
++| 最近最多 10 条简化诊断 | `chrome.storage.local`；固定错误码、模块以及可用时的时间和扩展版本；不含 URL、sender 对象、UA、页面正文、异常正文或堆栈 |
++| 旧版本机配置副本 | 保留在本机，提供导出及用户确认恢复；同步设置优先，不静默用副本覆盖同步设置 |
++| 旧版统计与域名交互记录 | 升级迁移时先在 `chrome.storage.local` 保留历史备份并校验，再移除对应 sync 副本；新代码停止新增域名访问统计和访问时间记录 |
+ 
+-以下数据仅保存在你的浏览器中（chrome.storage.sync / chrome.storage.local，由浏览器提供，可能通过你的 Google 账号同步，不经过开发者）：
++旧版本可能把错误详情、统计及交互记录保存在 sync。迁移将诊断脱敏，丢弃旧反馈草稿内容，并把历史统计／交互记录移为本机备份。**若本机写入、校验或同步清理失败，尚未完成的同步副本会保留，设置页会提示重试。**不能保证浏览器账号的远端历史副本或其他仍运行旧版的设备立即同步删除。设置和手工规则不因隐私迁移被删除。
+ 
+-- 扩展设置（功能开关、自动解锁名单、站点排除列表）
+-- 使用统计（处理站点数、激活次数，仅本地展示）
+-- 错误报告与用户反馈草稿（仅本地保留最近 10/20 条，供你排查问题时参考，不会自动发送）
++关闭计数只停止新增计数。删除数据可使用「设置 → 高级设置 → 清除所有数据」；该操作也删除设置、规则、简化诊断及历史备份。若任何存储操作失败，界面会报告失败，请重试并检查结果。需要保留配置时先导出；配置导出不包含旧访问历史或诊断。
+ 
+-你可以随时在扩展设置页「高级设置 → 清除所有数据」删除以上全部内容，或卸载扩展自动清除。
++## 用户主动打开的外部页面
+ 
+-后续优化源码的反馈入口（尚未包含在锁定的 1.1.2 ZIP）：用户主动点击后打开 GitHub issue 草稿，仅自动填写扩展版本及空白模板，不自动附带浏览地址、查询参数或浏览器明细。你可以编辑、放弃或自行提交草稿；提交内容由 GitHub 按其政策处理。帮助指南直接在扩展内显示。
++“反馈”只在点击后打开 GitHub issue 草稿，自动填写扩展版本和空白模板，不自动附带浏览地址或诊断。用户自行编辑、放弃或提交；提交内容按 GitHub 的政策处理。帮助内容在扩展内显示，仓库及文档链接由用户主动打开。请不要在反馈中填写密码、令牌、私密正文或含敏感参数的网址。
+ 
+-## 权限说明
++## 权限与资源
+ 
+-1.1.2 移除未使用的 `scripting` 与冗余的 `activeTab` 权限。保留 `storage`（设置、自动启用与排除列表、统计的浏览器存储）和 `contextMenus`（右键操作）。保留 `<all_urls>` 网站访问范围，用于任意普通网页的静态 Content Script、自动解锁及标签页 URL 识别；页面脚本通过扩展内的 web-accessible resource 加载。商店权限说明应与此一致。
++保留 `storage`（上述配置及本机数据）和 `contextMenus`（右键功能）；未申请 `scripting`、`activeTab` 或剪贴板读写权限。现有 `<all_urls>` 范围用于普通网页的静态内容脚本和站点判断；排除规则与总关闭优先。页面可访问资源已收缩为随扩展打包的 `content/injector.js`，不对页面公开工具脚本和图标目录。
+ 
+-## 开源可审计
++公开隐私 URL、商店数据声明、权限理由与最终包的一致性仍需发布前核验。
+ 
+-本扩展全部源代码以 MIT 协议公开：https://github.com/fenghuashao/EasyCV ，欢迎审查。
+-
+-## 联系我们
+-
+-隐私相关问题请通过 GitHub Issues 反馈：https://github.com/fenghuashao/EasyCV/issues
++源码和反馈：[EasyCV 仓库](https://github.com/fenghuashao/EasyCV)、[GitHub Issues](https://github.com/fenghuashao/EasyCV/issues)。
+ 
+ ---
+ 
+-# EasyCV Privacy Policy
+-
+-Effective date: 2026-11-01
+-
+-EasyCV ("the extension") respects your privacy.
+-
+-## We collect nothing
+-
+-The extension does not collect, store (on any developer server), transmit, or share any user data — including browsing history, page content, personal identity, or location. It contains no telemetry, analytics, or ads, and makes no network requests of any kind.
+-
+-## What stays in your browser
++# EasyCV Privacy Notice (local draft for the next version)
+ 
+-The following data lives only in your browser's own chrome.storage (synced by your Google account, never touching the developer):
++Updated: 2026-11-03. **This draft describes the local W1–W6 changes. The release version is not locked, and neither the store listing nor the public policy has been updated by this work.**
+ 
+-- Extension settings (toggles, auto-unlock list, site exclusion list)
+-- Usage statistics shown locally
+-- Recent error reports & feedback drafts (last 10/20 entries, local only, never sent automatically)
++EasyCV adjusts selection, copy and paste restrictions in the page. It does not read or retain clipboard contents, or put page text, complete browsing URLs, query parameters, browser identifiers, exception text or stacks in diagnostics. There is no developer telemetry, advertising or automatic diagnostic-upload service.
+ 
+-You can wipe everything via Settings → Advanced → Clear all data, or by uninstalling.
++- Settings, manual site rules and exclusions use `chrome.storage.sync`. Your browser may synchronize these through your account. Configured domain names are user settings, rather than automatically collected visit history.
++- Activation counts and the current usage date use `chrome.storage.local`. Counting can be disabled. Counts do not measure successful copying or unlock success rates; new visited-domain and visit-time collection has stopped.
++- Up to 10 minimal diagnostic entries stay in local storage: a fixed code, module, and timestamp/extension version when available. They do not contain URLs, sender objects, user-agent details or clipboard/page contents.
++- Legacy local settings remain available for export and explicit restoration. Synced settings take priority. Recovery does not silently replace synced values.
++- Legacy statistics and interaction records are backed up locally and verified before the sync copies are removed. Old diagnostic records are sanitized and old feedback draft contents are discarded. Settings and manual rules are retained.
+ 
+-The feedback flow in the next development iteration (not included in the locked 1.1.2 ZIP) opens a GitHub issue draft only when you click Feedback. It pre-fills the extension version and a blank template, without browsing URLs, query parameters or browser details. You can edit, discard or submit it yourself; submitted content is handled by GitHub under its policies. Help is shown locally in the extension.
++Migration can fail when local writes, verification or sync removal fail. Unremoved sync copies remain available for retry, with a notice in Settings. Deletion of remote account history or data on another device still running an old version cannot be guaranteed immediately.
+ 
+-## Permissions
++Settings → Advanced → Clear all data deletes settings, rules, local counts, diagnostics and legacy backups. Failures are reported for retry. Export settings first if you want to keep them; configuration exports exclude visit history and diagnostics. Disabling counts does not delete previously stored counts.
+ 
+-Version 1.1.2 removes unused `scripting` and redundant `activeTab`. It retains `storage` for settings, lists and local statistics, and `contextMenus` for context menu actions. `<all_urls>` remains for static content scripts, automatic unlocking and tab URL identification on ordinary web pages. The page script is loaded from a packaged web-accessible resource.
++Feedback opens a GitHub issue draft only on your click, with the extension version and a blank template. No browsing URL or diagnostic bundle is attached automatically. You decide whether to edit, discard or submit; GitHub handles submitted content under its policies. Avoid passwords, tokens, private page text and sensitive URLs. Help is displayed inside the extension.
+ 
+-## Open source
++The extension retains `storage`, `contextMenus` and the existing `<all_urls>` scope. It does not request `scripting`, `activeTab` or clipboard permissions. Exclusions and the global off switch take priority. Only the packaged `content/injector.js` is exposed as a web-accessible resource. Public policy and store disclosures must still be checked against the final release.
+ 
+-Fully auditable under MIT: https://github.com/fenghuashao/EasyCV
++[Source](https://github.com/fenghuashao/EasyCV) · [Contact](https://github.com/fenghuashao/EasyCV/issues)
+diff --git a/_locales/en/messages.json b/_locales/en/messages.json
+index 68d6d7c..805b6c1 100644
+--- a/_locales/en/messages.json
++++ b/_locales/en/messages.json
+@@ -32,7 +32,7 @@
+   "copy_check_enabled": { "message": "Copy unlock is on. Return to the page, select text and copy it to verify the result.", "description": "Switch check, not proof of clipboard success" },
+   "copy_check_disabled": { "message": "Copy unlock is off on this page. Check the switches or site exclusions.", "description": "Switch check result" },
+   "usage_stats": { "message": "Usage Statistics", "description": "Statistics section title" },
+-  "total_sites": { "message": "Sites Processed", "description": "Stat label: sites processed" },
++  "total_sites": { "message": "Total activations", "description": "Stat label: sites processed" },
+   "today_usage": { "message": "Today's Usage", "description": "Stat label: today's usage" },
+   "success_rate": { "message": "Success Rate", "description": "Stat label: success rate" },
+   "settings": { "message": "Settings", "description": "Settings button" },
+@@ -109,7 +109,7 @@
+   "max_retries": { "message": "Max Retries", "description": "Setting label" },
+   "max_retries_desc": { "message": "Maximum retry attempts when detection fails", "description": "Setting description" },
+   "suffix_times": { "message": "times", "description": "Input suffix" },
+-  "whitelist_description": { "message": "Manage the list of sites where unlock features are auto-enabled", "description": "Auto-unlock management description" },
++  "whitelist_description": { "message": "Site rules override copy/paste defaults; exclusions and the global switch take priority. *.example.com matches subdomains only.", "description": "Auto-unlock management description" },
+   "add_website": { "message": "Add Website", "description": "Add website group title" },
+   "domain_placeholder": { "message": "Enter a domain, e.g. example.com", "description": "Domain input placeholder" },
+   "feature_selection": { "message": "Feature Selection", "description": "Feature selection title" },
+@@ -135,9 +135,9 @@
+   "import_settings": { "message": "Import Settings", "description": "Button" },
+   "reset_settings": { "message": "Reset Settings", "description": "Button" },
+   "clear_all_data": { "message": "Clear All Data", "description": "Button" },
+-  "stats_description": { "message": "View usage and effectiveness statistics of the extension", "description": "Statistics description" },
+-  "total_sites_count": { "message": "Total Sites Processed", "description": "Stat card" },
+-  "successful_count": { "message": "Successful Operations", "description": "Stat card" },
++  "stats_description": { "message": "Local activations only; this does not measure successful unlocking", "description": "Statistics description" },
++  "total_sites_count": { "message": "Activations today", "description": "Stat card" },
++  "successful_count": { "message": "Total activations", "description": "Stat card" },
+   "detailed_stats": { "message": "Detailed Statistics", "description": "Detailed statistics title" },
+   "th_site": { "message": "Site", "description": "Table header" },
+   "th_visits": { "message": "Visits", "description": "Table header" },
+@@ -169,7 +169,7 @@
+ 
+   "init_failed": { "message": "Initialization failed", "description": "Notification" },
+   "settings_saved": { "message": "Settings saved", "description": "Notification" },
+-  "save_failed": { "message": "Failed to save", "description": "Notification" },
++  "save_failed": { "message": "Save was not confirmed. Retry; export a backup before reloading.", "description": "Notification" },
+   "invalid_domain_empty": { "message": "Please enter a valid domain", "description": "Notification" },
+   "invalid_domain_format": { "message": "Invalid domain format", "description": "Notification" },
+   "domain_exists": { "message": "Domain already exists", "description": "Notification" },
+@@ -182,7 +182,7 @@
+       "domain": { "content": "$1", "example": "example.com" }
+     }
+   },
+-  "update_failed": { "message": "Update failed", "description": "Notification" },
++  "update_failed": { "message": "Update failed. The original rule and draft are preserved.", "description": "Notification" },
+   "domain_deleted": { "message": "Domain deleted", "description": "Notification" },
+   "delete_failed": { "message": "Delete failed", "description": "Notification" },
+   "editing_config": {
+@@ -212,7 +212,7 @@
+   "settings_exported": { "message": "Settings exported", "description": "Notification" },
+   "export_failed": { "message": "Export failed", "description": "Notification" },
+   "settings_imported": { "message": "Settings imported", "description": "Notification" },
+-  "import_failed": { "message": "Import failed, please check the file format", "description": "Notification" },
++  "import_failed": { "message": "Import failed. Check the file format, domains and switch types. Saving was not confirmed.", "description": "Notification" },
+   "confirm_reset": { "message": "Are you sure you want to reset all settings? This cannot be undone.", "description": "Confirmation dialog" },
+   "settings_reset": { "message": "Settings reset", "description": "Notification" },
+   "reset_failed": { "message": "Reset failed", "description": "Notification" },
+@@ -230,5 +230,17 @@
+   "icon_title_partial_copy": { "message": "EasyCV - Partially Enabled (Copy Only)", "description": "Icon tooltip" },
+   "icon_title_partial_paste": { "message": "EasyCV - Partially Enabled (Paste Only)", "description": "Icon tooltip" },
+   "icon_title_inactive": { "message": "EasyCV - Disabled", "description": "Icon tooltip" },
+-  "icon_title_default": { "message": "EasyCV - Ready", "description": "Icon tooltip" }
++  "icon_title_default": { "message": "EasyCV - Ready", "description": "Icon tooltip" },
++  "today_use": {"message": "Activations today"},
++  "local_stats_notice": {"message": "Only local activations are counted, not unlock success. Site visits are no longer recorded."},
++  "privacy_storage_notice": {"message": "Settings and manual rules may sync through your browser. Counts and minimal diagnostics stay on this device. Legacy visit data is retained in a local backup; Clear all data removes it."},
++  "local_statistics_toggle": {"message": "Count local activations (no visited domains)"},
++  "local_recovery_notice": {"message": "Legacy local settings found. Sync takes priority; missing keys use the local copy. Export a backup before restoring."},
++  "export_local_recovery": {"message": "Export local settings copy"},
++  "restore_local_recovery": {"message": "Restore from local settings"},
++  "confirm_restore_local": {"message": "Overwrite synced settings with keys from the local copy? Other keys and the local copy are retained. Export both copies first."},
++  "cancel_edit": {"message": "Cancel edit"},
++  "load_failed": {"message": "Settings are temporarily unavailable. Try again."},
++  "privacy_migration_pending": {"message": "Legacy migration is incomplete; the synced copies are still retained. Try again later."},
++  "retry_migration": {"message": "Retry migration"}
+ }
+diff --git a/_locales/zh_CN/messages.json b/_locales/zh_CN/messages.json
+index 1747ebf..60c4a24 100644
+--- a/_locales/zh_CN/messages.json
++++ b/_locales/zh_CN/messages.json
+@@ -32,7 +32,7 @@
+   "copy_check_enabled": { "message": "复制解锁已开启。请回到网页选中文字并实际复制，确认效果。", "description": "开关检查结果，不宣称真实复制成功" },
+   "copy_check_disabled": { "message": "当前页面的复制解锁未开启，请检查开关或站点排除设置。", "description": "开关检查结果" },
+   "usage_stats": { "message": "使用统计", "description": "统计区标题" },
+-  "total_sites": { "message": "已处理网站", "description": "统计标签：已处理网站" },
++  "total_sites": { "message": "累计启用次数", "description": "统计标签：已处理网站" },
+   "today_usage": { "message": "今日使用", "description": "统计标签：今日使用" },
+   "success_rate": { "message": "成功率", "description": "统计标签：成功率" },
+   "settings": { "message": "设置", "description": "设置按钮" },
+@@ -109,7 +109,7 @@
+   "max_retries": { "message": "重试次数", "description": "设置标签" },
+   "max_retries_desc": { "message": "检测失败时的最大重试次数", "description": "设置说明" },
+   "suffix_times": { "message": "次", "description": "输入框单位后缀" },
+-  "whitelist_description": { "message": "管理需要自动开启解锁功能的网站列表", "description": "自动解锁管理描述" },
++  "whitelist_description": { "message": "本站规则覆盖复制／粘贴默认值；排除列表和总开关优先。*.example.com 仅匹配子域名。", "description": "自动解锁管理描述" },
+   "add_website": { "message": "添加网站", "description": "添加网站分组标题" },
+   "domain_placeholder": { "message": "输入网站域名，如：example.com", "description": "域名输入框占位" },
+   "feature_selection": { "message": "功能选择", "description": "功能选择标题" },
+@@ -135,9 +135,9 @@
+   "import_settings": { "message": "导入设置", "description": "按钮" },
+   "reset_settings": { "message": "重置设置", "description": "按钮" },
+   "clear_all_data": { "message": "清除所有数据", "description": "按钮" },
+-  "stats_description": { "message": "查看插件的使用情况和效果统计", "description": "使用统计描述" },
+-  "total_sites_count": { "message": "处理网站总数", "description": "统计卡片" },
+-  "successful_count": { "message": "成功处理次数", "description": "统计卡片" },
++  "stats_description": { "message": "仅显示本机启用次数，不代表页面解锁成功", "description": "使用统计描述" },
++  "total_sites_count": { "message": "今日启用次数", "description": "统计卡片" },
++  "successful_count": { "message": "累计启用次数", "description": "统计卡片" },
+   "detailed_stats": { "message": "详细统计", "description": "详细统计标题" },
+   "th_site": { "message": "网站", "description": "表头" },
+   "th_visits": { "message": "访问次数", "description": "表头" },
+@@ -169,7 +169,7 @@
+ 
+   "init_failed": { "message": "初始化失败", "description": "通知" },
+   "settings_saved": { "message": "设置已保存", "description": "通知" },
+-  "save_failed": { "message": "保存失败", "description": "通知" },
++  "save_failed": { "message": "保存未确认，请重试；重新载入前可先导出备份。", "description": "通知" },
+   "invalid_domain_empty": { "message": "请输入有效的域名", "description": "通知" },
+   "invalid_domain_format": { "message": "域名格式不正确", "description": "通知" },
+   "domain_exists": { "message": "域名已存在", "description": "通知" },
+@@ -182,7 +182,7 @@
+       "domain": { "content": "$1", "example": "example.com" }
+     }
+   },
+-  "update_failed": { "message": "更新失败", "description": "通知" },
++  "update_failed": { "message": "更新失败，原规则和编辑草稿已保留。", "description": "通知" },
+   "domain_deleted": { "message": "域名已删除", "description": "通知" },
+   "delete_failed": { "message": "删除失败", "description": "通知" },
+   "editing_config": {
+@@ -212,7 +212,7 @@
+   "settings_exported": { "message": "设置已导出", "description": "通知" },
+   "export_failed": { "message": "导出失败", "description": "通知" },
+   "settings_imported": { "message": "设置已导入", "description": "通知" },
+-  "import_failed": { "message": "导入失败，请检查文件格式", "description": "通知" },
++  "import_failed": { "message": "导入失败：请检查文件格式、域名和开关类型；设置未确认保存。", "description": "通知" },
+   "confirm_reset": { "message": "确定要重置所有设置吗？此操作不可撤销。", "description": "确认对话框" },
+   "settings_reset": { "message": "设置已重置", "description": "通知" },
+   "reset_failed": { "message": "重置失败", "description": "通知" },
+@@ -230,5 +230,17 @@
+   "icon_title_partial_copy": { "message": "EasyCV - 部分启用（仅复制）", "description": "图标提示" },
+   "icon_title_partial_paste": { "message": "EasyCV - 部分启用（仅粘贴）", "description": "图标提示" },
+   "icon_title_inactive": { "message": "EasyCV - 已禁用", "description": "图标提示" },
+-  "icon_title_default": { "message": "EasyCV - 待激活", "description": "图标提示" }
++  "icon_title_default": { "message": "EasyCV - 待激活", "description": "图标提示" },
++  "today_use": {"message": "今日启用次数"},
++  "local_stats_notice": {"message": "仅统计本机启用操作，不代表解锁成功率；不再记录网站访问明细。"},
++  "privacy_storage_notice": {"message": "设置和手工规则可能通过浏览器同步；统计和简化诊断仅保存在本机。旧版访问记录迁移为本机备份，可通过清除所有数据删除。"},
++  "local_statistics_toggle": {"message": "记录本机启用次数（不记录访问域名）"},
++  "local_recovery_notice": {"message": "检测到旧版本机配置副本。同步设置优先；同步缺失的键暂读本机副本。先导出备份，再按需恢复。"},
++  "export_local_recovery": {"message": "导出本机配置副本"},
++  "restore_local_recovery": {"message": "用本机副本恢复设置"},
++  "confirm_restore_local": {"message": "将本机配置副本中的键覆盖到同步设置。未包含的键保留。本机副本也会保留。建议先导出当前设置及本机副本。继续？"},
++  "cancel_edit": {"message": "取消编辑"},
++  "load_failed": {"message": "暂时无法读取设置，请稍后重试。"},
++  "privacy_migration_pending": {"message": "旧版数据迁移尚未完成，旧同步副本仍被保留。请稍后重试。"},
++  "retry_migration": {"message": "重试迁移"}
+ }
+diff --git a/background/auto-enable-manager.js b/background/auto-enable-manager.js
+index 2145c2d..e323180 100644
+--- a/background/auto-enable-manager.js
++++ b/background/auto-enable-manager.js
+@@ -40,13 +40,14 @@ class AutoEnableManager {
+       }
+ 
+       const urlObj = new URL(url);
++      if (!['http:', 'https:'].includes(urlObj.protocol)) return false;
+       const domain = urlObj.hostname;
+ 
+       // 排除列表（DEBT-08）优先级高于自动启用名单：命中即跳过，
+       // 避免用户刚把误伤站点排除又被自动启用配置拉回启用态
+       const state = await this.stateManager.getPluginState(domain);
+-      if (state.excluded) {
+-        console.debug(`AutoEnableManager: ${domain} is in excluded list, skip auto-enable`);
++      if (state.excluded || !state.pluginEnabled) {
++
+         return false;
+       }
+ 
+@@ -74,14 +75,14 @@ class AutoEnableManager {
+           return false;
+         }
+ 
+-        console.log(`AutoEnableManager: Auto-enabling for ${domain}:`, config);
++
+ 
+         // 应用自动启用配置
+         const success = await this.applyAutoEnableConfig(tabId, config);
+         
+         if (success) {
+           // 记录交互历史
+-          await this.recordInteraction(domain);
++          // No automatic domain/timestamp history is recorded.
+           
+           // 更新图标状态
+           if (this.stateManager.backgroundManager) {
+@@ -118,17 +119,7 @@ class AutoEnableManager {
+       const autoEnableList = state.autoEnableList || [];
+       
+       // 查找匹配的域名配置
+-      const config = autoEnableList.find(item => {
+-        if (item.domain === domain) return true;
+-        
+-        // 支持通配符匹配
+-        if (item.domain.startsWith('*.')) {
+-          const baseDomain = item.domain.substring(2);
+-          return domain.endsWith(baseDomain);
+-        }
+-        
+-        return false;
+-      });
++      const config = StorageUtils.matchAutoEnableRule(domain, autoEnableList);
+ 
+       // 更新缓存
+       this.domainCache.set(domain, {
+@@ -151,43 +142,18 @@ class AutoEnableManager {
+    */
+   async applyAutoEnableConfig(tabId, config) {
+     try {
+-      // 获取当前状态
+-      const state = await this.stateManager.getPluginState();
+-      
+-      // 生成操作ID
+-      const operationId = `auto_enable_${config.domain}_${Date.now()}`;
+-      
+-      // 更新插件设置
+-      await this.stateManager.updatePluginState({
+-        userSettings: {
+-          ...state.userSettings,
+-          copyEnabled: config.copyEnabled,
+-          pasteEnabled: config.pasteEnabled
+-        }
+-      }, operationId);
+-
+-      // 使用双方共享的消息协议；内容端重新读取完整状态（包括关闭的子开关）。
++      // The rule is resolved by GET_STATUS for this domain. Never write global defaults.
+       await MessageUtils.sendToContent(tabId, MessageUtils.MESSAGE_TYPES.STATE_UPDATED, {}, { silent: true });
+-
+       return true;
+-    } catch (error) {
+-      console.error('AutoEnableManager: Failed to apply config:', error);
+-      return false;
+-    }
++    } catch (error) { return false; }
+   }
+ 
+   /**
+    * 记录交互历史
+    * @param {string} domain - 域名
+    */
+-  async recordInteraction(domain) {
+-    try {
+-      const interactionHistory = await StorageUtils.getInteractionHistory();
+-      interactionHistory[domain] = Date.now();
+-      await StorageUtils.setInteractionHistory(interactionHistory);
+-    } catch (error) {
+-      console.error('AutoEnableManager: Failed to record interaction:', error);
+-    }
++  async recordInteraction() {
++    // Retained as a no-op for older callers; browsing history is no longer collected.
+   }
+ 
+   /**
+@@ -212,21 +178,10 @@ class AutoEnableManager {
+       // 清除相关缓存
+       this.clearDomainCache(domain);
+       
+-      // 通过StateManager更新配置
+-      const state = await this.stateManager.getPluginState();
+-      const autoEnableList = state.autoEnableList || [];
+-      
+-      const existingIndex = autoEnableList.findIndex(item => item.domain === domain);
+-      if (existingIndex >= 0) {
+-        autoEnableList[existingIndex] = { domain, ...config };
+-      } else {
+-        autoEnableList.push({ domain, ...config });
+-      }
+-      
+-      await this.stateManager.updatePluginState({
+-        autoEnableList: autoEnableList
+-      });
+-      
++      const list = await StorageUtils.getAutoEnableList();
++      if (list.some(item => item.domain === domain)) await StorageUtils.replaceAutoEnableRule(domain, { domain, ...config });
++      else await StorageUtils.addToAutoEnableList({ domain, ...config });
++
+       return true;
+     } catch (error) {
+       console.error('AutoEnableManager: Failed to update config:', error);
+@@ -243,16 +198,8 @@ class AutoEnableManager {
+       // 清除相关缓存
+       this.clearDomainCache(domain);
+       
+-      // 通过StateManager移除配置
+-      const state = await this.stateManager.getPluginState();
+-      const autoEnableList = state.autoEnableList || [];
+-      
+-      const filteredList = autoEnableList.filter(item => item.domain !== domain);
+-      
+-      await this.stateManager.updatePluginState({
+-        autoEnableList: filteredList
+-      });
+-      
++      await StorageUtils.removeFromAutoEnableList(domain);
++
+       return true;
+     } catch (error) {
+       console.error('AutoEnableManager: Failed to remove config:', error);
+diff --git a/background/service-worker.js b/background/service-worker.js
+index 3b283a7..c14fbc7 100644
+--- a/background/service-worker.js
++++ b/background/service-worker.js
+@@ -5,6 +5,7 @@
+ 
+ // 导入工具类（注意：在service worker中需要使用importScripts）
+ importScripts('../utils/storage-utils.js', '../utils/message-utils.js', '../utils/i18n-utils.js', 'icon-manager.js', 'auto-enable-manager.js', 'state-confirmation-manager.js', 'monitoring-manager.js');
++StorageUtils.configureMutationHost();
+ 
+ /**
+  * 状态管理器
+@@ -38,19 +39,14 @@ class StateManager {
+   async initialize() {
+     if (this.initialized) return;
+ 
+-    try {
+-      // 预加载关键状态到缓存
++    if (this.initializing) return this.initializing;
++    this.initializing = (async () => {
+       await this.preloadStates();
+-
+-      // 设置存储监听器
+       this.setupStorageListener();
+-
+       this.initialized = true;
+-      console.log('StateManager initialized successfully');
+-    } catch (error) {
+-      console.error('Failed to initialize StateManager:', error);
+-      throw error;
+-    }
++    })();
++    try { await this.initializing; }
++    finally { this.initializing = null; }
+   }
+ 
+   /**
+@@ -66,13 +62,16 @@ class StateManager {
+     ];
+ 
+     const data = await StorageUtils.get(keys);
++    this.storageAccessCount++;
+ 
++    StorageUtils.validateConfigurationKeys(data);
+     // 缓存状态数据
+     this.stateCache.set('pluginEnabled', data[StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED] ?? StorageUtils.DEFAULT_SETTINGS.pluginEnabled);
+     this.stateCache.set('forceMode', data[StorageUtils.STORAGE_KEYS.FORCE_MODE] ?? StorageUtils.DEFAULT_SETTINGS.forceMode);
+-    this.stateCache.set('userSettings', { ...StorageUtils.DEFAULT_SETTINGS, ...data[StorageUtils.STORAGE_KEYS.USER_SETTINGS] });
+-    this.stateCache.set('autoEnableList', data[StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST] ?? StorageUtils.DEFAULT_SETTINGS.autoEnableList);
+-    this.stateCache.set('excludedList', data[StorageUtils.STORAGE_KEYS.EXCLUDED_LIST] ?? StorageUtils.DEFAULT_SETTINGS.excludedList);
++    StorageUtils.validateSettings(data.user_settings ?? {});
++    this.stateCache.set('userSettings', { ...StorageUtils.DEFAULT_SETTINGS, ...data.user_settings });
++    this.stateCache.set('autoEnableList', StorageUtils.normalizeAutoEnableList(data.auto_enable_list ?? []));
++    this.stateCache.set('excludedList', StorageUtils.normalizeExcludedList(data.excluded_list ?? StorageUtils.DEFAULT_SETTINGS.excludedList));
+   }
+ 
+   /**
+@@ -80,29 +79,8 @@ class StateManager {
+    */
+   setupStorageListener() {
+     StorageUtils.addStorageListener((changes, areaName) => {
+-      // 更新缓存
+-      for (const [key, change] of Object.entries(changes)) {
+-        switch (key) {
+-          case StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED:
+-            this.stateCache.set('pluginEnabled', change.newValue);
+-            break;
+-          case StorageUtils.STORAGE_KEYS.FORCE_MODE:
+-            this.stateCache.set('forceMode', change.newValue);
+-            break;
+-          case StorageUtils.STORAGE_KEYS.USER_SETTINGS:
+-            this.stateCache.set('userSettings', change.newValue);
+-            break;
+-          case StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST:
+-            this.stateCache.set('autoEnableList', change.newValue);
+-            break;
+-          case StorageUtils.STORAGE_KEYS.EXCLUDED_LIST:
+-            // 键被移除（如清空数据）时回落默认敏感域名，保持账号页保护不裸奔
+-            this.stateCache.set('excludedList', change.newValue ?? StorageUtils.DEFAULT_SETTINGS.excludedList);
+-            break;
+-        }
+-      }
+-
+-      // 通知监听器
++      if (areaName !== 'sync') return;
++      // Reads refresh the cache from authoritative storage, including deleted keys.
+       this.notifyListeners({ changes, areaName });
+     });
+   }
+@@ -114,9 +92,9 @@ class StateManager {
+    */
+   async getPluginState(domain = null) {
+     await this.ensureInitialized();
++    await this.preloadStates();
+ 
+-    // 记录缓存命中
+-    this.cacheHitCount++;
++    // State is refreshed from storage; do not report this as a cache hit.
+     
+     const baseState = {
+       pluginEnabled: this.stateCache.get('pluginEnabled'),
+@@ -129,7 +107,7 @@ class StateManager {
+     // 如果指定了域名，获取该域名的特定配置
+     if (domain) {
+       const autoEnableList = this.stateCache.get('autoEnableList');
+-      const domainConfig = autoEnableList.find(item => item.domain === domain);
++      const domainConfig = StorageUtils.matchAutoEnableRule(domain, autoEnableList);
+ 
+       baseState.domainConfig = domainConfig || {
+         domain,
+@@ -175,9 +153,8 @@ class StateManager {
+       this.pendingOperations.set(operationId, operation);
+ 
+       // 操作完成后清理
+-      operation.finally(() => {
+-        this.pendingOperations.delete(operationId);
+-      });
++      operation.then(() => this.pendingOperations.delete(operationId),
++        () => this.pendingOperations.delete(operationId));
+     }
+ 
+     return await operation;
+@@ -212,7 +189,7 @@ class StateManager {
+   async batchUpdateState(updates, operationId) {
+     return new Promise((resolve, reject) => {
+       // 将更新添加到批处理队列
+-      this.batchUpdateQueue.set(operationId || Date.now(), { updates, resolve, reject });
++      this.batchUpdateQueue.set(operationId || Symbol(), { updates, resolve, reject });
+ 
+       // 如果没有正在进行的批处理，启动新的批处理
+       if (!this.batchUpdateTimer) {
+@@ -268,9 +245,10 @@ class StateManager {
+       // 合并所有更新
+       const mergedUpdates = {};
+       for (const { updates: update } of updates) {
++        const previousSettings = mergedUpdates.userSettings;
+         Object.assign(mergedUpdates, update);
+         if (update.userSettings) {
+-          mergedUpdates.userSettings = { ...mergedUpdates.userSettings, ...update.userSettings };
++          mergedUpdates.userSettings = { ...previousSettings, ...update.userSettings };
+         }
+       }
+ 
+@@ -296,130 +274,16 @@ class StateManager {
+    */
+   async performStateUpdate(updates) {
+     const startTime = Date.now();
+-    let success = false;
+-    
+     try {
+-      // 记录状态变更开始
+-      this.monitoringManager.logStateChange('state_update_start', {
+-        updates: Object.keys(updates),
+-        timestamp: startTime
+-      });
+-      
+-      const storageUpdates = {};
+-      const cacheUpdates = new Map();
+-
+-      // 处理各种状态更新
+-      if (updates.hasOwnProperty('pluginEnabled')) {
+-        storageUpdates[StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED] = updates.pluginEnabled;
+-        cacheUpdates.set('pluginEnabled', updates.pluginEnabled);
+-        
+-        this.monitoringManager.logStateChange('plugin_enabled_changed', {
+-          oldValue: this.stateCache.get('pluginEnabled'),
+-          newValue: updates.pluginEnabled
+-        });
+-      }
+-
+-      if (updates.hasOwnProperty('forceMode')) {
+-        storageUpdates[StorageUtils.STORAGE_KEYS.FORCE_MODE] = updates.forceMode;
+-        cacheUpdates.set('forceMode', updates.forceMode);
+-        
+-        this.monitoringManager.logStateChange('force_mode_changed', {
+-          oldValue: this.stateCache.get('forceMode'),
+-          newValue: updates.forceMode
+-        });
+-      }
+-
+-      // 处理copyEnabled和pasteEnabled更新
+-      if (updates.hasOwnProperty('copyEnabled') || updates.hasOwnProperty('pasteEnabled')) {
+-        const currentSettings = this.stateCache.get('userSettings') || {};
+-        const settingsUpdates = {};
+-        
+-        if (updates.hasOwnProperty('copyEnabled')) {
+-          settingsUpdates.copyEnabled = updates.copyEnabled;
+-          this.monitoringManager.logStateChange('copy_enabled_changed', {
+-            oldValue: currentSettings.copyEnabled,
+-            newValue: updates.copyEnabled
+-          });
+-        }
+-        
+-        if (updates.hasOwnProperty('pasteEnabled')) {
+-          settingsUpdates.pasteEnabled = updates.pasteEnabled;
+-          this.monitoringManager.logStateChange('paste_enabled_changed', {
+-            oldValue: currentSettings.pasteEnabled,
+-            newValue: updates.pasteEnabled
+-          });
+-        }
+-        
+-        const newSettings = { ...currentSettings, ...settingsUpdates };
+-        storageUpdates[StorageUtils.STORAGE_KEYS.USER_SETTINGS] = newSettings;
+-        cacheUpdates.set('userSettings', newSettings);
+-      }
+-
+-      if (updates.userSettings) {
+-        const currentSettings = this.stateCache.get('userSettings');
+-        const newSettings = { ...currentSettings, ...updates.userSettings };
+-        storageUpdates[StorageUtils.STORAGE_KEYS.USER_SETTINGS] = newSettings;
+-        cacheUpdates.set('userSettings', newSettings);
+-        
+-        this.monitoringManager.logStateChange('user_settings_changed', {
+-          changedKeys: Object.keys(updates.userSettings),
+-          newValues: updates.userSettings
+-        });
+-      }
+-
+-      if (updates.autoEnableList) {
+-        storageUpdates[StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST] = updates.autoEnableList;
+-        cacheUpdates.set('autoEnableList', updates.autoEnableList);
+-        
+-        this.monitoringManager.logStateChange('auto_enable_list_changed', {
+-          oldCount: (this.stateCache.get('autoEnableList') || []).length,
+-          newCount: updates.autoEnableList.length,
+-          newList: updates.autoEnableList
+-        });
+-      }
+-
+-      // 原子性存储更新
+-      if (Object.keys(storageUpdates).length > 0) {
+-        // 记录存储访问次数
+-        this.storageAccessCount++;
+-        
+-        await StorageUtils.set(storageUpdates);
+-
+-        // 更新缓存
+-        for (const [key, value] of cacheUpdates) {
+-          this.stateCache.set(key, value);
+-        }
+-        
+-        this.monitoringManager.logStateChange('storage_updated', {
+-          keys: Object.keys(storageUpdates),
+-          storageAccessCount: this.storageAccessCount
+-        });
+-      }
+-
+-      // 获取更新后的状态
+-      const newState = await this.getPluginState();
+-      success = true;
+-      
+-      // 记录成功完成
+-      const duration = Date.now() - startTime;
+-      this.monitoringManager.recordPerformance('state_update', duration, true);
+-      this.monitoringManager.logStateChange('state_update_completed', {
+-        duration,
+-        updatedKeys: Object.keys(updates)
+-      });
+-      
+-      return newState;
+-      
++      await StorageUtils.mutate('state', updates);
++      this.storageAccessCount++;
++      const state = await this.getPluginState();
++      this.monitoringManager.logStateChange('state_update', { success: true });
++      this.monitoringManager.recordPerformance('state_update', Date.now() - startTime, true);
++      return state;
+     } catch (error) {
+-      // 记录错误
+-      const duration = Date.now() - startTime;
+-      this.monitoringManager.recordPerformance('state_update', duration, false);
+-      this.monitoringManager.logStateChange('state_update_failed', {
+-        error: error.message,
+-        duration,
+-        updates: Object.keys(updates)
+-      }, 'error');
+-      
++      this.monitoringManager.logStateChange('state_update', { success: false }, 'error');
++      this.monitoringManager.recordPerformance('state_update', Date.now() - startTime, false);
+       throw error;
+     }
+   }
+@@ -629,12 +493,13 @@ class BackgroundManager {
+     console.log('EasyCV Background Service Worker initialized');
+ 
+     try {
+-      // 初始化状态管理器
++      // Best-effort startup privacy migration; a failure preserves sync originals for retry.
++      await StorageUtils.migratePrivateData().catch(() => console.warn('Local privacy migration pending'));
+       await this.stateManager.initialize();
+ 
+       // 获取当前状态
+       const state = await this.stateManager.getPluginState();
+-      console.log('Current plugin state:', state);
++      // Settings and site rules are not printed to the worker console.
+ 
+       // 更新图标状态
+       await this.updateIcon();
+@@ -652,6 +517,11 @@ class BackgroundManager {
+ 
+       try {
+         switch (type) {
++          case MessageUtils.MESSAGE_TYPES.STORAGE_MUTATION:
++            if (sender.id !== chrome.runtime.id || !sender.url?.startsWith(chrome.runtime.getURL(''))) {
++              throw new Error('Settings mutations require an extension page');
++            }
++            return { success: true, data: await StorageUtils.mutate(data.operation, data.data) };
+           case MessageUtils.MESSAGE_TYPES.TOGGLE_PLUGIN:
+             return await this.handleTogglePlugin(data);
+ 
+@@ -730,18 +600,16 @@ class BackgroundManager {
+    */
+   setupStorageSync() {
+     StorageUtils.addStorageListener((changes, areaName) => {
+-      console.log('Storage changed:', changes, areaName);
+-
+-      // 如果插件状态改变，更新图标
+-      if (changes[StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED]) {
+-        this.updateIcon();
++      if (areaName !== 'sync') return;
++      if (['statistics', 'interaction_history', 'errorReports', 'userFeedback'].some(key => changes[key]?.newValue !== undefined)) {
++        StorageUtils.migratePrivateData().catch(() => console.warn('Local privacy migration pending'));
+       }
+-
+-      // 广播设置变更到所有标签页
+-      MessageUtils.broadcastToAllTabs(
+-        MessageUtils.MESSAGE_TYPES.UPDATE_STATUS,
+-        { changes, areaName }
+-      );
++      const keys = Object.keys(changes).filter(key => StorageUtils.CONFIG_KEYS.includes(key));
++      if (!keys.length) return;
++      if (keys.includes('plugin_enabled')) this.updateIcon();
++      MessageUtils.broadcastToAllTabs(MessageUtils.MESSAGE_TYPES.UPDATE_STATUS, {
++        changes: Object.fromEntries(keys.map(key => [key, { changed: true }])), areaName
++      });
+     });
+   }
+ 
+@@ -789,7 +657,7 @@ class BackgroundManager {
+     const newStatus = data?.enabled ?? !currentState.pluginEnabled;
+ 
+     // 使用StateManager进行原子性状态更新
+-    const operationId = `toggle_${Date.now()}`;
++    const operationId = `toggle_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+     const updatedState = await this.stateManager.updatePluginState(
+       { pluginEnabled: newStatus },
+       operationId
+@@ -797,18 +665,7 @@ class BackgroundManager {
+ 
+     await this.updateIcon();
+ 
+-    // 更新统计
+-    if (newStatus) {
+-      const stats = await StorageUtils.getStatistics();
+-      const today = new Date().toDateString();
+-      await StorageUtils.updateStatistics({
+-        totalActivations: stats.totalActivations + 1,
+-        // 按自然日滚动的今日使用计数
+-        todayUsage: stats.lastUsedDate === today ? (stats.todayUsage || 0) + 1 : 1,
+-        lastUsedDate: today,
+-        lastUsed: new Date().toISOString()
+-      });
+-    }
++    if (newStatus) await StorageUtils.recordActivation().catch(() => {});
+ 
+     return { enabled: updatedState.pluginEnabled, state: updatedState };
+   }
+@@ -825,8 +682,8 @@ class BackgroundManager {
+       // 确保所有必需的字段都有有效值；排除站点强制 enabled=false（DEBT-08 逃生通道）
+       const responseData = {
+         enabled: Boolean(state.pluginEnabled) && !state.excluded,
+-        copyEnabled: Boolean(state.userSettings?.copyEnabled !== false),
+-        pasteEnabled: Boolean(state.userSettings?.pasteEnabled !== false),
++        copyEnabled: Boolean((state.domainConfig || state.userSettings)?.copyEnabled !== false),
++        pasteEnabled: Boolean((state.domainConfig || state.userSettings)?.pasteEnabled !== false),
+         forceMode: Boolean(state.forceMode),
+         settings: state.userSettings || {},
+         domainConfig: state.domainConfig || null,
+@@ -835,7 +692,7 @@ class BackgroundManager {
+       };
+ 
+       // 添加调试日志
+-      console.log('handleGetStatus response data:', responseData);
++
+ 
+       return {
+         success: true,
+@@ -844,19 +701,7 @@ class BackgroundManager {
+     } catch (error) {
+       console.error('Failed to get status:', error);
+       
+-      // 返回默认状态而不是null
+-      return {
+-        success: true,
+-        data: {
+-          enabled: true,
+-          copyEnabled: true,
+-          pasteEnabled: true,
+-          forceMode: false,
+-          settings: {},
+-          domainConfig: null,
+-          timestamp: Date.now()
+-        }
+-      };
++      return { success: false, error: 'STATUS_UNAVAILABLE' };
+     }
+   }
+ 
+@@ -879,7 +724,7 @@ class BackgroundManager {
+     }
+ 
+     // 使用StateManager进行原子性更新
+-    const operationId = `update_${Date.now()}`;
++    const operationId = `update_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+     const updatedState = await this.stateManager.updatePluginState(updates, operationId);
+ 
+     await this.updateIcon();
+@@ -891,7 +736,7 @@ class BackgroundManager {
+    */
+   async handleEnableForceMode(data) {
+     // 使用StateManager进行原子性状态更新
+-    const operationId = `enable_force_${Date.now()}`;
++    const operationId = `enable_force_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+     const updatedState = await this.stateManager.updatePluginState(
+       { forceMode: true },
+       operationId
+@@ -925,7 +770,7 @@ class BackgroundManager {
+    */
+   async handleDisableForceMode() {
+     // 使用StateManager进行原子性状态更新
+-    const operationId = `disable_force_${Date.now()}`;
++    const operationId = `disable_force_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+     const updatedState = await this.stateManager.updatePluginState(
+       { forceMode: false },
+       operationId
+@@ -973,7 +818,7 @@ class BackgroundManager {
+    */
+   async handleUpdateSettings(data) {
+     // 使用StateManager进行原子性设置更新
+-    const operationId = `update_settings_${Date.now()}`;
++    const operationId = `update_settings_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+     const updatedState = await this.stateManager.updatePluginState(
+       { userSettings: data },
+       operationId
+@@ -985,89 +830,24 @@ class BackgroundManager {
+   /**
+    * 处理错误报告
+    */
+-  async handleReportError(data, sender) {
+-    const errorReport = {
+-      error: data,
+-      sender: sender,
+-      timestamp: new Date().toISOString(),
+-      url: data.url || sender.tab?.url || 'unknown',
+-      userAgent: navigator.userAgent
+-    };
+-
+-    console.error('Error reported from content script:', errorReport);
+-
+-    // 保存错误报告到本地存储（用于反馈时参考）
+-    try {
+-      const existingReports = await StorageUtils.get('errorReports') || { errorReports: [] };
+-      const reports = existingReports.errorReports || [];
+-
+-      // 只保留最近的10个错误报告
+-      reports.push(errorReport);
+-      if (reports.length > 10) {
+-        reports.shift();
+-      }
+-
+-      await StorageUtils.set({ errorReports: reports });
+-    } catch (error) {
+-      console.error('Failed to save error report:', error);
+-    }
+-
++  async handleReportError() {
++    await StorageUtils.recordDiagnostic();
+     return { received: true };
+   }
+ 
+   /**
+    * 处理用户反馈提交
+    */
+-  async handleSubmitFeedback(data, sender) {
+-    const feedbackData = {
+-      ...data.data,
+-      tabId: sender.tab?.id,
+-      timestamp: new Date().toISOString()
+-    };
+-
+-    console.log('User feedback submitted:', feedbackData);
+-
+-    // 保存反馈数据到本地存储
+-    try {
+-      const existingFeedback = await StorageUtils.get('userFeedback') || { userFeedback: [] };
+-      const feedback = existingFeedback.userFeedback || [];
+-
+-      feedback.push(feedbackData);
+-
+-      // 只保留最近的20个反馈记录
+-      if (feedback.length > 20) {
+-        feedback.shift();
+-      }
+-
+-      await StorageUtils.set({ userFeedback: feedback });
+-
+-      // 可以在这里添加发送到服务器的逻辑
+-      // await this.sendFeedbackToServer(feedbackData);
+-
+-    } catch (error) {
+-      console.error('Failed to save feedback:', error);
+-    }
+-
+-    return { success: true };
++  async handleSubmitFeedback() {
++    // Feedback is a user-edited GitHub draft. Do not persist arbitrary page payloads.
++    return { success: false, error: 'Use the feedback link to compose your report' };
+   }
+ 
+   /**
+    * 处理页面分析结果
+    */
+-  async handlePageAnalyzed(data, sender) {
+-    const { restrictions, domain } = data;
+-
+-    // 更新统计信息
+-    if (restrictions && Object.values(restrictions).some(Boolean)) {
+-      const stats = await StorageUtils.getStatistics();
+-      const sitesUnlocked = stats.sitesUnlocked || [];
+-
+-      if (!sitesUnlocked.includes(domain)) {
+-        sitesUnlocked.push(domain);
+-        await StorageUtils.updateStatistics({ sitesUnlocked });
+-      }
+-    }
+-
++  async handlePageAnalyzed() {
++    // Page detection is not proof of success and must not create browsing records.
+     return { received: true };
+   }
+ 
+@@ -1102,7 +882,7 @@ class BackgroundManager {
+     // 统一走StateManager路径，避免与performStateUpdate的缓存产生双写竞争
+     await this.stateManager.updatePluginState(
+       { copyEnabled: data.enabled },
+-      `copy_status_${Date.now()}`
++      `copy_status_${Date.now()}_${Math.random().toString(36).slice(2)}`
+     );
+ 
+     // 广播到所有标签页
+@@ -1121,7 +901,7 @@ class BackgroundManager {
+     // 统一走StateManager路径，避免与performStateUpdate的缓存产生双写竞争
+     await this.stateManager.updatePluginState(
+       { pasteEnabled: data.enabled },
+-      `paste_status_${Date.now()}`
++      `paste_status_${Date.now()}_${Math.random().toString(36).slice(2)}`
+     );
+ 
+     // 广播到所有标签页
+@@ -1151,9 +931,7 @@ class BackgroundManager {
+         await MessageUtils.broadcastToAllTabs(
+           MessageUtils.MESSAGE_TYPES.STATE_UPDATED,
+           {
+-            requestId: result.requestId,
+-            updates,
+-            newState: result.result
++            requestId: result.requestId
+           }
+         );
+       }
+@@ -1231,4 +1009,4 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+ });
+ 
+ // 初始化后台管理器
+-const backgroundManager = new BackgroundManager();
+\ No newline at end of file
++const backgroundManager = new BackgroundManager();
+diff --git a/content/content.js b/content/content.js
+index 0ec98c0..1803153 100644
+--- a/content/content.js
++++ b/content/content.js
+@@ -4,12 +4,13 @@
+  */
+ 
+ // 复制/粘贴各自关联的限制性事件（启用时注册捕获阶段放行处理器，禁用时移除）
+-const COPY_EVENTS = ['selectstart', 'contextmenu', 'dragstart', 'copy'];
++const COPY_EVENTS = ['selectstart', 'contextmenu', 'dragstart', 'copy', 'cut'];
+ const PASTE_EVENTS = ['paste'];
+ 
+ class CopyPasteManager {
+   constructor() {
+     this.isEnabled = false;
++    this.stateKnown = false;
+     this.copyEnabled = true;
+     this.pasteEnabled = true;
+     this.forceMode = false;
+@@ -134,7 +135,7 @@ class CopyPasteManager {
+           )
+         ]);
+ 
+-        if (response?.success && response.data) {
++        if (response?.success && response.data && ['enabled', 'copyEnabled', 'pasteEnabled', 'forceMode'].every(key => typeof response.data[key] === 'boolean')) {
+           const newState = {
+             isEnabled: Boolean(response.data.enabled),
+             copyEnabled: Boolean(response.data.copyEnabled !== false),
+@@ -152,6 +153,7 @@ class CopyPasteManager {
+ 
+           // 验证状态
+           if (this.validateState(newState)) {
++            this.stateKnown = true;
+             this.updateLocalState(newState);
+             this.lastKnownState = { ...newState };
+             this.debugLog('State loaded successfully:', newState);
+@@ -174,29 +176,17 @@ class CopyPasteManager {
+           throw new Error('Failed to get valid response');
+         }
+       } catch (error) {
+-        console.warn(`State load attempt ${attempt + 1} failed:`, error.message);
++        this.stateKnown = false;
++        this.updateLocalState({ isEnabled: false, copyEnabled: false, pasteEnabled: false, forceMode: false });
++        await this.disableCopyPaste();
++        console.warn(`State load attempt ${attempt + 1} failed`);
+         
+         if (attempt < this.maxRetryCount) {
+           await new Promise(resolve => setTimeout(resolve, this.retryDelay * (attempt + 1)));
+         } else {
+-          console.error('All state load attempts failed, using last known state or defaults');
+-          // 优雅降级：使用最后已知状态或默认状态
+-          if (this.lastKnownState) {
+-            this.updateLocalState(this.lastKnownState);
+-            this.debugLog('Using last known state:', this.lastKnownState);
+-          } else {
+-            // 使用默认状态
+-            const defaultState = {
+-              isEnabled: true,
+-              copyEnabled: true,
+-              pasteEnabled: true,
+-              forceMode: false
+-            };
+-            this.updateLocalState(defaultState);
+-            this.lastKnownState = { ...defaultState };
+-            this.debugLog('Using default state:', defaultState);
+-          }
+-          // 不再抛出错误，而是继续执行
++          this.stateKnown = false;
++          this.updateLocalState({ isEnabled: false, copyEnabled: false, pasteEnabled: false, forceMode: false });
++          // Unknown status must never enable an excluded page or reuse stale permissions.
+           return;
+         }
+       }
+@@ -291,27 +281,14 @@ class CopyPasteManager {
+    * 检测页面限制
+    */
+   detectRestrictions() {
+-    const restrictions = DOMUtils.detectSelectionRestrictions();
+-
+-    // 报告检测结果
+-    MessageUtils.sendToBackground(
+-      MessageUtils.MESSAGE_TYPES.PAGE_ANALYZED,
+-      {
+-        restrictions,
+-        domain: window.location.hostname,
+-        url: window.location.href
+-      }
+-    ).catch(error => {
+-      console.debug('Failed to report page analysis:', error);
+-    });
+-
+-    return restrictions;
++    return DOMUtils.detectSelectionRestrictions();
+   }
+ 
+   /**
+    * 启用复制粘贴功能
+    */
+   enableCopyPaste() {
++    if (this.stateKnown === false || !this.isEnabled || (!this.copyEnabled && !this.pasteEnabled)) return;
+     try {
+       this.debugLog('启用复制粘贴功能');
+       this.debugLog('Current state before enabling:', {
+@@ -347,10 +324,12 @@ class CopyPasteManager {
+ 
+       // 注入自定义脚本（用于处理更深层的限制）
+       this.debugLog('Injecting custom script...');
++      document.documentElement.dataset.easycvCopyEnabled = this.copyEnabled ? '1' : '0';
++      document.documentElement.dataset.easycvPasteEnabled = this.pasteEnabled ? '1' : '0';
+       if (document.documentElement.dataset.easycvInjected) {
+         // injector 已在 main world 中，重新注入会被其防重复守卫跳过，
+         // 必须经 postMessage 通知其恢复原型重写与动态保护
+-        window.postMessage({ type: 'EASYCV_ENABLE' }, '*');
++        window.postMessage({ type: 'EASYCV_ENABLE', copyEnabled: this.copyEnabled, pasteEnabled: this.pasteEnabled }, '*');
+       } else {
+         this.injectCustomScript();
+       }
+@@ -425,6 +404,7 @@ class CopyPasteManager {
+         Object.keys(handlers).forEach(event => {
+           element.removeEventListener(event, this.allowDefaultHandler, true);
+           const original = handlers[event];
++          if (element.getAttribute(`on${event}`) !== null || element[`on${event}`] != null) return;
+           if (original.attribute !== null) element.setAttribute(`on${event}`, original.attribute);
+           else element[`on${event}`] = original.handler;
+         });
+@@ -531,7 +511,7 @@ class CopyPasteManager {
+    * 移除事件限制
+    */
+   removeEventRestrictions(element) {
+-    const copyEvents = ['selectstart', 'contextmenu', 'dragstart', 'copy', 'mousedown'];
++    const copyEvents = ['selectstart', 'contextmenu', 'dragstart', 'copy', 'cut', 'mousedown'];
+     const pasteEvents = ['paste'];
+ 
+     // 处理复制相关事件
+@@ -923,7 +903,8 @@ class CopyPasteManager {
+    */
+   async applyCurrentState() {
+     try {
+-      if (this.isEnabled && (this.copyEnabled || this.pasteEnabled)) {
++      if (this.stateKnown !== false && this.isEnabled && (this.copyEnabled || this.pasteEnabled)) {
++        await this.disableCopyPaste();
+         this.enableCopyPaste();
+       } else {
+         await this.disableCopyPaste();
+@@ -999,7 +980,7 @@ class CopyPasteManager {
+       await this.applyCurrentState();
+       this.notifyStateListeners();
+     }
+-    return { success: true };
++    return this.stateKnown ? { success: true } : { success: false, error: 'STATUS_UNAVAILABLE' };
+   }
+ 
+   /**
+@@ -1092,16 +1073,9 @@ class CopyPasteManager {
+   /**
+    * 报告错误
+    */
+-  reportError(error) {
+-    MessageUtils.sendToBackground(
+-      MessageUtils.MESSAGE_TYPES.REPORT_ERROR,
+-      {
+-        message: error.message,
+-        stack: error.stack,
+-        url: window.location.href,
+-        timestamp: new Date().toISOString()
+-      }
+-    ).catch(console.error);
++  reportError() {
++    MessageUtils.sendToBackground(MessageUtils.MESSAGE_TYPES.REPORT_ERROR, { code: 'CONTENT_OPERATION_FAILED' })
++      .catch(() => {});
+   }
+ 
+   /**
+@@ -1112,12 +1086,8 @@ class CopyPasteManager {
+       const { forceMode } = data;
+       this.forceMode = forceMode;
+       
+-      if (forceMode) {
+-        this.enableCopyPaste();
+-      } else {
+-        this.disableCopyPaste();
+-      }
+-      
++      await this.applyCurrentState();
++
+       return { success: true, forceMode: this.forceMode };
+     } catch (error) {
+       console.error('Failed to handle force mode change:', error);
+@@ -1171,6 +1141,7 @@ class CopyPasteManager {
+    * 处理获取页面状态
+    */
+   async handleGetPageStatus(data) {
++    if (this.stateKnown === false) return { success: false, error: 'STATUS_UNAVAILABLE' };
+     try {
+       // 检测当前页面限制
+       const restrictions = this.detectRestrictions();
+@@ -1183,7 +1154,6 @@ class CopyPasteManager {
+           pasteEnabled: this.pasteEnabled,
+           forceMode: this.forceMode,
+           restrictions,
+-          url: window.location.href,
+           domain: window.location.hostname,
+           timestamp: Date.now()
+         }
+diff --git a/content/injector.js b/content/injector.js
+index 27163f7..4d4f9b7 100644
+--- a/content/injector.js
++++ b/content/injector.js
+@@ -21,7 +21,7 @@
+   }
+   
+   debugLog('Starting EasyCV Injector initialization...');
+-  debugLog('Current URL:', window.location.href);
++
+   debugLog('Document readyState:', document.readyState);
+   
+   window.EasyCVInjected = true;
+@@ -46,8 +46,8 @@
+   debugLog('✓ Original functions saved');
+   
+   /**
+-   * 注册吞没名单：命中源码正则的监听器直接不予注册，破坏性最强，只保留纯限制向事件。
+-   * B站实测 keydown/mousedown 类吞没是播放器快捷键等功能的主要死因，故退出本名单；
++   * 受保护的内联事件名单。addEventListener 始终保留注册，仅在运行时按模式解除限制。
++   * 键盘和鼠标事件使用下方的精确门控，保护播放器快捷键与表单交互；
+    * mouseup 无主流站点用于复制限制，整体移除
+    */
+   const swallowEvents = [
+@@ -65,6 +65,9 @@
+    * （mousedown 级选择封锁、Ctrl+C/V/X 快捷键封锁）
+    */
+   const neutralizeEvents = [...swallowEvents, 'mousedown', 'keydown', 'keyup'];
++  let copyEnabled = document.documentElement.dataset.easycvCopyEnabled === '1';
++  let pasteEnabled = document.documentElement.dataset.easycvPasteEnabled === '1';
++  const modeAllows = type => type === 'paste' ? pasteEnabled : copyEnabled;
+ 
+   // on* 内联事件属性选择器与名称列表（供 querySelectorAll 与 MutationObserver attributeFilter）
+   const onAttributeSelector = swallowEvents.map(event => `[on${event}]`).join(',');
+@@ -76,16 +79,18 @@
+   function shouldNeutralize(event) {
+     try {
+       const type = String(event.type).toLowerCase();
+-      if (!neutralizeEvents.includes(type)) return false;
++      if (!injectorActive || !neutralizeEvents.includes(type)) return false;
+ 
+       // keydown/keyup 仅在组合键时中和：精准击穿 Ctrl+C/V/X 封锁（文库类），
+       // 放行播放器空格/方向键等单键 preventDefault（B站实测误伤来源）
+       if (type === 'keydown' || type === 'keyup') {
+-        return Boolean(event.ctrlKey || event.metaKey);
++        const key = String(event.key || '').toLowerCase();
++        return Boolean(event.ctrlKey || event.metaKey) && ((copyEnabled && ['c', 'x', 'a'].includes(key)) || (pasteEnabled && key === 'v'));
+       }
+ 
+       // mousedown 中和用于击穿 mousedown 级选择封锁；目标在输入域内时不中和，
+       // 保护输入框与富文本编辑器工具栏的焦点保持（toolbar 靠 mousedown preventDefault 防失焦）
++      if (!modeAllows(type)) return false;
+       if (type === 'mousedown') {
+         const target = event.target;
+         return !(target && typeof target.closest === 'function'
+@@ -123,7 +128,7 @@
+   let restrictiveCheckErrorCount = 0;
+   
+   // 注入即视为激活；EASYCV_DISABLE / EASYCV_ENABLE 消息翻转此标志
+-  let injectorActive = true;
++  let injectorActive = copyEnabled || pasteEnabled;
+ 
+   /**
+    * 重写addEventListener以拦截限制性事件监听器
+@@ -131,7 +136,7 @@
+   const overriddenAddEventListener = function(type, listener, options) {
+     // String() coercion 与原生 WebIDL 行为一致（原生会把 null 等转为字符串），
+     // 避免拦截判断本身比原生方法先抛错
+-    if (swallowEvents.includes(String(type).toLowerCase())) {
++    if (injectorActive && modeAllows(String(type).toLowerCase()) && swallowEvents.includes(String(type).toLowerCase())) {
+       // 检查监听器是否可能是限制性的
+       if (isRestrictiveListener(listener)) {
+         debugLog(`EasyCV: Intercepted restrictive ${type} listener`);
+@@ -147,11 +152,11 @@
+             interceptedListeners.get(this).set(type, { listener, options });
+           }
+         } catch (error) {
+-          console.warn('EasyCV: Failed to record intercepted listener (swallow still applied):', error);
++          console.warn('EasyCV: Failed to record intercepted listener (runtime protection still active):', error);
+         }
+ 
+-        // 不添加限制性监听器
+-        return;
++        // Preserve registration, identity, once/signal and removal semantics.
++        // Restrictions are neutralized at dispatch time only while the selected mode is on.
+       }
+     }
+     
+@@ -247,7 +252,18 @@
+    * 应用原型级重写。必须在页面脚本注册监听器之前执行（document_start 时机），
+    * 禁用后重新启用时需再次调用以恢复重写
+    */
++  const eventDescriptors = {};
++  for (const prop of ['returnValue', 'cancelBubble']) {
++    eventDescriptors[prop] = Object.getOwnPropertyDescriptor(Event.prototype, prop);
++  }
+   function applyPrototypeOverrides() {
++    for (const [prop, descriptor] of Object.entries(eventDescriptors)) {
++      if (!descriptor?.configurable || !descriptor.set) continue;
++      Object.defineProperty(Event.prototype, prop, { ...descriptor, set(value) {
++        if (shouldNeutralize(this) && (prop === 'returnValue' ? value === false : value === true)) return;
++        descriptor.set.call(this, value);
++      } });
++    }
+     EventTarget.prototype.addEventListener = overriddenAddEventListener;
+     Event.prototype.preventDefault = overriddenPreventDefault;
+     Event.prototype.stopPropagation = overriddenStopPropagation;
+@@ -266,111 +282,54 @@
+   }
+ 
+   // 注入即应用（此时处于 document_start，页面脚本尚未注册限制性监听器）
+-  applyPrototypeOverrides();
++  if (injectorActive) applyPrototypeOverrides();
+   
+   /**
+    * 移除现有的限制性事件监听器（增强安全版本）
+    */
+   function removeExistingRestrictiveListeners() {
+-    try {
+-      // 限制查询范围，避免性能问题
+-      const selectors = [
+-        'body', 'html', 'div', 'p', 'span', 'article', 'section',
+-        'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'td', 'th'
+-      ];
+-      
+-      selectors.forEach(selector => {
+-        try {
+-          const elements = document.querySelectorAll(selector);
+-          
+-          elements.forEach(element => {
+-            if (!element || !element.nodeType) return;
+-            
+-            swallowEvents.forEach(eventType => {
+-              try {
+-                const handlerProperty = `on${eventType}`;
+-                const inlineHandler = element[handlerProperty];
+-                
+-                if (inlineHandler && isRestrictiveListener(inlineHandler)) {
+-                  debugLog(`EasyCV: Removed restrictive inline ${eventType} handler`);
+-                  element[handlerProperty] = null;
+-                }
+-                
+-                // 同时检查属性形式的处理器
+-                if (element.hasAttribute(handlerProperty)) {
+-                  const attrHandler = element.getAttribute(handlerProperty);
+-                  if (attrHandler && isRestrictiveListener(attrHandler)) {
+-                    debugLog(`EasyCV: Removed restrictive ${handlerProperty} attribute`);
+-                    element.removeAttribute(handlerProperty);
+-                  }
+-                }
+-              } catch (error) {
+-                console.warn(`EasyCV: Error processing ${eventType} on element:`, error);
+-              }
+-            });
+-          });
+-        } catch (error) {
+-          console.warn(`EasyCV: Error querying ${selector} elements:`, error);
+-        }
+-      });
+-    } catch (error) {
+-      console.error('EasyCV: Error in removeExistingRestrictiveListeners:', error);
+-    }
++    document.querySelectorAll('*').forEach(cleanElementRestrictiveAttributes);
+   }
+   
+   /**
+    * 重写常见的禁用函数
+    */
++  const documentHandlers = {};
+   function overrideCommonDisableFunctions() {
+-    // 重写document.onselectstart
+-    Object.defineProperty(document, 'onselectstart', {
+-      get: function() { return null; },
+-      set: function(value) {
+-        debugLog('EasyCV: Blocked attempt to set document.onselectstart');
+-        // 不设置限制性处理器
+-      },
+-      configurable: true
+-    });
+-    
+-    // 重写document.oncontextmenu
+-    Object.defineProperty(document, 'oncontextmenu', {
+-      get: function() { return null; },
+-      set: function(value) {
+-        debugLog('EasyCV: Blocked attempt to set document.oncontextmenu');
+-      },
+-      configurable: true
+-    });
+-    
+-    // 重写document.ondragstart
+-    Object.defineProperty(document, 'ondragstart', {
+-      get: function() { return null; },
+-      set: function(value) {
+-        debugLog('EasyCV: Blocked attempt to set document.ondragstart');
+-      },
+-      configurable: true
++    if (!copyEnabled) return;
++    ['onselectstart', 'oncontextmenu', 'ondragstart'].forEach(prop => {
++      if (Object.hasOwn(documentHandlers, prop)) return;
++      const descriptor = Object.getOwnPropertyDescriptor(document, prop);
++      let current = document[prop];
++      documentHandlers[prop] = { descriptor, getValue: () => current };
++      Object.defineProperty(document, prop, {
++        get: () => isRestrictiveListener(current) ? null : current,
++        set: value => { current = value; }, configurable: true
++      });
+     });
+   }
+ 
++  // An array avoids depending on page-provided Map implementations for restoration.
++  const cleanedHandlers = [];
++
+   /**
+    * 清理单个元素上的限制性 on* 属性/属性值
+    */
+   function cleanElementRestrictiveAttributes(el) {
+-    swallowEvents.forEach(eventType => {
+-      const attrName = `on${eventType}`;
++    if (!injectorActive) return;
++    swallowEvents.forEach(type => {
++      if (!modeAllows(type)) return;
++      const name = `on${type}`;
+       try {
+-        if (el.hasAttribute && el.hasAttribute(attrName)) {
+-          const handler = el.getAttribute(attrName);
+-          if (handler && isRestrictiveListener(handler)) {
+-            el.removeAttribute(attrName);
+-          }
+-        }
+-        const propHandler = el[attrName];
+-        if (typeof propHandler === 'function' && isRestrictiveListener(propHandler)) {
+-          el[attrName] = null;
+-        }
+-      } catch (error) {
+-        console.warn(`EasyCV: Error cleaning ${attrName}:`, error);
+-      }
++        const attr = el.getAttribute?.(name) ?? null;
++        const handler = el[name];
++        if (!isRestrictiveListener(attr) && !isRestrictiveListener(handler)) return;
++        let saved = cleanedHandlers.find(item => item.el === el && item.name === name);
++        if (!saved) { saved = { el, name }; cleanedHandlers.push(saved); }
++        saved.attr = attr; saved.handler = handler;
++        el.removeAttribute?.(name);
++        el[name] = null;
++      } catch (error) { console.warn('EasyCV: Inline cleanup skipped'); }
+     });
+   }
+ 
+@@ -452,6 +411,7 @@
+    * 强制启用文本选择（增强版本）
+    */
+   function forceEnableTextSelection() {
++    if (!copyEnabled) return;
+     try {
+       // 检查是否已经注入过样式
+       if (document.querySelector('style[data-easycv-injected="text-selection"]')) {
+@@ -519,6 +479,7 @@
+       // 全局样式穿不透 shadow 边界，必须在 root 内部注入。
+       // 用 adoptedStyleSheets 而非 <style> 子元素：root.innerHTML 赋值会清空全部
+       // 子节点（包括注入的 style），但 adoptedStyleSheets 不受其影响
++      if (copyEnabled && shadowSheets && processedShadowRoots) {
+       const sheet = new CSSStyleSheet();
+       sheet.replaceSync(`
+         * {
+@@ -529,6 +490,7 @@
+       `);
+       root.adoptedStyleSheets = [...root.adoptedStyleSheets, sheet];
+       if (shadowSheets) shadowSheets.set(root, sheet);
++      }
+ 
+       // 清理已有的内联限制属性，并对 shadow 树挂动态保护
+       if (root.querySelectorAll) {
+@@ -586,6 +548,9 @@
+         dynamicObserver = null;
+       }
+       
++      for (const [prop, descriptor] of Object.entries(eventDescriptors)) {
++        if (descriptor?.configurable) Object.defineProperty(Event.prototype, prop, descriptor);
++      }
+       // 恢复原始的事件方法
+       if (originalFunctions.addEventListener) {
+         EventTarget.prototype.addEventListener = originalFunctions.addEventListener;
+@@ -633,8 +598,20 @@
+ 
+       // 解除 document.on* 属性劫持（这些以 own property 形式定义在 document 上，
+       // delete 后原型链上的原始描述符自然生效）
+-      ['onselectstart', 'oncontextmenu', 'ondragstart'].forEach(prop => {
+-        try { delete document[prop]; } catch (e) { /* 属性不可删除时忽略 */ }
++      Object.entries(documentHandlers).forEach(([prop, saved]) => {
++        try {
++          if (saved.descriptor) Object.defineProperty(document, prop, saved.descriptor);
++          else delete document[prop];
++          document[prop] = saved.getValue();
++          delete documentHandlers[prop];
++        } catch { /* A page may make its property non-configurable. */ }
++      });
++      cleanedHandlers.splice(0).forEach(({ el, name, attr, handler }) => {
++        try {
++          if (el[name] != null || el.getAttribute?.(name) != null) return;
++          if (attr !== null) el.setAttribute(name, attr);
++          else el[name] = handler;
++        } catch { /* A detached or replaced node needs no intervention. */ }
+       });
+       
+       // 清理拦截的监听器映射（页面可能篡改 Map，单独容错以免中断后续样式清理）
+@@ -698,12 +675,11 @@
+       restoreOriginalFunctions();
+       window.postMessage({ type: 'EASYCV_DISABLED' }, '*');
+     } else if (event.data?.type === 'EASYCV_ENABLE') {
+-      debugLog('EasyCV: Re-enabling injector');
+-      // 禁用后重新启用时，原型重写已被 restoreOriginalFunctions 还原，需要重新应用
+-      if (!injectorActive) {
+-        injectorActive = true;
+-        applyPrototypeOverrides();
+-      }
++      restoreOriginalFunctions();
++      copyEnabled = event.data.copyEnabled === true;
++      pasteEnabled = event.data.pasteEnabled === true;
++      injectorActive = copyEnabled || pasteEnabled;
++      if (injectorActive) applyPrototypeOverrides();
+       initializeInjector();
+     }
+   });
+diff --git "a/docs/API\350\256\276\350\256\241\346\226\207\346\241\243.md" "b/docs/API\350\256\276\350\256\241\346\226\207\346\241\243.md"
+index 458bcad..1e6d7ae 100644
+--- "a/docs/API\350\256\276\350\256\241\346\226\207\346\241\243.md"
++++ "b/docs/API\350\256\276\350\256\241\346\226\207\346\241\243.md"
+@@ -1,5 +1,17 @@
+ # EasyCV API设计文档
+ 
++## W1–W6 当前存储契约（2026-11-03）
++
++当前实现以 `utils/storage-utils.js` 与 [验收报告](../EASYCV-W1-W6-LOCAL-ACCEPTANCE.md) 为准。下文旧接口示例中的自动域名历史与 sync 统计不再适用。
++
++- Popup/Options 的 StorageUtils 写入经 `storage_mutation` 发送到 worker；worker 校验扩展页面发送者后，和 StateManager 一起进入单一串行队列。内容页无此通用写权限。
++- sync 为配置权威；缺键才读取保留的旧 local 副本。sync 读失败报告状态不可确认，写失败不回退成 local 成功。`getRecoveryData` / `restoreLocalSettings` 支持显式恢复。
++- `addToAutoEnableList`、`replaceAutoEnableRule`、`removeFromAutoEnableList` 从队列中的最新名单执行操作。站点精确规则优先，`*.example.com` 只匹配子域；旧字符串在读取时规范化，不自动覆盖原值。
++- `exportSettings` 返回 `schemaVersion:1` 的设置/名单/排除格式；旧文件无 schemaVersion 仍可导入。`importConfiguration` 先整体验证，再单次 sync.set；本机恢复导出使用 `{schemaVersion:1,kind:'easycv-local-recovery',configuration:{...原键}}`，导入时只覆盖包含的键。
++- `recordDiagnostic` / `recordActivation` 写 local；后者尊重 enableStatistics=false。`migratePrivateData` 先备份/脱敏并校验，再清理旧 sync 键；失败可重试，`hasPendingPrivacyMigration` 供 UI 提示。
++- `GET_STATUS` 失败明确返回 success:false；内容脚本休眠，后续通知重新取权威状态。变化广播只携带变化键或请求 ID，不携带完整配置或诊断。
++
++
+ ## 📋 文档概述
+ 
+ **项目名称**: EasyCV - 解除网页复制粘贴限制插件  
+diff --git a/docs/README.md b/docs/README.md
+index 8b203ca..f2d0f30 100644
+--- a/docs/README.md
++++ b/docs/README.md
+@@ -1,5 +1,10 @@
+ # EasyCV 文档索引
+ 
++## 下一版 W1–W6 本地整改（2026-11-03）
++
++当前源码验收以 [W1–W6 本地验收报告](../EASYCV-W1-W6-LOCAL-ACCEPTANCE.md) 为准；依据 [已批准方案](../EASYCV-NEXT-VERSION-PLAN.md) 实施。扩展版本仍为 1.1.2，待后台核实后锁定；本轮没有浏览器操作、商店提交或 Git 提交。以下 1.1.2 包和验收属于历史对象，不能代替本轮验证。
++
++
+ 本索引用于帮助你快速判断：现在应该看哪份文档、改动时应该同步更新哪份文档。
+ 
+ 文档角色（Vocabulary）以根目录的 [CONTEXT.md](../CONTEXT.md) 为准：Source Document / Reference Document / Working Document / Evidence Document / Governance Document / Archive / Asset。本文档用“状态=archive”表达“归档（Archive）材料”。
+diff --git a/docs/release-checklist.md b/docs/release-checklist.md
+index d20e071..4dbf7d3 100644
+--- a/docs/release-checklist.md
++++ b/docs/release-checklist.md
+@@ -1,3 +1,18 @@
++# 下一版发布门禁（2026-11-03，版本未锁定）
++
++当前本地整改见 [W1–W6 验收报告](../EASYCV-W1-W6-LOCAL-ACCEPTANCE.md)。以下历史清单保留其原始身份。
++
++- [ ] 后台核实发布/草稿/待审版本、商品 ID、警告/截止期及渠道，再锁版本。
++- [ ] 审阅本地整改和隐私披露草稿；处理依赖审计剩余告警或明确风险决定。
++- [ ] 使用最终版本重新运行真实本地检查，固定 source/build/ZIP 清单与 SHA256。
++- [ ] 获准后完成 Chrome/Edge、真实页面、升级/重启与中英 UI 验收。
++- [ ] 核对公开政策、商店数据声明、权限理由与实际包一致。
++- [ ] 单独取得上传、送审及发布所需授权；当前不执行这些动作。
++
++本地 Node/VM 结果不构成商店放行，版本仍为 1.1.2 也不代表该内容已上架。
++
++---
++
+ # 1.1.2 修复候选（2026-11-03）
+ 
+ 状态修复包的原始身份、Gate 与商店流程边界以 [状态修复验收报告](../EASYCV-1.1.2-STATE-FIX-ACCEPTANCE.md) 为准，其历史环境包目录未必存在于当前 checkout。本机 Windows 另有送审重打包，路径与哈希见 [优化报告中的包身份记录](../EASYCV-OPTIMIZATION-20261103.md)；该本地重打包及其原有证据未纳入本轮体验优化提交。重打包及 Git 交付不等于商店提交，实际后台状态须另行确认；旧权限整改包不用于本轮功能修复。
+diff --git "a/docs/\346\265\213\350\257\225\350\256\241\345\210\222.md" "b/docs/\346\265\213\350\257\225\350\256\241\345\210\222.md"
+index c560e0c..ae49582 100644
+--- "a/docs/\346\265\213\350\257\225\350\256\241\345\210\222.md"
++++ "b/docs/\346\265\213\350\257\225\350\256\241\345\210\222.md"
+@@ -1,5 +1,14 @@
+ # EasyCV 测试计划
+ 
++## 下一版必要回归（2026-11-03）
++
++本轮结果见 [W1–W6 验收报告](../EASYCV-W1-W6-LOCAL-ACCEPTANCE.md)。执行 `npm test`、`npm run lint`、`npm run docs:check` 只完成本地门禁。
++
++新增 `reliability.test.mjs` 覆盖调查 F01–F12、跨界面写入队列、失败保存、导入/恢复、隐私迁移、四种子开关组合及关闭恢复；`release-checks.test.mjs` 验证真实失败退出、版本同步、旧构建/额外文件/损坏 ZIP 拒绝。所有 fixtures 都是合成数据和临时目录，不读取真实用户浏览器配置。
++
++仍须获准后对最终 ZIP 测试：普通文本、复制/剪切/粘贴四种模式、关闭负对照、富文本输入和工具栏、播放器快捷键、iframe、Shadow DOM、SPA、严格 CSP、中文/英文布局、worker 冷启动与重启、离线/配额错误、多标签一致性及同 ID 商店升级。真实浏览器本轮 NOT_RUN；不能把 VM 桩或静态源码测试标为人工功能通过。
++
++
+ ## 📋 测试概述
+ 
+ **项目名称**: EasyCV - 解除网页复制粘贴限制插件  
+diff --git "a/docs/\351\203\250\347\275\262\346\226\207\346\241\243.md" "b/docs/\351\203\250\347\275\262\346\226\207\346\241\243.md"
+index f9f12ec..f20b8c3 100644
+--- "a/docs/\351\203\250\347\275\262\346\226\207\346\241\243.md"
++++ "b/docs/\351\203\250\347\275\262\346\226\207\346\241\243.md"
+@@ -1,5 +1,16 @@
+ # EasyCV 部署文档
+ 
++## 当前本地候选流程（2026-11-03，优先于下文旧命令示例）
++
++- `node scripts/build.js --out .tmp/一个全新目录/dist`：输出目录必须在项目内，且不能覆盖非空目录或源目录。manifest/package/lock 根版本必须一致。
++- `npm run package:quick`：在独立 `.tmp-quick-*` 下构建、打包；仅供开发自测，不运行完整门禁。
++- `npm run deploy` / `npm run release`：真实运行语法、Node 单元及文档检查，失败立即停止；在独立 `.tmp-deploy-*` 生成候选及报告，不自动清理旧包，不操作商店。
++- `npm run zip` / `--package-only` 会校验默认 dist 与当前源码；过期、缺失或额外文件被拒绝。不要为了绕过校验使用旧 dist。
++- 每个 ZIP 生成 `.verification.json`，校验 source/build/ZIP 文件集合、逐文件 SHA256、CRC、根 manifest、版本与权限；禁止同名覆盖。浏览器和商店放行状态始终单独记录。
++- 版本脚本同步 manifest、package、lock 顶层/根包，拒绝非法三段项目版本与原文件不一致；只在后台版本核实及授权后使用。本轮未执行源码升版。
++- 依赖审计：`npm audit --registry=https://registry.npmjs.org`。当前镜像不提供审计端点，可用命令参数临时指定官方端点，不改变全局 registry。结果见 [验收报告](../EASYCV-W1-W6-LOCAL-ACCEPTANCE.md)，不能用本地测试替代依赖风险处置。
++
++
+ ## 📋 部署概述
+ 
+ 本文档说明 EasyCV 当前仓库下真实可执行的构建、打包、版本更新与部署准备流程。目标是让维护者能够基于现有脚本完成发布准备，而不是依赖过时模板或占位配置。
+diff --git a/manifest.json b/manifest.json
+index f8c18ef..7ad3aa0 100644
+--- a/manifest.json
++++ b/manifest.json
+@@ -49,9 +49,7 @@
+   "web_accessible_resources": [
+     {
+       "resources": [
+-        "content/injector.js",
+-        "icons/*.png",
+-        "utils/*.js"
++        "content/injector.js"
+       ],
+       "matches": [
+         "<all_urls>"
+diff --git a/options/options.html b/options/options.html
+index 3cb7941..7df63fc 100644
+--- a/options/options.html
++++ b/options/options.html
+@@ -211,6 +211,7 @@
+                 </div>
+               </div>
+               <button class="btn btn-primary" id="addWhitelistBtn" data-i18n="add_btn">添加</button>
++              <button class="btn btn-secondary" id="cancelRuleEditBtn" data-i18n="cancel_edit" hidden>取消编辑</button>
+             </div>
+           </div>
+ 
+@@ -301,6 +302,17 @@
+ 
+         <div class="settings-section">
+           <h3 class="section-title" data-i18n="data_management">数据管理</h3>
++          <p class="setting-description" data-i18n="privacy_storage_notice">设置和手工规则可能通过浏览器同步；统计和简化诊断仅保存在本机。旧版访问记录迁移为本机备份，可通过清除所有数据删除。</p>
++          <label><input type="checkbox" id="enableStatistics"> <span data-i18n="local_statistics_toggle">记录本机启用次数（不记录访问域名）</span></label>
++          <div id="privacyMigrationPending" hidden>
++            <p data-i18n="privacy_migration_pending">旧版数据迁移尚未完成，旧同步副本仍被保留。请稍后重试。</p>
++            <button class="btn btn-secondary" id="retryPrivacyMigrationBtn" data-i18n="retry_migration">重试迁移</button>
++          </div>
++          <div id="localRecovery" hidden>
++            <p data-i18n="local_recovery_notice">检测到旧版本机配置副本。当前以同步设置为准；先导出备份，再按需恢复。</p>
++            <button class="btn btn-secondary" id="exportRecoveryBtn" data-i18n="export_local_recovery">导出本机配置副本</button>
++            <button class="btn btn-warning" id="restoreRecoveryBtn" data-i18n="restore_local_recovery">用本机副本恢复设置</button>
++          </div>
+ 
+           <div class="action-buttons">
+             <button class="btn btn-secondary" id="exportSettingsBtn">
+@@ -348,7 +360,7 @@
+             </div>
+             <div class="stat-content">
+               <h3 class="stat-number" id="totalSitesCount">0</h3>
+-              <p class="stat-label" data-i18n="total_sites_count">处理网站总数</p>
++              <p class="stat-label" data-i18n="total_sites_count">今日启用次数</p>
+             </div>
+           </div>
+ 
+@@ -361,7 +373,7 @@
+             </div>
+             <div class="stat-content">
+               <h3 class="stat-number" id="successfulCount">0</h3>
+-              <p class="stat-label" data-i18n="successful_count">成功处理次数</p>
++              <p class="stat-label" data-i18n="successful_count">累计启用次数</p>
+             </div>
+           </div>
+ 
+@@ -373,7 +385,7 @@
+               </svg>
+             </div>
+             <div class="stat-content">
+-              <h3 class="stat-number" id="successRate">0%</h3>
++              <h3 class="stat-number" id="successRate">—</h3>
+               <p class="stat-label" data-i18n="success_rate">成功率</p>
+             </div>
+           </div>
+@@ -381,24 +393,7 @@
+ 
+         <div class="stats-details">
+           <h3 class="section-title" data-i18n="detailed_stats">详细统计</h3>
+-          <div class="stats-table-container">
+-            <table class="stats-table">
+-              <thead>
+-                <tr>
+-                  <th data-i18n="th_site">网站</th>
+-                  <th data-i18n="th_visits">访问次数</th>
+-                  <th data-i18n="th_processes">处理次数</th>
+-                  <th data-i18n="success_rate">成功率</th>
+-                  <th data-i18n="th_last_visit">最后访问</th>
+-                </tr>
+-              </thead>
+-              <tbody id="statsTableBody">
+-                <tr class="empty-row">
+-                  <td colspan="5" data-i18n="empty_stats">暂无统计数据</td>
+-                </tr>
+-              </tbody>
+-            </table>
+-          </div>
++          <p id="statsTableBody" data-i18n="local_stats_notice">仅统计本机启用操作，不代表解锁成功率；不再记录网站访问明细。</p>
+         </div>
+       </div>
+ 
+diff --git a/options/options.js b/options/options.js
+index ee8dbaa..ed7c955 100644
+--- a/options/options.js
++++ b/options/options.js
+@@ -184,6 +184,7 @@ class OptionsManager {
+    * 绑定白名单事件
+    */
+   bindWhitelistEvents() {
++    document.getElementById('cancelRuleEditBtn')?.addEventListener('click', () => this.cancelRuleEdit());
+     // 添加白名单
+     const addBtn = document.getElementById('addWhitelistBtn');
+     const input = document.getElementById('whitelistInput');
+@@ -256,6 +257,10 @@ class OptionsManager {
+       });
+     }
+     
++    document.getElementById('retryPrivacyMigrationBtn')?.addEventListener('click', () => this.retryPrivacyMigration());
++    document.getElementById('exportRecoveryBtn')?.addEventListener('click', () => this.exportRecovery());
++    document.getElementById('restoreRecoveryBtn')?.addEventListener('click', () => this.restoreRecovery());
++    document.getElementById('enableStatistics')?.addEventListener('change', e => this.updateSetting('enableStatistics', e.target.checked));
+     // 数据管理按钮
+     const exportBtn = document.getElementById('exportSettingsBtn');
+     const importBtn = document.getElementById('importSettingsBtn');
+@@ -359,7 +364,7 @@ class OptionsManager {
+       this.statistics = await StorageUtils.getStatistics();
+       
+     } catch (error) {
+-      console.error('Failed to load data:', error);
++      throw error;
+     }
+   }
+   
+@@ -367,6 +372,7 @@ class OptionsManager {
+    * 初始化UI
+    */
+   initializeUI() {
++    this.refreshRecoveryNotice().catch(() => this.showNotification(I18nUtils.t('load_failed'), 'error'));
+     // 设置表单值
+     this.updateFormValues();
+     
+@@ -409,6 +415,8 @@ class OptionsManager {
+     const maxRetries = document.getElementById('maxRetries');
+     if (maxRetries) maxRetries.value = this.settings.maxRetries ?? 3;
+     
++    const enableStatistics = document.getElementById('enableStatistics');
++    if (enableStatistics) enableStatistics.checked = this.settings.enableStatistics !== false;
+     // 高级设置
+     const debugMode = document.getElementById('debugMode');
+     if (debugMode) debugMode.checked = this.settings.debugMode ?? false;
+@@ -422,15 +430,12 @@ class OptionsManager {
+    */
+   async updateSetting(key, value) {
+     try {
+-      this.settings[key] = value;
+-      // 只保存本次编辑的字段，避免覆盖 Popup/其他标签刚修改的设置。
+       await StorageUtils.setPluginSettings({ [key]: value });
+-
+-      // 无需显式通知 background：StateManager 的 storage 监听器会自动同步缓存
+-
++      this.settings = await StorageUtils.getPluginSettings();
++      this.updateFormValues();
+       this.showNotification(I18nUtils.t('settings_saved'), 'success');
+     } catch (error) {
+-      console.error('Failed to update setting:', error);
++      this.updateFormValues();
+       this.showNotification(I18nUtils.t('save_failed'), 'error');
+     }
+   }
+@@ -439,94 +444,46 @@ class OptionsManager {
+    * 添加自动解锁域名
+    */
+   async addWhitelistDomain(domain) {
+-    if (!domain) {
+-      this.showNotification(I18nUtils.t('invalid_domain_empty'), 'warning');
+-      return;
+-    }
+-
+-    // 验证域名格式
+-    if (!this.isValidDomain(domain)) {
+-      this.showNotification(I18nUtils.t('invalid_domain_format'), 'warning');
+-      return;
+-    }
+-
+-    // 检查是否已存在
+-    if (this.whitelist.find(item => item.domain === domain)) {
+-      this.showNotification(I18nUtils.t('domain_exists'), 'warning');
+-      return;
+-    }
+-
+-    // 获取精细化控制选项
+-    const copyEnabled = document.getElementById('enableCopyOption').checked;
+-    const pasteEnabled = document.getElementById('enablePasteOption').checked;
+-
+-    if (!copyEnabled && !pasteEnabled) {
+-      this.showNotification(I18nUtils.t('select_at_least_one'), 'warning');
+-      return;
+-    }
+-    
++    const isEditing = Boolean(this.editingDomain);
+     try {
+-      const config = {
+-        domain,
+-        copyEnabled,
+-        pasteEnabled
+-      };
+-      
+-      // 检查是否为编辑模式
+-      const input = document.getElementById('whitelistInput');
+-      const isEditing = input && input.hasAttribute('data-editing');
+-      const editingDomain = isEditing ? input.getAttribute('data-editing') : null;
+-      
+-      this.whitelist.push(config);
+-      await StorageUtils.set({ [StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: this.whitelist });
+-      
+-      // 清空输入框和重置选项
+-      if (input) {
+-        input.value = '';
+-        input.removeAttribute('data-editing');
+-      }
+-      document.getElementById('enableCopyOption').checked = true;
+-      document.getElementById('enablePasteOption').checked = true;
+-      
+-      // 重置按钮状态
+-      const addBtn = document.getElementById('addWhitelistBtn');
+-      if (addBtn) {
+-        addBtn.textContent = I18nUtils.t('add_btn');
+-        addBtn.classList.remove('updating');
+-      }
+-
+-      // 移除编辑高亮
+-      const editingItems = document.querySelectorAll('.whitelist-item.editing');
+-      editingItems.forEach(item => item.classList.remove('editing'));
+-
+-      // 重新渲染列表
++      domain = StorageUtils.normalizeDomain(domain, true);
++      const config = { domain, copyEnabled: document.getElementById('enableCopyOption').checked,
++        pasteEnabled: document.getElementById('enablePasteOption').checked };
++      if (isEditing) await StorageUtils.replaceAutoEnableRule(this.editingDomain, config);
++      else await StorageUtils.addToAutoEnableList(config);
++      this.whitelist = await StorageUtils.getAutoEnableList();
++      this.cancelRuleEdit();
+       this.renderWhitelist();
+-
+-      if (isEditing && editingDomain) {
+-        this.showNotification(I18nUtils.t('config_updated', editingDomain), 'success');
+-      } else {
+-        this.showNotification(I18nUtils.t('domain_added'), 'success');
+-      }
++      this.showNotification(I18nUtils.t(isEditing ? 'settings_saved' : 'domain_added'), 'success');
+     } catch (error) {
+-      console.error('Failed to add whitelist domain:', error);
++      // The draft and persisted rule remain intact so the user can retry.
+       this.showNotification(I18nUtils.t(isEditing ? 'update_failed' : 'add_failed'), 'error');
+     }
+   }
++
++  cancelRuleEdit() {
++    this.editingDomain = null;
++    document.getElementById('whitelistInput').value = '';
++    document.getElementById('enableCopyOption').checked = true;
++    document.getElementById('enablePasteOption').checked = true;
++    const button = document.getElementById('addWhitelistBtn');
++    button.textContent = I18nUtils.t('add_btn');
++    button.classList.remove('updating');
++    const cancel = document.getElementById('cancelRuleEditBtn');
++    if (cancel) cancel.hidden = true;
++  }
+   
+   /**
+    * 删除自动解锁域名
+    */
+   async removeWhitelistDomain(domain) {
+     try {
+-      this.whitelist = this.whitelist.filter(item => item.domain !== domain);
+-      await StorageUtils.set({ [StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: this.whitelist });
+-      
+-      // 重新渲染列表
++      await StorageUtils.removeFromAutoEnableList(domain);
++      this.whitelist = await StorageUtils.getAutoEnableList();
++      if (this.editingDomain === domain) this.cancelRuleEdit();
+       this.renderWhitelist();
+-
+       this.showNotification(I18nUtils.t('domain_deleted'), 'success');
+     } catch (error) {
+-      console.error('Failed to remove whitelist domain:', error);
+       this.showNotification(I18nUtils.t('delete_failed'), 'error');
+     }
+   }
+@@ -539,7 +496,7 @@ class OptionsManager {
+     if (!config) return;
+     
+     // 高亮正在编辑的项目
+-    const editingItem = document.querySelector(`[data-domain="${domain}"]`);
++    const editingItem = document.querySelector(`[data-domain="${this.escapeHTML(domain)}"]`);
+     if (editingItem) {
+       editingItem.classList.add('editing');
+     }
+@@ -564,8 +521,10 @@ class OptionsManager {
+     // 显示编辑提示
+     this.showNotification(I18nUtils.t('editing_config', domain), 'info');
+     
+-    // 先删除原配置
+-    await this.removeWhitelistDomain(domain);
++    // Editing is an in-memory draft; only Save performs an atomic replacement.
++    this.editingDomain = domain;
++    const cancel = document.getElementById('cancelRuleEditBtn');
++    if (cancel) cancel.hidden = false;
+     
+     // 滚动到添加表单
+     const addForm = document.querySelector('.add-whitelist');
+@@ -619,11 +578,11 @@ class OptionsManager {
+       const featureText = I18nUtils.t('enabled_features', featureList.join(' + '));
+ 
+       return `
+-        <div class="whitelist-item" data-domain="${domain}">
++        <div class="whitelist-item" data-domain="${this.escapeHTML(domain)}">
+           <div class="whitelist-info">
+             <div class="domain-header">
+               ${statusIcon}
+-              <span class="whitelist-domain">${domain}</span>
++              <span class="whitelist-domain">${this.escapeHTML(domain)}</span>
+             </div>
+             <div class="whitelist-status">
+               ${statusTags}
+@@ -631,11 +590,11 @@ class OptionsManager {
+             </div>
+           </div>
+           <div class="whitelist-actions">
+-            <button class="action-btn-small edit" data-domain="${domain}" title="${I18nUtils.t('edit_title')}">
++            <button class="action-btn-small edit" data-domain="${this.escapeHTML(domain)}" title="${I18nUtils.t('edit_title')}">
+               <svg viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/></svg>
+               ${I18nUtils.t('edit_btn')}
+             </button>
+-            <button class="action-btn-small delete" data-domain="${domain}" title="${I18nUtils.t('delete_title')}">
++            <button class="action-btn-small delete" data-domain="${this.escapeHTML(domain)}" title="${I18nUtils.t('delete_title')}">
+               <svg viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+               ${I18nUtils.t('delete_btn')}
+             </button>
+@@ -654,6 +613,9 @@ class OptionsManager {
+    * 设置白名单事件监听器
+    */
+   setupWhitelistEventListeners(container) {
++    this.boundWhitelistContainers ||= new WeakSet();
++    if (this.boundWhitelistContainers.has(container)) return;
++    this.boundWhitelistContainers.add(container);
+     // 事件委托处理编辑按钮
+     container.addEventListener('click', (e) => {
+       const editBtn = e.target.closest('.action-btn-small.edit');
+@@ -697,8 +659,8 @@ class OptionsManager {
+     }
+ 
+     try {
+-      this.excludedList.push(domain);
+-      await StorageUtils.setExcludedList(this.excludedList);
++      await StorageUtils.addToExcludedList(domain);
++      this.excludedList = await StorageUtils.getExcludedList();
+ 
+       const input = document.getElementById('excludedInput');
+       if (input) input.value = '';
+@@ -716,8 +678,8 @@ class OptionsManager {
+    */
+   async removeExcludedDomain(domain) {
+     try {
+-      this.excludedList = this.excludedList.filter(item => item !== domain);
+-      await StorageUtils.setExcludedList(this.excludedList);
++      await StorageUtils.removeFromExcludedList(domain);
++      this.excludedList = await StorageUtils.getExcludedList();
+ 
+       this.renderExcludedList();
+       this.showNotification(I18nUtils.t('domain_deleted'), 'success');
+@@ -747,14 +709,14 @@ class OptionsManager {
+     }
+ 
+     container.innerHTML = this.excludedList.map(domain => `
+-      <div class="whitelist-item" data-domain="${domain}">
++      <div class="whitelist-item" data-domain="${this.escapeHTML(domain)}">
+         <div class="whitelist-info">
+           <div class="domain-header">
+-            <span class="whitelist-domain">${domain}</span>
++            <span class="whitelist-domain">${this.escapeHTML(domain)}</span>
+           </div>
+         </div>
+         <div class="whitelist-actions">
+-          <button class="action-btn-small delete" data-domain="${domain}" title="${I18nUtils.t('delete_title')}">
++          <button class="action-btn-small delete" data-domain="${this.escapeHTML(domain)}" title="${I18nUtils.t('delete_title')}">
+             <svg viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+             ${I18nUtils.t('delete_btn')}
+           </button>
+@@ -767,8 +729,11 @@ class OptionsManager {
+    * 验证域名格式
+    */
+   isValidDomain(domain) {
+-    const domainRegex = /^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]?\.[a-zA-Z]{2,}$/;
+-    return domainRegex.test(domain);
++    try { StorageUtils.normalizeDomain(domain); return true; } catch { return false; }
++  }
++
++  escapeHTML(value) {
++    return String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+   }
+   
+   /**
+@@ -776,14 +741,8 @@ class OptionsManager {
+    */
+   async exportSettings() {
+     try {
+-      const data = {
+-        settings: this.settings,
+-        whitelist: this.whitelist,
+-        excludedList: this.excludedList,
+-        exportDate: new Date().toISOString(),
+-        version: chrome.runtime.getManifest().version
+-      };
+-      
++      const data = await StorageUtils.exportSettings();
++
+       const blob = new Blob([JSON.stringify(data, null, 2)], {
+         type: 'application/json'
+       });
+@@ -818,39 +777,22 @@ class OptionsManager {
+    */
+   async handleFileImport(file) {
+     if (!file) return;
+-    
+     try {
++      if (file.size > 1000000) throw new Error('File too large');
+       const text = await file.text();
+-      const data = JSON.parse(text);
+-      
+-      // 验证数据格式
+-      if (!data.settings || !data.whitelist) {
+-        throw new Error('Invalid file format');
+-      }
+-      
+-      // 导入设置
+-      this.settings = { ...this.settings, ...data.settings };
+-      await StorageUtils.setPluginSettings(this.settings);
+-      
+-      // 导入白名单
+-      this.whitelist = data.whitelist;
+-      await StorageUtils.setAutoEnableList(this.whitelist);
+-
+-      // 导入站点排除列表（旧版导出文件无此字段时跳过，保留现状）
+-      if (Array.isArray(data.excludedList)) {
+-        this.excludedList = data.excludedList;
+-        await StorageUtils.setExcludedList(this.excludedList);
+-      }
+-
+-      // 更新UI
++      if (text.length > 1000000) throw new Error('File too large');
++      await StorageUtils.importConfiguration(JSON.parse(text));
++      await this.loadAllData();
++      this.cancelRuleEdit();
+       this.updateFormValues();
+       this.renderWhitelist();
+       this.renderExcludedList();
+-      
+       this.showNotification(I18nUtils.t('settings_imported'), 'success');
+     } catch (error) {
+-      console.error('Failed to import settings:', error);
+       this.showNotification(I18nUtils.t('import_failed'), 'error');
++    } finally {
++      const input = document.getElementById('importFileInput');
++      if (input) input.value = '';
+     }
+   }
+   
+@@ -864,7 +806,7 @@ class OptionsManager {
+ 
+     try {
+       // 重置为默认设置
+-      this.settings = {
++      const defaults = {
+         enabled: true,
+         copyEnabled: true,
+         pasteEnabled: true,
+@@ -878,7 +820,8 @@ class OptionsManager {
+         performanceMonitoring: false
+       };
+ 
+-      await StorageUtils.setPluginSettings(this.settings);
++      await StorageUtils.setPluginSettings(defaults);
++      this.settings = await StorageUtils.getPluginSettings();
+ 
+       // 更新UI
+       this.updateFormValues();
+@@ -899,8 +842,8 @@ class OptionsManager {
+     }
+ 
+     try {
+-      await chrome.storage.sync.clear();
+-      await chrome.storage.local.clear();
++      await StorageUtils.clear();
++      this.cancelRuleEdit();
+ 
+       // 重新加载数据
+       await this.loadAllData();
+@@ -923,7 +866,7 @@ class OptionsManager {
+       // 更新统计卡片（statistics 中真实存在的字段：sitesUnlocked / totalActivations）
+       const totalSitesElement = document.getElementById('totalSitesCount');
+       if (totalSitesElement) {
+-        totalSitesElement.textContent = (this.statistics.sitesUnlocked || []).length;
++        totalSitesElement.textContent = this.statistics.todayUsage || 0;
+       }
+ 
+       const successfulElement = document.getElementById('successfulCount');
+@@ -934,10 +877,7 @@ class OptionsManager {
+       // 成功率暂无数据来源（未追踪尝试次数），显示占位符而非误导性的 0%
+       const successRateElement = document.getElementById('successRate');
+       if (successRateElement) {
+-        const total = this.statistics.totalAttempts || 0;
+-        successRateElement.textContent = total > 0
+-          ? `${Math.round((this.statistics.successfulAttempts / total) * 100)}%`
+-          : '—';
++        successRateElement.textContent = '—';
+       }
+       
+       // 更新详细统计表格
+@@ -953,33 +893,40 @@ class OptionsManager {
+    */
+   renderStatisticsTable() {
+     const tbody = document.getElementById('statsTableBody');
+-    if (!tbody) return;
+-    
+-    const siteStats = this.statistics.siteStats || {};
+-    const sites = Object.keys(siteStats);
+-    
+-    if (sites.length === 0) {
+-      tbody.innerHTML = `<tr class="empty-row"><td colspan="5">${I18nUtils.t('empty_stats')}</td></tr>`;
+-      return;
+-    }
+-    
+-    const html = sites.map(site => {
+-      const stats = siteStats[site];
+-      const successRate = stats.attempts > 0 ? Math.round((stats.successes / stats.attempts) * 100) : 0;
+-      const lastVisit = new Date(stats.lastVisit).toLocaleDateString();
+-      
+-      return `
+-        <tr>
+-          <td>${site}</td>
+-          <td>${stats.visits || 0}</td>
+-          <td>${stats.attempts || 0}</td>
+-          <td>${successRate}%</td>
+-          <td>${lastVisit}</td>
+-        </tr>
+-      `;
+-    }).join('');
+-    
+-    tbody.innerHTML = html;
++    if (tbody) tbody.textContent = I18nUtils.t('local_stats_notice');
++  }
++
++  async refreshRecoveryNotice() {
++    const data = await StorageUtils.getRecoveryData();
++    const panel = document.getElementById('localRecovery');
++    if (panel) panel.hidden = Object.keys(data).length === 0;
++    const pending = document.getElementById('privacyMigrationPending');
++    if (pending) pending.hidden = !(await StorageUtils.hasPendingPrivacyMigration());
++  }
++
++  async retryPrivacyMigration() {
++    try { await StorageUtils.migratePrivateData(); await this.refreshRecoveryNotice(); }
++    catch { this.showNotification(I18nUtils.t('privacy_migration_pending'), 'error'); }
++  }
++
++  async exportRecovery() {
++    try {
++      const data = await StorageUtils.getRecoveryData();
++      const url = URL.createObjectURL(new Blob([JSON.stringify({ schemaVersion: 1, kind: 'easycv-local-recovery', configuration: data }, null, 2)], { type: 'application/json' }));
++      const a = document.createElement('a');
++      a.href = url; a.download = 'easycv-local-recovery.json'; a.click();
++      URL.revokeObjectURL(url);
++    } catch { this.showNotification(I18nUtils.t('export_failed'), 'error'); }
++  }
++
++  async restoreRecovery() {
++    if (!confirm(I18nUtils.t('confirm_restore_local'))) return;
++    try {
++      await StorageUtils.restoreLocalSettings();
++      await this.loadAllData();
++      this.initializeUI();
++      this.showNotification(I18nUtils.t('settings_saved'), 'success');
++    } catch { this.showNotification(I18nUtils.t('save_failed'), 'error'); }
+   }
+   
+   /**
+diff --git a/package-lock.json b/package-lock.json
+index 47ebc6a..3fb16bd 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -134,9 +134,9 @@
+       }
+     },
+     "node_modules/brace-expansion": {
+-      "version": "1.1.11",
+-      "resolved": "https://registry.npmmirror.com/brace-expansion/-/brace-expansion-1.1.11.tgz",
+-      "integrity": "sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==",
++      "version": "1.1.21",
++      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.21.tgz",
++      "integrity": "sha512-9zeA+KLZNNzglF2TPKRQEDyx6Yby7daAkuy8MiPzpXPsYDWi/DRM8jmwUDxokQjYqBpv5DgPiwD4h4ZZSy1Ujw==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+@@ -418,9 +418,9 @@
+       "license": "MIT"
+     },
+     "node_modules/minimatch": {
+-      "version": "3.1.2",
+-      "resolved": "https://registry.npmmirror.com/minimatch/-/minimatch-3.1.2.tgz",
+-      "integrity": "sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==",
++      "version": "3.1.5",
++      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-3.1.5.tgz",
++      "integrity": "sha512-VgjWUsnnT6n+NUk6eZq77zeFdpW2LWDzP6zFGrCbHXiYNul5Dzqk2HHQ5uFH2DNW5Xbp8+jVzaeNt94ssEEl4w==",
+       "dev": true,
+       "license": "ISC",
+       "dependencies": {
+@@ -493,9 +493,9 @@
+       }
+     },
+     "node_modules/readdir-glob/node_modules/brace-expansion": {
+-      "version": "2.0.1",
+-      "resolved": "https://registry.npmmirror.com/brace-expansion/-/brace-expansion-2.0.1.tgz",
+-      "integrity": "sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==",
++      "version": "2.1.7",
++      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-2.1.7.tgz",
++      "integrity": "sha512-uZbew1NqdmPDTMJ8ah1y+b+9QEJrfkXFk3RcTQw3X0jW/xRUvFKsg1CfQdSYGdTbXZWExtU3J3ccxtnfw1Fi0g==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+@@ -503,9 +503,9 @@
+       }
+     },
+     "node_modules/readdir-glob/node_modules/minimatch": {
+-      "version": "5.1.6",
+-      "resolved": "https://registry.npmmirror.com/minimatch/-/minimatch-5.1.6.tgz",
+-      "integrity": "sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==",
++      "version": "5.1.9",
++      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-5.1.9.tgz",
++      "integrity": "sha512-7o1wEA2RyMP7Iu7GNba9vc0RWWGACJOCZBJX2GJWip0ikV+wcOsgVuY9uE8CPiyQhkGFSlhuSkZPavN7u1c2Fw==",
+       "dev": true,
+       "license": "ISC",
+       "dependencies": {
+diff --git a/package.json b/package.json
+index 2a19e39..772dbdf 100644
+--- a/package.json
++++ b/package.json
+@@ -20,7 +20,7 @@
+     "bump:patch": "node scripts/bump-version.js patch",
+     "bump:minor": "node scripts/bump-version.js minor",
+     "bump:major": "node scripts/bump-version.js major",
+-    "release": "npm run clean && npm run build && npm run package",
++    "release": "node scripts/deploy.js",
+     "deploy": "node scripts/deploy.js",
+     "deploy:patch": "node scripts/deploy.js --bump patch",
+     "deploy:minor": "node scripts/deploy.js --bump minor",
+diff --git a/popup/popup.html b/popup/popup.html
+index 93ff2cd..47e4595 100644
+--- a/popup/popup.html
++++ b/popup/popup.html
+@@ -115,7 +115,7 @@
+         <div class="stats-grid">
+           <div class="stat-item">
+             <span class="stat-number" id="totalSites">0</span>
+-            <span class="stat-label" data-i18n="total_sites">已处理网站</span>
++            <span class="stat-label" data-i18n="total_sites">累计启用次数</span>
+           </div>
+           <div class="stat-item">
+             <span class="stat-number" id="todayCount">0</span>
+diff --git a/popup/popup.js b/popup/popup.js
+index 3944e14..c743d18 100644
+--- a/popup/popup.js
++++ b/popup/popup.js
+@@ -744,10 +744,10 @@ class PopupManager {
+     try {
+       const stats = await StorageUtils.getStatistics();
+       
+-      // 更新总网站数（statistics 中以 sitesUnlocked 数组记录）
++      // Local activation count does not imply unique sites or successful unlocking.
+       const totalSitesElement = document.getElementById('totalSites');
+       if (totalSitesElement) {
+-        totalSitesElement.textContent = (stats.sitesUnlocked || []).length;
++        totalSitesElement.textContent = stats.totalActivations || 0;
+       }
+ 
+       // 更新今日使用次数（对应 HTML 中的 #todayCount）
+@@ -759,11 +759,7 @@ class PopupManager {
+       // 更新成功率
+       const successRateElement = document.getElementById('successRate');
+       if (successRateElement) {
+-        const total = stats.totalAttempts;
+-        const successes = stats.successfulAttempts;
+-        successRateElement.textContent = Number.isFinite(total) && total > 0 &&
+-          Number.isFinite(successes) && successes >= 0 && successes <= total
+-          ? `${Math.round((successes / total) * 100)}%` : '—';
++        successRateElement.textContent = '—';
+       }
+     } catch (error) {
+       console.error('加载统计数据失败:', error);
+diff --git a/scripts/build.js b/scripts/build.js
+index 8286c06..9d55159 100644
+--- a/scripts/build.js
++++ b/scripts/build.js
+@@ -1,5 +1,6 @@
+ const fs = require('fs');
+ const path = require('path');
++const { verifyVersions, sourceInventory, verifyBuild } = require('./release-checks');
+ 
+ /**
+  * EasyCV 构建脚本
+@@ -170,12 +171,17 @@ class Builder {
+     console.log('=' .repeat(50));
+     
+     try {
++      verifyVersions(this.sourceDir);
++      const sourceHashes = sourceInventory(this.sourceDir);
+       // 验证manifest
+       const manifest = this.validateManifest();
+       this.validateFileReferences(manifest);
+       
+       // 清理旧的构建文件
+-      this.clean();
++      const output = path.resolve(this.distDir);
++      const relative = path.relative(this.sourceDir, output);
++      if (!relative || relative.startsWith('..') || path.isAbsolute(relative) || this.filesToCopy.some(item => output === path.resolve(this.sourceDir, item) || output.startsWith(path.resolve(this.sourceDir, item) + path.sep))) throw Error('Build output must be an isolated directory inside the workspace');
++      if (fs.existsSync(output) && fs.readdirSync(output).length) throw Error('Build output already exists; choose a new --out directory');
+       
+       // 创建dist目录
+       this.ensureDir(this.distDir);
+@@ -203,7 +209,9 @@ class Builder {
+       const buildInfo = {
+         version: manifest.version,
+         buildTime: new Date().toISOString(),
+-        buildNumber: Date.now()
++        buildNumber: Date.now(),
++        sourceHashes,
++        acceptance: 'LOCAL_BUILD_ONLY'
+       };
+       
+       fs.writeFileSync(
+@@ -211,6 +219,7 @@ class Builder {
+         JSON.stringify(buildInfo, null, 2)
+       );
+       
++      verifyBuild(this.sourceDir, this.distDir);
+       console.log('=' .repeat(50));
+       console.log(`✅ 构建完成!`);
+       console.log(`📦 版本: ${manifest.version}`);
+@@ -219,7 +228,7 @@ class Builder {
+       
+     } catch (error) {
+       console.error('❌ 构建失败:', error.message);
+-      process.exit(1);
++      throw error;
+     }
+   }
+ }
+@@ -227,7 +236,12 @@ class Builder {
+ // 执行构建
+ if (require.main === module) {
+   const builder = new Builder();
+-  builder.build();
++  const outIndex = process.argv.indexOf('--out');
++  if (outIndex >= 0) {
++    if (!process.argv[outIndex + 1]) throw Error('--out requires a directory');
++    builder.distDir = path.resolve(process.argv[outIndex + 1]);
++  }
++  builder.build().catch(() => { process.exitCode = 1; });
+ }
+ 
+ module.exports = Builder;
+\ No newline at end of file
+diff --git a/scripts/bump-version.js b/scripts/bump-version.js
+index 800af12..d53d2bf 100644
+--- a/scripts/bump-version.js
++++ b/scripts/bump-version.js
+@@ -1,5 +1,6 @@
+ const fs = require('fs');
+ const path = require('path');
++const { validateVersion, verifyVersions } = require('./release-checks');
+ 
+ /**
+  * EasyCV 版本管理脚本
+@@ -17,6 +18,7 @@ class VersionManager {
+    * 解析版本号
+    */
+   parseVersion(version) {
++    validateVersion(version);
+     const parts = version.split('.').map(Number);
+     if (parts.length !== 3 || parts.some(isNaN)) {
+       throw new Error(`无效的版本号格式: ${version}`);
+@@ -58,7 +60,7 @@ class VersionManager {
+         throw new Error(`无效的版本类型: ${type}。支持的类型: major, minor, patch`);
+     }
+     
+-    return this.formatVersion(version);
++    return validateVersion(this.formatVersion(version));
+   }
+ 
+   /**
+@@ -180,6 +182,21 @@ class VersionManager {
+   /**
+    * 执行版本更新
+    */
++  updateVersionFiles(newVersion) {
++    validateVersion(newVersion);
++    verifyVersions(this.sourceDir);
++    const files = [this.packageJsonPath, this.manifestJsonPath, path.join(this.sourceDir, 'package-lock.json')];
++    const originals = files.map(file => fs.readFileSync(file, 'utf8'));
++    const updates = originals.map((text, index) => {
++      const data = JSON.parse(text); data.version = newVersion;
++      if (index === 2) data.packages[''].version = newVersion;
++      return JSON.stringify(data, null, 2) + '\n';
++    });
++    try { files.forEach((file, index) => fs.writeFileSync(file, updates[index])); }
++    catch (error) { files.forEach((file, index) => fs.writeFileSync(file, originals[index])); throw error; }
++    verifyVersions(this.sourceDir);
++  }
++
+   async bump(type = 'patch', options = {}) {
+     console.log(`🔄 开始版本更新 (${type})...`);
+     console.log('=' .repeat(50));
+@@ -203,8 +220,7 @@ class VersionManager {
+       console.log('\n📝 正在更新文件...');
+       
+       // 更新文件
+-      this.updatePackageJson(newVersion);
+-      this.updateManifestJson(newVersion);
++      this.updateVersionFiles(newVersion);
+       
+       // 更新 CHANGELOG
+       if (!options.skipChangelog) {
+@@ -225,7 +241,7 @@ class VersionManager {
+       
+     } catch (error) {
+       console.error('❌ 版本更新失败:', error.message);
+-      process.exit(1);
++      throw error;
+     }
+   }
+ }
+@@ -253,7 +269,7 @@ if (require.main === module) {
+     console.log('🔍 运行预览模式...');
+   }
+   
+-  versionManager.bump(type, options);
++  versionManager.bump(type, options).catch(() => { process.exitCode = 1; });
+ }
+ 
+ module.exports = VersionManager;
+\ No newline at end of file
+diff --git a/scripts/deploy.js b/scripts/deploy.js
+index 2f08fb5..4fc4359 100644
+--- a/scripts/deploy.js
++++ b/scripts/deploy.js
+@@ -1,5 +1,6 @@
+ const fs = require('fs');
+ const path = require('path');
++const { spawnSync } = require('child_process');
+ const Builder = require('./build');
+ const Packager = require('./package');
+ const Cleaner = require('./clean');
+@@ -109,31 +110,24 @@ class Deployer {
+    * 运行测试
+    */
+   async runTests() {
+-    console.log('🧪 运行测试...');
+-    
+-    // 这里可以集成实际的测试框架
+-    // 目前只是模拟测试过程
+-    
+-    const tests = [
+-      { name: '代码语法检查', duration: 1000 },
+-      { name: '功能单元测试', duration: 2000 },
+-      { name: '集成测试', duration: 1500 }
+-    ];
+-    
+-    for (const test of tests) {
+-      process.stdout.write(`   ${test.name}... `);
+-      await new Promise(resolve => setTimeout(resolve, test.duration));
+-      console.log('✅ 通过');
++    const env = { ...process.env };
++    delete env.NODE_TEST_CONTEXT; // A nested invocation must run real child tests as well.
++    for (const [name, args] of [
++      ['syntax', ['scripts/lint.js']],
++      ['unit', ['--test', 'test/unit/*.test.mjs']],
++      ['docs', ['scripts/check-docs.js']]
++    ]) {
++      const result = spawnSync(process.execPath, args, { cwd: this.sourceDir, stdio: 'inherit', windowsHide: true, env });
++      if (result.error || result.status !== 0) throw Error(`${name} check failed (exit ${result.status})`);
+     }
+-    
+-    console.log('✅ 所有测试通过');
++    console.log('Local checks passed; browser/upgrade acceptance: NOT_RUN');
+   }
+ 
+   /**
+    * 生成部署报告
+    */
+   generateDeployReport(results) {
+-    const reportPath = path.join(this.sourceDir, 'releases', 'deploy-report.json');
++    const reportPath = path.join(this.outputDir, 'deploy-report.json');
+     
+     const report = {
+       deployTime: new Date().toISOString(),
+@@ -143,10 +137,12 @@ class Deployer {
+       packagePath: results.packagePath,
+       packageSize: results.packageSize,
+       steps: results.steps,
++      browserAcceptance: 'NOT_RUN',
++      storeReady: false,
+       duration: results.duration
+     };
+     
+-    fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
++    fs.writeFileSync(reportPath, JSON.stringify(report, null, 2), { flag: 'wx' });
+     console.log(`📊 生成部署报告: ${path.relative(this.sourceDir, reportPath)}`);
+     
+     return reportPath;
+@@ -157,6 +153,10 @@ class Deployer {
+    */
+   async deploy(options = {}) {
+     const startTime = Date.now();
++    this.outputDir = fs.mkdtempSync(path.join(this.sourceDir, '.tmp-deploy-'));
++    this.builder.distDir = path.join(this.outputDir, 'dist');
++    this.packager.distDir = this.builder.distDir;
++    this.packager.outputDir = this.outputDir;
+     const steps = [];
+     const results = {
+       buildSuccess: false,
+@@ -195,12 +195,6 @@ class Deployer {
+       // 获取版本信息
+       results.version = this.versionManager.getCurrentVersion();
+       
+-      // 清理旧文件
+-      steps.push({ name: '清理构建', status: 'running', startTime: Date.now() });
+-      await this.cleaner.clean();
+-      steps[steps.length - 1].status = 'success';
+-      steps[steps.length - 1].duration = Date.now() - steps[steps.length - 1].startTime;
+-      
+       // 构建项目
+       steps.push({ name: '项目构建', status: 'running', startTime: Date.now() });
+       await this.builder.build();
+@@ -252,7 +246,7 @@ class Deployer {
+       results.duration = Date.now() - startTime;
+       this.generateDeployReport(results);
+       
+-      process.exit(1);
++      throw error;
+     }
+   }
+ 
+@@ -319,7 +313,7 @@ if (require.main === module) {
+   }
+   
+   // 执行部署
+-  deployer.deploy(options);
++  deployer.deploy(options).catch(() => { process.exitCode = 1; });
+ }
+ 
+-module.exports = Deployer;
+\ No newline at end of file
++module.exports = Deployer;
+diff --git a/scripts/package.js b/scripts/package.js
+index 86f6dd5..ef293e7 100644
+--- a/scripts/package.js
++++ b/scripts/package.js
+@@ -1,7 +1,8 @@
+ const fs = require('fs');
+ const path = require('path');
+ const archiver = require('archiver');
+-const { execSync } = require('child_process');
++const { execFileSync } = require('child_process');
++const { verifyBuild, verifyZip } = require('./release-checks');
+ const os = require('os');
+ 
+ /**
+@@ -59,19 +60,25 @@ class Packager {
+    * 创建ZIP包
+    */
+   async createZip(outputPath) {
++    const verified = verifyBuild(this.sourceDir, this.distDir);
++    if (fs.existsSync(outputPath)) throw Error('Package already exists');
+     return new Promise((resolve, reject) => {
+-      const output = fs.createWriteStream(outputPath);
++      const output = fs.createWriteStream(outputPath, { flags: 'wx' });
+       const archive = archiver('zip', {
+         zlib: { level: 9 } // 最高压缩级别
+       });
+ 
+       output.on('close', () => {
++        try {
++          const verification = verifyZip(this.sourceDir, this.distDir, outputPath);
++          fs.writeFileSync(outputPath + '.verification.json', JSON.stringify(verification, null, 2), { flag: 'wx' });
+         const size = this.formatFileSize(archive.pointer());
+         console.log(`✅ 打包完成: ${path.basename(outputPath)} (${size})`);
+         resolve({
+           path: outputPath,
+           size: archive.pointer()
+         });
++        } catch (error) { reject(error); }
+       });
+ 
+       output.on('error', reject);
+@@ -80,7 +87,7 @@ class Packager {
+       archive.pipe(output);
+ 
+       // 添加dist目录中的所有文件
+-      archive.directory(this.distDir, false);
++      for (const name of Object.keys(verified.files).sort()) archive.file(path.join(this.distDir, name), { name });
+ 
+       archive.finalize();
+     });
+@@ -105,25 +112,20 @@ class Packager {
+ 
+       // 如果解压目录已存在，先删除
+       if (fs.existsSync(extractDir)) {
+-        console.log(`🗑️  删除已存在的解压目录: ${path.basename(extractDir)}`);
+-        fs.rmSync(extractDir, { recursive: true, force: true });
++        throw Error('Extraction directory already exists');
+       }
+ 
+       console.log(`📂 正在解压到: ${path.basename(extractDir)}`);
+       
+-      let command;
+       if (platform === 'win32') {
+-        // Windows环境：使用PowerShell的Expand-Archive命令解压
+-        command = `powershell -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${extractDir}' -Force"`;
+-      } else if (platform === 'darwin') {
+-        // macOS环境：使用内置的unzip命令解压
+-        // 先创建目标目录
+-        fs.mkdirSync(extractDir, { recursive: true });
+-        command = `unzip -q "${zipPath}" -d "${extractDir}"`;
++        const quote = value => "'" + value.replace(/'/g, "''") + "'";
++        execFileSync('powershell', ['-NoProfile', '-NonInteractive', '-Command',
++          `Expand-Archive -LiteralPath ${quote(zipPath)} -DestinationPath ${quote(extractDir)}`], { stdio: 'pipe', windowsHide: true });
++      } else {
++        fs.mkdirSync(extractDir);
++        execFileSync('unzip', ['-q', zipPath, '-d', extractDir], { stdio: 'pipe' });
+       }
+-      
+-      execSync(command, { stdio: 'pipe' });
+-      
++
+       console.log(`✅ 解压完成: ${path.relative(this.sourceDir, extractDir)}`);
+       return extractDir;
+       
+@@ -138,7 +140,9 @@ class Packager {
+    * 生成发布说明
+    */
+   generateReleaseNotes(versionInfo, packageInfo) {
+-    const releaseNotes = `# EasyCV v${versionInfo.version} 发布包
++    const releaseNotes = `# EasyCV v${versionInfo.version} 本地候选包
++
++> 本地构建产物；浏览器、同 ID 升级及商店验收未由此脚本完成，不代表可以发布。
+ 
+ ## 📦 包信息
+ - **版本**: ${versionInfo.version}
+@@ -178,11 +182,11 @@ class Packager {
+ - **网站访问范围**: ${versionInfo.hostPermissions.join(', ')}
+ 
+ ---
+-*此发布包由自动化脚本生成*
++*此候选包由本地脚本生成，发布验收须单独完成*
+ `;
+ 
+-    const notesPath = path.join(this.outputDir, `EasyCV-v${versionInfo.version}-README.md`);
+-    fs.writeFileSync(notesPath, releaseNotes);
++    const notesPath = path.join(this.outputDir, path.basename(packageInfo.path, '.zip') + '-README.md');
++    fs.writeFileSync(notesPath, releaseNotes, { flag: 'wx' });
+     console.log(`📝 生成发布说明: ${path.basename(notesPath)}`);
+     
+     return notesPath;
+@@ -247,7 +251,7 @@ class Packager {
+       
+     } catch (error) {
+       console.error('❌ 打包失败:', error.message);
+-      process.exit(1);
++      throw error;
+     }
+   }
+ }
+@@ -255,7 +259,7 @@ class Packager {
+ // 执行打包
+ if (require.main === module) {
+   const packager = new Packager();
+-  packager.package();
++  packager.package().catch(() => { process.exitCode = 1; });
+ }
+ 
+ module.exports = Packager;
+\ No newline at end of file
+diff --git a/scripts/quick-package.js b/scripts/quick-package.js
+index f3273eb..8c1e5a9 100644
+--- a/scripts/quick-package.js
++++ b/scripts/quick-package.js
+@@ -1,4 +1,5 @@
+ const path = require('path');
++const fs = require('fs');
+ const Builder = require('./build');
+ const Packager = require('./package');
+ 
+@@ -22,9 +23,13 @@ async function main() {
+   console.log('='.repeat(50));
+ 
+   const builder = new Builder();
++  const out = fs.mkdtempSync(path.join(builder.sourceDir, '.tmp-quick-'));
++  builder.distDir = path.join(out, 'dist');
+   await builder.build();
+ 
+   const packager = new Packager();
++  packager.distDir = builder.distDir;
++  packager.outputDir = out;
+   const versionInfo = packager.getVersionInfo();
+   packager.ensureDir(packager.outputDir);
+ 
+diff --git a/test/unit/helpers/injector-harness.mjs b/test/unit/helpers/injector-harness.mjs
+index 3586372..2b1035e 100644
+--- a/test/unit/helpers/injector-harness.mjs
++++ b/test/unit/helpers/injector-harness.mjs
+@@ -10,8 +10,11 @@ import { fileURLToPath } from 'node:url';
+ const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
+ const injectorSource = fs.readFileSync(path.join(rootDir, 'content/injector.js'), 'utf8');
+ 
+-export function runInjector({ Map: MapImpl = Map } = {}) {
++export function runInjector({ Map: MapImpl = Map, copyEnabled = true, pasteEnabled = true, nodes = [] } = {}) {
+   const registrations = [];
++  const removals = [];
++  const observers = [];
++  const styles = [];
+   const warnings = [];
+   const eventMethodCalls = { preventDefault: [], stopPropagation: [], stopImmediatePropagation: [] };
+ 
+@@ -26,7 +29,7 @@ export function runInjector({ Map: MapImpl = Map } = {}) {
+   EventTarget.prototype.addEventListener = function (...args) {
+     registrations.push({ target: this, args });
+   };
+-  EventTarget.prototype.removeEventListener = function () {};
++  EventTarget.prototype.removeEventListener = function (...args) { removals.push({ target: this, args }); };
+ 
+   function Event() {}
+   Event.prototype.preventDefault = function () { eventMethodCalls.preventDefault.push(this); };
+@@ -36,17 +39,23 @@ export function runInjector({ Map: MapImpl = Map } = {}) {
+   function Element() {}
+   Element.prototype.attachShadow = function () { return {}; };
+ 
+-  function MutationObserver() {}
++  function MutationObserver(callback) { this.callback = callback; observers.push(this); }
+   MutationObserver.prototype.observe = function () {};
+-  MutationObserver.prototype.disconnect = function () {};
++  MutationObserver.prototype.disconnect = function () { this.disconnected = true; };
+ 
+   const window = {
+     location: { href: 'https://example.com/' },
+-    addEventListener: () => {}
++    postMessage() {},
++    addEventListener(type, listener) { if (type === 'message') this.receiveMessage = listener; }
+   };
+   const document = {
++    querySelectorAll: selector => selector.startsWith('style') ? styles : nodes,
++    querySelector: () => null,
++    createElement: () => ({ setAttribute() {}, remove() { const i = styles.indexOf(this); if (i >= 0) styles.splice(i, 1); } }),
++    head: { appendChild(style) { styles.push(style); } },
++    body: {},
+     readyState: 'loading',
+-    documentElement: { dataset: {} },
++    documentElement: { dataset: { easycvCopyEnabled: copyEnabled ? '1' : '0', easycvPasteEnabled: pasteEnabled ? '1' : '0' } },
+     addEventListener: () => {}
+   };
+ 
+@@ -57,8 +66,8 @@ export function runInjector({ Map: MapImpl = Map } = {}) {
+   );
+   factory(
+     window, document, EventTarget, Event, Element,
+-    MutationObserver, { ELEMENT_NODE: 1 }, function () {}, MapImpl, sandboxConsole
++    MutationObserver, { ELEMENT_NODE: 1 }, function () { this.replaceSync = () => {}; }, MapImpl, sandboxConsole
+   );
+ 
+-  return { registrations, warnings, eventMethodCalls, EventTarget, Event, Element, window, document };
++  return { registrations, removals, observers, styles, warnings, eventMethodCalls, EventTarget, Event, Element, window, document };
+ }
+diff --git a/test/unit/injector-neutralize.test.mjs b/test/unit/injector-neutralize.test.mjs
+index b17ef3a..c4b7177 100644
+--- a/test/unit/injector-neutralize.test.mjs
++++ b/test/unit/injector-neutralize.test.mjs
+@@ -9,7 +9,7 @@ import { test } from 'node:test';
+ import assert from 'node:assert/strict';
+ import { runInjector } from './helpers/injector-harness.mjs';
+ 
+-test('注册吞没名单收窄：keydown/mousedown/mouseup 不再被吞，copy/selectstart 仍吞没', () => {
++test('所有监听器均保留注册，限制仅在运行时按开关中和', () => {
+   const { registrations, EventTarget } = runInjector();
+   const restrictive = function (e) { e.preventDefault(); };
+ 
+@@ -20,17 +20,17 @@ test('注册吞没名单收窄：keydown/mousedown/mouseup 不再被吞，copy/s
+ 
+   EventTarget.prototype.addEventListener.call(new EventTarget(), 'copy', restrictive);
+   EventTarget.prototype.addEventListener.call(new EventTarget(), 'selectstart', restrictive);
+-  assert.equal(registrations.length, 3);
++  assert.equal(registrations.length, 5);
+ });
+ 
+ test('keydown/keyup 仅组合键（ctrl/meta）时中和 preventDefault', () => {
+   const { eventMethodCalls, Event } = runInjector();
+ 
+-  Event.prototype.preventDefault.call({ type: 'keydown', ctrlKey: true }); // 中和（Ctrl+C 封锁场景）
+-  Event.prototype.preventDefault.call({ type: 'keydown', metaKey: true }); // 中和
++  Event.prototype.preventDefault.call({ type: 'keydown', ctrlKey: true, key: 'c' }); // 中和（Ctrl+C 封锁场景）
++  Event.prototype.preventDefault.call({ type: 'keydown', metaKey: true, key: 'v' }); // 中和
+   Event.prototype.preventDefault.call({ type: 'keydown' });                // 放行（播放器空格/方向键）
+   Event.prototype.preventDefault.call({ type: 'keyup' });                  // 放行
+-  Event.prototype.preventDefault.call({ type: 'keyup', ctrlKey: true });   // 中和
++  Event.prototype.preventDefault.call({ type: 'keyup', ctrlKey: true, key: 'c' });   // 中和
+ 
+   assert.equal(eventMethodCalls.preventDefault.length, 2);
+   assert.deepEqual(
+diff --git a/test/unit/injector-robustness.test.mjs b/test/unit/injector-robustness.test.mjs
+index 8d94220..85931ff 100644
+--- a/test/unit/injector-robustness.test.mjs
++++ b/test/unit/injector-robustness.test.mjs
+@@ -11,7 +11,7 @@ import { runInjector } from './helpers/injector-harness.mjs';
+ // 道客巴巴实测形态：构造可用，但实例方法缺失（.has/.set 为 undefined，调用即 TypeError）
+ function TamperedMap() {}
+ 
+-test('页面篡改 Map 时，注册吞没路径不向页面抛异常', () => {
++test('页面篡改 Map 时，监听器保留路径不向页面抛异常', () => {
+   const { registrations, EventTarget } = runInjector({ Map: TamperedMap });
+ 
+   const target = new EventTarget();
+@@ -21,7 +21,7 @@ test('页面篡改 Map 时，注册吞没路径不向页面抛异常', () => {
+     EventTarget.prototype.addEventListener.call(target, 'copy', restrictiveListener);
+   });
+   // 吞没决策仍然生效：限制性监听器不应进入原始注册通道
+-  assert.equal(registrations.length, 0);
++  assert.equal(registrations.length, 1);
+ });
+ 
+ test('Map 构造本身抛错时，injector 加载与拦截路径均不抛异常', () => {
+@@ -34,7 +34,7 @@ test('Map 构造本身抛错时，injector 加载与拦截路径均不抛异常'
+       new EventTarget(), 'copy', function (e) { e.preventDefault(); }
+     );
+   });
+-  assert.equal(registrations.length, 0);
++  assert.equal(registrations.length, 1);
+ });
+ 
+ test('非限制性监听器在 Map 被篡改时仍正常注册', () => {
+diff --git a/test/unit/popup-ux.test.mjs b/test/unit/popup-ux.test.mjs
+index dbd7481..28962f0 100644
+--- a/test/unit/popup-ux.test.mjs
++++ b/test/unit/popup-ux.test.mjs
+@@ -162,8 +162,8 @@ test('Feedback opens the real issue draft without sending browsing URLs or brows
+   assert.equal(url.searchParams.get('body').includes('1.1.2'), true);
+ });
+ 
+-for (const [statistics, expected] of [[{}, '—'], [{ totalAttempts: 5, successfulAttempts: 2 }, '40%']]) {
+-  test(`Success-rate display uses measured attempts: ${JSON.stringify(statistics)}`, async () => {
++for (const [statistics, expected] of [[{}, '—'], [{ totalAttempts: 5, successfulAttempts: 2 }, '—']]) {
++  test(`Success-rate display stays unmeasured even with legacy counters: ${JSON.stringify(statistics)}`, async () => {
+     const h = popup();
+     h.elements.set('successRate', { textContent: '' });
+     h.storage.getStatistics = async () => statistics;
+diff --git a/test/unit/state-sync.test.mjs b/test/unit/state-sync.test.mjs
+index c2214a2..15d521e 100644
+--- a/test/unit/state-sync.test.mjs
++++ b/test/unit/state-sync.test.mjs
+@@ -1,6 +1,7 @@
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import fs from 'node:fs';
++import { loadStorage } from './helpers/reliability-harness.mjs';
+ import { createCopyPasteManager } from './helpers/content-harness.mjs';
+ 
+ const source = name => fs.readFileSync(new URL(`../../${name}`, import.meta.url), 'utf8');
+@@ -130,7 +131,8 @@ test('auto-enable sends a validated state notification and invalidates cached do
+   const MessageUtils = new Function('chrome', `${source('utils/message-utils.js')};return MessageUtils;`)(chrome);
+   const AutoEnableManager = new Function('chrome', 'MessageUtils', 'StorageUtils',
+     `${source('background/auto-enable-manager.js')};return AutoEnableManager;`)(chrome, MessageUtils, {
+-      STORAGE_KEYS: { AUTO_ENABLE_LIST: 'auto_enable_list' }
++      STORAGE_KEYS: { AUTO_ENABLE_LIST: 'auto_enable_list' },
++      matchAutoEnableRule: (domain, list) => loadStorage().StorageUtils.matchAutoEnableRule(domain, list)
+     });
+   const listeners = [];
+   const state = { autoEnableList: [], userSettings: { copyEnabled: false, pasteEnabled: false } };
+@@ -140,10 +142,10 @@ test('auto-enable sends a validated state notification and invalidates cached do
+   assert.equal(await manager.getDomainConfig('example.com'), null);
+   state.autoEnableList = [{ domain: 'example.com', copyEnabled: false, pasteEnabled: true }];
+   for (const listener of listeners) listener({ changes: { auto_enable_list: { newValue: state.autoEnableList } } });
+-  assert.deepEqual(await manager.getDomainConfig('example.com'), state.autoEnableList[0]);
++  assert.deepEqual(JSON.parse(JSON.stringify(await manager.getDomainConfig('example.com'))), state.autoEnableList[0]);
+   await manager.applyAutoEnableConfig(12, state.autoEnableList[0]);
+   assert.ok(messages.length > 0);
+   for (const message of messages) assert.equal(MessageUtils.isValidMessage(message), true);
+   assert.equal(state.userSettings.copyEnabled, false);
+-  assert.equal(state.userSettings.pasteEnabled, true);
++  assert.equal(state.userSettings.pasteEnabled, false);
+ });
+diff --git a/test/unit/storage-exclusion.test.mjs b/test/unit/storage-exclusion.test.mjs
+index b1df198..74be2df 100644
+--- a/test/unit/storage-exclusion.test.mjs
++++ b/test/unit/storage-exclusion.test.mjs
+@@ -62,11 +62,11 @@ test('getExcludedList 尊重用户清空（空数组不回落默认值）', asyn
+   assert.deepEqual(await StorageUtils.getExcludedList(), []);
+ });
+ 
+-test('getExcludedList 对损坏的非数组值兜底为空列表而非抛错', async () => {
++test('getExcludedList 损坏的非数组值必须报告失败以阻止未知排除状态启用', async () => {
+   const chrome = createChromeMock({ excluded_list: 'not-an-array' });
+   const StorageUtils = loadStorageUtils({ chrome });
+ 
+-  assert.deepEqual(await StorageUtils.getExcludedList(), []);
++  await assert.rejects(StorageUtils.getExcludedList());
+ });
+ 
+ test('addToExcludedList 按域名去重', async () => {
+diff --git a/utils/dom-utils.js b/utils/dom-utils.js
+index 5138ce9..3572892 100644
+--- a/utils/dom-utils.js
++++ b/utils/dom-utils.js
+@@ -103,7 +103,7 @@ class DOMUtils {
+     }
+ 
+     // 检查是否禁用了右键菜单
+-    if (element.oncontextmenu === null ||
++    if (typeof element.oncontextmenu === 'function' ||
+       element.getAttribute('oncontextmenu') === 'return false') {
+       restrictions.contextMenu = true;
+     }
+diff --git a/utils/message-utils.js b/utils/message-utils.js
+index 40d4e6a..cacb57f 100644
+--- a/utils/message-utils.js
++++ b/utils/message-utils.js
+@@ -7,6 +7,7 @@ class MessageUtils {
+    * 消息类型常量
+    */
+   static MESSAGE_TYPES = {
++    STORAGE_MUTATION: 'storage_mutation',
+     TOGGLE_PLUGIN: 'toggle_plugin',
+     GET_STATUS: 'get_status',
+     GET_PAGE_STATUS: 'GET_PAGE_STATUS',
+diff --git a/utils/storage-utils.js b/utils/storage-utils.js
+index 7d883ef..fdcf54f 100644
+--- a/utils/storage-utils.js
++++ b/utils/storage-utils.js
+@@ -1,479 +1,290 @@
+-/**
+- * 存储工具类
+- * 处理插件的数据存储和同步
+- */
++/** Existing setting keys, one background mutation queue, no silent sync/local fork. */
+ class StorageUtils {
+-  /**
+-   * 存储键名常量
+-   */
+   static STORAGE_KEYS = {
+-    PLUGIN_ENABLED: 'plugin_enabled',
+-    FORCE_MODE: 'force_mode',
+-    AUTO_ENABLE_LIST: 'auto_enable_list',
+-    EXCLUDED_LIST: 'excluded_list',
+-    USER_SETTINGS: 'user_settings',
+-    STATISTICS: 'statistics',
+-    LAST_UPDATE: 'last_update',
+-    INTERACTION_HISTORY: 'interaction_history'
++    PLUGIN_ENABLED: 'plugin_enabled', FORCE_MODE: 'force_mode', AUTO_ENABLE_LIST: 'auto_enable_list',
++    EXCLUDED_LIST: 'excluded_list', USER_SETTINGS: 'user_settings', STATISTICS: 'statistics',
++    LAST_UPDATE: 'last_update', INTERACTION_HISTORY: 'interaction_history'
+   };
+-
+-  /**
+-   * 默认设置
+-   */
+   static DEFAULT_SETTINGS = {
+-    pluginEnabled: true,
+-    forceMode: false,
+-    autoEnableList: [],
+-    // 敏感账号登录页默认排除：injector 的原型重写暴露面不应覆盖高价值账号页
+-    // （依据 docs/测试报告-真实站点回归-2026-08.md R5）
++    pluginEnabled: true, forceMode: false, autoEnableList: [],
+     excludedList: ['accounts.google.com', 'login.live.com', 'appleid.apple.com'],
+-    showNotifications: true,
+-    enableStatistics: true,
+-    theme: 'auto',
+-    copyEnabled: true,
+-    pasteEnabled: true
++    showNotifications: true, enableStatistics: true, theme: 'auto', copyEnabled: true, pasteEnabled: true
+   };
++  static CONFIG_KEYS = ['plugin_enabled', 'force_mode', 'user_settings', 'auto_enable_list', 'excluded_list'];
++  static mutationHost = false;
++  static mutationQueue = Promise.resolve();
++  static configureMutationHost() { this.mutationHost = true; }
+ 
+-  /**
+-   * 获取存储数据
+-   * @param {string|Array<string>} keys - 存储键名
+-   * @returns {Promise<Object>} 存储数据
+-   */
+   static async get(keys) {
+-    try {
+-      if (typeof keys === 'string') {
+-        keys = [keys];
+-      }
+-
+-      const result = await chrome.storage.sync.get(keys);
+-      return result;
+-    } catch (error) {
+-      console.error('Failed to get storage data:', error);
+-      // 降级到本地存储
+-      return await chrome.storage.local.get(keys);
+-    }
+-  }
+-
+-  /**
+-   * 设置存储数据
+-   * @param {Object} data - 要存储的数据
+-   * @returns {Promise<void>}
+-   */
+-  static async set(data) {
+-    try {
+-      await chrome.storage.sync.set(data);
+-    } catch (error) {
+-      console.error('Failed to set sync storage, falling back to local:', error);
+-      // 降级到本地存储
+-      await chrome.storage.local.set(data);
++    const names = typeof keys === 'string' ? [keys] : keys;
++    let sync;
++    try { sync = await chrome.storage.sync.get(names); }
++    catch (error) { throw new Error('Authoritative settings unavailable'); }
++    const missing = names.filter(key => this.CONFIG_KEYS.includes(key) && !Object.hasOwn(sync, key));
++    if (missing.length) {
++      const local = await chrome.storage.local.get(missing);
++      for (const key of missing) if (Object.hasOwn(local, key)) sync[key] = local[key];
+     }
++    return sync;
+   }
+-
+-  /**
+-   * 删除存储数据
+-   * @param {string|Array<string>} keys - 要删除的键名
+-   * @returns {Promise<void>}
+-   */
+-  static async remove(keys) {
+-    try {
+-      await chrome.storage.sync.remove(keys);
+-    } catch (error) {
+-      console.error('Failed to remove from sync storage:', error);
+-      await chrome.storage.local.remove(keys);
++  static async mutate(operation, data = {}) {
++    if (!this.mutationHost && typeof window !== 'undefined' && chrome.runtime?.sendMessage) {
++      const response = await chrome.runtime.sendMessage({ type: 'storage_mutation', data: { operation, data } });
++      if (!response?.success) throw new Error('Settings could not be saved');
++      return response.data;
+     }
++    const pending = this.mutationQueue.then(() => this.executeMutation(operation, data));
++    this.mutationQueue = pending.catch(() => {});
++    return pending;
+   }
+-
+-  /**
+-   * 清空所有存储数据
+-   * @returns {Promise<void>}
+-   */
+-  static async clear() {
+-    try {
++  static async executeMutation(operation, data) {
++    if (operation === 'clear') {
+       await chrome.storage.sync.clear();
+       await chrome.storage.local.clear();
+-    } catch (error) {
+-      console.error('Failed to clear storage:', error);
++      return;
+     }
+-  }
+-
+-  /**
+-   * 获取插件启用状态
+-   * @returns {Promise<boolean>} 是否启用
+-   */
+-  static async getPluginEnabled() {
+-    const result = await this.get(this.STORAGE_KEYS.PLUGIN_ENABLED);
+-    return result[this.STORAGE_KEYS.PLUGIN_ENABLED] ?? this.DEFAULT_SETTINGS.pluginEnabled;
+-  }
+-
+-  /**
+-   * 设置插件启用状态
+-   * @param {boolean} enabled - 是否启用
+-   * @returns {Promise<void>}
+-   */
+-  static async setPluginEnabled(enabled) {
+-    await this.set({ [this.STORAGE_KEYS.PLUGIN_ENABLED]: enabled });
+-  }
+-
+-  /**
+-   * 获取强力模式状态
+-   * @returns {Promise<boolean>} 是否启用强力模式
+-   */
+-  static async getForceMode() {
+-    const result = await this.get(this.STORAGE_KEYS.FORCE_MODE);
+-    return result[this.STORAGE_KEYS.FORCE_MODE] ?? this.DEFAULT_SETTINGS.forceMode;
+-  }
+-
+-  /**
+-   * 设置强力模式状态
+-   * @param {boolean} enabled - 是否启用强力模式
+-   * @returns {Promise<void>}
+-   */
+-  static async setForceMode(enabled) {
+-    await this.set({ [this.STORAGE_KEYS.FORCE_MODE]: enabled });
+-  }
+-
+-  /**
+-   * 获取自动启用列表
+-   * @returns {Promise<Array<Object>>} 域名配置列表
+-   */
+-  static async getAutoEnableList() {
+-    const result = await this.get(this.STORAGE_KEYS.AUTO_ENABLE_LIST);
+-    const list = result[this.STORAGE_KEYS.AUTO_ENABLE_LIST] ?? this.DEFAULT_SETTINGS.autoEnableList;
+-
+-    // 兼容旧版本的字符串数组格式
+-    if (list.length > 0 && typeof list[0] === 'string') {
+-      return list.map(domain => ({
+-        domain,
+-        copyEnabled: true,
+-        pasteEnabled: true
+-      }));
++    if (operation === 'remove') return chrome.storage.sync.remove(data);
++    if (operation === 'privacy') return this.migratePrivateDataNow();
++    if (operation === 'diagnostic') {
++      await this.migratePrivateDataNow();
++      const { errorReports = [] } = await chrome.storage.local.get(['errorReports']);
++      const reports = Array.isArray(errorReports) ? errorReports : [];
++      const entry = { code: 'CONTENT_OPERATION_FAILED', module: 'content', timestamp: new Date().toISOString(),
++        version: chrome.runtime?.getManifest?.().version || 'unknown' };
++      await chrome.storage.local.set({ errorReports: [...reports, entry].slice(-10) });
++      return;
+     }
+-
+-    return list;
+-  }
+-
+-  /**
+-   * 添加域名到自动启用列表
+-   * @param {string|Object} domainOrConfig - 域名字符串或配置对象
+-   * @param {boolean} copyEnabled - 是否启用复制（当第一个参数为字符串时使用）
+-   * @param {boolean} pasteEnabled - 是否启用粘贴（当第一个参数为字符串时使用）
+-   * @returns {Promise<void>}
+-   */
+-  static async addToAutoEnableList(domainOrConfig, copyEnabled = true, pasteEnabled = true) {
+-    const list = await this.getAutoEnableList();
+-
+-    let config;
+-    if (typeof domainOrConfig === 'string') {
+-      config = {
+-        domain: domainOrConfig,
+-        copyEnabled,
+-        pasteEnabled
+-      };
+-    } else {
+-      config = domainOrConfig;
+-    }
+-
+-    // 检查是否已存在该域名
+-    const existingIndex = list.findIndex(item => item.domain === config.domain);
+-    if (existingIndex === -1) {
+-      list.push(config);
+-      await this.set({ [this.STORAGE_KEYS.AUTO_ENABLE_LIST]: list });
++    if (operation === 'activation') {
++      if ((await this.getUserSettings()).enableStatistics === false) return;
++      await this.migratePrivateDataNow();
++      const stats = await this.getStatistics();
++      const today = new Date().toDateString();
++      await chrome.storage.local.set({ statistics: { totalActivations: stats.totalActivations + 1,
++        todayUsage: stats.lastUsedDate === today ? stats.todayUsage + 1 : 1, lastUsedDate: today } });
++      return;
+     }
++    let updates = {};
++    if (operation === 'set') updates = data;
++    else if (operation === 'settings' || operation === 'state') {
++      this.validateSettings(data.userSettings || (operation === 'settings' ? data : {}));
++      const settings = operation === 'settings' ? { ...data } : { ...data.userSettings };
++      for (const key of ['copyEnabled', 'pasteEnabled']) if (Object.hasOwn(data, key)) settings[key] = data[key];
++      const allowed = ['copyEnabled', 'pasteEnabled', 'showNotifications', 'enableStatistics', 'theme', 'autoDetect', 'debugMode', 'performanceMonitoring', 'autoAddToWhitelist', 'detectionDelay', 'maxRetries'];
++      for (const key of Object.keys(settings)) if (!allowed.includes(key)) delete settings[key];
++      delete settings.enabled; delete settings.forceMode; delete settings.pluginEnabled;
++      if (Object.keys(settings).length) updates.user_settings = { ...await this.getUserSettings(), ...settings };
++      if (Object.hasOwn(data, 'enabled')) updates.plugin_enabled = data.enabled;
++      if (Object.hasOwn(data, 'pluginEnabled')) updates.plugin_enabled = data.pluginEnabled;
++      if (Object.hasOwn(data, 'forceMode')) updates.force_mode = data.forceMode;
++      if (Object.hasOwn(data, 'autoEnableList')) updates.auto_enable_list = data.autoEnableList;
++    } else if (['addRule', 'replaceRule', 'removeRule'].includes(operation)) {
++      const list = await this.getAutoEnableList();
++      const oldDomain = this.normalizeDomain(data.originalDomain || data.domain, true);
++      const index = list.findIndex(item => item.domain === oldDomain);
++      if (operation === 'removeRule') updates.auto_enable_list = list.filter(item => item.domain !== oldDomain);
++      else {
++        const rule = this.normalizeAutoEnableList([data.rule])[0];
++        if (operation === 'replaceRule' && index < 0) throw new Error('Rule changed; reload before editing');
++        const duplicate = list.findIndex(item => item.domain === rule.domain);
++        if (duplicate >= 0 && (operation === 'addRule' || duplicate !== index)) {
++          if (operation === 'addRule') return list;
++          throw new Error('Domain already exists');
++        }
++        if (operation === 'replaceRule') list[index] = { ...list[index], ...rule };
++        else list.push(rule);
++        updates.auto_enable_list = list;
++      }
++    } else if (operation === 'addExcluded' || operation === 'removeExcluded') {
++      const list = await this.getExcludedList();
++      const domain = this.normalizeDomain(data.domain);
++      updates.excluded_list = operation === 'removeExcluded' ? list.filter(item => item !== domain) : [...new Set([...list, domain])];
++    } else if (operation === 'import' || operation === 'restoreLocal') {
++      if (operation === 'restoreLocal') {
++        updates = this.validateConfigurationKeys(await chrome.storage.local.get(this.CONFIG_KEYS));
++        if (updates.user_settings) updates.user_settings = { ...await this.getUserSettings(), ...updates.user_settings };
++      } else if (data?.kind === 'easycv-local-recovery') {
++        this.validateJSON(data);
++        if (data.schemaVersion !== 1) throw new Error('Unsupported recovery schema');
++        updates = this.validateConfigurationKeys(data.configuration);
++        if (updates.user_settings) updates.user_settings = { ...await this.getUserSettings(), ...updates.user_settings };
++      } else {
++        this.validateJSON(data);
++        if (data.schemaVersion !== undefined && data.schemaVersion !== 1) throw new Error('Unsupported settings schema');
++        if (!data.settings || !Array.isArray(data.whitelist)) throw new Error('Invalid settings file');
++        this.validateSettings(data.settings);
++        const { enabled, pluginEnabled, forceMode, ...settings } = data.settings;
++        updates.user_settings = { ...await this.getUserSettings(), ...settings };
++        if (enabled !== undefined || pluginEnabled !== undefined) updates.plugin_enabled = enabled ?? pluginEnabled;
++        if (forceMode !== undefined) updates.force_mode = forceMode;
++        updates.auto_enable_list = this.normalizeAutoEnableList(data.whitelist);
++        if (Object.hasOwn(data, 'excludedList')) updates.excluded_list = this.normalizeExcludedList(data.excludedList);
++      }
++    } else throw new Error('Unknown settings operation');
++    updates = this.validateConfigurationKeys(updates);
++    await chrome.storage.sync.set(updates);
++    return updates;
+   }
+-
+-  /**
+-   * 从自动启用列表移除域名
+-   * @param {string} domain - 域名
+-   * @returns {Promise<void>}
+-   */
+-  static async removeFromAutoEnableList(domain) {
+-    const list = await this.getAutoEnableList();
+-    const index = list.findIndex(item => item.domain === domain);
+-    if (index > -1) {
+-      list.splice(index, 1);
+-      await this.set({ [this.STORAGE_KEYS.AUTO_ENABLE_LIST]: list });
+-    }
++  static validateJSON(data) {
++    if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Invalid settings object');
++    if (JSON.stringify(data).length > 1000000) throw new Error('Settings file is too large');
++    const inspect = (value, depth = 0) => {
++      if (depth > 20) throw new Error('Settings nesting is too deep');
++      if (value && typeof value === 'object') for (const [key, item] of Object.entries(value)) {
++        if (['__proto__', 'prototype', 'constructor'].includes(key)) throw new Error('Invalid settings key');
++        inspect(item, depth + 1);
++      }
++    };
++    inspect(data);
+   }
+-
+-  /**
+-   * 更新自动启用列表中域名的配置
+-   * @param {string} domain - 域名
+-   * @param {boolean} copyEnabled - 是否启用复制
+-   * @param {boolean} pasteEnabled - 是否启用粘贴
+-   * @returns {Promise<void>}
+-   */
+-  static async updateAutoEnableConfig(domain, copyEnabled, pasteEnabled) {
+-    const list = await this.getAutoEnableList();
+-    const index = list.findIndex(item => item.domain === domain);
+-    if (index > -1) {
+-      list[index].copyEnabled = copyEnabled;
+-      list[index].pasteEnabled = pasteEnabled;
+-      await this.set({ [this.STORAGE_KEYS.AUTO_ENABLE_LIST]: list });
++  static validateSettings(settings) {
++    this.validateJSON(settings);
++    for (const key of ['enabled', 'pluginEnabled', 'forceMode', 'copyEnabled', 'pasteEnabled', 'showNotifications',
++      'enableStatistics', 'autoDetect', 'debugMode', 'performanceMonitoring', 'autoAddToWhitelist']) {
++      if (Object.hasOwn(settings, key) && typeof settings[key] !== 'boolean') throw new Error('Invalid setting: ' + key);
+     }
++    for (const [key, max] of [['detectionDelay', 60000], ['maxRetries', 100]]) {
++      if (Object.hasOwn(settings, key) && (!Number.isInteger(settings[key]) || settings[key] < 0 || settings[key] > max)) throw new Error('Invalid setting: ' + key);
++    }
++    if (Object.hasOwn(settings, 'theme') && !['auto', 'light', 'dark'].includes(settings.theme)) throw new Error('Invalid theme');
+   }
+-
+-  /**
+-   * 获取特定域名的自动启用配置
+-   * @param {string} domain - 域名
+-   * @returns {Promise<Object|null>} 配置对象或null
+-   */
+-  static async getAutoEnableConfig(domain) {
+-    const list = await this.getAutoEnableList();
+-    return list.find(item => item.domain === domain) || null;
+-  }
+-
+-  /**
+-   * 设置自动启用列表（静态方法）
+-   * @param {Array<Object>} list - 域名配置列表
+-   * @returns {Promise<void>}
+-   */
+-  static async setAutoEnableList(list) {
+-    await StorageUtils.set({ [StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]: list });
++  static normalizeDomain(value, wildcard = false) {
++    if (typeof value !== 'string') throw new Error('Invalid domain');
++    const domain = value.trim().toLowerCase();
++    const host = wildcard && domain.startsWith('*.') ? domain.slice(2) : domain;
++    if (!host || host.length > 253 || !host.split('.').every(label => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(label))) throw new Error('Invalid domain');
++    return domain;
+   }
+-
+-  /**
+-   * 获取站点排除列表
+-   * 键缺席时回落到默认敏感域名；用户清空（存入空数组）则尊重用户选择
+-   * @returns {Promise<Array<string>>} 域名列表
+-   */
+-  static async getExcludedList() {
+-    const result = await this.get(this.STORAGE_KEYS.EXCLUDED_LIST);
+-    const list = result[this.STORAGE_KEYS.EXCLUDED_LIST] ?? this.DEFAULT_SETTINGS.excludedList;
+-    return Array.isArray(list) ? list : [];
++  static normalizeAutoEnableList(list) {
++    if (!Array.isArray(list) || list.length > 1000) throw new Error('Invalid site list');
++    const seen = new Set();
++    return list.map(value => {
++      const item = typeof value === 'string' ? { domain: value, copyEnabled: true, pasteEnabled: true } : value;
++      this.validateJSON(item);
++      const domain = this.normalizeDomain(item.domain, true);
++      if (seen.has(domain) || typeof item.copyEnabled !== 'boolean' || typeof item.pasteEnabled !== 'boolean') throw new Error('Invalid or duplicate site rule');
++      seen.add(domain);
++      return { ...item, domain };
++    });
+   }
+-
+-  /**
+-   * 添加域名到站点排除列表
+-   * @param {string} domain - 域名
+-   * @returns {Promise<void>}
+-   */
+-  static async addToExcludedList(domain) {
+-    const list = await this.getExcludedList();
+-    if (!list.includes(domain)) {
+-      list.push(domain);
+-      await this.set({ [this.STORAGE_KEYS.EXCLUDED_LIST]: list });
+-    }
++  static normalizeExcludedList(list) {
++    if (!Array.isArray(list) || list.length > 1000) throw new Error('Invalid excluded list');
++    return [...new Set(list.map(domain => this.normalizeDomain(domain)))];
+   }
+-
+-  /**
+-   * 从站点排除列表移除域名
+-   * @param {string} domain - 域名
+-   * @returns {Promise<void>}
+-   */
+-  static async removeFromExcludedList(domain) {
+-    const list = await this.getExcludedList();
+-    const index = list.indexOf(domain);
+-    if (index > -1) {
+-      list.splice(index, 1);
+-      await this.set({ [this.STORAGE_KEYS.EXCLUDED_LIST]: list });
+-    }
++  static validateConfigurationKeys(data) {
++    this.validateJSON(data);
++    const result = { ...data };
++    for (const key of Object.keys(result)) if (!this.CONFIG_KEYS.includes(key)) throw new Error('Invalid configuration key');
++    for (const key of ['plugin_enabled', 'force_mode']) if (Object.hasOwn(result, key) && typeof result[key] !== 'boolean') throw new Error('Invalid switch');
++    if (Object.hasOwn(result, 'user_settings')) this.validateSettings(result.user_settings);
++    if (Object.hasOwn(result, 'auto_enable_list')) result.auto_enable_list = this.normalizeAutoEnableList(result.auto_enable_list);
++    if (Object.hasOwn(result, 'excluded_list')) result.excluded_list = this.normalizeExcludedList(result.excluded_list);
++    return result;
+   }
+-
+-  /**
+-   * 设置站点排除列表
+-   * @param {Array<string>} list - 域名列表
+-   * @returns {Promise<void>}
+-   */
+-  static async setExcludedList(list) {
+-    await this.set({ [this.STORAGE_KEYS.EXCLUDED_LIST]: list });
++  static matchAutoEnableRule(domain, list) {
++    const host = this.normalizeDomain(domain);
++    const rules = this.normalizeAutoEnableList(list);
++    return rules.find(item => item.domain === host) || rules.filter(item => item.domain.startsWith('*.') && host.endsWith('.' + item.domain.slice(2)))
++      .sort((a, b) => b.domain.length - a.domain.length)[0] || null;
+   }
+-
+-  /**
+-   * 判断主机名是否被排除列表命中（纯函数，供 background/content 共用判定语义）
+-   * 精确匹配或子域后缀匹配：排除 bilibili.com 即覆盖 www.bilibili.com；
+-   * 按点分段拼接避免误伤相似域名（排除 google.com 不覆盖 notgoogle.com）
+-   * @param {string} hostname - 主机名
+-   * @param {Array<string>} excludedList - 排除域名列表
+-   * @returns {boolean} 是否被排除
+-   */
+   static isDomainExcluded(hostname, excludedList) {
+     if (!hostname || !Array.isArray(excludedList)) return false;
+     const host = String(hostname).toLowerCase();
+-    return excludedList.some(entry => {
+-      const domain = String(entry).toLowerCase();
+-      return host === domain || host.endsWith('.' + domain);
+-    });
++    return excludedList.some(entry => { const domain = String(entry).toLowerCase(); return host === domain || host.endsWith('.' + domain); });
+   }
+-
+-  /**
+-   * 获取用户设置
+-   * @returns {Promise<Object>} 用户设置对象
+-   */
+-  static async getUserSettings() {
+-    const result = await this.get(this.STORAGE_KEYS.USER_SETTINGS);
+-    return { ...this.DEFAULT_SETTINGS, ...result[this.STORAGE_KEYS.USER_SETTINGS] };
+-  }
+-
+-  /**
+-   * 更新用户设置
+-   * @param {Object} settings - 设置对象
+-   * @returns {Promise<void>}
+-   */
+-  static async updateUserSettings(settings) {
+-    const currentSettings = await this.getUserSettings();
+-    const newSettings = { ...currentSettings, ...settings };
+-    await this.set({ [this.STORAGE_KEYS.USER_SETTINGS]: newSettings });
++  static set(data) { return this.mutate('set', data); }
++  static remove(keys) { return this.mutate('remove', keys); }
++  static clear() { return this.mutate('clear'); }
++  static async getPluginEnabled() { return (await this.get('plugin_enabled')).plugin_enabled ?? true; }
++  static setPluginEnabled(enabled) { return this.set({ plugin_enabled: enabled }); }
++  static async getForceMode() { return (await this.get('force_mode')).force_mode ?? false; }
++  static setForceMode(enabled) { return this.set({ force_mode: enabled }); }
++  static async getAutoEnableList() { return this.normalizeAutoEnableList((await this.get('auto_enable_list')).auto_enable_list ?? []); }
++  static setAutoEnableList(list) { return this.set({ auto_enable_list: list }); }
++  static addToAutoEnableList(value, copyEnabled = true, pasteEnabled = true) {
++    const rule = typeof value === 'string' ? { domain: value, copyEnabled, pasteEnabled } : value;
++    return this.mutate('addRule', { domain: rule.domain, rule });
+   }
+-
+-  /**
+-   * 获取统计数据
+-   * @returns {Promise<Object>} 统计数据
+-   */
+-  static async getStatistics() {
+-    const result = await this.get(this.STORAGE_KEYS.STATISTICS);
+-    return result[this.STORAGE_KEYS.STATISTICS] ?? {
+-      totalActivations: 0,
+-      sitesUnlocked: [],
+-      lastUsed: null
+-    };
+-  }
+-
+-  /**
+-   * 更新统计数据
+-   * @param {Object} stats - 统计数据
+-   * @returns {Promise<void>}
+-   */
+-  static async updateStatistics(stats) {
+-    const currentStats = await this.getStatistics();
+-    const newStats = { ...currentStats, ...stats };
+-    await this.set({ [this.STORAGE_KEYS.STATISTICS]: newStats });
++  static replaceAutoEnableRule(originalDomain, rule) { return this.mutate('replaceRule', { originalDomain, rule }); }
++  static removeFromAutoEnableList(domain) { return this.mutate('removeRule', { domain }); }
++  static updateAutoEnableConfig(domain, copyEnabled, pasteEnabled) { return this.replaceAutoEnableRule(domain, { domain, copyEnabled, pasteEnabled }); }
++  static async getAutoEnableConfig(domain) { return this.matchAutoEnableRule(domain, await this.getAutoEnableList()); }
++  static async getExcludedList() { return this.normalizeExcludedList((await this.get('excluded_list')).excluded_list ?? this.DEFAULT_SETTINGS.excludedList); }
++  static addToExcludedList(domain) { return this.mutate('addExcluded', { domain }); }
++  static removeFromExcludedList(domain) { return this.mutate('removeExcluded', { domain }); }
++  static setExcludedList(list) { return this.set({ excluded_list: list }); }
++  static async getUserSettings() {
++    const stored = (await this.get('user_settings')).user_settings ?? {};
++    this.validateSettings(stored);
++    return { ...this.DEFAULT_SETTINGS, ...stored };
+   }
+-
+-  /**
+-   * 监听存储变化
+-   * @param {Function} callback - 回调函数
+-   */
+-  static addStorageListener(callback) {
+-    if (typeof callback !== 'function') {
+-      throw new Error('Storage listener must be a function');
+-    }
+-
+-    chrome.storage.onChanged.addListener((changes, areaName) => {
+-      callback(changes, areaName);
+-    });
++  static updateUserSettings(settings) { return this.mutate('settings', settings); }
++  static async getPluginSettings() {
++    const [enabled, forceMode, settings] = await Promise.all([this.getPluginEnabled(), this.getForceMode(), this.getUserSettings()]);
++    return { ...settings, enabled, forceMode };
+   }
+-
+-  /**
+-   * 导出所有设置
+-   * @returns {Promise<Object>} 所有设置数据
+-   */
++  static setPluginSettings(settings) { return this.mutate('settings', settings); }
++  static addStorageListener(callback) { chrome.storage.onChanged.addListener(callback); }
+   static async exportSettings() {
+-    const allKeys = Object.values(this.STORAGE_KEYS);
+-    const data = await this.get(allKeys);
+-    return {
+-      ...data,
+-      exportTime: new Date().toISOString(),
+-      version: '1.1.0'
+-    };
++    return { schemaVersion: 1, settings: await this.getPluginSettings(), whitelist: await this.getAutoEnableList(),
++      excludedList: await this.getExcludedList(), version: chrome.runtime?.getManifest?.().version || 'unknown', exportDate: new Date().toISOString() };
+   }
+-
+-  /**
+-   * 导入设置
+-   * @param {Object} data - 设置数据
+-   * @returns {Promise<void>}
+-   */
+-  static async importSettings(data) {
+-    if (!data || typeof data !== 'object') {
+-      throw new Error('Invalid import data');
+-    }
+-
+-    // 验证数据格式
+-    const validKeys = Object.values(this.STORAGE_KEYS);
+-    const importData = {};
+-
+-    validKeys.forEach(key => {
+-      if (data.hasOwnProperty(key)) {
+-        importData[key] = data[key];
+-      }
+-    });
+-
+-    await this.set(importData);
++  static importConfiguration(data) { return this.mutate('import', data); }
++  static importSettings(data) { return this.importConfiguration(data); }
++  static async hasPendingPrivacyMigration() {
++    const data = await chrome.storage.sync.get(['statistics', 'interaction_history', 'errorReports', 'userFeedback']);
++    return Object.keys(data).length > 0;
+   }
+-
+-  /**
+-   * 获取插件设置（静态方法）
+-   * @returns {Promise<Object>} 插件设置对象
+-   */
+-  static async getPluginSettings() {
+-    const [enabled, forceMode, userSettings] = await Promise.all([
+-      this.getPluginEnabled(),
+-      this.getForceMode(),
+-      this.getUserSettings()
+-    ]);
+-
+-    return {
+-      ...userSettings,
+-      enabled,
+-      forceMode
+-    };
++  static async getRecoveryData() { return chrome.storage.local.get(this.CONFIG_KEYS); }
++  static restoreLocalSettings() { return this.mutate('restoreLocal'); }
++  static async getStatistics() {
++    const local = await chrome.storage.local.get(['statistics']);
++    const statistics = local.statistics || {};
++    const count = value => Number.isSafeInteger(value) && value >= 0 ? value : 0;
++    return { totalActivations: count(statistics.totalActivations), todayUsage: statistics.lastUsedDate === new Date().toDateString() ? count(statistics.todayUsage) : 0,
++      lastUsedDate: typeof statistics.lastUsedDate === 'string' ? statistics.lastUsedDate : null };
+   }
+-
+-  /**
+-   * 设置插件配置（静态方法）
+-   * @param {Object} settings - 插件设置对象
+-   * @returns {Promise<void>}
+-   */
+-  static async setPluginSettings(settings) {
+-    const updates = [];
+-
+-    if (settings.hasOwnProperty('enabled')) {
+-      updates.push(StorageUtils.setPluginEnabled(settings.enabled));
++  static recordActivation() { return this.mutate('activation'); }
++  static recordDiagnostic() { return this.mutate('diagnostic'); }
++  static migratePrivateData() { return this.mutate('privacy'); }
++  static async migratePrivateDataNow() {
++    const keys = ['statistics', 'interaction_history', 'errorReports', 'userFeedback'];
++    const sync = await chrome.storage.sync.get(keys);
++    const local = await chrome.storage.local.get([...keys, 'legacy_private_backup']);
++    const present = keys.filter(key => Object.hasOwn(sync, key));
++    const updates = {};
++    const backup = { ...local.legacy_private_backup };
++    for (const key of ['statistics', 'interaction_history']) {
++      if (Object.hasOwn(sync, key)) backup['sync_' + key] = sync[key];
++      if (Object.hasOwn(local, key) && (key === 'interaction_history' || (local.statistics?.sitesUnlocked || local.statistics?.siteStats))) backup['local_' + key] = local[key];
+     }
+-
+-    if (settings.hasOwnProperty('forceMode')) {
+-      updates.push(StorageUtils.setForceMode(settings.forceMode));
++    if (Object.keys(backup).length) updates.legacy_private_backup = backup;
++    if (sync.statistics || local.statistics) {
++      const old = local.statistics || sync.statistics;
++      const count = value => Number.isSafeInteger(value) && value >= 0 ? value : 0;
++      updates.statistics = { totalActivations: Math.max(count(local.statistics?.totalActivations), count(sync.statistics?.totalActivations)),
++        todayUsage: count(old.todayUsage), lastUsedDate: typeof old.lastUsedDate === 'string' ? old.lastUsedDate : null };
+     }
+-
+-    // 处理其他用户设置，包括复制粘贴控制与检测/调试选项
+-    const userSettingsKeys = [
+-      'showNotifications', 'enableStatistics', 'theme', 'copyEnabled', 'pasteEnabled',
+-      'autoDetect', 'detectionDelay', 'maxRetries', 'debugMode', 'performanceMonitoring',
+-      'autoAddToWhitelist'
+-    ];
+-    const userSettingsUpdate = {};
+-    let hasUserSettings = false;
+-
+-    userSettingsKeys.forEach(key => {
+-      if (settings.hasOwnProperty(key)) {
+-        userSettingsUpdate[key] = settings[key];
+-        hasUserSettings = true;
+-      }
+-    });
+-
+-    if (hasUserSettings) {
+-      updates.push(StorageUtils.updateUserSettings(userSettingsUpdate));
++    // Never retain arbitrary payload fields, even in old local error records.
++    if (Object.hasOwn(sync, 'errorReports') || Object.hasOwn(local, 'errorReports')) {
++      const reports = [...(Array.isArray(sync.errorReports) ? sync.errorReports : []), ...(Array.isArray(local.errorReports) ? local.errorReports : [])];
++      updates.errorReports = reports.slice(-10).map(report => {
++        const entry = { code: report?.code === 'CONTENT_OPERATION_FAILED' ? report.code : 'LEGACY_ERROR', module: 'content' };
++        if (/^\d{4}-\d{2}-\d{2}T[\d:.]+Z$/.test(report?.timestamp)) entry.timestamp = report.timestamp;
++        if (/^\d{1,5}(?:\.\d{1,5}){0,3}$/.test(report?.version)) entry.version = report.version;
++        return entry;
++      });
+     }
+-
+-    await Promise.all(updates);
+-  }
+-
+-  /**
+-   * 获取交互历史记录
+-   * @returns {Promise<Object>} 交互历史记录
+-   */
+-  static async getInteractionHistory() {
+-    try {
+-      const result = await StorageUtils.get(StorageUtils.STORAGE_KEYS.INTERACTION_HISTORY);
+-      return result[StorageUtils.STORAGE_KEYS.INTERACTION_HISTORY] || {};
+-    } catch (error) {
+-      console.error('Failed to get interaction history:', error);
+-      return {};
++    if (Object.hasOwn(sync, 'userFeedback') || Object.hasOwn(local, 'userFeedback')) updates.userFeedback = [];
++    if (Object.keys(updates).length) {
++      await chrome.storage.local.set(updates);
++      const verified = await chrome.storage.local.get(Object.keys(updates));
++      if (Object.keys(updates).some(key => JSON.stringify(verified[key]) !== JSON.stringify(updates[key]))) throw new Error('Local migration verification failed');
+     }
+-  }
+-
+-  /**
+-   * 设置交互历史记录
+-   * @param {Object} history - 交互历史记录
+-   * @returns {Promise<void>}
+-   */
+-  static async setInteractionHistory(history) {
+-    try {
+-      await StorageUtils.set({
+-        [StorageUtils.STORAGE_KEYS.INTERACTION_HISTORY]: history
+-      });
+-    } catch (error) {
+-      console.error('Failed to set interaction history:', error);
+-      throw error;
++    if (present.length) {
++      const latest = await chrome.storage.sync.get(present);
++      if (present.some(key => JSON.stringify(latest[key]) !== JSON.stringify(sync[key]))) throw new Error('Private data changed during migration; retry required');
++      await chrome.storage.sync.remove(present);
+     }
++    if (Object.hasOwn(local, 'interaction_history')) await chrome.storage.local.remove('interaction_history');
+   }
+ }

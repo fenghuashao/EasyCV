@@ -1,0 +1,57 @@
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+📁 创建目录: D:\pro\github\EasyCV\releases\w1-w6-local-final-20261103\dist
+📄 复制文件: manifest.json -> releases\w1-w6-local-final-20261103\dist\manifest.json
+📁 创建目录: D:\pro\github\EasyCV\releases\w1-w6-local-final-20261103\dist\background\
+📄 复制文件: background\auto-enable-manager.js -> releases\w1-w6-local-final-20261103\dist\background\auto-enable-manager.js
+📄 复制文件: background\icon-manager.js -> releases\w1-w6-local-final-20261103\dist\background\icon-manager.js
+📄 复制文件: background\monitoring-manager.js -> releases\w1-w6-local-final-20261103\dist\background\monitoring-manager.js
+📄 复制文件: background\service-worker.js -> releases\w1-w6-local-final-20261103\dist\background\service-worker.js
+📄 复制文件: background\state-confirmation-manager.js -> releases\w1-w6-local-final-20261103\dist\background\state-confirmation-manager.js
+📁 创建目录: D:\pro\github\EasyCV\releases\w1-w6-local-final-20261103\dist\content\
+📄 复制文件: content\content.js -> releases\w1-w6-local-final-20261103\dist\content\content.js
+📄 复制文件: content\injector.js -> releases\w1-w6-local-final-20261103\dist\content\injector.js
+📁 创建目录: D:\pro\github\EasyCV\releases\w1-w6-local-final-20261103\dist\popup\
+📄 复制文件: popup\popup.css -> releases\w1-w6-local-final-20261103\dist\popup\popup.css
+📄 复制文件: popup\popup.html -> releases\w1-w6-local-final-20261103\dist\popup\popup.html
+📄 复制文件: popup\popup.js -> releases\w1-w6-local-final-20261103\dist\popup\popup.js
+📁 创建目录: D:\pro\github\EasyCV\releases\w1-w6-local-final-20261103\dist\options\
+📄 复制文件: options\options.css -> releases\w1-w6-local-final-20261103\dist\options\options.css
+📄 复制文件: options\options.html -> releases\w1-w6-local-final-20261103\dist\options\options.html
+📄 复制文件: options\options.js -> releases\w1-w6-local-final-20261103\dist\options\options.js
+📁 创建目录: D:\pro\github\EasyCV\releases\w1-w6-local-final-20261103\dist\utils\
+📄 复制文件: utils\dom-utils.js -> releases\w1-w6-local-final-20261103\dist\utils\dom-utils.js
+📄 复制文件: utils\i18n-utils.js -> releases\w1-w6-local-final-20261103\dist\utils\i18n-utils.js
+📄 复制文件: utils\message-utils.js -> releases\w1-w6-local-final-20261103\dist\utils\message-utils.js
+📄 复制文件: utils\notification-utils.js -> releases\w1-w6-local-final-20261103\dist\utils\notification-utils.js
+📄 复制文件: utils\storage-utils.js -> releases\w1-w6-local-final-20261103\dist\utils\storage-utils.js
+📁 创建目录: D:\pro\github\EasyCV\releases\w1-w6-local-final-20261103\dist\icons\
+📄 复制文件: icons\icon-active-128.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-active-128.png
+📄 复制文件: icons\icon-active-16.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-active-16.png
+📄 复制文件: icons\icon-active-32.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-active-32.png
+📄 复制文件: icons\icon-active-48.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-active-48.png
+📄 复制文件: icons\icon-default-128.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-default-128.png
+📄 复制文件: icons\icon-default-16.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-default-16.png
+📄 复制文件: icons\icon-default-32.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-default-32.png
+📄 复制文件: icons\icon-default-48.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-default-48.png
+📄 复制文件: icons\icon-inactive-128.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-inactive-128.png
+📄 复制文件: icons\icon-inactive-16.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-inactive-16.png
+📄 复制文件: icons\icon-inactive-32.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-inactive-32.png
+📄 复制文件: icons\icon-inactive-48.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-inactive-48.png
+📄 复制文件: icons\icon-partial-128.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-partial-128.png
+📄 复制文件: icons\icon-partial-16.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-partial-16.png
+📄 复制文件: icons\icon-partial-32.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-partial-32.png
+📄 复制文件: icons\icon-partial-48.png -> releases\w1-w6-local-final-20261103\dist\icons\icon-partial-48.png
+📁 创建目录: D:\pro\github\EasyCV\releases\w1-w6-local-final-20261103\dist\_locales\
+📁 创建目录: D:\pro\github\EasyCV\releases\w1-w6-local-final-20261103\dist\_locales\en
+📄 复制文件: _locales\en\messages.json -> releases\w1-w6-local-final-20261103\dist\_locales\en\messages.json
+📁 创建目录: D:\pro\github\EasyCV\releases\w1-w6-local-final-20261103\dist\_locales\zh_CN
+📄 复制文件: _locales\zh_CN\messages.json -> releases\w1-w6-local-final-20261103\dist\_locales\zh_CN\messages.json
+==================================================
+✅ 构建完成!
+📦 版本: 1.1.2
+📁 输出目录: D:\pro\github\EasyCV\releases\w1-w6-local-final-20261103\dist
+⏰ 构建时间: 2026-11-03T06:29:52.511Z
+✅ 打包完成: EasyCV-W1-W6-TEST-ONLY.zip (135.21 KB)

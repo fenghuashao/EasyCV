@@ -11,7 +11,7 @@ import { runInjector } from './helpers/injector-harness.mjs';
 // 道客巴巴实测形态：构造可用，但实例方法缺失（.has/.set 为 undefined，调用即 TypeError）
 function TamperedMap() {}
 
-test('页面篡改 Map 时，注册吞没路径不向页面抛异常', () => {
+test('页面篡改 Map 时，监听器保留路径不向页面抛异常', () => {
   const { registrations, EventTarget } = runInjector({ Map: TamperedMap });
 
   const target = new EventTarget();
@@ -21,7 +21,7 @@ test('页面篡改 Map 时，注册吞没路径不向页面抛异常', () => {
     EventTarget.prototype.addEventListener.call(target, 'copy', restrictiveListener);
   });
   // 吞没决策仍然生效：限制性监听器不应进入原始注册通道
-  assert.equal(registrations.length, 0);
+  assert.equal(registrations.length, 1);
 });
 
 test('Map 构造本身抛错时，injector 加载与拦截路径均不抛异常', () => {
@@ -34,7 +34,7 @@ test('Map 构造本身抛错时，injector 加载与拦截路径均不抛异常'
       new EventTarget(), 'copy', function (e) { e.preventDefault(); }
     );
   });
-  assert.equal(registrations.length, 0);
+  assert.equal(registrations.length, 1);
 });
 
 test('非限制性监听器在 Map 被篡改时仍正常注册', () => {

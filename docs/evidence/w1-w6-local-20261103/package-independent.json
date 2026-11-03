@@ -1,0 +1,9 @@
+{
+  "method": "Python zipfile independent CRC and byte comparison",
+  "zip": "releases/w1-w6-local-final-20261103/EasyCV-W1-W6-TEST-ONLY.zip",
+  "files": 38,
+  "sourceBuildZipEqual": true,
+  "rootManifest": true,
+  "forbiddenPermissionsAbsent": true,
+  "passed": true
+}

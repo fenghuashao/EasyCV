@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { validateVersion, verifyVersions } = require('./release-checks');
 
 /**
  * EasyCV 版本管理脚本
@@ -17,6 +18,7 @@ class VersionManager {
    * 解析版本号
    */
   parseVersion(version) {
+    validateVersion(version);
     const parts = version.split('.').map(Number);
     if (parts.length !== 3 || parts.some(isNaN)) {
       throw new Error(`无效的版本号格式: ${version}`);
@@ -58,7 +60,7 @@ class VersionManager {
         throw new Error(`无效的版本类型: ${type}。支持的类型: major, minor, patch`);
     }
     
-    return this.formatVersion(version);
+    return validateVersion(this.formatVersion(version));
   }
 
   /**
@@ -180,6 +182,21 @@ class VersionManager {
   /**
    * 执行版本更新
    */
+  updateVersionFiles(newVersion) {
+    validateVersion(newVersion);
+    verifyVersions(this.sourceDir);
+    const files = [this.packageJsonPath, this.manifestJsonPath, path.join(this.sourceDir, 'package-lock.json')];
+    const originals = files.map(file => fs.readFileSync(file, 'utf8'));
+    const updates = originals.map((text, index) => {
+      const data = JSON.parse(text); data.version = newVersion;
+      if (index === 2) data.packages[''].version = newVersion;
+      return JSON.stringify(data, null, 2) + '\n';
+    });
+    try { files.forEach((file, index) => fs.writeFileSync(file, updates[index])); }
+    catch (error) { files.forEach((file, index) => fs.writeFileSync(file, originals[index])); throw error; }
+    verifyVersions(this.sourceDir);
+  }
+
   async bump(type = 'patch', options = {}) {
     console.log(`🔄 开始版本更新 (${type})...`);
     console.log('=' .repeat(50));
@@ -203,8 +220,7 @@ class VersionManager {
       console.log('\n📝 正在更新文件...');
       
       // 更新文件
-      this.updatePackageJson(newVersion);
-      this.updateManifestJson(newVersion);
+      this.updateVersionFiles(newVersion);
       
       // 更新 CHANGELOG
       if (!options.skipChangelog) {
@@ -225,7 +241,7 @@ class VersionManager {
       
     } catch (error) {
       console.error('❌ 版本更新失败:', error.message);
-      process.exit(1);
+      throw error;
     }
   }
 }
@@ -253,7 +269,7 @@ if (require.main === module) {
     console.log('🔍 运行预览模式...');
   }
   
-  versionManager.bump(type, options);
+  versionManager.bump(type, options).catch(() => { process.exitCode = 1; });
 }
 
 module.exports = VersionManager;

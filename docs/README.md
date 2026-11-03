@@ -1,5 +1,14 @@
 # EasyCV 文档索引
 
+## 四语言支持（2026-11-03，尚未发布）
+
+当前源码支持英语、简体中文、日语和繁体中文，未支持语言回退英文。实现、浏览器矩阵、截图和剩余验收边界见 [四语言支持验收](../EASYCV-I18N-ACCEPTANCE-20261103.md)。本轮未升版、未提交 Git、未发布；不覆盖下方其他专项证据。
+
+## 下一版 W1–W6 本地整改（2026-11-03）
+
+当前源码验收以 [W1–W6 本地验收报告](../EASYCV-W1-W6-LOCAL-ACCEPTANCE.md) 为准；依据 [已批准方案](../EASYCV-NEXT-VERSION-PLAN.md) 实施。扩展版本仍为 1.1.2，待后台核实后锁定；本轮没有浏览器操作、商店提交或 Git 提交。以下 1.1.2 包和验收属于历史对象，不能代替本轮验证。
+
+
 本索引用于帮助你快速判断：现在应该看哪份文档、改动时应该同步更新哪份文档。
 
 文档角色（Vocabulary）以根目录的 [CONTEXT.md](../CONTEXT.md) 为准：Source Document / Reference Document / Working Document / Evidence Document / Governance Document / Archive / Asset。本文档用“状态=archive”表达“归档（Archive）材料”。

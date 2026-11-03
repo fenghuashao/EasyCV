@@ -1,0 +1,94 @@
+{
+  "results": [
+    {
+      "language": "en-US",
+      "checks": [
+        "native popup view, real active tab, locale and initial state",
+        "native dimensions, help expansion and scroll reachability",
+        "switch updates fixture and localized state",
+        "closing native view and reopening preserves state",
+        "native settings action opens options and closes popup",
+        "unsupported browser page is explained in native popup"
+      ],
+      "opening": "chrome.action.openPopup()",
+      "currentTabOverride": false,
+      "dimensions": {
+        "width": 380,
+        "height": 500,
+        "scroll": 380
+      },
+      "pass": true,
+      "browserVersion": "149.0.7827.55"
+    },
+    {
+      "language": "zh-CN",
+      "checks": [
+        "native popup view, real active tab, locale and initial state"
+      ],
+      "opening": "chrome.action.openPopup()",
+      "currentTabOverride": false,
+      "pass": false,
+      "error": "Error: UNKNOWN: unknown error, open 'D:\\pro\\github\\EasyCV\\docs\\evidence\\i18n-native-20261103\\native-zh-CN.png'\n    at async open (node:internal/fs/promises:1345:25)\n    at async Object.writeFile (node:internal/fs/promises:1965:14)\n    at async _Page.screenshot (C:\\Users\\fengh\\AppData\\Local\\Programs\\nodejs\\node_modules\\@playwright\\cli\\node_modules\\playwright-core\\lib\\coreBundle.js:61436:11)\n    at async file:///D:/pro/github/EasyCV/test/i18n-native-popup.mjs:39:2"
+    },
+    {
+      "language": "ja",
+      "checks": [
+        "native popup view, real active tab, locale and initial state",
+        "native dimensions, help expansion and scroll reachability",
+        "switch updates fixture and localized state",
+        "closing native view and reopening preserves state",
+        "native settings action opens options and closes popup",
+        "unsupported browser page is explained in native popup"
+      ],
+      "opening": "chrome.action.openPopup()",
+      "currentTabOverride": false,
+      "dimensions": {
+        "width": 380,
+        "height": 500,
+        "scroll": 380
+      },
+      "pass": true,
+      "browserVersion": "149.0.7827.55"
+    },
+    {
+      "language": "zh-TW",
+      "checks": [
+        "native popup view, real active tab, locale and initial state",
+        "native dimensions, help expansion and scroll reachability",
+        "switch updates fixture and localized state",
+        "closing native view and reopening preserves state",
+        "native settings action opens options and closes popup",
+        "unsupported browser page is explained in native popup"
+      ],
+      "opening": "chrome.action.openPopup()",
+      "currentTabOverride": false,
+      "dimensions": {
+        "width": 380,
+        "height": 500,
+        "scroll": 380
+      },
+      "pass": true,
+      "browserVersion": "149.0.7827.55"
+    },
+    {
+      "language": "ro",
+      "checks": [
+        "native popup view, real active tab, locale and initial state",
+        "native dimensions, help expansion and scroll reachability",
+        "switch updates fixture and localized state",
+        "closing native view and reopening preserves state",
+        "native settings action opens options and closes popup",
+        "unsupported browser page is explained in native popup"
+      ],
+      "opening": "chrome.action.openPopup()",
+      "currentTabOverride": false,
+      "dimensions": {
+        "width": 380,
+        "height": 500,
+        "scroll": 380
+      },
+      "pass": true,
+      "browserVersion": "149.0.7827.55"
+    }
+  ]
+}

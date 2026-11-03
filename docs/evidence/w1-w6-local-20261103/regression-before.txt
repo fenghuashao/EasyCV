@@ -1,0 +1,342 @@
+✖ F01 failed sync write rejects and never reports local fallback as saved (2.9761ms)
+✖ F02 editing a rule without saving preserves its persisted value (4.3504ms)
+✖ F03 legacy and mixed lists normalize on the background read path without rewriting storage (3.936ms)
+✖ F04 wildcard is subdomain-only, boundary-safe and exact rules win (3.1079ms)
+✖ F05 automatic site visit never writes global defaults (1.7039ms)
+✖ F06 failed status lookup returns a failure, never enabled success (2.0676ms)
+✖ F07 diagnostics contain only fixed non-sensitive fields and live in local (4.5305ms)
+✖ F08 malformed import changes neither settings nor rules (2.5405ms)
+✖ F09 concurrent settings updates merge rather than lose unrelated fields (1.3895ms)
+✖ F10 deleted storage keys normalize to safe defaults in background cache (2.2941ms)
+✖ F11 copy-disabled injector preserves copy preventDefault but neutralizes paste (0.9893ms)
+✖ F12 ordinary page is not restricted and analysis never saves visited domains (1.0913ms)
+✖ site settings apply per-domain while global off and exclusions dominate (2.3753ms)
+✖ privacy migration is idempotent, preserves history locally and removes sync copies only after verified write (1.085ms)
+✖ migration local write failure preserves original sync data (1.4171ms)
+✖ atomic imported settings preserve excluded list when absent and reject unsafe domains (0.8902ms)
+✖ failed rule replacement and parallel additions preserve original/latest rules (1.1037ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 0
+ℹ fail 17
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 164.7762
+
+✖ failing tests:
+
+test at test\unit\reliability.test.mjs:7:1
+✖ F01 failed sync write rejects and never reports local fallback as saved (2.9761ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:9:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test\unit\reliability.test.mjs:13:1
+✖ F02 editing a rule without saving preserves its persisted value (4.3504ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   {
+  -     copyEnabled: true,
+  -     domain: 'example.com',
+  -     pasteEnabled: false
+  -   }
+  - ]
+  
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:19:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ { domain: 'example.com', copyEnabled: true, pasteEnabled: false } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\unit\reliability.test.mjs:21:1
+✖ F03 legacy and mixed lists normalize on the background read path without rewriting storage (3.936ms)
+  TypeError: Cannot read properties of null (reading 'copyEnabled')
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:26:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at test\unit\reliability.test.mjs:29:1
+✖ F04 wildcard is subdomain-only, boundary-safe and exact rules win (3.1079ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + {
+  +   copyEnabled: true,
+  +   domain: '*.example.com',
+  +   pasteEnabled: true
+  + }
+  - null
+  
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:36:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { domain: '*.example.com', copyEnabled: true, pasteEnabled: true },
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\unit\reliability.test.mjs:40:1
+✖ F05 automatic site visit never writes global defaults (1.7039ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:45:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\unit\reliability.test.mjs:47:1
+✖ F06 failed status lookup returns a failure, never enabled success (2.0676ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:53:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\unit\reliability.test.mjs:56:1
+✖ F07 diagnostics contain only fixed non-sensitive fields and live in local (4.5305ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     error: {
+  +       message: 'private',
+  +       stack: 'private',
+  +       url: 'https://example.com/?secret=synthetic'
+  +     },
+  +     sender: {
+  +       tab: {
+  +         url: 'https://example.com/?secret=synthetic'
+  +       }
+  +     },
+  +     timestamp: '2026-11-03T05:58:07.247Z',
+  +     url: 'https://example.com/?secret=synthetic',
+  +     userAgent: 'synthetic-audit-agent'
+  +   }
+  + ]
+  - undefined
+  
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:60:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { error: [Object], sender: [Object], timestamp: '2026-11-03T05:58:07.247Z', url: 'https://example.com/?secret=synthetic', userAgent: 'synthetic-audit-agent' } ],
+    expected: undefined,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\unit\reliability.test.mjs:64:1
+✖ F08 malformed import changes neither settings nor rules (2.5405ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   auto_enable_list: {
+  +     bad: true
+  +   },
+  -   auto_enable_list: [
+  -     'example.com'
+  -   ],
+      force_mode: true,
+      user_settings: {
+  +     autoEnableList: [],
+  +     copyEnabled: true,
+  +     enableStatistics: true,
+  +     excludedList: [
+  +       'accounts.google.com',
+  +       'login.live.com',
+  +       'appleid.apple.com'
+  +     ],
+  +     forceMode: false,
+  +     pasteEnabled: true,
+  +     pluginEnabled: true,
+  +     showNotifications: true,
+  +     theme: 'auto'
+  -     copyEnabled: false
+      }
+    }
+  
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:68:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { force_mode: true, auto_enable_list: { bad: true }, user_settings: { pluginEnabled: true, forceMode: false, autoEnableList: [], excludedList: [Array], showNotifications: true, enableStatistics: true, theme: 'auto', copyEnabled: true, pasteEnabled: true } },
+    expected: { force_mode: true, auto_enable_list: [ 'example.com' ], user_settings: { copyEnabled: false } },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\unit\reliability.test.mjs:70:1
+✖ F09 concurrent settings updates merge rather than lose unrelated fields (1.3895ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:73:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\unit\reliability.test.mjs:77:1
+✖ F10 deleted storage keys normalize to safe defaults in background cache (2.2941ms)
+  TypeError: Cannot read properties of undefined (reading 'find')
+      at StateManager.getPluginState (evalmachine.<anonymous>:132:43)
+
+test at test\unit\reliability.test.mjs:85:1
+✖ F11 copy-disabled injector preserves copy preventDefault but neutralizes paste (0.9893ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   'copy'
+  - ]
+  
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:89:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ 'copy' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\unit\reliability.test.mjs:91:1
+✖ F12 ordinary page is not restricted and analysis never saves visited domains (1.0913ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:96:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\unit\reliability.test.mjs:103:1
+✖ site settings apply per-domain while global off and exclusions dominate (2.3753ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:107:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\unit\reliability.test.mjs:111:1
+✖ privacy migration is idempotent, preserves history locally and removes sync copies only after verified write (1.085ms)
+  TypeError: h.StorageUtils.migratePrivateData is not a function
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:114:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at test\unit\reliability.test.mjs:123:1
+✖ migration local write failure preserves original sync data (1.4171ms)
+  TypeError: h.StorageUtils.migratePrivateData is not a function
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:126:39)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at test\unit\reliability.test.mjs:129:1
+✖ atomic imported settings preserve excluded list when absent and reject unsafe domains (0.8902ms)
+  TypeError: h.StorageUtils.importConfiguration is not a function
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:131:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at test\unit\reliability.test.mjs:138:1
+✖ failed rule replacement and parallel additions preserve original/latest rules (1.1037ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 3
+  
+      at TestContext.<anonymous> (file:///D:/pro/github/EasyCV/test/unit/reliability.test.mjs:141:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

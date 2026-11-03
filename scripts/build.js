@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { verifyVersions, sourceInventory, verifyBuild } = require('./release-checks');
 
 /**
  * EasyCV 构建脚本
@@ -170,12 +171,17 @@ class Builder {
     console.log('=' .repeat(50));
     
     try {
+      verifyVersions(this.sourceDir);
+      const sourceHashes = sourceInventory(this.sourceDir);
       // 验证manifest
       const manifest = this.validateManifest();
       this.validateFileReferences(manifest);
       
       // 清理旧的构建文件
-      this.clean();
+      const output = path.resolve(this.distDir);
+      const relative = path.relative(this.sourceDir, output);
+      if (!relative || relative.startsWith('..') || path.isAbsolute(relative) || this.filesToCopy.some(item => output === path.resolve(this.sourceDir, item) || output.startsWith(path.resolve(this.sourceDir, item) + path.sep))) throw Error('Build output must be an isolated directory inside the workspace');
+      if (fs.existsSync(output) && fs.readdirSync(output).length) throw Error('Build output already exists; choose a new --out directory');
       
       // 创建dist目录
       this.ensureDir(this.distDir);
@@ -203,7 +209,9 @@ class Builder {
       const buildInfo = {
         version: manifest.version,
         buildTime: new Date().toISOString(),
-        buildNumber: Date.now()
+        buildNumber: Date.now(),
+        sourceHashes,
+        acceptance: 'LOCAL_BUILD_ONLY'
       };
       
       fs.writeFileSync(
@@ -211,6 +219,7 @@ class Builder {
         JSON.stringify(buildInfo, null, 2)
       );
       
+      verifyBuild(this.sourceDir, this.distDir);
       console.log('=' .repeat(50));
       console.log(`✅ 构建完成!`);
       console.log(`📦 版本: ${manifest.version}`);
@@ -219,7 +228,7 @@ class Builder {
       
     } catch (error) {
       console.error('❌ 构建失败:', error.message);
-      process.exit(1);
+      throw error;
     }
   }
 }
@@ -227,7 +236,12 @@ class Builder {
 // 执行构建
 if (require.main === module) {
   const builder = new Builder();
-  builder.build();
+  const outIndex = process.argv.indexOf('--out');
+  if (outIndex >= 0) {
+    if (!process.argv[outIndex + 1]) throw Error('--out requires a directory');
+    builder.distDir = path.resolve(process.argv[outIndex + 1]);
+  }
+  builder.build().catch(() => { process.exitCode = 1; });
 }
 
 module.exports = Builder;

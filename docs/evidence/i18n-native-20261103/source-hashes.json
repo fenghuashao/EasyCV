@@ -1,0 +1,6 @@
+{
+  "popup/popup.css": "225797b0246de306b64188ae79b03be7e73fc1d873c73244ad01527dcf7387a1",
+  "_locales/ja/messages.json": "afd9ef28646918d9dea5d7d1f801cf9d139093775c7d7b6ce7f3394c9e720bc8",
+  "_locales/zh_TW/messages.json": "9b166946c7aab47e731c37c831e0d74abd643e395dfe236706b1d58004407710",
+  "test/i18n-native-popup.mjs": "23372f0f73f8e5cdea5d9dee944020009b6df62633e4b811e44fb19cccdebb01"
+}

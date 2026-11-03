@@ -1,0 +1,138 @@
+Window: "EasyCV Physical Toolbar Test - Google Chrome for Testing", App: easycv-native-test.exe.
+	0 窗口 EasyCV Physical Toolbar Test - Google Chrome for Testing Secondary Actions: Raise
+		1 窗格 (disabled)
+		2 区域 EasyCV Physical Toolbar Test - Google Chrome for Testing
+			3 区域
+				4 区域
+					5 区域
+						6 按钮 最小化 ID: view_1
+						7 按钮 最大化 ID: view_2
+						8 按钮 閉じる ID: view_4
+					9 区域
+						10 区域
+						11 区域
+							12 工具栏 ID: view_1000
+								13 按钮 (disabled) 戻る ID: view_1001
+								14 按钮 (disabled) 進む ID: view_1002
+								15 按钮 再読み込み ID: view_1003
+								16 组
+									17 按钮 サイト情報を表示 ID: view_1011
+									18 编辑 (settable, string) アドレス検索バー Description: Google で検索または URL を入力 Value: 127.0.0.1:55393 ID: view_1012
+									19 区域
+										20 按钮 このタブをブックマークに追加します
+									21 区域
+								22 区域
+									103 按钮 EasyCV - 有効 このサイトへのアクセスが許可されています ID: view_1009
+									23 按钮 拡張機能はこのサイトで許可されています。メニューを開くには選択してください。 ID: view_1006
+								24 区域
+								25 按钮 あなた ID: view_1018
+								26 按钮 Chromium ID: view_1007
+							27 区域
+						28 区域
+							29 区域
+								30 区域
+									31 文档 EasyCV Physical Toolbar Test Value: http://127.0.0.1:55393/ ID: RootWebArea
+										32 组
+											33 标题 EasyCV physical popup test
+											34 按钮 Outside click received ID: outside
+											35 组
+												36 文本 Local fixture only.
+						37 组 情報バー コンテナ ID: view_1039
+							38 警报 情報バー Secondary Actions: Raise
+								39 区域
+									40 文本 Chrome for Testing v149.0.7827.55 は、自動テスト専用です。通常のブラウジングには、自動的に更新される標準版の Chrome をご使用ください。
+								41 区域
+									42 链接 Chrome をダウンロードする
+							43 区域
+						44 选项卡
+							45 区域
+								46 按钮 タブ検索
+							47 区域 ID: view_21
+								48 区域
+									49 选项卡项目 (selectable) EasyCV Physical Toolbar Test ID: view_20
+										50 按钮 閉じる
+								51 区域
+							52 按钮 新しいタブ
+							53 区域
+						54 区域
+			104 窗格
+				105 窗格 (disabled)
+				106 警报 Secondary Actions: Raise
+					107 区域
+						108 区域
+							109 区域
+							110 区域
+								111 区域
+									112 文档 EasyCV - コピー・貼り付けアシスタント Value: chrome-extension://jifmjghmblchemiflghfhopehjcndblk/popup/popup.html ID: RootWebArea
+										113 ヘッダー
+											114 グラフィック EasyCV
+											115 标题 EasyCV
+											116 文本 コピー・貼り付けアシスタント
+											117 文本 v1.1.2
+										118 主要
+											119 按钮 制限解除をオフにする ID: mainUnlockBtn
+												120 グラフィック
+											121 文本 設定はすべてのページに反映されます。除外設定とサイト別の自動有効化ルールが優先されます。
+											122 状态
+												150 文本 このページのコピー・貼り付け制限解除はオンです
+											151 文本 127.0.0.1
+											125 詳細 ID: advancedSection
+												126 三角形の展開ボタン 詳細オプション
+													127 文本 詳細オプション
+											128 标题 クイック操作
+											129 按钮 再検出 ID: refreshBtn
+												130 グラフィック
+											131 按钮 自動有効化に追加 ID: addToAutoBtn
+												132 グラフィック
+											133 按钮 コピー状態を確認 ID: testCopyBtn
+												134 グラフィック
+											135 标题 利用統計
+											152 文本 0
+											137 文本 有効化の累計回数
+											153 文本 0
+											139 文本 今日の有効化回数
+											154 文本 —
+											141 文本 成功率
+										142 フッター
+											143 按钮 設定 ID: settingsBtn
+												144 グラフィック
+											145 按钮 ヘルプ ID: helpBtn
+												146 グラフィック
+											147 按钮 フィードバック ID: feedbackBtn
+												148 グラフィック
+								149 区域
+
+Document text: ```
+￼
+EasyCV
+コピー・貼り付けアシスタント
+v1.1.2
+￼
+制限解除をオフにする
+設定はすべてのページに反映されます。除外設定とサイト別の自動有効化ルールが優先されます。
+￼
+このページのコピー・貼り付け制限解除はオンです
+127.0.0.1
+詳細オプション
+クイック操作
+￼
+再検出
+￼
+自動有効化に追加
+￼
+コピー状態を確認
+利用統計
+0
+有効化の累計回数
+0
+今日の有効化回数
+—
+成功率
+￼
+設定
+￼
+ヘルプ
+￼
+フィードバック
+￼
+```

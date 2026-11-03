@@ -1,0 +1,60 @@
+🚀 开始构建 EasyCV...
+==================================================
+✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+✅ 扩展文件引用验证通过
+📁 创建目录: D:\pro\github\EasyCV\.tmp\i18n-20261103\build-verified
+📄 复制文件: manifest.json -> .tmp\i18n-20261103\build-verified\manifest.json
+📁 创建目录: D:\pro\github\EasyCV\.tmp\i18n-20261103\build-verified\background\
+📄 复制文件: background\auto-enable-manager.js -> .tmp\i18n-20261103\build-verified\background\auto-enable-manager.js
+📄 复制文件: background\icon-manager.js -> .tmp\i18n-20261103\build-verified\background\icon-manager.js
+📄 复制文件: background\monitoring-manager.js -> .tmp\i18n-20261103\build-verified\background\monitoring-manager.js
+📄 复制文件: background\service-worker.js -> .tmp\i18n-20261103\build-verified\background\service-worker.js
+📄 复制文件: background\state-confirmation-manager.js -> .tmp\i18n-20261103\build-verified\background\state-confirmation-manager.js
+📁 创建目录: D:\pro\github\EasyCV\.tmp\i18n-20261103\build-verified\content\
+📄 复制文件: content\content.js -> .tmp\i18n-20261103\build-verified\content\content.js
+📄 复制文件: content\injector.js -> .tmp\i18n-20261103\build-verified\content\injector.js
+📁 创建目录: D:\pro\github\EasyCV\.tmp\i18n-20261103\build-verified\popup\
+📄 复制文件: popup\popup.css -> .tmp\i18n-20261103\build-verified\popup\popup.css
+📄 复制文件: popup\popup.html -> .tmp\i18n-20261103\build-verified\popup\popup.html
+📄 复制文件: popup\popup.js -> .tmp\i18n-20261103\build-verified\popup\popup.js
+📁 创建目录: D:\pro\github\EasyCV\.tmp\i18n-20261103\build-verified\options\
+📄 复制文件: options\options.css -> .tmp\i18n-20261103\build-verified\options\options.css
+📄 复制文件: options\options.html -> .tmp\i18n-20261103\build-verified\options\options.html
+📄 复制文件: options\options.js -> .tmp\i18n-20261103\build-verified\options\options.js
+📁 创建目录: D:\pro\github\EasyCV\.tmp\i18n-20261103\build-verified\utils\
+📄 复制文件: utils\dom-utils.js -> .tmp\i18n-20261103\build-verified\utils\dom-utils.js
+📄 复制文件: utils\i18n-utils.js -> .tmp\i18n-20261103\build-verified\utils\i18n-utils.js
+📄 复制文件: utils\message-utils.js -> .tmp\i18n-20261103\build-verified\utils\message-utils.js
+📄 复制文件: utils\notification-utils.js -> .tmp\i18n-20261103\build-verified\utils\notification-utils.js
+📄 复制文件: utils\storage-utils.js -> .tmp\i18n-20261103\build-verified\utils\storage-utils.js
+📁 创建目录: D:\pro\github\EasyCV\.tmp\i18n-20261103\build-verified\icons\
+📄 复制文件: icons\icon-active-128.png -> .tmp\i18n-20261103\build-verified\icons\icon-active-128.png
+📄 复制文件: icons\icon-active-16.png -> .tmp\i18n-20261103\build-verified\icons\icon-active-16.png
+📄 复制文件: icons\icon-active-32.png -> .tmp\i18n-20261103\build-verified\icons\icon-active-32.png
+📄 复制文件: icons\icon-active-48.png -> .tmp\i18n-20261103\build-verified\icons\icon-active-48.png
+📄 复制文件: icons\icon-default-128.png -> .tmp\i18n-20261103\build-verified\icons\icon-default-128.png
+📄 复制文件: icons\icon-default-16.png -> .tmp\i18n-20261103\build-verified\icons\icon-default-16.png
+📄 复制文件: icons\icon-default-32.png -> .tmp\i18n-20261103\build-verified\icons\icon-default-32.png
+📄 复制文件: icons\icon-default-48.png -> .tmp\i18n-20261103\build-verified\icons\icon-default-48.png
+📄 复制文件: icons\icon-inactive-128.png -> .tmp\i18n-20261103\build-verified\icons\icon-inactive-128.png
+📄 复制文件: icons\icon-inactive-16.png -> .tmp\i18n-20261103\build-verified\icons\icon-inactive-16.png
+📄 复制文件: icons\icon-inactive-32.png -> .tmp\i18n-20261103\build-verified\icons\icon-inactive-32.png
+📄 复制文件: icons\icon-inactive-48.png -> .tmp\i18n-20261103\build-verified\icons\icon-inactive-48.png
+📄 复制文件: icons\icon-partial-128.png -> .tmp\i18n-20261103\build-verified\icons\icon-partial-128.png
+📄 复制文件: icons\icon-partial-16.png -> .tmp\i18n-20261103\build-verified\icons\icon-partial-16.png
+📄 复制文件: icons\icon-partial-32.png -> .tmp\i18n-20261103\build-verified\icons\icon-partial-32.png
+📄 复制文件: icons\icon-partial-48.png -> .tmp\i18n-20261103\build-verified\icons\icon-partial-48.png
+📁 创建目录: D:\pro\github\EasyCV\.tmp\i18n-20261103\build-verified\_locales\
+📁 创建目录: D:\pro\github\EasyCV\.tmp\i18n-20261103\build-verified\_locales\en
+📄 复制文件: _locales\en\messages.json -> .tmp\i18n-20261103\build-verified\_locales\en\messages.json
+📁 创建目录: D:\pro\github\EasyCV\.tmp\i18n-20261103\build-verified\_locales\ja
+📄 复制文件: _locales\ja\messages.json -> .tmp\i18n-20261103\build-verified\_locales\ja\messages.json
+📁 创建目录: D:\pro\github\EasyCV\.tmp\i18n-20261103\build-verified\_locales\zh_CN
+📄 复制文件: _locales\zh_CN\messages.json -> .tmp\i18n-20261103\build-verified\_locales\zh_CN\messages.json
+📁 创建目录: D:\pro\github\EasyCV\.tmp\i18n-20261103\build-verified\_locales\zh_TW
+📄 复制文件: _locales\zh_TW\messages.json -> .tmp\i18n-20261103\build-verified\_locales\zh_TW\messages.json
+==================================================
+✅ 构建完成!
+📦 版本: 1.1.2
+📁 输出目录: D:\pro\github\EasyCV\.tmp\i18n-20261103\build-verified
+⏰ 构建时间: 2026-11-03T07:28:07.990Z

@@ -1,0 +1,2389 @@
+{
+  "head": "9d378b5e731e2e3f5e3513762fab7b36fcb35236",
+  "headUnchanged": true,
+  "versions": {
+    "manifest.json": "1.1.2",
+    "package.json": "1.1.2",
+    "package-lock.json": "1.1.2",
+    "lock-root": "1.1.2"
+  },
+  "protectedFileCount": 475,
+  "protectedFiles": [
+    {
+      "path": "docs/evidence/1.1.2/acceptance.json",
+      "sha256": "5e809816f1cdad0c7e1229a4bc1d2927134d07daaff6db3e1433677b24c9d4de",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/baseline-build.txt",
+      "sha256": "adce134279f06436d161e4da28d293dc5eaeaf20ef03431145d45bbd41e1a09c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/baseline-docs-check.txt",
+      "sha256": "49e02d54f929b2416d20353b371560a61a83440f22098ed16e62c1ddc8df6e80",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/baseline-e2e.txt",
+      "sha256": "f1a5f3d098b5dc0ea9a9fcc8a1855a2fc0bfe949609a6e3419984537d4fbd675",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/baseline-permission-regression.json",
+      "sha256": "483f4fdc5429b61727cede6b7007e95836bfd24cdbd7713d70754ff6ec387dcb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/baseline-permission-regression.txt",
+      "sha256": "c2adfb27673ed98235a08355543e49a6f070a812c68ca8a9cc98affafb27e7a5",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/baseline-permission-search.txt",
+      "sha256": "47e024857e201b2aa66e03a038e4ecf0eb6abfc1c2826d53a0184c90d1822f6d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/baseline-sha.txt",
+      "sha256": "36f88ff4348957f3c3ddd1af9f0f4a75ce221a5936a790d9b2360566df8f5f81",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/baseline-unit.txt",
+      "sha256": "290c5a6f3a9befd0968de1926ea6a64c98b0917840be52ed332e7affd4b4d67b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/check-results.json",
+      "sha256": "e59ab778d03706ae17b2a401f13e1576356e66f03b33dca52a25e19ba298f1dc",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/commit-20261102/commit-scope.md",
+      "sha256": "9b7a4397c8eb9525eb2ded39426af5880c75263d7d315786e415133b4a31230d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/commit-20261102/validation.json",
+      "sha256": "40dd9e9f498a0d12473f47feffde8773d1f0400cd020d9da7aaaee348ba31222",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-check.txt",
+      "sha256": "0e0ccdfd4da0d791e13784779920776c51613e60f01a5ff6623c1724cc15c00d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/diff-check.txt",
+      "sha256": "c991f60cf596f0774ca3b612a99e1a7355597a215af207de3a87d5539222ed7b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/docs-check-before.json",
+      "sha256": "231d84e533f196adc008c158ca2a5036cc3adf5a133b6eaa5393903c8d5abbac",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/docs-check-before.txt",
+      "sha256": "0e0ccdfd4da0d791e13784779920776c51613e60f01a5ff6623c1724cc15c00d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/docs-check.json",
+      "sha256": "24ad24cf3f71a202dc4bbcd56ff573c1a46b04d3730c70e90d62ccf8e0399623",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/docs-check.txt",
+      "sha256": "2e77a032876f8615f3274021a935882d7ae2a4c4fb8bd5ba35907e462b46d006",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/docs-regression-attempt1.json",
+      "sha256": "e4fac2e6f88f8ed36e40c22c7448c36e5e7aff8c65ff140694b7655e43913fed",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/docs-regression-attempt1.txt",
+      "sha256": "23a83908453d586bc3c562ddb35ff39b067d75a1591e7749f309cf1a8f13c01b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/docs-regression-command.json",
+      "sha256": "47a98aeffed5400df2d724f2d90040afa6fd1b1cad09ef99fd9733c1f9ffc093",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/docs-regression.txt",
+      "sha256": "847f3383090f4ef69ff8a4c7f610d81203e9b115881629f1a1fad74f3de51ddc",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/lint-command.json",
+      "sha256": "058f270a1d1b14753f062f76b1eee23440b9f7a82c705bb97bb7ff72103b8a8c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/lint.json",
+      "sha256": "058f270a1d1b14753f062f76b1eee23440b9f7a82c705bb97bb7ff72103b8a8c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/lint.txt",
+      "sha256": "59208932180c844629f86a5c186f4747ff8ebda5d20d835af87d9e796ab111dd",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/package-command.json",
+      "sha256": "e012be439a2e886f0d787daa474e9c972e12aae0a309c08c7715dd41e645d8da",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/package-verification.json",
+      "sha256": "6f26cdfb4209dc4aa3317d1afa6ed492d851a93da2b55faccab40113d28f1276",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/package.txt",
+      "sha256": "2285ed09e6b968b75e38d976e09bd3a3c38cd1594ec37b5c469ff96985ec926a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/preexisting-files.json",
+      "sha256": "3882782611a9fd4ac10ec37f6d9be1b89f8eb0d4b8360b6b00950c287af8877c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/preservation.json",
+      "sha256": "e6836068bbfa65aa6b1607291c2d33d35e7cb6df42860e04701bb89cd787feab",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/regression-before-final.json",
+      "sha256": "085d2cc330cc664fdeb1ceea7ef995e5605d5c78da0d5bd9f200a196e82576fe",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/regression-before-final.txt",
+      "sha256": "cbed75fe145abffce0a47f9c56a2286bacab7150f2f72808a578a897bfb347a7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/regression-before.txt",
+      "sha256": "6b78bc91de3c5acfeef2e0e14113da12082160532f474e0a408092e8fe48c0ce",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/unit-attempt1.json",
+      "sha256": "7991598979c4f5abea1e3b09643798f2f287476dd4b2acfe5718d21febcfdec6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/unit-attempt1.txt",
+      "sha256": "37223ea5c810546bc59da4d46bc82f4fcb56446eb117047f5d8008601973c365",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/unit-command.json",
+      "sha256": "428c4a13e700160d9ebfdbfa633388f5a039304a2eb7a2c4fc311b5c1663238f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/docs-gate-fix-20261101/unit.txt",
+      "sha256": "5437d932a2b60111a2c00c7cc55cca8916b6a728bb35cba53152c14d6716d204",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/e2e.txt",
+      "sha256": "caa42298d9ab8bfbf7d80e2e7b0d97a54c76d4046390d70df685121cdffa8481",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/final-permission-search.txt",
+      "sha256": "9ed66cfc53c80d40a0206e2d0530fbb502ecac034022a6bfe9b3b4d0eff020c6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/final-status.txt",
+      "sha256": "de9fa6672dc644ec50e9a40d36f74fc82863b99ff6a123c2e5460886e58f745d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/initial-status.txt",
+      "sha256": "c25a9a3b0d1f218e7bb95a1c270a13e153fef71c11384b01267910fa824b6239",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/lint.txt",
+      "sha256": "36f4e0aaca639f4e3acf6e4f0b4cf8f56a65fdf53043474968a9ae25fadbfe7a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/package-check.txt",
+      "sha256": "0856adc337c44682f6368401885c41cc4b4771d61f00441dd46ed36916f27520",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/package-verification.json",
+      "sha256": "1becc72e63444ddf313a8cdb5765c7d7b3d1b1a2bc9966df5f9ccb67d9da53a8",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/package.txt",
+      "sha256": "7647ba197aa1550f4c26dabd77abe16647f7d8de34df37075c3a28b1eeae5656",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/paste-diagnosis.json",
+      "sha256": "0fdee3f596d2b1ae1130045e10eec2af4feac56275aa7a2628f942ec4a19d334",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/permission-regression.json",
+      "sha256": "e738f1e41e4a069fde54f182a2f786f37bb7ef815ff95315ca14cad9d753ba9a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/permission-regression.txt",
+      "sha256": "c2adfb27673ed98235a08355543e49a6f070a812c68ca8a9cc98affafb27e7a5",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/1.1.1-popup-enabled.png",
+      "sha256": "b1044e2c085b2c62cdac6163d87e579b2a08bc3ed99a8972b3fa60e8b63687b1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/1.1.2-popup-enabled.png",
+      "sha256": "4f9767305b02e02c473b3ae58cf25b6f61edf75165b3f206bd6947c2c80d922d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/check-results.json",
+      "sha256": "f3170e47be2c035f8ae073ce7c872d1d6b566c9ec015faa89d79905b4dfb8f73",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/chrome-1.1.1-reenable.json",
+      "sha256": "daffb7602947bf5a5476e4bd95cfcf940696840bb35613511b388cf8c2f3dc27",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/chrome-1.1.1.json",
+      "sha256": "00f504791fd03077e7b073072395edebd6908458226b8be59b74ad566fb2da2f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/chrome-1.1.2-reenable.json",
+      "sha256": "63a53a2ec4525dbdeb2d25960b17bbe81e23464390291828955a21f367fdb2b5",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/chrome-1.1.2.json",
+      "sha256": "1ec9fb8d3abc633bfe631688795aacaa9478c899cb099399204e731f365b5342",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/chrome-environment.json",
+      "sha256": "66c20c2fbe0d6398428a694050eda46706ec4c8560424ba47a31808f040b7f37",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/docs-check-final.txt",
+      "sha256": "0e0ccdfd4da0d791e13784779920776c51613e60f01a5ff6623c1724cc15c00d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/docs-check.txt",
+      "sha256": "0e0ccdfd4da0d791e13784779920776c51613e60f01a5ff6623c1724cc15c00d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/final-status.txt",
+      "sha256": "94cabc661719313c153e763e84b63781e389dc2e6510a7690ff968d7df2721ed",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/harness-aborted-1.1.1.json",
+      "sha256": "145815123fdfd0b83b62ce2d7b036c0bd525cddb88b9117f51d7078001077bc2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/harness-aborted-1.1.2.json",
+      "sha256": "da1f7646b51e928ce4f7d30998376b39ce84cad7ae49890bbef8b4e09db5a046",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/harness-attempt1.json",
+      "sha256": "56b8b6a92be09b46bd4af065ecfa718367687bdbe188f9f22018ad18d6a4d7a6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/harness-round1-1.1.1.json",
+      "sha256": "46cd8d69208a3a2d15d65c0671a990e6006657aa80dfbdfd66fe1005773d1b89",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/harness-round1-1.1.2.json",
+      "sha256": "d210c611cbc1f32a57054e76c9e1e07774577362b63db4c1907f007ce4320f74",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/initial-status.txt",
+      "sha256": "de9fa6672dc644ec50e9a40d36f74fc82863b99ff6a123c2e5460886e58f745d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/mechanisms.html",
+      "sha256": "b831cebcbca92fcf9fe7deeadf67fe1058c80fa8774e1fecdad186bca52d5d55",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/preexisting-files.json",
+      "sha256": "bbb82dcf68f39e45b66c7f9ed58fca4037ae0639b4bb600c4fae55ce44097ab2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/preservation.json",
+      "sha256": "a4b86249703a19e67a24fc4fb48dec8f7fd70a828589a72d725e4d57be3705dd",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/reenable-runner.mjs",
+      "sha256": "25bc2a270612d53186cc01e24cbbf5399a4fe5a86bf1ead859fa3ce7ef022ea0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/runtime-comparison.json",
+      "sha256": "ae482c222d7470bbfa15fc7aabbe6de0d3d7cc46e5bbd34399e62a97c74539ef",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/triage-runner.mjs",
+      "sha256": "01f9fd42c5c9f795e60b0d7453b0f220d662b3bb341b0b56c239c8f50becef54",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/verdicts.json",
+      "sha256": "1a09a8d00cf0aa560a0f29e92c3a498a45f236f00bc4fda344bf067a0bb3e599",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/popup-paste-triage-20261101/verify-observations.py",
+      "sha256": "816b4d34a01828398c04c25a9440a9759aa9320abdc7d1756ea8d06e44144208",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/acceptance.json",
+      "sha256": "7a45deb2bde95d05787c1f0a0416ccdd27dd8b44866c159bf1f8b787e17eb977",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/baseline-build.txt",
+      "sha256": "1f8f87838dd834a44e733b3e12705023101cb85f21aebbc12f8675c1120cb9f2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/baseline-docs-check.txt",
+      "sha256": "c3cdaf6213f310c02c0b7890217c631cb5186470db9b3fbf66a1aae2fa250b69",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/baseline-e2e.txt",
+      "sha256": "f1a5f3d098b5dc0ea9a9fcc8a1855a2fc0bfe949609a6e3419984537d4fbd675",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/baseline-permission-regression.json",
+      "sha256": "2fab2bf1ac3887829aec8ea9e72ec7c99b57fa183ebb546e41795829aa971d25",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/baseline-permission-regression.txt",
+      "sha256": "c2adfb27673ed98235a08355543e49a6f070a812c68ca8a9cc98affafb27e7a5",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/baseline-sha.txt",
+      "sha256": "36f88ff4348957f3c3ddd1af9f0f4a75ce221a5936a790d9b2360566df8f5f81",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/baseline-unit.txt",
+      "sha256": "0eec82144091c6b732376b1cca0f1dc160c7e847c62d6eaeeca4b2426ad069d0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/build.txt",
+      "sha256": "10523353545439430c09dc3d63cbe1029a69db282b1ab6ee7c9738cbe45a6c08",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/check-results.json",
+      "sha256": "c5221e4829b03a5eca3622c6410a6cfa7cd9752e1f4786afc6f45a9e90c05469",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/diff-check-final.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/docs-check-final.txt",
+      "sha256": "0e0ccdfd4da0d791e13784779920776c51613e60f01a5ff6623c1724cc15c00d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/docs-check.txt",
+      "sha256": "0e0ccdfd4da0d791e13784779920776c51613e60f01a5ff6623c1724cc15c00d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/e2e.txt",
+      "sha256": "caa42298d9ab8bfbf7d80e2e7b0d97a54c76d4046390d70df685121cdffa8481",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/environment.json",
+      "sha256": "f297070cdee4ba4efd0df9378a219022075550a835ff259adc046c0bfec58390",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/final-status.txt",
+      "sha256": "d83da8f6ab365efeba5e692b73c66b7553f8ca272c20e52faa9117885629b8c6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/initial-diff.patch",
+      "sha256": "4985d9e252d427d80f458bec9ca95661d58410f8d3c779cf47995fb49dcc34d6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/initial-status.txt",
+      "sha256": "25e857cadd20f47921a572c19b1aefdf547ca2dc3339ea3229b2b0bdf73789cf",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/lint.txt",
+      "sha256": "36f4e0aaca639f4e3acf6e4f0b4cf8f56a65fdf53043474968a9ae25fadbfe7a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/local-archives.json",
+      "sha256": "fb81be1a72a3b190698da2ff7df83953ef69d71d87064af94d9d4e5eb47f430a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/package-check.txt",
+      "sha256": "2285ed09e6b968b75e38d976e09bd3a3c38cd1594ec37b5c469ff96985ec926a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/package-verification.json",
+      "sha256": "1b71ac9e04fae418867e34c61b7713ca789bc04ddf690af5247034fbdc86e978",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/package.txt",
+      "sha256": "08766efbcf84a734bf5a14c8d8cdde65eb6eb2df0e5ac0957eea05a89b078fc1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/permission-regression.json",
+      "sha256": "4fde097d68fec63c4036b52bff7527734f3e204dd63dacca4faa11905e66d63e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/permission-regression.txt",
+      "sha256": "c2adfb27673ed98235a08355543e49a6f070a812c68ca8a9cc98affafb27e7a5",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/permission-search-command.json",
+      "sha256": "0e70c724aa73b0d657580e0a2e182fa623aaceca681be7fcba62455f185bb059",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/permission-search.txt",
+      "sha256": "ecb893c8808485b75c4dc53c7b0d888170ae8857598bd6a7919a064dd49e1192",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/preexisting-files.json",
+      "sha256": "2b3fb7140666ecf97323bcde76f6145596df84bc797e91a0870a7d4843554260",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/preservation.json",
+      "sha256": "219b2b2c671c5a5e488b95d43484e10c976315df57d274c08bb3439099b3746e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/runtime-unchanged.json",
+      "sha256": "8b2f3aad68c8aa6157048af2b400e129e1081e17c269b133d6d4757e8807ee80",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/server.txt",
+      "sha256": "a0bd80978262dc16af71832730a9541c9c6a1dc2f61575a1361d822177415bcc",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/SHA256SUMS",
+      "sha256": "e08e5abe8b367cfc6a275c417cb59a34c74201074ba987624591cf9fb79321d4",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/recheck-20261101/unit.txt",
+      "sha256": "145b78780bbf1ef422d72df02b7289847fca104577fe4727fc9c8fd2e87722dc",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/acceptance.json",
+      "sha256": "a9c3ea25bbe4382e96e2a1bd93fa99ba6def6c7208361628efa847d7965f1736",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/baseline-docs-check.txt",
+      "sha256": "c3cdaf6213f310c02c0b7890217c631cb5186470db9b3fbf66a1aae2fa250b69",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/chrome-upgrade-observations.json",
+      "sha256": "f90c7c4d1983bde07325f1c08797bf8177b9aa74fd3f094df6d1671b09e9e4dc",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/dashboard-access.json",
+      "sha256": "736e2a6a1d23480b5145957831fa44759d7be362f64fc92fa68cf43bc56883ae",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/docs-check.txt",
+      "sha256": "0e0ccdfd4da0d791e13784779920776c51613e60f01a5ff6623c1724cc15c00d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/docs-classification.json",
+      "sha256": "b6257a7193608ea7ac3bab326c78b3fc6096babc3a871e106b4cafa6bb3fd320",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/final-status.txt",
+      "sha256": "1fc68a0fd24d8cc30c832e96932ab19174904d2690444c424c2842e0fcdc8439",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/initial-diff.patch",
+      "sha256": "4985d9e252d427d80f458bec9ca95661d58410f8d3c779cf47995fb49dcc34d6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/initial-head.txt",
+      "sha256": "36f88ff4348957f3c3ddd1af9f0f4a75ce221a5936a790d9b2360566df8f5f81",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/initial-status.txt",
+      "sha256": "94cabc661719313c153e763e84b63781e389dc2e6510a7690ff968d7df2721ed",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/lint.txt",
+      "sha256": "36f4e0aaca639f4e3acf6e4f0b4cf8f56a65fdf53043474968a9ae25fadbfe7a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/native-context-menu.png",
+      "sha256": "efdd232304dafc50f28d93d0714d104d7d856295470d4357f9050b3cdcc51681",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/native-context-menu.txt",
+      "sha256": "b192a28af0b7efeeb01ee81d12a5c8493b77a3e84e43404d60003f3ba91202c3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/native-options-persistence.txt",
+      "sha256": "66a9ded097b584c2ed0b1fe2affcacfc583690e72594c635e17467c80e395998",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/native-popup-actions.png",
+      "sha256": "1b1c5c3278e0bf9f6bee911c3dfdc06f7b5a630d1c23e10b92b5e192b2be3e97",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/native-popup-actions.txt",
+      "sha256": "54b12e16857bd71f8989f297ed6f0094785aa2aa22c6e9f4e45545ac9ec54493",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/native-popup-initial.png",
+      "sha256": "cd43cdd8ea39d1f67f628d00ab25774be056f94688a08d903bee34e09290aed3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/native-popup-initial.txt",
+      "sha256": "9ad6add58bee6153d27463decfdccf537327dfadae99174e169b743ac6081b99",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/package-verification.json",
+      "sha256": "6f26cdfb4209dc4aa3317d1afa6ed492d851a93da2b55faccab40113d28f1276",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/platform-availability.json",
+      "sha256": "b7ef16c04a15fa2e04e2a7e1cd8a39d99fd5d69157a0a962712acc9e8adb92be",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/preexisting-files.json",
+      "sha256": "7f157fc7bda2fd8e7a6ff17a24a719f732a1d0e45c836b485215783f95c81dfe",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/preservation.json",
+      "sha256": "a0f403d45974bde97e24d7a26d20b7b089428470b8b9ae91cafe0112a66deb2e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/store-download.json",
+      "sha256": "5a11d734a0cf56a841c75a43d415821f428156fe58376e30f54fcd8f339bbe11",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/store-listing-observation.json",
+      "sha256": "a39c98d7e094da21d6398062c63bdc4de73fb71370422cf33d66e9b9819de823",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/store-package-comparison.json",
+      "sha256": "12b34bfa0df6ea1abdb6654460561f630c1e9eaa9c9e0d68d8456ac70be68eb4",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/store-signature-verification.json",
+      "sha256": "daa88ed47eb17486c62cc9e53c6797eb49088b30ee6cc4aa304628b576a3ce55",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/unit.txt",
+      "sha256": "ae01ad954e18dbf768d64fe9e36c1f59cf9f54cb3a3a1068562a40dbc70ac35c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/release-closeout-20261101/verify-store-package.py",
+      "sha256": "c53b238ed2408655f5ba25445a8e39d4777b492705cbfea5ef44ed35d87fff73",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/acceptance.json",
+      "sha256": "fbbe20db371035523aa718181a1debc540bc91836859237144735193ae8fbee6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/baseline.json",
+      "sha256": "3e59e1a27315d4c2d55db1fb3437faddb3ee74c714cd9f89d1fd05ebc5e9bb9a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/browser-baseline.json",
+      "sha256": "9aa080b3426c2d465b80b32572e6b5080edf21b4f59be579dbce6fa407a50ee7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/browser-baseline.txt",
+      "sha256": "6682c2ec6b024e45affa227718e82d912aae49aee96e5228be088ef33b9efd93",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/browser-command.py",
+      "sha256": "d7e38774713b8f1a4aad4e0bfcfb7caae306f5be1d14e8bfc53e0632eda02ac9",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/browser-final.json",
+      "sha256": "bb119c2209efa1bb4443531fb9f6794a78490e004ddc408f4de9064e02ef499a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/browser-final.txt",
+      "sha256": "69f60e384a9b60c5e4067183871726e8a09c3525ac3593086389f52673cb8be8",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/browser-round1.json",
+      "sha256": "2ffb705b27ee1e3a1d2daef2738bf39b6733458cef9a0c941afbf40b99c6d1cb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/browser-round1.txt",
+      "sha256": "90d9a8619ad1cf4d20cc8cf39448c9ddfde0311c3500974782de874252328065",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/browser-round2.json",
+      "sha256": "9821c6e70632e40a9ee1baf2f82b7d498e04f30f184bea01d187b099d9f87007",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/browser-round2.txt",
+      "sha256": "5d3e22873cb3fa04fd4cb7326a9155ecd489f2c2ba9cea5dec0115e0909c74bd",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/browser-round3.json",
+      "sha256": "21e8c80a6bae07ec7a17f3fb591bd0d4d832349254cd6ec51217ffd351f9c888",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/browser-round3.txt",
+      "sha256": "69f60e384a9b60c5e4067183871726e8a09c3525ac3593086389f52673cb8be8",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/build-final.txt",
+      "sha256": "708b9a695b5863149d6e17e93e765d92d7733a194c79bd5ea76bf69e9d9a1d79",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/build-round1.txt",
+      "sha256": "f41606e9404aa96b09d2eb6b582b26c28ec16359cfb7dcb354300f4ffea7fb07",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/build-round2.txt",
+      "sha256": "5aa19059d45d73fbbee0829c9aedab5f250564c1f0b73a855b65f1d37659f52e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/build-round3.txt",
+      "sha256": "d27829d8623692594f62f4b8e46c5963c7c0bd557ea3d67de709d232b7d011cf",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/cdp-helpers.ps1",
+      "sha256": "c7b941e3acfab9f4aaa3d4879f89f304dca1b318e8339a6e2e3990d92d154653",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/checks.json",
+      "sha256": "4599b4b994c5887a4b37af4ae7bf03f910e6c92242075736561c357f51871172",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/chrome-developer-baseline.json",
+      "sha256": "49b0a845acb9ada87d4367664103a5ded7043d8c3cc84194dafd9469a1990234",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/chrome-final-close.json",
+      "sha256": "4dffb869d1a2e13c88fffd75af5097461cedead1775a8e6777035b5b4104e641",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/chrome-fixture-diagnostic.json",
+      "sha256": "fcf970ec24363d5c9ffe35a49f43cb6e27d6be84b7ee7c0e4eb7dd734d745ce1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/chrome-native-auto.json",
+      "sha256": "4a0574b598e4efdbdfb78525840ccb8568f1133f335d5550f3682dbc10615afb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/chrome-native-copy-r2.json",
+      "sha256": "3f05392225d3905c78d9d86fb121afced4e41620c27a1a5bac31265942fed61e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/chrome-native-copy.json",
+      "sha256": "a3d5855a8ccfe6cd10b5be79d0f28ec17088e48afc86145e32244832efa6124f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/chrome-native-main-r2.json",
+      "sha256": "66bf7f225486922cdb444768e51297649d2dad82b9a21c40ea47f1f341f82909",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/chrome-native-main-r3.json",
+      "sha256": "4b5015417ee24946d297efccbb9c8daa2fbcd0aae6dfe60e73d06009a3ffb686",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/chrome-native-main.json",
+      "sha256": "7028f0070f6517c6f8324452e4ae8fd0a2bf90cad3acb4bde1d82e13e6273a79",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/chrome-native-prepare.json",
+      "sha256": "9c1f6b4997cd3edd0da4fc99ed5fe0c6bf92067138e025b14f4a0abe5e946b6e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/chrome-native-restart.json",
+      "sha256": "333b3ee047102677bf82d50939e23b52506736e0592e2c07b7f3b96f02a33f1f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/chrome-normal-close.json",
+      "sha256": "8aba18c54ae05007a169f7eb4f8f23cd47acd81bd26256800e01f0978658d54a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/chrome-normal-relaunch.json",
+      "sha256": "a0911d6b7bd57ad980a4e2876bbcbe490bfd9fa9efa46c217eab93d423585315",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/chrome-reload-fixed-development.json",
+      "sha256": "5e0195fb120ff8ba65694fedf369191a52b8a8f7b6365258fbfbf28f5fec34f1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/closeout-checks.json",
+      "sha256": "13856766b857081711ccc63ca3013c58759d3379f2a61bd5db83a1b6d81039b3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/diff-closeout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/diff-final.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/docs-closeout.txt",
+      "sha256": "2e77a032876f8615f3274021a935882d7ae2a4c4fb8bd5ba35907e462b46d006",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/docs-final.txt",
+      "sha256": "2e77a032876f8615f3274021a935882d7ae2a4c4fb8bd5ba35907e462b46d006",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/e2e-final.txt",
+      "sha256": "caa42298d9ab8bfbf7d80e2e7b0d97a54c76d4046390d70df685121cdffa8481",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/edge-final-close.json",
+      "sha256": "04bb32a07e014a58aa9dddd07af2761add873ae6e47a2b9a59d3f4e73a6678d0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/edge-native-auto.json",
+      "sha256": "5d2f6c5cb119e0854f51a37f6b8adef4f2e336e4d9ac49402891225dd9977bb1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/edge-native-copy.json",
+      "sha256": "a9d99cf67b03c1c99d6994d67045bd8779412e30d1bc53bafababe3723abfce7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/edge-native-main.json",
+      "sha256": "0bee746c3bbb8e95d9c4fd520564915004af27f3a29cb35e13ae5af55361a171",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/edge-native-restart.json",
+      "sha256": "3999ba4d265a005ea11e866aaf3c949c9575963517bd244780b9a14bd5cdb123",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/edge-normal-close.json",
+      "sha256": "6dbfd02968d96199790a49acc372b434427d089d5af410ceb5197794df74119e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/edge-normal-relaunch.json",
+      "sha256": "15a618cc88c47dcde4775fa6fe824b8dffa0da364ee6e721f40d07b989565060",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/edge-start-candidate.json",
+      "sha256": "ec5c0ecb8dfd74b1b2aad0900664b33c610ca671f39b97d80af98b03291fbc49",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/final-checks.json",
+      "sha256": "f1e5f6734878822e43b7620552052903f8ff244c34dc1db7996a4b0c22c1bfc7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/host-final-cleanup.json",
+      "sha256": "d7e5a561c840672d76d8b0072f4b7733a1cf85faaa5cb90c339225919a558a26",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/lint-final.txt",
+      "sha256": "2e1236a9b2463e215f4b711864afc9eb7aefbb6cf931665e7f9ea34edfb68c2f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/normal-close.ps1",
+      "sha256": "bb7be02d248b846233dc022590d2cb9a11dd2dfe7b38cf47b0dd20a665f99b8a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/package-final.json",
+      "sha256": "3a51f2fe96a7b554daba97dee26131ac1c594aa51eea6b9ebbdb1e2c00a927c9",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/package-recheck.json",
+      "sha256": "3a51f2fe96a7b554daba97dee26131ac1c594aa51eea6b9ebbdb1e2c00a927c9",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/package-recheck.txt",
+      "sha256": "9f9cd395f957fed075f553e452549bbe859fcc17b403c7ae0708014370d60bb4",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/package-verification.json",
+      "sha256": "050520176a50ec69ab628790d6c2128320dc7b7e05f003b600db6660f832c34d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/permission-round1.json",
+      "sha256": "a26da12b679d56651318d5ec3703c342f9515730c21b125c44533a8b83c8d384",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/permission-round1.txt",
+      "sha256": "8917b66c1cd18679565eea76f0b0d55a217738503f865de72c1ed8f785041323",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/popup-click.ps1",
+      "sha256": "3d0ffec0fe9b7633d75bb98df77889128c2fa94b88b99e2843107cfc60a2ea3c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/reload-development.ps1",
+      "sha256": "8229b30e845f718d644b4c3d42aead5ce535e48cd8a0aa9c367808ad95b86669",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/restart-comparison.json",
+      "sha256": "5fcd8fd4b768030a0d46d0af8132e00af40e2b40ff2b9a2af56f055db0bc386b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/unit-before.txt",
+      "sha256": "f8fd00def0dfb57c9fe69ee16aa87ed67533515a7f30635c214d7f8a10021988",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/unit-final.txt",
+      "sha256": "50b0fdf880fc04ea6862c0cb2b54cb42ba7fa3b36af2ebf658b6fc6c04261a26",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/unit-round1.txt",
+      "sha256": "f60794652964896567bc1de8bf2c1237f1b8d1e73a768874549771ed9a667b58",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/unit-round3.txt",
+      "sha256": "cc76f1254399b6066c3870b46dc6ff2c43c37ae3dc18a1f3bca38ec6990c4fe2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/windows-command.py",
+      "sha256": "eb891d14b38937646fde0cd216bd609d95128d0cb11033b12f58aa8a16f0abda",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/windows-final-cleanup.json",
+      "sha256": "aa20fcaada57a416254bd868eb3f85376e0cdf050ba58c958bdfaa8ff018fdb7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/windows-integrity.json",
+      "sha256": "afaf0b69f013cc787d728f0e9120eec1ea6ed83f9e1df31af4bbe3d195e24b16",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/windows-package-check.json",
+      "sha256": "342913c47ee05f58059f1f5cd11ad4541b7ee96006c064dc8361c6f5237b44c6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/windows-regression.ps1",
+      "sha256": "e43c38846a59ac96d30fe5b31c0f1342a58cd8f313203b7348272e9d6343bb50",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/windows-start-chrome.json",
+      "sha256": "213d2b54f18f83743cb70b47657a32a65d89875f9259c96ff8db789e9a49713a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/windows-start-fixture-r2.json",
+      "sha256": "3a2e3b3b86b10a814313ea4b60f3a47a88872af516c0a334261ce138d781bc79",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/windows-start-fixture.json",
+      "sha256": "3471135aea39b79d234ebc61b52ea314f6678e376f4b5eebb5f16e8ce55f51d5",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/windows-tool-skill.json",
+      "sha256": "208ca1501800b0d37c60291cf984fadfc2109eb3899f57f5ce4cac09192c3ee1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/windows-tools-and-processes.json",
+      "sha256": "373ffa27882cb9864aac801afcd280f550c91861f98a1d7cb4be0afb651e0eb8",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/state-fix-20261103/windows-transfer.json",
+      "sha256": "40bf6d485dc0634b95a96f59361db2cb6ac25d6d6b43effc6489d86a4e26896e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/store-submission-20261103/build-package.txt",
+      "sha256": "3116d196b27a39c77410b8b2ad6c8bc28d80c68481aa370daf0a779b3165567e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/store-submission-20261103/docs-check.txt",
+      "sha256": "90f0ca11b88081b4fceb33096b57fb655e29da705330bf74a1a78483226abd1d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/store-submission-20261103/lint.txt",
+      "sha256": "e47aa595546f1c9bbc3fa6e2d6af00cbe2bd2b275b2324af4d5938434d0ed122",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/store-submission-20261103/package-verification.json",
+      "sha256": "d71cde1e1eded5fc7bd391171e27fbccf5d3c09cedb00e84046b711dde16a6ac",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/store-submission-20261103/unit.txt",
+      "sha256": "f7294027de806489171f3ac0aa782093d0a5a86d4806e7b3f94d223ec9f93dd5",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/unit.txt",
+      "sha256": "446f1c5920d3ad6e262c5049568fce8b615e3a4c7d4b60b70ed65ba04296df1b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261101/environment-user-clarification.json",
+      "sha256": "f8e79ee2494444cb6b9085ae7289c10611c1f4c86afeea34593acf4704242fa2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261101/execution-plan.md",
+      "sha256": "e092e5f7647602aea4bb1a356a2ce2155796790d09d463225875c874b81d324b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261101/fixture-server.ps1",
+      "sha256": "e483d32e4138e6f38fe406d67620eb651ff71dede55baa2f4805a4ec869182d0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261101/interim-verification.json",
+      "sha256": "bafd799725506ebbbd364712d6e35e1292b4a35d55f4cf3d66ec372bd8aea08a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261101/locked-package.json",
+      "sha256": "7a73a714313dd97d5612900e0cfebf8c58c3c95a9af3d3a22c353a12f9a1d116",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261101/platform-availability.json",
+      "sha256": "980cda6bcabb9ce7554a3e1236feacf19123e4acc7d3b79516d030f8afb80595",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261101/platform-followup.json",
+      "sha256": "27f25482e33ff3d392e913da4360fedb6bdaa95424452a96defa766e1f05f501",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261101/preservation-before.json",
+      "sha256": "588aa50ed154c7d552fc38cd97466f0d8fc7c8f5fb21f19c7c5dc609bfae4fda",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261101/store-current-check.json",
+      "sha256": "b6f2ddc413d8263ff3e529385a85338c58cb9b4a186f32afd0e0b128922933c3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261101/test-staging.json",
+      "sha256": "2681c5a8edf8bd07a9e5e6bd3bf2ac8fddaaa8591a70a46fb41ff4f95815af59",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261101/upgrade-path.json",
+      "sha256": "16a07d90d87e9b01a7d5c88f30f748b8d3c242a89439c138f4291288b2ff1c37",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261101/windows-command.py",
+      "sha256": "537dba8c3719dcb1966597427ec400ad82ef17da5f539967a6cdc24fec0000c4",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/agent-browser-download.json",
+      "sha256": "985b1beeb0156efe6d34f50a04c2e2a72cc8cd0da3d6db286e9cf7eb8d48acf3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/auto-enable-first-visit-observation.md",
+      "sha256": "eee0c28ea97a1ec79769c608f742a2456c1eb3b5338e82548124d3118d8caf00",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/auto-path-source-comparison.json",
+      "sha256": "533a4070a2ed638b87e40cfc316882a86697d6d3880bb90045d7e24f7543ccd2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/browser-command.py",
+      "sha256": "0aab17ee946688d6fef9b085bcbaad0f93a1682f6904da9415870333e2b597d5",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/cdp-connection.ps1",
+      "sha256": "00d190c48eba2b722f6979c4923cc7888094b067b085938d9474417787c92c0f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/cdp-readonly-probe.json",
+      "sha256": "c10043b0db4b3d0f3aaeb43666accac84d9c8e771f8157565544f6d5681002d2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-and-tool-ready.json",
+      "sha256": "fc9d769f55d03340bf1c88843329dd79b0c24cb9b27084502f50d6dd1bc46048",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-auto-delayed-stale-then-refresh.json",
+      "sha256": "6aa278fbf74e72082dda95b70f08295e859f66f3460286fab531ec4fd1344c27",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-auto-enabled-real-page.json",
+      "sha256": "bd31a034ae743bf7bc588a4410ebdc1c78c8fe9b6c937c9cd8dcbdd74e94c964",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-auto-observation-after-tests-r2.json",
+      "sha256": "4cf9d2475b986c69fd69d49f849e667284a2f3f65e144254554d4af49b8ee0d1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-auto-observation-after-tests.json",
+      "sha256": "621f42ef5aad0215850d35e9ed0e6752a15707b8e658e26a4989f7fd2732da33",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-auto-prerequisite-off.json",
+      "sha256": "04f125e1cf030044f2d8c1d3a9d9fe452c485fa610c1f58298b8930fb49d9303",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-auto-unlisted-control.json",
+      "sha256": "c0de93e2e53b9e20b476564f0e8b35e6a53dc2d95c339852c2dc588dd3f0c5c2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-candidate-loading-state-latest.json",
+      "sha256": "bcaed5048b53ba1327490b4ed05e7708c2a797641d46eb995fbedc6489c0e9b4",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-candidate-manager-after-assist.json",
+      "sha256": "68a38935e82784198404d1e56fefeeaea41c0fa4b4f88589274e303689fae117",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-copy-geometry.json",
+      "sha256": "9af66b34c3f9f02c016ef55d1653687a9d5ff5e989646ca50d9dd027dcc7d3bb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-developer-mode.json",
+      "sha256": "dcac8d964856674c09469ab07753012ec738c5520687b2832d03c827d64ca99a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-download.json",
+      "sha256": "13cb2e26629a590a33915fa5ec2de3272b9dadb09357dd907edee7cd503c9be2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-excluded-both-lists-context-negative.json",
+      "sha256": "4832a068cf60d934329d4eb292689b6c90f29ccc9fc2946c3948adea5118b57d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-exclusion-delete-control-observation.json",
+      "sha256": "152d291dc76fb4cd3c9d27e87e398394041031d6657454e0e10d7f37a330cee3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-exclusion-priority-real-page.json",
+      "sha256": "6043be822b70d74a34e208491a6f76e9327775771b22eed82e296d44515c5c7e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-exclusion-remove-and-context-restored-r2.json",
+      "sha256": "7e83b0f5c51b5a5ae20a53260e011300cbac3f21f9f86f5bdd420fcc997f5b81",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-exclusion-remove-and-context-restored.json",
+      "sha256": "b8a7cb24c8d149ee402c7a8684d14325368330c0ec1d4e52493f9db24de955e1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-final-normal-close-and-data.json",
+      "sha256": "f07e56f0ca2ac073cc8771e92172c307f19821d883bb7fb838a68aad4a9cee6f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-install-interactive.json",
+      "sha256": "d1c93a7949c615ab387c7cd421dbaa49d656ca55ef8210465b67800a37f20a92",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-install-observation.json",
+      "sha256": "0ca274eed59d9b89fbeeacdcd0ca8016c732310ee79d3764c196ef37b77fcbeb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-install-options-and-real-paste.json",
+      "sha256": "cf30f7d6daf6d2eec74d20e0ee306fc3b2dc9c0cf09e0a1e363beacc1878d4c0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-install-start.json",
+      "sha256": "16e916e44be313787680d3ac288b7e84f5a26dfab0dcf08e707d3d3f8bd05f10",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-installer-diagnostic.json",
+      "sha256": "4020f37f56025d11d5b3466c1dc9222c719880bff8f8c6a334c5712a221e4691",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-load-dialog.json",
+      "sha256": "6ad5aa8a92f3560b6f7f6cfcc4541f0e81eee79d8ee12212dd6a4236513b32b7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-manager-initial.json",
+      "sha256": "8ef05fa0fa43209960bf7c87658f30d66b8977d6ab97ff9be3da20d54eb99455",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-msi-download-final-check.json",
+      "sha256": "a146181809b83ba6921268c25967959af066b797a1ced3e2aa5dffa62f501456",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-msi-download.json",
+      "sha256": "6c801f3f45ad068497fe8a45671aa02d8236566fb8c127f591ac89bd6e642ef6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-msi-install.json",
+      "sha256": "37d0823605366c50fe91174699b200713e263c3308af4a5c400090491d824d3b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-msi-progress.json",
+      "sha256": "0868c6814fca84912c3c71f7e4c729f8901858642cad8c3949f6c7ed4d5aca2f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-msi-result.json",
+      "sha256": "95868c74a022a7c0266f0d288e59519e50fa62530c9c89d6335467ac13aeb5e5",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-msi-resume-start.json",
+      "sha256": "3837da15ac539bf7660724f4007db1f35f8bf1acec365640381938e2cc95e83c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-native-completion-force-off.json",
+      "sha256": "3185532c30e1ad0c234c6f7b0dd2edcf03da120856c69c432ed2326ae2f97d81",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-native-completion-managed-options.json",
+      "sha256": "a5d939a92e2b27547fc8aac87b8e9e49394629da655b878f875fea9fb5544f83",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-native-completion-options-tab-scope.json",
+      "sha256": "64f216220f919520830081341d06e8c02a4b930af61000b76478fd1df9fd1971",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-native-completion-page-open.json",
+      "sha256": "24154ad275f8296196dce2d57e4dd5b7d2349116ee3b3432aebb6b57f5989a9c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-native-completion-relaunch.json",
+      "sha256": "a2969f8f52a34844a1ff9ba3aa77ff91ab174b5e4178bcc12fb3c66f8313c969",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-native-force-and-add-auto-confirmed.json",
+      "sha256": "fa91daad8530de94cf850ce7c7e26262bf87e10af9c177c17e0fc2d599873704",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-native-force-and-add-auto-state-r2.json",
+      "sha256": "ead17a4436d62b90532c83683dab710ccb6aeab31a2fcd8a2eebed55ade55f3b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-native-force-mode-real-page-final.json",
+      "sha256": "4366b0448f5dd9d463ec8d15a52b67a4e983b01a360b4eca704f341358589a95",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-native-menu-off-real-page.json",
+      "sha256": "983ee7c1a347331aaf427fbcbe85dbcd865da152c608a7d5b663213207c62cf4",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-native-menu-on-real-page.json",
+      "sha256": "cf4074d81d94e11bb4f1e339560a6b1a7f14e93d3f7a7150abb14cdba103054e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-native-menu-open.json",
+      "sha256": "fd81ac8f8671e698f25690bf72c0bca252db54a680c9710ad0eaa6f910e70a8a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-native-toolbar-popup-observed.json",
+      "sha256": "852f4f7fecf236003c8991e04efb023a569bb99611b3b43e3b479c40175dacf8",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-official-download-links.json",
+      "sha256": "aabf5586c4fb1406601b428c6cdb466480451c8a1f18f18e5b431a5264b8365b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-picker-foreground-restored.json",
+      "sha256": "668c0c9cb1de4caca115cf32381d99f520f1ed87a93c80d7473abf18e61bc6dd",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-popup-force-off.json",
+      "sha256": "36d7cef828bc0ce6f8675806f7e181e4bcdcb362916d1a2eef61f29e969fc4c3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-popup-force-on.json",
+      "sha256": "56e230fd93170c9404743e5b9989ccaae9bfd76b793a09bea7a98b2a7f4b9e25",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-popup-force-stale-a.json",
+      "sha256": "4d89c95cdcfa8b47406836e14d4c6ca4d3bc3a477a502a1d0c6a0a4988b98467",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-popup-functional-summary.json",
+      "sha256": "5431af7d3f733d13238c6f9bba6c38d9b2a90002970706aaaeeae8975da8285d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-popup-main-off.json",
+      "sha256": "90dd2cb40d9a1b80f3e50d0f17b031ff64d45ba138baac150970a6d641af9fa7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-popup-main-on.json",
+      "sha256": "87ca3bcb8ce0993e95d47074702c1701315323fe052512a2192a33f84a051a38",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-popup-off-refreshed-a.json",
+      "sha256": "789964de67815cb9f66c380edcc2cbd670333562a7b85b002338dd1a085e2f11",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-popup-off-refreshed-b.json",
+      "sha256": "1bca77bf8644411084143034d619e63f13d01be28f7a2dcbd66d4d638dd6f55b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-popup-on-stale-a.json",
+      "sha256": "abd366546ce2bb35c626eee518a3936d40a984a54579e10ca89509281ac5a230",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-popup-on-stale-b.json",
+      "sha256": "f781bc997de9f79f07cf2b5451ae690564c2713c97bfc68e6e43dd701047290a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-popup-refresh-workaround-a.json",
+      "sha256": "dba351a0aa48ca224421b19edf050f5e79df801cca71cc398e2b25e8f19a699f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-popup-refresh-workaround-b.json",
+      "sha256": "b3baac2c03cc6ffd56171d3d343d37a7118000111bb4226e311ec3b9a349bbff",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-popup-seed-positive.json",
+      "sha256": "ce160b4e534ed7264d975b90655c4b1fc49818d572548a946b8813a6d099bf30",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-post-acceptance-normal-close.json",
+      "sha256": "2ef97c01a968a7f56cd6bffc5286e24d3fc8fc4d080337e4f89dd93aff53c128",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-profile-start.json",
+      "sha256": "1db35dfc904ea0973543a413be68e3b228902c2f8f1c960b90da1470c05fa659",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-real-copy-select-r2.json",
+      "sha256": "02c1291a636f9baacd3c4b35e701687bd6faa68e65c8a2cc914f85c1508ad3cd",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-real-copy-select.json",
+      "sha256": "1b20fdf266dea2c7a378a5fa83a003e55e96842e2678d284ceb0e763061b08a4",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-restart-focus-recheck.json",
+      "sha256": "3153d0498a7c3a68c7a16943ca1cde953c418865f81ec74ef8c59f37f60e5849",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-restart-normal-close.json",
+      "sha256": "045f608b4c11ad38a946813b0314914b9d6331e7fe02e9381ddff35ce252b6fc",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-restart-real-copy-paste-select.json",
+      "sha256": "4b91b23ff141cc76b954d34350bc6b9c8c96a89eeb675d0e62e13a6cfe22114f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-restart-real-paste-r2.json",
+      "sha256": "f99e50f4ea9223701d26d0f5e7d54b2cda818aac37269bcb38d6d40a5f5aae4c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-restart-relaunch.json",
+      "sha256": "d8c791cb68845b49100f1dbdc519a417e23ca2b33574792a5b0851460380b2b3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-restart-restored-full-ui.json",
+      "sha256": "e1196908125a63f0bf2c3b1bf14b420da7fcfff827aee5abce53918c29bb3bad",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-restart-tabs.json",
+      "sha256": "15b8843f3fb9dde41797b3b598b0fca624bb4ef13cd285a44c1603dbda6f6e6c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-second-tab-off.json",
+      "sha256": "a418c4a2025cdcc479c6f16b32d7de06d8c57d5a1ecc550d0a98df4bc694c1df",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-settings-before-refresh.json",
+      "sha256": "cc88a78871d6abe964a8e33d4b6282b5508c121efb19f5de33cd8f514f4a18d5",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-settings-lists-refresh.json",
+      "sha256": "86ff9229d04583c74f0dde5b177b72ae24a0f749378dfcd49c894c0f2eb74708",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-site-lists-roundtrip-and-menu-ready.json",
+      "sha256": "125496be359d246a4a0a666507cbc614c076c5ec4076ea32159feae7d2009721",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-store-add-prompt.json",
+      "sha256": "2d96ddb12b2aab88471a29a5c899a2d6356e5e49d05721f502eae976b596a1d1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-store-initial-page.json",
+      "sha256": "fa2b80530f9365a11c82b8cb935a4002fdd31d92549415200cf6eced0f5a29fb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/chrome-store-isolated-profile-start.json",
+      "sha256": "04ed33010f2da4cb34e3f4496e6d0f9d80dd733a02d975febd923b07e2b0ab5d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-actual-popup-open.json",
+      "sha256": "4dbbed7bcdc6ef4757901a1b8e1a1bdf737cbec91d68c4d3075e9e3ac4b4cd6e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-and-fixture-start.json",
+      "sha256": "4e5d7420596d074daaf32904f71103aea7fbe389cecd4a6b37110e49b35260b8",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-control-readonly.json",
+      "sha256": "94050eac87a69f4facf23a9f156932e5e56bdd22ede4e1072fb5300a370d5be3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-copy-geometry.json",
+      "sha256": "37b1b314d0e1dd4ba006932e9e752786a555004515cf8add0cd2a5ec4bf63aa6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-developer-mode.json",
+      "sha256": "4bfc7c8fe73e3363b9234f705c9f76647a13ad6f0e7c94d2c3d5e7e59944d4a7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-exclusion-real-negative.json",
+      "sha256": "af56faf8f5d57470e7987512e55a5f71fce0887a8c135d6df014709e7d494025",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-extension-manager-alias.json",
+      "sha256": "867b2af52e53b555144bbac3ad4d30e93a5be573319e7626be554aeb013d5500",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-extension-manager.json",
+      "sha256": "fe7804f837421a394ab7b92e669a660291a8fc159f12ece5d8209021599330fa",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-install-identity.json",
+      "sha256": "cae31f0f7a4990c632e63d11565222a71dfc626dadf1f4ede5be9288d10597a7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-installed.json",
+      "sha256": "3454901e86b0626c56f47babda9d10a6464f5a56e97addf88922561590871450",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-native-menu-after-assist.json",
+      "sha256": "83beee969e28dd817eed16690aab17c9366dfa3915260296320bed418b3c56cf",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-native-menu-off-real-page.json",
+      "sha256": "3a3d25e6b1f4599617141e90e3f86a6284cd7973bcb16bbc9cca962fdae831c0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-native-menu-on-real-page.json",
+      "sha256": "d359ed012b77cfefb54cdf5da5555156f9d54377b01833dcc9a401e6cc578a21",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-native-menu-open.json",
+      "sha256": "536c33a92c6235ec174beaa854b5763079b42d9e82286faa0d6036afb1186366",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-native-menu-restored-state.json",
+      "sha256": "48b7d330e1b33f771a67678ff7b1900b5db2b365bc5a2bccc8181d60cd4a207a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-nondefault-settings.json",
+      "sha256": "b70d0ba0ee507cebea9e439dbad212d475e2ce91fce5672965f87480b3f077c6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-options-entry.json",
+      "sha256": "2b2036b03534fc8df30ff9cb79e69d894b007ab153ad846cd4b43ccfa50a9498",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-options-tab.json",
+      "sha256": "357b034b478fddf1dbf203888b849225bfd4627c7fb0a838e4a2d31821395d96",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-force-off-no-refresh-paste.json",
+      "sha256": "dda3f0b113a76f3fb1eb9310075db2a6c47d1aefc304cd8d203464dc6c040ff1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-force-off.json",
+      "sha256": "3ce7a0731cde98d8abec78979f8d8d0e650d7853742f2964954af2702fbb82e2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-off-r2.json",
+      "sha256": "5c8eed15bcd1d95c8286eab58436606e12607b328ec4ff118f6416819bd1779b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-off-r3.json",
+      "sha256": "f584ab5e49a8452f67b7b1fc3fec2e51939f33640c88920ca2b7636ead328881",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-off-reload-negative.json",
+      "sha256": "cca50f2c6efdbb63b868bf44ec466b4af1c5c44bedcc6136811e736ea8f27498",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-off.json",
+      "sha256": "3171cebc55b42dc79161f7fab91d23c39b8ab5b0016500cec4d82548c5bcc2c7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-on-no-refresh-paste.json",
+      "sha256": "716bb0bd7b5b325742b6680d9f8803321117df90960ae18944200c382c267fdb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-on-stale.json",
+      "sha256": "7f3028c19271ca4278520ab66bdc74e38a2cd029e15724cdae1478c7e575bda4",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-r4-force-off.json",
+      "sha256": "a2daffd1f4f069deffab9b284795bd5f68dcf21938d55c63f163068a5df06b1a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-r4-main-off.json",
+      "sha256": "0f2b9dd0f85dd2161d2e005987db82061d2b627eb67f9310bdddc49692ce1334",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-r4-main-on.json",
+      "sha256": "c09c6c2455b9d49690832467f418bbab60b8c5dea78b7eb1758a1b12616b92bd",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-r4-off-refreshed.json",
+      "sha256": "b0f335b31775a6f6a434b1e49662b66460213ebb6bd6861578b5d0b9e8a55f44",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-r4-on-stale.json",
+      "sha256": "560266f9a195b9cc509c01883219e7e150c2240eb3ddf4247089b052b4dd604e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-r4-refresh-workaround.json",
+      "sha256": "4c8ef54b5dd3c193c5140d1bbf33b04783f60364dac20be48696caf7ce26caac",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-r4-seed-positive.json",
+      "sha256": "5e79dd7c5d4bf8485789290bc0d19eccd45e08d0d0807038d4ea63760a478274",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-refresh-workaround.json",
+      "sha256": "f39395d33b177258b2800538779315715bc2e9168f6e4e458add740b1713c9b8",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-targets-r2.json",
+      "sha256": "9b635c7356f81c6b723380a1f82c478a4dbcdcc200f8a96004515c637f4b3fd3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-popup-targets.json",
+      "sha256": "45097e71d0419074a62aec7433bb6a035782d4afb3a3a1a2dd6dee562d15b9ac",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-post-acceptance-normal-close.json",
+      "sha256": "6516563fe861e7447866516461a365473a4039484b6b338a0242906d56334d91",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-profile-scope.json",
+      "sha256": "21e83c67c7fea203109f0ee919f80a52fe922ae5248d4bead10bd6b49cb4630c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-ready.json",
+      "sha256": "584cb6ec5f6c6c97f9fe7a029a4aabb47608f97ff7cff0ff5505e4a9f667ad0c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-real-copy-select-enabled.json",
+      "sha256": "b2266fc4b2b7825accc9f1d69b1321aceba0341031f32d8cce861aaa11e71876",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-real-paste-enabled.json",
+      "sha256": "0af09689622857dee5afeeaa4a6365e6a37b503ead18adbe6afb173440f06ac3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-restart-close-confirmed.json",
+      "sha256": "77677a8836b54328a6ab68cc81f62a82ce2b9454945e9ccf3ab072ba01149209",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-restart-comparison.json",
+      "sha256": "f64e0366e3bf971cac9560b2e736e36c72cdc9d00ef22c566867b8ac43a0d6b8",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-restart-focus-recheck.json",
+      "sha256": "e881c8ae4735d0ae866379a27ba89e6a0a7974531167f87fb9ae956bf608c886",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-restart-normal-close.json",
+      "sha256": "f946f8cd92a3fe5e03451d9b981bb1754ac2cedce9a7bcd0a7c2035eb04877ba",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-restart-real-copy-paste-select.json",
+      "sha256": "6ba094130fbc04d961204b8ef71518ec9bad1dbbec0cd370ce27d0fdfe069242",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-restart-real-paste-r2.json",
+      "sha256": "869a013c5e5629f9b0e5bbbcd493bd96e1fb6dd370f81570759b2c278e62f524",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-restart-real-paste-r3.json",
+      "sha256": "e7cdd0e419f45b5b17537f95fe09123be5335c1c716a891699ef2b39c9b9d231",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-restart-relaunch.json",
+      "sha256": "6c8316a63d459c5c6d4a021f8638737655eb37efa044f0a757fa7e94d190313e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-restart-restored-full-ui.json",
+      "sha256": "335ea7ebcf29bd721dd58d0685161a890c6519ec9e78142648edd1f18c03d32e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-restart-restored-settings.json",
+      "sha256": "e32dfb56fd3ff57dbafde16d239c9b956cce36b50033386bcd564bc951ef0788",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-restart-tabs.json",
+      "sha256": "0eda0b03347384f9987eb55b6903621175bfd86777ecef04a63896f9086e22f5",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-saved-lists-and-force-mismatch.json",
+      "sha256": "c2a188d9a464b27ad803a1ed640ead1ca2f3ecd4463e8160e6d8c664066e512a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-settings-lists-refresh.json",
+      "sha256": "93a8e5093397b6ce0c06cbe30c180cd28d2dd7f6cf0ac6aad9b495af8e5be342",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-settings-refresh-observation.json",
+      "sha256": "43d18604d7b6720f6cc6245e63d4cb4e015c5726f3d63225c51f7c6b0aa47400",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/edge-version-details.json",
+      "sha256": "3719e461b17c80d16ac99be51437661c119babf3a6d96edaec646b085119e1e4",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/final-docs-check.json",
+      "sha256": "dc36c77d1fc9c020e4cedd1a67353439126a6a4f740f14cd746679bde508d38d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/final-docs-check.txt",
+      "sha256": "2e77a032876f8615f3274021a935882d7ae2a4c4fb8bd5ba35907e462b46d006",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/final-guest-candidate-and-store-runtime-integrity.json",
+      "sha256": "e7b89800bb821bee83c15ee63b7bd4e5eb7c4b09646e3d39a336105617a3dda8",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/final-guest-cleanup-and-integrity-r2.json",
+      "sha256": "9792030a4a848a2895caa1fe4e4f307e0e4e7597d55a44adf8800376b670811a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/final-guest-cleanup-and-integrity.json",
+      "sha256": "dba75c8396844cca86506feaf14d4a4c0bf621b908de4ef90746d436d3dc2a3a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/final-preservation.json",
+      "sha256": "bb3eaa813ab077a096b40cd63a9111eca7f10fc7bed417063cd5f929d5fff4e0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/fixture-owner-scope-recheck.json",
+      "sha256": "5cfde78e06c70a7fc561ae78983e82b6142568457693ccf729238abf32159978",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/fixture-transfer-r2.json",
+      "sha256": "ec1dba70e0391debbaa023d4ce94c91b1eb9d2756e66713a9d9d33fe88930741",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/fixture-transfer-stdin.json",
+      "sha256": "fc9d46818fcf1b3d48442f993c41d648ec54340583743af295a5fb53e63dc932",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/fixture-transfer.json",
+      "sha256": "58e259607345bc68e7b25882dd93b780887537fa9f647e17a1b1938b855d62d4",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/focus-task-page.ps1",
+      "sha256": "53487afa5250d87e8be4878a19def74b078e856d3ac0252d47dcfd57ad3161c4",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/force-mode-source-comparison.json",
+      "sha256": "580d86e400ca263371220b86fcd042ff2c66375941e6b4d3e7870f19ddf97102",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/gate-results.json",
+      "sha256": "90a6f871c34d6644c15f34fc1789b59b2c1baa44180f67c0fa60904fdd9fc83d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/guest-candidate-files-and-ports.json",
+      "sha256": "e38dbbe4410b0f0fc2dabae37f85ddffb7aa078f511ca442e03a7589df56f689",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/guest-content-comparison.json",
+      "sha256": "e11b99466ce90a4e9b642f035f683433a3c61e15c3291f21900da593780106b7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/native-browser-architectures.json",
+      "sha256": "4eb457bb5a3ca339d62e2a7522ce0a0dad21f39401c8280729a84885df282219",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/native-ui-observation.md",
+      "sha256": "7a7951b26fdc3f4c74a4b37bc88a9226d4e54cc4a69b65f3346918eab469be15",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/popup-click.ps1",
+      "sha256": "3d0ffec0fe9b7633d75bb98df77889128c2fa94b88b99e2843107cfc60a2ea3c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/preservation-before.json",
+      "sha256": "cbd83111716f4ab5cc2c42f5a433bc0a27fe70203db38bb613ac2abc40ecfc17",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/resource-network-probe.json",
+      "sha256": "3579f92df301609904a7ed8c08fbdc6334dbd33cbf52bcf36ea1f75b73c33727",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/restart-cdp-scope-diagnostic.json",
+      "sha256": "5e95b18f65740ebd8a018fc0dc96d59232d31e48b573dd2d4befc1df8288c92b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/restart-functional-comparison.json",
+      "sha256": "228bbf9332e8f32b8c8ea4f31233a5eb63018245ead1a8dad161f5c4357182b5",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/run-chrome-popup-and-auto.py",
+      "sha256": "6073b1dc2208d6a7ffbf258e80a0a7f9dc1ccc0ca8d115ee47aaeb2903f83914",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/run-edge-popup-recheck.py",
+      "sha256": "d0f4cfc3d1afd8656e9486548cc6ecf1e425c5dd93f2fcfbdc6e4f957d54aa7a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/run-store111-baseline.py",
+      "sha256": "5010e0b717b1c86428c3d9b3ddf0e2066e359590ca26e0ba5c0a10cb9b79f3fc",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/settings-force-mode-observation.md",
+      "sha256": "bb4b6c8cbd634bedfc7b4517d7c11fdaba9be1469fb2e56d881aa7f2e43229d6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/site-lists-and-native-context-summary.json",
+      "sha256": "9159be542921f3e8208d3390e04411567ef5ef60689d00ed4fe4af4b666b3fcb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/stdin-probe.json",
+      "sha256": "44293b1bc583db899bb20b28aafa0934cca0dffc5d3edd267b48b786cf53142a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store-current-check.json",
+      "sha256": "a2d8d000eed45638608446956dba2b42b1e2a96d5652e3191c0157f58d3a7c1f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-auto-first-visit.json",
+      "sha256": "b780b29342a4635bc9d4ee31963e50f795c4fc743228cd85262e7ded0be191b6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-auto-prerequisite-off.json",
+      "sha256": "939d09b1ac929187177974a9838fa02414d1fe9b83ca4fa3222808fe9f509ce6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-auto-refresh-workaround.json",
+      "sha256": "48c34c643f87b43e41c0c68f1e4543224435c536da67d9f0260a4e78e7abab56",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-baseline-normal-close.json",
+      "sha256": "ec90ada576510cfb341e6c17d8bccd2c0616612a5557bb80ba1ec93b06a33ec7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-baseline-relaunch.json",
+      "sha256": "ea24a0aa6f98936c50e40c62bf6ae88c8d7a5bff6ed7a0db955b943a48c9a4f4",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-baseline-restored-ui.json",
+      "sha256": "f47c613665abad365ccb74fdd422cebc406c1acfc1f301b774cc128e91bfc8b6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-default-real-paste.json",
+      "sha256": "00f0f3c3d7ada9cbd46595df932f938bdb42e64cd403c5faeea4cf8044429d7b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-force-ui-after-refresh.json",
+      "sha256": "2cdf0f2994ac0704426625be096e234dff59d4e60eb8d369fb212a9db0e2debf",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-force-ui-before-refresh.json",
+      "sha256": "3f00c96833bbbbf38fb309d8b12a659725898384dadaec5132095abd9453894e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-icon128-difference-analysis.json",
+      "sha256": "da9565ebc97a6aff62d260c613bb1dd5b27e7ee39a72d59829f703bcf502163c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-install-asset-equivalence.json",
+      "sha256": "bccf4b765ff1973d9f792a7ed4ca5ac25adc74e40a60120e56a32294cb6a5bf7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-install-normalized-assets-readonly.json",
+      "sha256": "0ac8cf0da323c1cf4ae2de6d01bf4fe466e25bc3a410729d75ae98250a422809",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-installed-identity-r2.json",
+      "sha256": "8a86a2288b5b099550a0f603f14596feb0a0c91c21f5fdd7b9f4cfc2eda79fea",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-installed-identity.json",
+      "sha256": "27546caf80783e1a97a87d8ec2711e8fac7a1f9eef2954434ce72edc9b767cae",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-popup-force-off.json",
+      "sha256": "adb85d9df2989b797045d0c01f1cef6f778d07dac70f6adc29c32f0082f4ef7e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-popup-force-on.json",
+      "sha256": "61a6a2547d9bbb3d79d8f93845138246c3db25dc16f52229e32762dd45ce7723",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-popup-force-stale.json",
+      "sha256": "adc3591055dfde7f79a9dbe31112ba80da6edd713d5ffc85261a0a90da9a16e8",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-popup-main-off.json",
+      "sha256": "17f182b4d4cbf485859281698a4da984c31bb16408c295c8adc938fc160da429",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-popup-main-on.json",
+      "sha256": "28244753938bf0094a0bd506c5fe6426317f60c665fc1641e78c4282561f3fc9",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-popup-off-refreshed.json",
+      "sha256": "25732fe28c2f1c817ea3a4b2aa40033191ebf470b047e4caa083af0eebc45fdd",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-popup-on-stale.json",
+      "sha256": "95a95987f614d936e37ea6c734be2a2db4991c36cdb5e3d22b7bbd5efd8f6591",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-popup-refresh-workaround.json",
+      "sha256": "d3cf2bde52bab0083d27a5375474e06d45abec4619c1a919de32daa1f2f8adf3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-pre-upgrade-nondefault-seed.json",
+      "sha256": "4d5651c1cb2b454c804d6b41620d7d12fa5a0b6eceb0c521adb343d468478051",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-preserved-final-close.json",
+      "sha256": "3b103136c9d10e8f8d283dbff67b9d17d21dc0d6562e79b46588f60996f5c0f3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-restart-focus.json",
+      "sha256": "1b8b99fc1b92f346a5ff8dcdcc6ab15f469edb02d6927493e2bc89a43bc36875",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-restart-functional-page-open.json",
+      "sha256": "7f9eef1fbd5e7501efce05bf86428e754b2dba2716653e3b3b3be8d80fa6de0b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-restart-real-paste.json",
+      "sha256": "45f0248c5799d63f9560c1896f0e8f85b9379786fff5b0dff4545a691cb95b1e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/store111-seeded-real-paste.json",
+      "sha256": "dff45ae7db379f7386151343d648f025d651e37bc0868b896a72dd1890e524f6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/test-resource-state.json",
+      "sha256": "6903e286abc7714a6f668ed2fa1f591a86fa790fe3692ca483193875d4d3f00e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/transfer-fixtures-r2.py",
+      "sha256": "cb927cc94e37f779e2a610e156436cc21e0eddecbaf93b1c714b851d82e676cb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/transfer-fixtures-stdin.py",
+      "sha256": "73416a5a2e45fa256e155a22c88b6adf04087dcbece1da6e5d7591f739ea9cc8",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/transfer-fixtures.py",
+      "sha256": "90b2adb4aca07957e5a28747f3f748bbf051c8480ab858d57749aac66956c028",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/upgrade-baseline-summary.json",
+      "sha256": "6ee2771235df48997b616cd60e5b77f878d74b0256c4fd6bac6383f40d897371",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/verify-installed-store-assets.py",
+      "sha256": "60c15a8d0e35dd866ca0709b2de9c16625aaa65ffc61bfb2a3dc6ea43d1397ab",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/windows-command.py",
+      "sha256": "eb891d14b38937646fde0cd216bd609d95128d0cb11033b12f58aa8a16f0abda",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/windows-environment.json",
+      "sha256": "28acc152e53eb667c25067ad6cdaa4b7f2f366e3afc4b380064d972f6cee6bde",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/1.1.2/windows-acceptance-20261102/windows-report-before-20261102.txt",
+      "sha256": "7badaf3af745a774dd8b4789986d39303977dd36bd226209bd54a3c6d6b50838",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/browser-before-message-fix.json",
+      "sha256": "6ff3687f1067cb86772d2888c1dfa43532efa5afe0ee71b00176a2ad10868234",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/browser-before-message-fix.txt",
+      "sha256": "021d4a4385ea62a4323b19dbfeb0b7bf03aee89d181fe3fd4d9dc238341c9ed8",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/browser-feedback-observation.json",
+      "sha256": "b92c764cb4e33e7c0c23c6b0cc1f6ffdfbca1a54e1cd47d8e714bdc76a324c56",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/browser-feedback-observation.txt",
+      "sha256": "f1ad80360e595c14fc2cfb453a440191189daad0d8b53a3cf91da7b936aac3ee",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/browser-hidden-input.json",
+      "sha256": "e96d776c2660e87c2707badd8f81c1fb6f93bdb0850ec3517a581ba78b68b854",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/browser-hidden-input.txt",
+      "sha256": "f39c5f1cf14e354769e31fe81f3165f0e85cbf28aeb119b131014cb27cf8f39f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/browser-setup1.json",
+      "sha256": "8872ab8a30eb0682ffa73d08c712ef8d1fd2dbbd626d6d6214b47bd40f230321",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/browser-setup1.txt",
+      "sha256": "e1143767084a1ea59d0211f3f5afe2cc7d58c8f1a877152f6d3833f1cad55352",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/browser-setup2.json",
+      "sha256": "15a675e7a4d49b0557848bb00297447719ad50645bfa4bf1597188d321ca3b02",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/browser-setup2.txt",
+      "sha256": "cded98f3bc5a3c218fa7d8847a5769d05b5c23485d642975064c4aec6ac0d451",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/browser.json",
+      "sha256": "517049828a32e0b3e9c2dddb95a8ff7c7419cb17576d3b9bf8d8019425ce3556",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/browser.txt",
+      "sha256": "dbfbd7f27ce3597450208bab286c9c5d979bb5d7450bdda70114c02a3ed12e23",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/build-verification.json",
+      "sha256": "0d13bb10d3ec9ac63e780cfbab5567684b39f44d7aabd1627a449a113b542c30",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/build.txt",
+      "sha256": "be3e628f3e31c2bd2588735286191fa37db3ebef413952f9cb74878b1e11f85d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/docs-check.txt",
+      "sha256": "2e77a032876f8615f3274021a935882d7ae2a4c4fb8bd5ba35907e462b46d006",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/failure-en-US.png",
+      "sha256": "9e148bbc67c78cf4f94027d0adc1a68dd5a2977ed28aa4da5eee2942c3782d11",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/failure-zh-CN.png",
+      "sha256": "0aa10d7652d1b6a1bb13386e29aa8cfd782d4fdc2a00d49931f59fdf4f1c7852",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/final-checks.json",
+      "sha256": "67d78dc94a6d15964d2dc56d67efd2635021e113a22e029cb0bf6bda130a2a16",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/lint.txt",
+      "sha256": "9c60e6d55dfb6dd06b1b1b80071c98e0b7b711a21672135190555cdfd4c12658",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/popup-en-US.png",
+      "sha256": "b3d5da008359d6ce1663eb45b841ab6b268b68d786524d4027f6ce145c62a797",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/popup-help-en-US.png",
+      "sha256": "1011751879ad15de0820cdc95c009a6c135ff41c729df10d1962b2008fe541c9",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/popup-help-zh-CN.png",
+      "sha256": "df266f5d34984082faf4142c161edd2bb6ced9bba42174020a433ddc21ea6c86",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/popup-zh-CN.png",
+      "sha256": "7fe08d30c969e1def7ee3bc60973bf1e24ab9134b0e738dbaacf2d7711881b71",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/optimization-20261103/unit.txt",
+      "sha256": "8c0d76c82634a18133a2d37a1a645570cd11751191a6c94d17d326207f0579cf",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/artifact-audit.json",
+      "sha256": "edc8d9e1e54617453d2381b27700ea8d9584b1535e3b79b7d49db85ad7871804",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/artifact-audit.py",
+      "sha256": "a75820f566a2acbb5a8f1901fe6126abcad4c0bdebecf2d832d0977ac8fa11e1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/baseline.json",
+      "sha256": "4584777e0cfb6f8aa8949d772224548efcd86e94bdb5262cf13f39607af00637",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/docs-before.txt",
+      "sha256": "446fcaebba8fb601a807135a8ac020286d52c3f4b972badc042c159c1c6ddc4c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/docs-final.txt",
+      "sha256": "446fcaebba8fb601a807135a8ac020286d52c3f4b972badc042c159c1c6ddc4c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/isolated-build.cjs",
+      "sha256": "9c96630a1f6b0d29dc76b716079623ecbd301ae7cb6f8dd3bef157f7c1e2ffd6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/isolated-build.json",
+      "sha256": "026df2a59013a44e1192396ebc641d9076b9f7e7c6510fedb4c79a3dddc2360a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/isolated-build.txt",
+      "sha256": "2536cb0cb0f134cda2b7779b9d0e55e1346eef0df1cb4f7fa3747431b1f85752",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/lint.txt",
+      "sha256": "55acdc038ad71df60499518d9e1453ec9e892e6e881a076a0d52994af64a203d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/local-probes.json",
+      "sha256": "ab9ebe2cf34b54baa7ca888bd962084427b59d2febd5130ba4f8f8823ffd403f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/local-probes.mjs",
+      "sha256": "29584710d2f58c9f2e57e3204b7772a7e3e875cae8d6931879bd74863ac1e949",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/preservation.json",
+      "sha256": "e59c1e538ae69305ff349176ebef9ffb8e1ef450f44f15ea514d37f7938e269a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/report-links.json",
+      "sha256": "a10fe7c7dc00def87d0b234067bf0154613161205102090f7e08361711a4efeb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/review-summary.json",
+      "sha256": "3b8e55664d14493f23f8594ca7dba95c44a67d62f2b8aff80287ded2b9ad3157",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/runtime-scan.txt",
+      "sha256": "63df33371448a70433e66beb91a6f267bd5dc3bebf55e5b8ae65362480e6e83e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/evidence/p0-p2-review-20261103/unit.txt",
+      "sha256": "4ee91135fcf3fe29979fc0509e88832c8a3f8b99e089332da05caccad5625a80",
+      "unchanged": true
+    },
+    {
+      "path": "EASYCV-NEXT-VERSION-PLAN.md",
+      "sha256": "cbafb356e13e6ae0b69be9826f4ee05ccc3646c77022bb4ff069e7ba6fee1a1a",
+      "unchanged": true
+    },
+    {
+      "path": "releases/store-submission-20261103/EasyCV-v1.1.2-20261103.zip",
+      "sha256": "52d58935bad6f40b2fd987ff4d1e9f2b2a81f88e87d333eda42fd52d1a7c49f9",
+      "unchanged": true
+    }
+  ],
+  "unexpectedChanges": []
+}

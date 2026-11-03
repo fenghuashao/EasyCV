@@ -1,0 +1,79 @@
+TAP version 13
+# 🚀 开始构建 EasyCV...
+# ==================================================
+# ✅ Manifest 验证通过 - __MSG_extension_name__ v1.1.2
+# ✅ 扩展文件引用验证通过
+# 📁 创建目录: C:\\Users\\fengh\\AppData\\Local\\Temp\\easycv-local-tests-ESofhp\\build
+# 📄 复制文件: manifest.json -> build\\manifest.json
+# 📁 创建目录: C:\\Users\\fengh\\AppData\\Local\\Temp\\easycv-local-tests-ESofhp\\build\\background\\
+# 📄 复制文件: background\\auto-enable-manager.js -> build\\background\\auto-enable-manager.js
+# 📄 复制文件: background\\icon-manager.js -> build\\background\\icon-manager.js
+# 📄 复制文件: background\\monitoring-manager.js -> build\\background\\monitoring-manager.js
+# 📄 复制文件: background\\service-worker.js -> build\\background\\service-worker.js
+# 📄 复制文件: background\\state-confirmation-manager.js -> build\\background\\state-confirmation-manager.js
+# 📁 创建目录: C:\\Users\\fengh\\AppData\\Local\\Temp\\easycv-local-tests-ESofhp\\build\\content\\
+# 📄 复制文件: content\\content.js -> build\\content\\content.js
+# 📄 复制文件: content\\injector.js -> build\\content\\injector.js
+# 📁 创建目录: C:\\Users\\fengh\\AppData\\Local\\Temp\\easycv-local-tests-ESofhp\\build\\popup\\
+# 📄 复制文件: popup\\popup.css -> build\\popup\\popup.css
+# 📄 复制文件: popup\\popup.html -> build\\popup\\popup.html
+# 📄 复制文件: popup\\popup.js -> build\\popup\\popup.js
+# 📁 创建目录: C:\\Users\\fengh\\AppData\\Local\\Temp\\easycv-local-tests-ESofhp\\build\\options\\
+# 📄 复制文件: options\\options.css -> build\\options\\options.css
+# 📄 复制文件: options\\options.html -> build\\options\\options.html
+# 📄 复制文件: options\\options.js -> build\\options\\options.js
+# 📁 创建目录: C:\\Users\\fengh\\AppData\\Local\\Temp\\easycv-local-tests-ESofhp\\build\\utils\\
+# 📄 复制文件: utils\\dom-utils.js -> build\\utils\\dom-utils.js
+# 📄 复制文件: utils\\i18n-utils.js -> build\\utils\\i18n-utils.js
+# 📄 复制文件: utils\\message-utils.js -> build\\utils\\message-utils.js
+# 📄 复制文件: utils\\notification-utils.js -> build\\utils\\notification-utils.js
+# 📄 复制文件: utils\\storage-utils.js -> build\\utils\\storage-utils.js
+# 📁 创建目录: C:\\Users\\fengh\\AppData\\Local\\Temp\\easycv-local-tests-ESofhp\\build\\icons\\
+# 📄 复制文件: icons\\icon-active-128.png -> build\\icons\\icon-active-128.png
+# 📄 复制文件: icons\\icon-active-16.png -> build\\icons\\icon-active-16.png
+# 📄 复制文件: icons\\icon-active-32.png -> build\\icons\\icon-active-32.png
+# 📄 复制文件: icons\\icon-active-48.png -> build\\icons\\icon-active-48.png
+# 📄 复制文件: icons\\icon-default-128.png -> build\\icons\\icon-default-128.png
+# 📄 复制文件: icons\\icon-default-16.png -> build\\icons\\icon-default-16.png
+# 📄 复制文件: icons\\icon-default-32.png -> build\\icons\\icon-default-32.png
+# 📄 复制文件: icons\\icon-default-48.png -> build\\icons\\icon-default-48.png
+# 📄 复制文件: icons\\icon-inactive-128.png -> build\\icons\\icon-inactive-128.png
+# 📄 复制文件: icons\\icon-inactive-16.png -> build\\icons\\icon-inactive-16.png
+# 📄 复制文件: icons\\icon-inactive-32.png -> build\\icons\\icon-inactive-32.png
+# 📄 复制文件: icons\\icon-inactive-48.png -> build\\icons\\icon-inactive-48.png
+# 📄 复制文件: icons\\icon-partial-128.png -> build\\icons\\icon-partial-128.png
+# 📄 复制文件: icons\\icon-partial-16.png -> build\\icons\\icon-partial-16.png
+# 📄 复制文件: icons\\icon-partial-32.png -> build\\icons\\icon-partial-32.png
+# 📄 复制文件: icons\\icon-partial-48.png -> build\\icons\\icon-partial-48.png
+# 📁 创建目录: C:\\Users\\fengh\\AppData\\Local\\Temp\\easycv-local-tests-ESofhp\\build\\_locales\\
+# 📁 创建目录: C:\\Users\\fengh\\AppData\\Local\\Temp\\easycv-local-tests-ESofhp\\build\\_locales\\en
+# 📄 复制文件: _locales\\en\\messages.json -> build\\_locales\\en\\messages.json
+# 📁 创建目录: C:\\Users\\fengh\\AppData\\Local\\Temp\\easycv-local-tests-ESofhp\\build\\_locales\\zh_CN
+# 📄 复制文件: _locales\\zh_CN\\messages.json -> build\\_locales\\zh_CN\\messages.json
+# ==================================================
+# ✅ 构建完成!
+# 📦 版本: 1.1.2
+# 📁 输出目录: C:\\Users\\fengh\\AppData\\Local\\Temp\\easycv-local-tests-ESofhp\\build
+# ⏰ 构建时间: 2026-11-03T07:18:24.412Z
+# Subtest: ZIP source read failure rejects, closes streams and never creates a success receipt
+not ok 1 - ZIP source read failure rejects, closes streams and never creates a success receipt
+  ---
+  duration_ms: 183.1139
+  type: 'test'
+  location: 'D:\\pro\\github\\EasyCV\\test\\unit\\release-checks.test.mjs:93:3'
+  failureType: 'uncaughtException'
+  error: 'synthetic source read failure'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Immediate._onImmediate (file:///D:/pro/github/EasyCV/test/unit/release-checks.test.mjs:103:42)
+    process.processImmediate (node:internal/timers:574:21)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 295.5124

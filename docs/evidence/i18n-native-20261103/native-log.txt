@@ -1,0 +1,30 @@
+PASS en-US native popup view, real active tab, locale and initial state
+PASS en-US native dimensions, help expansion and scroll reachability
+PASS en-US switch updates fixture and localized state
+PASS en-US closing native view and reopening preserves state
+PASS en-US native settings action opens options
+PASS en-US unsupported browser page is explained in native popup
+PASS zh-CN native popup view, real active tab, locale and initial state
+PASS zh-CN native dimensions, help expansion and scroll reachability
+PASS zh-CN switch updates fixture and localized state
+PASS zh-CN closing native view and reopening preserves state
+PASS zh-CN native settings action opens options
+PASS zh-CN unsupported browser page is explained in native popup
+PASS ja native popup view, real active tab, locale and initial state
+PASS ja native dimensions, help expansion and scroll reachability
+PASS ja switch updates fixture and localized state
+PASS ja closing native view and reopening preserves state
+PASS ja native settings action opens options
+PASS ja unsupported browser page is explained in native popup
+PASS zh-TW native popup view, real active tab, locale and initial state
+PASS zh-TW native dimensions, help expansion and scroll reachability
+PASS zh-TW switch updates fixture and localized state
+PASS zh-TW closing native view and reopening preserves state
+PASS zh-TW native settings action opens options
+PASS zh-TW unsupported browser page is explained in native popup
+PASS ro native popup view, real active tab, locale and initial state
+PASS ro native dimensions, help expansion and scroll reachability
+PASS ro switch updates fixture and localized state
+PASS ro closing native view and reopening preserves state
+PASS ro native settings action opens options
+PASS ro unsupported browser page is explained in native popup
