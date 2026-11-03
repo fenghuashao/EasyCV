@@ -1,0 +1,213 @@
+{
+  "version": "1.1.2",
+  "extensionPath": "/Users/fengshaohua/pro/github/EasyCV/dist",
+  "browser": "/Users/fengshaohua/Library/Caches/ms-playwright/chromium-1234/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+  "results": [
+    {
+      "name": "installed manifest and permissions",
+      "pass": true
+    },
+    {
+      "name": "negative control: restrictions effective when disabled",
+      "pass": true
+    },
+    {
+      "name": "Popup main button enables via real runtime/storage path",
+      "pass": true
+    },
+    {
+      "name": "copy/paste/selectstart cancellation neutralized",
+      "pass": true
+    },
+    {
+      "name": "CSS selection and DOM range",
+      "pass": true
+    },
+    {
+      "name": "trusted keyboard copy (test text only)",
+      "pass": true
+    },
+    {
+      "name": "trusted keyboard paste (test text only)",
+      "pass": true
+    },
+    {
+      "name": "Popup force mode persists; main-world injector runs",
+      "pass": true
+    },
+    {
+      "name": "dynamic restricted content is processed",
+      "pass": true
+    },
+    {
+      "name": "repeat page-script load keeps same wrappers",
+      "pass": true
+    },
+    {
+      "name": "refresh reinjects and retains force mode",
+      "pass": true
+    },
+    {
+      "name": "trusted keyboard paste after refresh (test text only)",
+      "pass": true
+    },
+    {
+      "name": "second tab, activation and URL visibility without activeTab",
+      "pass": true
+    },
+    {
+      "name": "native context menu IDs registered (not native click)",
+      "pass": true
+    },
+    {
+      "name": "context menu handler dispatch: add to auto list (synthetic)",
+      "pass": true
+    },
+    {
+      "name": "auto-enable list settings applied on a fresh domain navigation",
+      "pass": true
+    },
+    {
+      "name": "Options add exclusion writes storage",
+      "pass": true
+    },
+    {
+      "name": "excluded site dormant after reload despite auto/force",
+      "pass": true
+    },
+    {
+      "name": "remove exclusion restores unlock after reload",
+      "pass": true
+    },
+    {
+      "name": "Popup copy setting persists across UI reopen",
+      "pass": true
+    },
+    {
+      "name": "settings/lists survive full isolated browser restart",
+      "pass": false,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  {\n+   auto_enable_list: [],\n+   excluded_list: [\n+     'accounts.google.com',\n+     'login.live.com',\n+     'appleid.apple.com'\n-   auto_enable_list: [\n-     {\n-       copyEnabled: true,\n-       domain: 'auto.localhost',\n-       pasteEnabled: true\n-     }\n    ],\n-   excluded_list: [],\n    user_settings: {\n+     autoEnableList: [],\n+     copyEnabled: true,\n+     enableStatistics: true,\n+     excludedList: [\n+       'accounts.google.com',\n+       'login.live.com',\n+       'appleid.apple.com'\n+     ],\n+     forceMode: false,\n-     copyEnabled: false,\n      pasteEnabled: true,\n+     pluginEnabled: true,\n+     showNotifications: true,\n+     theme: 'auto'\n    }\n  }\n"
+    }
+  ],
+  "diagnostics": {
+    "initialInstallLog": [
+      [
+        {
+          "type": "string",
+          "value": "EasyCV installed:"
+        },
+        {
+          "type": "object",
+          "className": "Object",
+          "description": "Object",
+          "objectId": "1681833139897499061.1.1",
+          "preview": {
+            "type": "object",
+            "description": "Object",
+            "overflow": false,
+            "properties": [
+              {
+                "name": "reason",
+                "type": "string",
+                "value": "install"
+              }
+            ]
+          }
+        }
+      ]
+    ],
+    "afterPopupToggle": {
+      "storage": {
+        "plugin_enabled": true,
+        "user_settings": {
+          "copyEnabled": true,
+          "pasteEnabled": true
+        }
+      },
+      "page": {
+        "textarea": "<textarea id=\"pasteTarget\" data-easycv-processed=\"true\" style=\"user-select: text !important; pointer-events: auto !important;\"></textarea>",
+        "handler": "null"
+      }
+    },
+    "afterRefresh": {
+      "storage": {
+        "copyEnabled": true,
+        "pasteEnabled": true
+      },
+      "page": {
+        "textarea": "<textarea id=\"pasteTarget\" data-easycv-processed=\"true\" style=\"user-select: text !important; pointer-events: auto !important;\"></textarea>",
+        "handler": "null"
+      }
+    },
+    "beforeRestart": {
+      "auto_enable_list": [
+        {
+          "copyEnabled": true,
+          "domain": "auto.localhost",
+          "pasteEnabled": true
+        }
+      ],
+      "excluded_list": [],
+      "user_settings": {
+        "copyEnabled": false,
+        "pasteEnabled": true
+      }
+    },
+    "restartInstallLog": [
+      [
+        {
+          "type": "string",
+          "value": "EasyCV installed:"
+        },
+        {
+          "type": "object",
+          "className": "Object",
+          "description": "Object",
+          "objectId": "4656169418891378798.1.1",
+          "preview": {
+            "type": "object",
+            "description": "Object",
+            "overflow": false,
+            "properties": [
+              {
+                "name": "reason",
+                "type": "string",
+                "value": "install"
+              }
+            ]
+          }
+        }
+      ]
+    ],
+    "afterRestart": {
+      "auto_enable_list": [],
+      "excluded_list": [
+        "accounts.google.com",
+        "login.live.com",
+        "appleid.apple.com"
+      ],
+      "user_settings": {
+        "autoEnableList": [],
+        "copyEnabled": true,
+        "enableStatistics": true,
+        "excludedList": [
+          "accounts.google.com",
+          "login.live.com",
+          "appleid.apple.com"
+        ],
+        "forceMode": false,
+        "pasteEnabled": true,
+        "pluginEnabled": true,
+        "showNotifications": true,
+        "theme": "auto"
+      }
+    },
+    "sameExtensionId": true
+  },
+  "manualNotRun": [
+    "native toolbar popup",
+    "native context menu clicks",
+    "real sites/CSP",
+    "store update installation"
+  ]
+}

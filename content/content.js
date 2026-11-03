@@ -252,25 +252,15 @@ class CopyPasteManager {
       try {
         switch (type) {
           case MessageUtils.MESSAGE_TYPES.TOGGLE_PLUGIN:
-            return await this.queueStateUpdate('TOGGLE_PLUGIN', data);
-
-          case 'COPY_STATUS_CHANGED':
-            return await this.queueStateUpdate('COPY_TOGGLE', data);
-
-          case 'PASTE_STATUS_CHANGED':
-            return await this.queueStateUpdate('PASTE_TOGGLE', data);
-
+          case MessageUtils.MESSAGE_TYPES.COPY_STATUS_CHANGED:
+          case MessageUtils.MESSAGE_TYPES.PASTE_STATUS_CHANGED:
+          case MessageUtils.MESSAGE_TYPES.STATE_UPDATED:
           case MessageUtils.MESSAGE_TYPES.ENABLE_FORCE_MODE:
-            return await this.queueStateUpdate('FORCE_MODE_ENABLE', {});
-
           case MessageUtils.MESSAGE_TYPES.DISABLE_FORCE_MODE:
-            return await this.queueStateUpdate('FORCE_MODE_DISABLE', {});
+            return await this.queueStateUpdate('SYNC_STATE', {});
 
           case MessageUtils.MESSAGE_TYPES.UPDATE_STATUS:
             return await this.queueStateUpdate('UPDATE_STATUS', data);
-
-          case 'STATE_BROADCAST':
-            return await this.handleStateBroadcast(data);
 
           case MessageUtils.MESSAGE_TYPES.PING:
             return { success: true, message: 'Content script is available' };
@@ -333,6 +323,13 @@ class CopyPasteManager {
       
       // 清理之前的性能数据
       this.clearPerformanceData();
+
+      // main world 注入器也会清理内联属性；必须在注入前保存，不能只保留
+      // isolated world 中可能为 null 的 on* 函数引用。
+      const events = [...(this.copyEnabled ? COPY_EVENTS : []), ...(this.pasteEnabled ? PASTE_EVENTS : [])];
+      for (const event of events) {
+        document.querySelectorAll(`[on${event}]`).forEach(element => this.rememberOriginalHandler(element, event));
+      }
       
       // 移除全局限制
       this.debugLog('Removing global restrictions...');
@@ -377,11 +374,22 @@ class CopyPasteManager {
   /**
    * 禁用复制粘贴功能
    */
-  disableCopyPaste() {
+  async disableCopyPaste() {
     this.debugLog('禁用复制粘贴功能');
 
     // 通知 main world 的 injector 恢复原始函数（启停协议由 content script 单向触发，
     // 否则禁用后 main world 的原型重写与强制样式仍然残留）
+    // 等 main world 停止属性观察器后再还原，否则刚还原的 onpaste 会被再次清除。
+    const stopped = document.documentElement?.dataset.easycvInjected ? new Promise(resolve => {
+      const done = event => {
+        if (event && (event.source !== window || event.data?.type !== 'EASYCV_DISABLED')) return;
+        window.removeEventListener('message', done);
+        clearTimeout(timer);
+        resolve();
+      };
+      const timer = setTimeout(() => done(), 1000);
+      window.addEventListener('message', done);
+    }) : Promise.resolve();
     window.postMessage({ type: 'EASYCV_DISABLE' }, '*');
 
     // 停止DOM观察器
@@ -397,12 +405,16 @@ class CopyPasteManager {
     
     // 清理性能数据和待处理队列
     this.clearPerformanceData();
+
+    await stopped;
     
     // 恢复所有元素的原始状态
     this.originalStyles.forEach((styles, element) => {
       if (element && element.isConnected) {
         Object.keys(styles).forEach(property => {
-          element.style.setProperty(property, styles[property], 'important');
+          const original = styles[property];
+          if (original.value) element.style.setProperty(property, original.value, original.priority);
+          else element.style.removeProperty(property);
         });
       }
     });
@@ -411,7 +423,10 @@ class CopyPasteManager {
     this.originalHandlers.forEach((handlers, element) => {
       if (element && element.isConnected) {
         Object.keys(handlers).forEach(event => {
-          element[event] = handlers[event];
+          element.removeEventListener(event, this.allowDefaultHandler, true);
+          const original = handlers[event];
+          if (original.attribute !== null) element.setAttribute(`on${event}`, original.attribute);
+          else element[`on${event}`] = original.handler;
         });
       }
     });
@@ -452,7 +467,7 @@ class CopyPasteManager {
    * 处理单个元素（优化版本）
    */
   processElement(element) {
-    if (!element || this.processedElements.has(element)) return;
+    if (!this.isEnabled || (!this.copyEnabled && !this.pasteEnabled) || !element || this.processedElements.has(element)) return;
 
     const startTime = performance.now();
 
@@ -494,16 +509,22 @@ class CopyPasteManager {
    * 保存原始样式
    */
   saveOriginalStyles(element) {
-    const computedStyle = window.getComputedStyle(element);
-    const originalStyles = {
-      'user-select': computedStyle.userSelect,
-      '-webkit-user-select': computedStyle.webkitUserSelect,
-      '-moz-user-select': computedStyle.mozUserSelect,
-      '-ms-user-select': computedStyle.msUserSelect,
-      'pointer-events': computedStyle.pointerEvents
-    };
+    if (this.originalStyles.has(element)) return;
+    const properties = ['user-select', '-webkit-user-select', '-moz-user-select',
+      '-ms-user-select', 'pointer-events', '-webkit-touch-callout', '-khtml-user-select'];
+    const originalStyles = Object.fromEntries(properties.map(property => [property, {
+      value: element.style.getPropertyValue(property), priority: element.style.getPropertyPriority(property)
+    }]));
 
     this.originalStyles.set(element, originalStyles);
+  }
+
+  rememberOriginalHandler(element, eventType) {
+    const handlers = this.originalHandlers.get(element) || {};
+    if (!Object.prototype.hasOwnProperty.call(handlers, eventType)) {
+      handlers[eventType] = { handler: element[`on${eventType}`], attribute: element.getAttribute(`on${eventType}`) };
+      this.originalHandlers.set(element, handlers);
+    }
   }
 
   /**
@@ -512,14 +533,12 @@ class CopyPasteManager {
   removeEventRestrictions(element) {
     const copyEvents = ['selectstart', 'contextmenu', 'dragstart', 'copy', 'mousedown'];
     const pasteEvents = ['paste'];
-    const originalHandlers = {};
 
     // 处理复制相关事件
     if (this.copyEnabled) {
       copyEvents.forEach(eventType => {
         // 保存原始处理器
-        const originalHandler = element[`on${eventType}`];
-        originalHandlers[eventType] = originalHandler;
+        this.rememberOriginalHandler(element, eventType);
 
         // 移除内联事件处理器
         element[`on${eventType}`] = null;
@@ -534,8 +553,7 @@ class CopyPasteManager {
     if (this.pasteEnabled) {
       pasteEvents.forEach(eventType => {
         // 保存原始处理器
-        const originalHandler = element[`on${eventType}`];
-        originalHandlers[eventType] = originalHandler;
+        this.rememberOriginalHandler(element, eventType);
 
         // 移除内联事件处理器
         element[`on${eventType}`] = null;
@@ -546,7 +564,6 @@ class CopyPasteManager {
       });
     }
 
-    this.originalHandlers.set(element, originalHandlers);
   }
 
   /**
@@ -706,7 +723,7 @@ class CopyPasteManager {
     if (currentUrl === this.lastKnownUrl) return;
     this.lastKnownUrl = currentUrl;
 
-    if (!this.isEnabled) return;
+    if (!this.isEnabled || (!this.copyEnabled && !this.pasteEnabled)) return;
 
     clearTimeout(this.spaCheckTimer);
     this.spaCheckTimer = setTimeout(() => {
@@ -822,35 +839,10 @@ class CopyPasteManager {
    * 处理状态更新
    */
   async handleUpdateStatus(data) {
-    if (data.changes) {
-      // 处理存储变化
-      const changes = data.changes;
-      let stateChanged = false;
-
-      // 排除列表（DEBT-08）变更会翻转本站启用裁决：重走 GET_STATUS 全量加载，
-      // 复用 background 的排除判定，避免 content 侧重复实现域名匹配逻辑；
-      // 全量加载同时覆盖同事务里的其他键变更，故提前返回
-      if (changes[StorageUtils.STORAGE_KEYS.EXCLUDED_LIST]) {
-        await this.loadSettingsWithRetry();
-        await this.applyCurrentState();
-        this.notifyStateListeners();
-        return { success: true };
-      }
-
-      if (changes[StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED]) {
-        this.isEnabled = changes[StorageUtils.STORAGE_KEYS.PLUGIN_ENABLED].newValue;
-        stateChanged = true;
-      }
-
-      if (changes[StorageUtils.STORAGE_KEYS.FORCE_MODE]) {
-        this.forceMode = changes[StorageUtils.STORAGE_KEYS.FORCE_MODE].newValue;
-        stateChanged = true;
-      }
-
-      if (stateChanged) {
-        await this.applyCurrentState();
-        this.notifyStateListeners();
-      }
+    const relevantKeys = ['PLUGIN_ENABLED', 'FORCE_MODE', 'USER_SETTINGS', 'EXCLUDED_LIST', 'AUTO_ENABLE_LIST'];
+    if (relevantKeys.some(key => data?.changes?.[StorageUtils.STORAGE_KEYS[key]])) {
+      // 全量读取本站裁决，既消费子开关变更，也避免全局通知绕过域名排除。
+      return await this.synchronizeState();
     }
 
     return { success: true };
@@ -890,6 +882,9 @@ class CopyPasteManager {
         try {
           let result;
           switch (update.type) {
+            case 'SYNC_STATE':
+              result = await this.synchronizeState();
+              break;
             case 'UPDATE_STATUS':
               result = await this.handleUpdateStatus(update.data);
               break;
@@ -928,10 +923,10 @@ class CopyPasteManager {
    */
   async applyCurrentState() {
     try {
-      if (this.isEnabled) {
+      if (this.isEnabled && (this.copyEnabled || this.pasteEnabled)) {
         this.enableCopyPaste();
       } else {
-        this.disableCopyPaste();
+        await this.disableCopyPaste();
       }
       
       this.debugLog('Current state applied:', {
@@ -994,34 +989,17 @@ class CopyPasteManager {
   /**
    * 处理状态广播
    */
-  async handleStateBroadcast(data) {
-    try {
-      if (data && this.validateState(data)) {
-        const oldState = {
-          isEnabled: this.isEnabled,
-          copyEnabled: this.copyEnabled,
-          pasteEnabled: this.pasteEnabled,
-          forceMode: this.forceMode
-        };
-
-        this.updateLocalState(data);
-        
-        // 只在状态真正改变时应用
-        if (JSON.stringify(oldState) !== JSON.stringify(data)) {
-          await this.applyCurrentState();
-          this.notifyStateListeners();
-          this.debugLog('State updated from broadcast:', data);
-        }
-        
-        return { success: true };
-      } else {
-        console.warn('Invalid state broadcast received:', data);
-        return { success: false, error: 'Invalid state data' };
-      }
-    } catch (error) {
-      console.error('Failed to handle state broadcast:', error);
-      return { success: false, error: error.message };
+  async synchronizeState() {
+    const before = [this.isEnabled, this.copyEnabled, this.pasteEnabled, this.forceMode];
+    // state_updated 的 newState 是后台缓存结构，不能当作页面状态直接覆盖；
+    // GET_STATUS 保持与首次加载相同的域名排除和默认值语义。
+    await this.loadSettingsWithRetry();
+    const after = [this.isEnabled, this.copyEnabled, this.pasteEnabled, this.forceMode];
+    if (before.some((value, index) => value !== after[index])) {
+      await this.applyCurrentState();
+      this.notifyStateListeners();
     }
+    return { success: true };
   }
 
   /**

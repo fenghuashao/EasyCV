@@ -402,9 +402,9 @@ class StorageUtils {
     ]);
 
     return {
+      ...userSettings,
       enabled,
-      forceMode,
-      ...userSettings
+      forceMode
     };
   }
 

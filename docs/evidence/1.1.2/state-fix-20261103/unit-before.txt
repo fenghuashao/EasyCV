@@ -1,0 +1,142 @@
+✖ Options reads authoritative switches and unrelated saves preserve them (0.843084ms)
+✖ state_updated reaches the content script and reapplies authoritative page state (0.814584ms)
+✖ copy_status_changed reaches the content script and reapplies authoritative page state (1.001792ms)
+✖ paste_status_changed reaches the content script and reapplies authoritative page state (0.164833ms)
+✖ user_settings change updates existing tabs without navigation (0.231417ms)
+✖ global switch notifications cannot wake an excluded page (0.164458ms)
+✖ auto-enable sends a validated state notification and invalidates cached domain misses (0.8245ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 0
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 41.048709
+
+✖ failing tests:
+
+test at test/unit/state-sync.test.mjs:8:1
+✖ Options reads authoritative switches and unrelated saves preserve them (0.843084ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/fengshaohua/pro/github/EasyCV/test/unit/state-sync.test.mjs:16:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/unit/state-sync.test.mjs:56:3
+✖ state_updated reaches the content script and reapplies authoritative page state (0.814584ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/fengshaohua/pro/github/EasyCV/test/unit/state-sync.test.mjs:59:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/unit/state-sync.test.mjs:56:3
+✖ copy_status_changed reaches the content script and reapplies authoritative page state (1.001792ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/fengshaohua/pro/github/EasyCV/test/unit/state-sync.test.mjs:59:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/unit/state-sync.test.mjs:56:3
+✖ paste_status_changed reaches the content script and reapplies authoritative page state (0.164833ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/fengshaohua/pro/github/EasyCV/test/unit/state-sync.test.mjs:59:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/unit/state-sync.test.mjs:67:1
+✖ user_settings change updates existing tabs without navigation (0.231417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/fengshaohua/pro/github/EasyCV/test/unit/state-sync.test.mjs:72:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/unit/state-sync.test.mjs:77:1
+✖ global switch notifications cannot wake an excluded page (0.164458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///Users/fengshaohua/pro/github/EasyCV/test/unit/state-sync.test.mjs:81:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/unit/state-sync.test.mjs:84:1
+✖ auto-enable sends a validated state notification and invalidates cached domain misses (0.8245ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + null
+  - {
+  -   copyEnabled: false,
+  -   domain: 'example.com',
+  -   pasteEnabled: true
+  - }
+  
+      at TestContext.<anonymous> (file:///Users/fengshaohua/pro/github/EasyCV/test/unit/state-sync.test.mjs:101:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: { domain: 'example.com', copyEnabled: false, pasteEnabled: true },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

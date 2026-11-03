@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "checks": [
+    "38 candidate files match tested ZIP",
+    "38 preserved baseline files match old locked ZIP"
+  ],
+  "os": {
+    "caption": "Microsoft Windows 11 专业版",
+    "architecture": "ARM 64 位处理器",
+    "version": "10.0.26100"
+  },
+  "browsers": [
+    {
+      "name": "chrome.exe",
+      "version": "156.0.8078.80",
+      "peMachine": "0xAA64"
+    },
+    {
+      "name": "msedge.exe",
+      "version": "156.0.4314.58",
+      "peMachine": "0xAA64"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+✅ 扩展注入（EasyCVInjected）
+✅ 测试1 CSS user-select 解除
+✅ attachShadow 已被包装
+✅ 测试6a 声明式 Shadow DOM 解除
+✅ 测试6b 预创建 Shadow DOM 解除
+✅ 测试6c 动态 Shadow DOM 解除
+✅ 测试7 SPA 重放解除
+✅ Service Worker 注册
+✅ popup 主按钮存在
+✅ popup 主按钮 i18n 文案 — zh-CN
+✅ popup 版本号取自 manifest — v1.1.2
+✅ popup 高级选项折叠区存在
+✅ options 导航 i18n 生效 — 常规设置
+✅ options 自动加入设置项存在
+✅ options 版本号 i18n — 版本 1.1.2
+
+15/15 项通过

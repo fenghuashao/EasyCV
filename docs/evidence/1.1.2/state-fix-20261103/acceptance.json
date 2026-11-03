@@ -1,0 +1,59 @@
+{
+  "observedAt": "2026-11-03T01:24:29.044876+08:00",
+  "baselineCommit": "2e93f89",
+  "package": {
+    "zip": "releases/state-fix-20261103/EasyCV-v1.1.2-20261102.zip",
+    "sha256": "b0613dd4140dd599710c42c2ddd0e3b8fb1af8b77405cb628255482c06af396a",
+    "bytes": 133088,
+    "fileCount": 38
+  },
+  "gates": {
+    "REQUESTED_DEFECTS": "PASS",
+    "UNIT": "57/57 PASS",
+    "EXISTING_E2E": "15/15 PASS",
+    "TARGETED_BROWSER": "10/10 PASS (old ZIP 2/10)",
+    "WINDOWS_CHROME_FIX_REGRESSION": "PASS",
+    "WINDOWS_EDGE_FIX_REGRESSION": "PASS",
+    "ACTUAL_ACTION_POPUP": "PASS",
+    "NORMAL_BROWSER_RESTART": "PASS",
+    "SETTINGS_AND_LIST_PERSISTENCE": "PASS",
+    "PACKAGED_EXTENSION": "PASS",
+    "UPGRADE_STORE_111_TO_112": "NOT_VERIFIED",
+    "STORE_SUBMISSION": "NOT_RUN",
+    "GOOGLE_WARNING_CLEARED": "NOT_VERIFIED",
+    "DOCUMENTATION": "PASS",
+    "DIFF_CHECK": "PASS",
+    "FINAL_PACKAGE_RECHECK": "PASS",
+    "TEST_ENVIRONMENT_CLEANUP": "PASS"
+  },
+  "decision": "READY_FOR_STORE_REVIEW_PREPARATION; NOT_FORMAL_RELEASE_COMPLETION",
+  "scope": "Windows 11 ARM64; Chrome/Edge 156; actual action Popup + trusted CDP input + local mechanism fixtures; normal same-profile restart, no reinstall; not original-store-ID upgrade",
+  "windowsReports": [
+    "chrome-native-main-r3.json",
+    "chrome-native-auto.json",
+    "chrome-native-prepare.json",
+    "chrome-native-copy-r2.json",
+    "chrome-native-restart.json",
+    "edge-native-main.json",
+    "edge-native-auto.json",
+    "edge-native-copy.json",
+    "edge-native-restart.json",
+    "restart-comparison.json"
+  ],
+  "notCovered": [
+    "Windows x64",
+    "full native context-menu retest",
+    "physical keyboard/mouse usability",
+    "broad real-site compatibility",
+    "original store same-ID upgrade",
+    "store approval/publishing"
+  ],
+  "commitCreated": false,
+  "pushPerformed": false,
+  "cleanup": {
+    "browserProcesses": 0,
+    "temporaryFixtureServersStopped": true,
+    "profilesAndEvidencePreserved": true,
+    "vmLeftRunning": true
+  }
+}

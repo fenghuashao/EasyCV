@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "records": [
+    {
+      "name": "candidate.zip",
+      "sha256": "b0613dd4140dd599710c42c2ddd0e3b8fb1af8b77405cb628255482c06af396a",
+      "match": true
+    },
+    {
+      "name": "mechanisms.html",
+      "sha256": "7e6e963108ed97bc9a5c57f61827c3eb0cdcff1f672b4cef692158fac670d46a",
+      "match": true
+    },
+    {
+      "name": "permission-fix.html",
+      "sha256": "9c1b1be796659c4b205490658c0e25e8e099145a971d5ed75654675bbb70ab7a",
+      "match": true
+    },
+    {
+      "name": "fixture-server.ps1",
+      "sha256": "e483d32e4138e6f38fe406d67620eb651ff71dede55baa2f4805a4ec869182d0",
+      "match": true
+    }
+  ],
+  "candidate": {
+    "backup": "C:\\Users\\fengshaohua\\AppData\\Local\\EasyCV-StateFix-20261103\\candidate-before",
+    "files": 38,
+    "candidate": "C:\\Users\\fengshaohua\\AppData\\Local\\EasyCV-Acceptance-20261102-r3\\candidate",
+    "version": "1.1.2"
+  },
+  "method": "development source replacement with old directory preserved; not a store upgrade"
+}

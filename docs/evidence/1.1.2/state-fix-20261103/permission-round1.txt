@@ -1,0 +1,56 @@
+PASS installed manifest and permissions
+PASS negative control: restrictions effective when disabled
+PASS Popup main button enables via real runtime/storage path
+PASS copy/paste/selectstart cancellation neutralized
+PASS CSS selection and DOM range
+PASS trusted keyboard copy (test text only)
+PASS trusted keyboard paste (test text only)
+PASS Popup force mode persists; main-world injector runs
+PASS dynamic restricted content is processed
+PASS repeat page-script load keeps same wrappers
+PASS refresh reinjects and retains force mode
+PASS trusted keyboard paste after refresh (test text only)
+PASS second tab, activation and URL visibility without activeTab
+PASS native context menu IDs registered (not native click)
+PASS context menu handler dispatch: add to auto list (synthetic)
+PASS auto-enable list settings applied on a fresh domain navigation
+PASS Options add exclusion writes storage
+PASS excluded site dormant after reload despite auto/force
+PASS remove exclusion restores unlock after reload
+PASS Popup copy setting persists across UI reopen
+FAIL settings/lists survive full isolated browser restart: Expected values to be strictly deep-equal:
++ actual - expected
+
+  {
++   auto_enable_list: [],
++   excluded_list: [
++     'accounts.google.com',
++     'login.live.com',
++     'appleid.apple.com'
+-   auto_enable_list: [
+-     {
+-       copyEnabled: true,
+-       domain: 'auto.localhost',
+-       pasteEnabled: true
+-     }
+    ],
+-   excluded_list: [],
+    user_settings: {
++     autoEnableList: [],
++     copyEnabled: true,
++     enableStatistics: true,
++     excludedList: [
++       'accounts.google.com',
++       'login.live.com',
++       'appleid.apple.com'
++     ],
++     forceMode: false,
+-     copyEnabled: false,
+      pasteEnabled: true,
++     pluginEnabled: true,
++     showNotifications: true,
++     theme: 'auto'
+    }
+  }
+
+20/21 passed

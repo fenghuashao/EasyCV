@@ -1,0 +1,37 @@
+[
+  {
+    "name": "unit-final",
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "lint-final",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "e2e-final",
+    "command": [
+      "node",
+      "test/e2e-extension.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "browser-baseline",
+    "extensionPath": "releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031",
+    "exitCode": 1
+  },
+  {
+    "name": "browser-final",
+    "extensionPath": "releases/state-fix-20261103/EasyCV-v1.1.2-20261102",
+    "exitCode": 0
+  }
+]

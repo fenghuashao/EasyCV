@@ -13,6 +13,11 @@ class AutoEnableManager {
     this.CACHE_EXPIRE_TIME = 5 * 60 * 1000;
     // 防抖延迟（100ms）
     this.DEBOUNCE_DELAY = 100;
+
+    // Options/右键菜单直接保存名单时也要失效缓存，包括此前未命中的域名。
+    this.stateManager.addStateListener(({ changes }) => {
+      if (changes?.[StorageUtils.STORAGE_KEYS.AUTO_ENABLE_LIST]) this.clearDomainCache();
+    });
   }
 
   /**
@@ -161,32 +166,8 @@ class AutoEnableManager {
         }
       }, operationId);
 
-      // 发送消息到内容脚本
-      const messages = [];
-      
-      if (config.copyEnabled) {
-        messages.push({
-          type: 'COPY_STATUS_CHANGED',
-          enabled: true
-        });
-      }
-
-      if (config.pasteEnabled) {
-        messages.push({
-          type: 'PASTE_STATUS_CHANGED',
-          enabled: true
-        });
-      }
-
-      // 批量发送消息
-      for (const message of messages) {
-        try {
-          await chrome.tabs.sendMessage(tabId, message);
-        } catch (error) {
-          // 忽略错误，可能是内容脚本还未加载
-          console.debug('AutoEnableManager: Failed to send message:', error);
-        }
-      }
+      // 使用双方共享的消息协议；内容端重新读取完整状态（包括关闭的子开关）。
+      await MessageUtils.sendToContent(tabId, MessageUtils.MESSAGE_TYPES.STATE_UPDATED, {}, { silent: true });
 
       return true;
     } catch (error) {

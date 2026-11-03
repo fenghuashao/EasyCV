@@ -1,0 +1,11 @@
+PASS Options force mode survives refresh and unrelated setting save
+PASS disabled child switches retain all four paste restrictions
+PASS Popup enables four paste mechanisms in both existing tabs without reload
+PASS selection and trusted copy work after Popup enable without reload
+PASS Popup disable and re-enable restore restrictions and unlock without reload
+PASS stale Options page cannot overwrite a Popup force-mode change
+PASS global toggles do not activate an already excluded tab
+PASS auto list first visit unlocks actual inputs without refresh
+PASS adding a previously visited domain takes effect on next visit
+PASS removing an auto domain invalidates its positive cache
+10/10 passed

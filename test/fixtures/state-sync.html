@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>EasyCV state regression</title>
+<style>#restricted { user-select:none; -webkit-user-select:none } input,textarea { display:block; margin:12px; width:440px; height:32px }</style>
+<script>
+  window.testEvents = [];
+  document.addEventListener('paste', event => {
+    const row = { id: event.target.id, trusted: event.isTrusted };
+    testEvents.push(row);
+    queueMicrotask(() => { row.prevented = event.defaultPrevented; });
+    if (event.target.id === 'listener') event.preventDefault();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.target.id === 'keyboard' && (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'v') event.preventDefault();
+  });
+</script></head>
+<body>
+<p id="restricted" oncopy="return false" onselectstart="return false">EASYCV_STATE_COPY_TEXT</p>
+<textarea id="inline" onpaste="return false" aria-label="inline restriction"></textarea>
+<input id="input" onpaste="return false" aria-label="input restriction">
+<textarea id="listener" aria-label="listener restriction"></textarea>
+<textarea id="keyboard" aria-label="keyboard restriction"></textarea>
+<textarea id="plain" aria-label="positive control"></textarea>
+</body></html>

@@ -1,0 +1,280 @@
+{
+  "status": "PASS",
+  "zip": "releases/state-fix-20261103/EasyCV-v1.1.2-20261102.zip",
+  "sha256": "b0613dd4140dd599710c42c2ddd0e3b8fb1af8b77405cb628255482c06af396a",
+  "bytes": 133088,
+  "fileCount": 38,
+  "changedFromLockedCandidate": [
+    "background/auto-enable-manager.js",
+    "build-info.json",
+    "content/content.js",
+    "content/injector.js",
+    "options/options.js",
+    "utils/storage-utils.js"
+  ],
+  "checks": [
+    "ZIP CRC",
+    "exact payload allowlist",
+    "unique entries",
+    "source/dist/ZIP equality",
+    "explicit runtime change allowlist",
+    "manifest unchanged",
+    "version consistency",
+    "no scripting dependency",
+    "permission notes",
+    "old ZIP unchanged"
+  ],
+  "manifest": {
+    "manifest_version": 3,
+    "name": "__MSG_extension_name__",
+    "version": "1.1.2",
+    "description": "__MSG_extension_description__",
+    "default_locale": "zh_CN",
+    "permissions": [
+      "storage",
+      "contextMenus"
+    ],
+    "host_permissions": [
+      "<all_urls>"
+    ],
+    "background": {
+      "service_worker": "background/service-worker.js"
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "<all_urls>"
+        ],
+        "js": [
+          "utils/message-utils.js",
+          "utils/storage-utils.js",
+          "utils/dom-utils.js",
+          "content/content.js"
+        ],
+        "run_at": "document_start",
+        "all_frames": true
+      }
+    ],
+    "action": {
+      "default_popup": "popup/popup.html",
+      "default_title": "__MSG_extension_name__",
+      "default_icon": {
+        "16": "icons/icon-default-16.png",
+        "32": "icons/icon-default-32.png",
+        "48": "icons/icon-default-48.png",
+        "128": "icons/icon-default-128.png"
+      }
+    },
+    "options_page": "options/options.html",
+    "icons": {
+      "16": "icons/icon-default-16.png",
+      "32": "icons/icon-default-32.png",
+      "48": "icons/icon-default-48.png",
+      "128": "icons/icon-default-128.png"
+    },
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "content/injector.js",
+          "icons/*.png",
+          "utils/*.js"
+        ],
+        "matches": [
+          "<all_urls>"
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "file": "_locales/en/messages.json",
+      "bytes": 17779,
+      "sha256": "5cc232f982540ba35e20b2b379f1f20a199f7bb6b09fca65064bd3f0f37c2c92"
+    },
+    {
+      "file": "_locales/zh_CN/messages.json",
+      "bytes": 16857,
+      "sha256": "b9a30413b51126e507ec4dc666fa7d21bf1c8c2555bc359f1de9b1a395f50bfe"
+    },
+    {
+      "file": "background/auto-enable-manager.js",
+      "bytes": 8794,
+      "sha256": "dd73492b289ca6795fc434bc2356bb1d271b78b9cc5260d201e0c5aec2668829"
+    },
+    {
+      "file": "background/icon-manager.js",
+      "bytes": 7558,
+      "sha256": "d262d8a675162c6c68f2e69de2acf1254635f9ab2c3ca8bb81c9d84b0526ea23"
+    },
+    {
+      "file": "background/monitoring-manager.js",
+      "bytes": 9845,
+      "sha256": "0eb22e1673ced6f2afcbc61fbc929166dc363271b0931c45d091c760813142dd"
+    },
+    {
+      "file": "background/service-worker.js",
+      "bytes": 37511,
+      "sha256": "6dca77acddc9fee791ac4f7024eef598a029a3777584c7db07e5da0671a25d70"
+    },
+    {
+      "file": "background/state-confirmation-manager.js",
+      "bytes": 12783,
+      "sha256": "ee120f28e74b0551dea72692b6c7292d871086befd7464a2442f44c6bfc58d86"
+    },
+    {
+      "file": "build-info.json",
+      "bytes": 99,
+      "sha256": "0bdb6df5374c802aa78aa6d2ef4784b9160026c88058d4ab2f2804f78e773688"
+    },
+    {
+      "file": "content/content.js",
+      "bytes": 37576,
+      "sha256": "77a8037c3608501ffa6aaf6113fb2592be120b2135dd1eeede050b9b27696673"
+    },
+    {
+      "file": "content/injector.js",
+      "bytes": 25587,
+      "sha256": "c96edb23f99d9fc2778bccdfd894033f90087b90d244b0971a984d6c2f77f1a5"
+    },
+    {
+      "file": "icons/icon-active-128.png",
+      "bytes": 6225,
+      "sha256": "f818ee94242a2c04fecdb07e089a98d484081c1ef0cd461ec0dd75cc95273f02"
+    },
+    {
+      "file": "icons/icon-active-16.png",
+      "bytes": 451,
+      "sha256": "e4d0782364e6cdde287001a62efa147fa3afdfb37fbbc4a950cb86926280edd2"
+    },
+    {
+      "file": "icons/icon-active-32.png",
+      "bytes": 1017,
+      "sha256": "a39c54acc55dea5f4e37fcaf4e303655fb1a56934e1765d888b55f0447949cc5"
+    },
+    {
+      "file": "icons/icon-active-48.png",
+      "bytes": 1674,
+      "sha256": "a53689373b01a40b3f164cb14d3d9a832cb5d7eed059052a762eb7d97a214074"
+    },
+    {
+      "file": "icons/icon-default-128.png",
+      "bytes": 6140,
+      "sha256": "56030c3004c31b8a4aa4efe79c61219741419ab7c8a894b01ce39ae3f1669916"
+    },
+    {
+      "file": "icons/icon-default-16.png",
+      "bytes": 451,
+      "sha256": "a5d79a0c13c4685d3273a4e7e89051b257c3fa1501d3c15e78ebdd1e0612c594"
+    },
+    {
+      "file": "icons/icon-default-32.png",
+      "bytes": 1012,
+      "sha256": "2234f2eae86f48f8d35788b9eb4e0475633b51ca09201df1124378e1fa79c942"
+    },
+    {
+      "file": "icons/icon-default-48.png",
+      "bytes": 1652,
+      "sha256": "26472109aec2a3253a2089e45f563720dff0135918beaad0899966c487e6fe6e"
+    },
+    {
+      "file": "icons/icon-inactive-128.png",
+      "bytes": 6833,
+      "sha256": "b2ed4bb9c4a8fcdd2037d590e449b63b9f2ddc7b42bf5be82c789f31b69c8589"
+    },
+    {
+      "file": "icons/icon-inactive-16.png",
+      "bytes": 522,
+      "sha256": "4ee0d952d8fa17c34e87232567bc2e9ea92de4fa90227a176e6ba75aea36b3b4"
+    },
+    {
+      "file": "icons/icon-inactive-32.png",
+      "bytes": 1216,
+      "sha256": "fe8544a786463dbdc210a1f6955d1b67199e07cb5b44aa5f8c5a05458b5628ab"
+    },
+    {
+      "file": "icons/icon-inactive-48.png",
+      "bytes": 2049,
+      "sha256": "0a99374c352870ef3fdbc58dcfa599386d8fbcf33210060d056588199e903e5c"
+    },
+    {
+      "file": "icons/icon-partial-128.png",
+      "bytes": 7076,
+      "sha256": "4be5199c17ac5b8b104366c8f912fd06f37fef59686770d85a855c81cdd18e7a"
+    },
+    {
+      "file": "icons/icon-partial-16.png",
+      "bytes": 528,
+      "sha256": "5b935f53ede7b94a6bb97847a3f2f3cfdb3aed79384f3883f1e544e62e64698c"
+    },
+    {
+      "file": "icons/icon-partial-32.png",
+      "bytes": 1224,
+      "sha256": "3f133195ea4f6628d4c9afda3eee17b6704079de4bac5b9309f5826650800f65"
+    },
+    {
+      "file": "icons/icon-partial-48.png",
+      "bytes": 2084,
+      "sha256": "2d241af9329c05f499116389e9b5ee28de9ff70ea3dbfc7664648eefbe802855"
+    },
+    {
+      "file": "manifest.json",
+      "bytes": 1362,
+      "sha256": "61553936aca48cf3ad9910a5b6b673e5c1e2e3726f354517566d18b5623e2e43"
+    },
+    {
+      "file": "options/options.css",
+      "bytes": 20086,
+      "sha256": "c320f9a656e6545ef6a857b4fe109fafa42e337d1ca5ac1b8b3c3e973daf8717"
+    },
+    {
+      "file": "options/options.html",
+      "bytes": 25980,
+      "sha256": "01b5d036f07c50fac76793092ae96aa090486f0aa97e248955959f653584dc39"
+    },
+    {
+      "file": "options/options.js",
+      "bytes": 31127,
+      "sha256": "be43957fb017a45b3f9b9b49dc406480314979e461d7c3357a52a13e6b54b001"
+    },
+    {
+      "file": "popup/popup.css",
+      "bytes": 12765,
+      "sha256": "83c9d611c09c699bccea0ef776663a9b5f4e6243f33ab1693615db7437063bf6"
+    },
+    {
+      "file": "popup/popup.html",
+      "bytes": 8045,
+      "sha256": "56c51bde9de61cec493f979b8268f7f731bc008a6f1dbb16b169fbdd2fe7c81f"
+    },
+    {
+      "file": "popup/popup.js",
+      "bytes": 26702,
+      "sha256": "b1d4012e0bcb9c5b922da8416c985a270b779f5114a4507cbb8dc791697572b9"
+    },
+    {
+      "file": "utils/dom-utils.js",
+      "bytes": 5745,
+      "sha256": "c7580ee6a7a8c2fdc9486ebb353ddad915cddaa3301a4524eaff2627c6db2f25"
+    },
+    {
+      "file": "utils/i18n-utils.js",
+      "bytes": 2117,
+      "sha256": "574feeb437a5fd5196d1084a1688b5ab91e16c2d9854202ddf951ed32b742b82"
+    },
+    {
+      "file": "utils/message-utils.js",
+      "bytes": 8724,
+      "sha256": "3fd77cf582cfa413fe4faa4425f7685661b1bbf69f9f9c85fcc466f2c0674e98"
+    },
+    {
+      "file": "utils/notification-utils.js",
+      "bytes": 2286,
+      "sha256": "e5b610f9f0147129deae0f01b8dd57f4408e0d62d4687b06bb51b8b043a01c3a"
+    },
+    {
+      "file": "utils/storage-utils.js",
+      "bytes": 13699,
+      "sha256": "a12090dc5a39810c441d1d1bc51b34570c7db529f085097dd041a6b7ee8f6035"
+    }
+  ]
+}

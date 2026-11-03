@@ -423,7 +423,8 @@ class OptionsManager {
   async updateSetting(key, value) {
     try {
       this.settings[key] = value;
-      await StorageUtils.setPluginSettings(this.settings);
+      // 只保存本次编辑的字段，避免覆盖 Popup/其他标签刚修改的设置。
+      await StorageUtils.setPluginSettings({ [key]: value });
 
       // 无需显式通知 background：StateManager 的 storage 监听器会自动同步缓存
 

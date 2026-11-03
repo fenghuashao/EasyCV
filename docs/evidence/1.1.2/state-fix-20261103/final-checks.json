@@ -1,0 +1,31 @@
+{
+  "docs-final": {
+    "exitCode": 0,
+    "command": [
+      "npm",
+      "run",
+      "docs:check"
+    ],
+    "output": "\n> easycv@1.1.2 docs:check\n> node scripts/check-docs.js\n\n✅ docs:check 通过\n"
+  },
+  "diff-final": {
+    "exitCode": 0,
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "output": ""
+  },
+  "package-recheck": {
+    "exitCode": 0,
+    "command": [
+      "python3",
+      "test/verify-state-fix-package.py",
+      "releases/state-fix-20261103/EasyCV-v1.1.2-20261102.zip",
+      "releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031.zip",
+      "docs/evidence/1.1.2/state-fix-20261103/package-recheck.json"
+    ],
+    "output": "PASS 38 files; SHA256 b0613dd4140dd599710c42c2ddd0e3b8fb1af8b77405cb628255482c06af396a\n"
+  }
+}

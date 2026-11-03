@@ -1,0 +1,216 @@
+[
+  {
+    "browser": "chrome",
+    "status": "PASS",
+    "sameExtensionId": true,
+    "sameVersion": true,
+    "allFiveStorageKeysEqual": true,
+    "before": {
+      "id": "dgckfbbdhlgcjhaihmpdnnhnfpfeaono",
+      "version": "1.1.2",
+      "storage": {
+        "auto_enable_list": [
+          {
+            "copyEnabled": true,
+            "domain": "chrome.localhost",
+            "pasteEnabled": true
+          },
+          {
+            "copyEnabled": true,
+            "domain": "blocked.localhost",
+            "pasteEnabled": true
+          },
+          {
+            "copyEnabled": true,
+            "domain": "menu.localhost",
+            "pasteEnabled": true
+          },
+          {
+            "copyEnabled": true,
+            "domain": "statefix.localhost",
+            "pasteEnabled": true
+          }
+        ],
+        "excluded_list": [
+          "accounts.google.com",
+          "login.live.com",
+          "appleid.apple.com",
+          "blocked.localhost",
+          "statefix.localhost"
+        ],
+        "force_mode": true,
+        "plugin_enabled": true,
+        "user_settings": {
+          "autoEnableList": [],
+          "copyEnabled": true,
+          "detectionDelay": 1900,
+          "enableStatistics": true,
+          "excludedList": [
+            "accounts.google.com",
+            "login.live.com",
+            "appleid.apple.com"
+          ],
+          "forceMode": false,
+          "maxRetries": 6,
+          "pasteEnabled": true,
+          "pluginEnabled": true,
+          "showNotifications": true,
+          "theme": "auto"
+        }
+      }
+    },
+    "after": {
+      "id": "dgckfbbdhlgcjhaihmpdnnhnfpfeaono",
+      "version": "1.1.2",
+      "forceUI": true,
+      "delayUI": "1900",
+      "storage": {
+        "auto_enable_list": [
+          {
+            "copyEnabled": true,
+            "domain": "chrome.localhost",
+            "pasteEnabled": true
+          },
+          {
+            "copyEnabled": true,
+            "domain": "blocked.localhost",
+            "pasteEnabled": true
+          },
+          {
+            "copyEnabled": true,
+            "domain": "menu.localhost",
+            "pasteEnabled": true
+          },
+          {
+            "copyEnabled": true,
+            "domain": "statefix.localhost",
+            "pasteEnabled": true
+          }
+        ],
+        "excluded_list": [
+          "accounts.google.com",
+          "login.live.com",
+          "appleid.apple.com",
+          "blocked.localhost",
+          "statefix.localhost"
+        ],
+        "force_mode": true,
+        "plugin_enabled": true,
+        "user_settings": {
+          "autoEnableList": [],
+          "copyEnabled": true,
+          "detectionDelay": 1900,
+          "enableStatistics": true,
+          "excludedList": [
+            "accounts.google.com",
+            "login.live.com",
+            "appleid.apple.com"
+          ],
+          "forceMode": false,
+          "maxRetries": 6,
+          "pasteEnabled": true,
+          "pluginEnabled": true,
+          "showNotifications": true,
+          "theme": "auto"
+        }
+      }
+    }
+  },
+  {
+    "browser": "edge",
+    "status": "PASS",
+    "sameExtensionId": true,
+    "sameVersion": true,
+    "allFiveStorageKeysEqual": true,
+    "before": {
+      "id": "dgckfbbdhlgcjhaihmpdnnhnfpfeaono",
+      "version": "1.1.2",
+      "storage": {
+        "auto_enable_list": [
+          {
+            "copyEnabled": true,
+            "domain": "edge.localhost",
+            "pasteEnabled": true
+          },
+          {
+            "copyEnabled": true,
+            "domain": "statefix.localhost",
+            "pasteEnabled": true
+          }
+        ],
+        "excluded_list": [
+          "accounts.google.com",
+          "login.live.com",
+          "appleid.apple.com",
+          "blocked.localhost",
+          "statefix.localhost"
+        ],
+        "force_mode": true,
+        "plugin_enabled": true,
+        "user_settings": {
+          "autoEnableList": [],
+          "copyEnabled": true,
+          "detectionDelay": 1900,
+          "enableStatistics": true,
+          "excludedList": [
+            "accounts.google.com",
+            "login.live.com",
+            "appleid.apple.com"
+          ],
+          "forceMode": false,
+          "maxRetries": 5,
+          "pasteEnabled": true,
+          "pluginEnabled": true,
+          "showNotifications": true,
+          "theme": "auto"
+        }
+      }
+    },
+    "after": {
+      "id": "dgckfbbdhlgcjhaihmpdnnhnfpfeaono",
+      "version": "1.1.2",
+      "forceUI": true,
+      "delayUI": "1900",
+      "storage": {
+        "auto_enable_list": [
+          {
+            "copyEnabled": true,
+            "domain": "edge.localhost",
+            "pasteEnabled": true
+          },
+          {
+            "copyEnabled": true,
+            "domain": "statefix.localhost",
+            "pasteEnabled": true
+          }
+        ],
+        "excluded_list": [
+          "accounts.google.com",
+          "login.live.com",
+          "appleid.apple.com",
+          "blocked.localhost",
+          "statefix.localhost"
+        ],
+        "force_mode": true,
+        "plugin_enabled": true,
+        "user_settings": {
+          "autoEnableList": [],
+          "copyEnabled": true,
+          "detectionDelay": 1900,
+          "enableStatistics": true,
+          "excludedList": [
+            "accounts.google.com",
+            "login.live.com",
+            "appleid.apple.com"
+          ],
+          "forceMode": false,
+          "maxRetries": 5,
+          "pasteEnabled": true,
+          "pluginEnabled": true,
+          "showNotifications": true,
+          "theme": "auto"
+        }
+      }
+    }
+  }
+]

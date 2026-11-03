@@ -1,0 +1,95 @@
+{
+  "extensionPath": "/Users/fengshaohua/pro/github/EasyCV/dist",
+  "browser": "/Users/fengshaohua/Library/Caches/ms-playwright/chromium-1234/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+  "results": [
+    {
+      "name": "Options force mode survives refresh and unrelated setting save",
+      "pass": true
+    },
+    {
+      "name": "disabled child switches retain all four paste restrictions",
+      "pass": false,
+      "error": "AssertionError [ERR_ASSERTION]: listener on http://easycv.localhost:18963/test/fixtures/state-sync.html?a\n+ actual - expected\n\n+ 'EASYCV_NEGATIVE'\n- ''\n\n    at paste (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:51:12)\n    at async restrictions (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:58:70)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:78:5\n    at async check (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:19:9)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:77:3"
+    },
+    {
+      "name": "Popup enables four paste mechanisms in both existing tabs without reload",
+      "pass": true
+    },
+    {
+      "name": "selection and trusted copy work after Popup enable without reload",
+      "pass": true
+    },
+    {
+      "name": "global toggles do not activate an already excluded tab",
+      "pass": true
+    },
+    {
+      "name": "auto list first visit unlocks actual inputs without refresh",
+      "pass": true
+    },
+    {
+      "name": "adding a previously visited domain takes effect on next visit",
+      "pass": true
+    },
+    {
+      "name": "removing an auto domain invalidates its positive cache",
+      "pass": true
+    }
+  ],
+  "evidence": {
+    "options": {
+      "auto_enable_list": [],
+      "excluded_list": [
+        "accounts.google.com",
+        "login.live.com",
+        "appleid.apple.com"
+      ],
+      "force_mode": true,
+      "plugin_enabled": true,
+      "statistics": {
+        "lastUsed": null,
+        "sitesUnlocked": [
+          "easycv.localhost"
+        ],
+        "totalActivations": 0
+      },
+      "user_settings": {
+        "autoEnableList": [],
+        "copyEnabled": true,
+        "enableStatistics": true,
+        "excludedList": [
+          "accounts.google.com",
+          "login.live.com",
+          "appleid.apple.com"
+        ],
+        "forceMode": false,
+        "pasteEnabled": true,
+        "pluginEnabled": true,
+        "showNotifications": false,
+        "theme": "auto"
+      }
+    },
+    "afterPopup": {
+      "auto_enable_list": [],
+      "excluded_list": [],
+      "force_mode": false,
+      "plugin_enabled": true,
+      "statistics": {
+        "lastUsed": null,
+        "sitesUnlocked": [
+          "easycv.localhost"
+        ],
+        "totalActivations": 0
+      },
+      "user_settings": {
+        "copyEnabled": true,
+        "pasteEnabled": true
+      }
+    }
+  },
+  "notCovered": [
+    "native toolbar/menu",
+    "normal installed-browser restart",
+    "store upgrade"
+  ]
+}

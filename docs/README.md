@@ -4,9 +4,9 @@
 
 文档角色（Vocabulary）以根目录的 [CONTEXT.md](../CONTEXT.md) 为准：Source Document / Reference Document / Working Document / Evidence Document / Governance Document / Archive / Asset。本文档用“状态=archive”表达“归档（Archive）材料”。
 
-## 1.1.2 本地权限整改
+## 1.1.2 本地修复与验收
 
-当前候选的 Gate、证据及人工验收见 [EASYCV-1.1.2-PERMISSION-FIX](../EASYCV-1.1.2-PERMISSION-FIX.md)。下方历史 Evidence Document 不证明本次候选通过。
+当前候选以 [2026-11-03 状态修复验收](../EASYCV-1.1.2-STATE-FIX-ACCEPTANCE.md) 中的完整包路径、哈希和结果为准。[权限整改](../EASYCV-1.1.2-PERMISSION-FIX.md)及[旧包 Windows 验收](../EASYCV-1.1.2-WINDOWS-ACCEPTANCE.md)保留为历史证据；不能把旧包的问题归因或通过项直接当作新包结果。
 
 ## 快速入口
 

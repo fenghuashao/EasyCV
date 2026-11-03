@@ -1,0 +1,21 @@
+{
+  "observedAt": "2026-11-03T01:05:22.071351+08:00",
+  "browser": "chrome",
+  "session": "easycv-win-chrome-20261103",
+  "guestCDPPort": 19331,
+  "commands": [
+    [
+      "open",
+      "chrome://extensions/"
+    ],
+    [
+      "eval",
+      "(async()=>{const es=await chrome.developerPrivate.getExtensionsInfo({includeDisabled:true});return es.map(e=>({id:e.id,name:e.name,version:e.version,location:e.location,state:e.state,path:e.path}))})()"
+    ]
+  ],
+  "timeoutSeconds": 35,
+  "exitCode": null,
+  "stdout": "✓ 扩展程序\n  chrome://extensions/\nACTION_RESULT {\"arguments\":[\"open\",\"chrome://extensions/\"],\"exitCode\":0}\r\n[\n  {\n    \"id\": \"dgckfbbdhlgcjhaihmpdnnhnfpfeaono\",\n    \"location\": \"UNPACKED\",\n    \"name\": \"EasyCV - 解除网页复制粘贴限制\",\n    \"path\": \"C:\\\\Users\\\\fengshaohua\\\\AppData\\\\Local\\\\EasyCV-Acceptance-20261102-r3\\\\candidate\",\n    \"state\": \"ENABLED\",\n    \"version\": \"1.1.2\"\n  }\n]\nACTION_RESULT {\"arguments\":[\"eval\",\"(async()=\\u003e{const es=await chrome.developerPrivate.getExtensionsInfo({includeDisabled:true});return es.map(e=\\u003e({id:e.id,name:e.name,version:e.version,location:e.location,state:e.state,path:e.path}))})()\"],\"exitCode\":0}\r\n",
+  "stderr": "",
+  "timedOut": true
+}

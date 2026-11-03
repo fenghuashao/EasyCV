@@ -693,10 +693,11 @@
   window.addEventListener('message', (event) => {
     if (event.source !== window) return;
     
-    if (event.data.type === 'EASYCV_DISABLE') {
+    if (event.data?.type === 'EASYCV_DISABLE') {
       debugLog('EasyCV: Disabling injector');
       restoreOriginalFunctions();
-    } else if (event.data.type === 'EASYCV_ENABLE') {
+      window.postMessage({ type: 'EASYCV_DISABLED' }, '*');
+    } else if (event.data?.type === 'EASYCV_ENABLE') {
       debugLog('EasyCV: Re-enabling injector');
       // 禁用后重新启用时，原型重写已被 restoreOriginalFunctions 还原，需要重新应用
       if (!injectorActive) {

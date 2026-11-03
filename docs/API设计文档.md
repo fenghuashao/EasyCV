@@ -5,7 +5,7 @@
 **项目名称**: EasyCV - 解除网页复制粘贴限制插件  
 **API版本**: V1.0  
 **文档版本**: 1.0.0  
-**最后更新**: 2024年12月
+**最后更新**: 2026年11月3日（设置读写及状态刷新协议）
 
 ## 🎯 API架构概览
 
@@ -284,18 +284,23 @@ const originalStyles = DOMUtils.modifyStyles(element, {
 ##### getPluginSettings()
 **功能**: 获取插件设置
 
+`enabled`、`forceMode` 以独立存储键 `plugin_enabled`、`force_mode` 为准，覆盖旧 `user_settings` 对象中同名字段。名单通过专用 getter 读取。
+
 **返回值**: `Promise<Object>` - 插件设置对象
 ```javascript
 {
-  isEnabled: boolean,
+  enabled: boolean,
   forceMode: boolean,
   showNotifications: boolean,
-  autoEnableList: Array<string>
+  copyEnabled: boolean,
+  pasteEnabled: boolean
 }
 ```
 
 ##### setPluginSettings(settings)
 **功能**: 设置插件配置
+
+支持部分字段更新。设置页仅传入本次编辑字段，避免把页面打开时的旧快照覆盖到其他入口刚修改的设置。
 
 **参数**:
 - `settings` (Object): 插件设置对象
@@ -483,7 +488,12 @@ const MESSAGE_TYPES = {
 }
 ```
 
+**状态刷新通知（1.1.2）**
+
+状态变更通知使用 `MessageUtils.MESSAGE_TYPES` 的实际值：`state_updated`、`copy_status_changed`、`paste_status_changed`。内容端将这些通知入队后重新发送带当前域名的 `GET_STATUS`；`state_updated.data.newState` 是后台缓存结构，不能直接作为页面状态。存储广播 `update_status` 涉及主开关、强力模式、用户设置、自动名单或排除名单时同样重读本站状态。无关统计键不触发页面重应用。
+
 **GET_SETTINGS**
+
 ```javascript
 // 请求
 {
@@ -653,4 +663,4 @@ const ERROR_TYPES = {
 
 **文档维护**: 本文档随代码实现同步更新  
 **版本控制**: 遵循语义化版本规范  
-**最后更新**: 2024年12月
+**最后更新**: 2026年11月3日（设置读写及状态刷新协议）

@@ -1,0 +1,60 @@
+{
+  "extensionPath": "/Users/fengshaohua/pro/github/EasyCV/releases/permission-recheck-20261101/EasyCV-v1.1.2-20261031",
+  "browser": "/Users/fengshaohua/Library/Caches/ms-playwright/chromium-1234/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+  "results": [
+    {
+      "name": "Options force mode survives refresh and unrelated setting save",
+      "pass": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:68:12\n    at async check (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:19:9)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:61:3"
+    },
+    {
+      "name": "disabled child switches retain all four paste restrictions",
+      "pass": false,
+      "error": "AssertionError [ERR_ASSERTION]: listener on http://easycv.localhost:18963/test/fixtures/state-sync.html?a\n+ actual - expected\n\n+ 'EASYCV_NEGATIVE'\n- ''\n\n    at paste (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:51:12)\n    at async restrictions (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:58:70)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:78:5\n    at async check (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:19:9)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:77:3"
+    },
+    {
+      "name": "Popup enables four paste mechanisms in both existing tabs without reload",
+      "pass": false,
+      "error": "AssertionError [ERR_ASSERTION]: inline on http://easycv.localhost:18963/test/fixtures/state-sync.html?a\n+ actual - expected\n\n+ ''\n- 'EASYCV_POPUP_A'\n\n    at paste (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:51:12)\n    at async restrictions (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:58:70)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:83:5\n    at async check (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:19:9)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:80:3"
+    },
+    {
+      "name": "selection and trusted copy work after Popup enable without reload",
+      "pass": true
+    },
+    {
+      "name": "Popup disable and re-enable restore restrictions and unlock without reload",
+      "pass": false,
+      "error": "AssertionError [ERR_ASSERTION]: listener on http://easycv.localhost:18963/test/fixtures/state-sync.html?a\n+ actual - expected\n\n+ 'EASYCV_OFF_AGAIN'\n- ''\n\n    at paste (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:51:12)\n    at async restrictions (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:58:70)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:102:5\n    at async check (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:19:9)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:99:3"
+    },
+    {
+      "name": "stale Options page cannot overwrite a Popup force-mode change",
+      "pass": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n\n    at file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:117:12\n    at async check (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:19:9)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:108:3"
+    },
+    {
+      "name": "global toggles do not activate an already excluded tab",
+      "pass": false,
+      "error": "AssertionError [ERR_ASSERTION]: listener on http://blocked.localhost:18963/test/fixtures/state-sync.html\n+ actual - expected\n\n+ 'EASYCV_EXCLUDED'\n- ''\n\n    at paste (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:51:12)\n    at async restrictions (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:58:70)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:127:5\n    at async check (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:19:9)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:121:3"
+    },
+    {
+      "name": "auto list first visit unlocks actual inputs without refresh",
+      "pass": false,
+      "error": "AssertionError [ERR_ASSERTION]: inline on http://fresh.localhost:18963/test/fixtures/state-sync.html\n+ actual - expected\n\n+ ''\n- 'EASYCV_AUTO_FIRST'\n\n    at paste (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:51:12)\n    at async restrictions (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:58:70)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:135:5\n    at async check (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:19:9)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:130:3"
+    },
+    {
+      "name": "adding a previously visited domain takes effect on next visit",
+      "pass": false,
+      "error": "AssertionError [ERR_ASSERTION]: inline on http://cached.localhost:18963/test/fixtures/state-sync.html?listed\n+ actual - expected\n\n+ ''\n- 'EASYCV_AUTO_ADDED'\n\n    at paste (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:51:12)\n    at async restrictions (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:58:70)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:143:5\n    at async check (file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:19:9)\n    at async file:///Users/fengshaohua/pro/github/EasyCV/test/state-sync-regression.mjs:137:3"
+    },
+    {
+      "name": "removing an auto domain invalidates its positive cache",
+      "pass": true
+    }
+  ],
+  "evidence": {},
+  "notCovered": [
+    "native toolbar/menu",
+    "normal installed-browser restart",
+    "store upgrade"
+  ]
+}

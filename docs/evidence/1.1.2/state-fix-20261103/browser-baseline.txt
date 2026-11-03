@@ -1,0 +1,47 @@
+FAIL Options force mode survives refresh and unrelated setting save: Expected values to be strictly equal:
+
+false !== true
+
+FAIL disabled child switches retain all four paste restrictions: listener on http://easycv.localhost:18963/test/fixtures/state-sync.html?a
++ actual - expected
+
++ 'EASYCV_NEGATIVE'
+- ''
+
+FAIL Popup enables four paste mechanisms in both existing tabs without reload: inline on http://easycv.localhost:18963/test/fixtures/state-sync.html?a
++ actual - expected
+
++ ''
+- 'EASYCV_POPUP_A'
+
+PASS selection and trusted copy work after Popup enable without reload
+FAIL Popup disable and re-enable restore restrictions and unlock without reload: listener on http://easycv.localhost:18963/test/fixtures/state-sync.html?a
++ actual - expected
+
++ 'EASYCV_OFF_AGAIN'
+- ''
+
+FAIL stale Options page cannot overwrite a Popup force-mode change: Expected values to be strictly equal:
+
+false !== true
+
+FAIL global toggles do not activate an already excluded tab: listener on http://blocked.localhost:18963/test/fixtures/state-sync.html
++ actual - expected
+
++ 'EASYCV_EXCLUDED'
+- ''
+
+FAIL auto list first visit unlocks actual inputs without refresh: inline on http://fresh.localhost:18963/test/fixtures/state-sync.html
++ actual - expected
+
++ ''
+- 'EASYCV_AUTO_FIRST'
+
+FAIL adding a previously visited domain takes effect on next visit: inline on http://cached.localhost:18963/test/fixtures/state-sync.html?listed
++ actual - expected
+
++ ''
+- 'EASYCV_AUTO_ADDED'
+
+PASS removing an auto domain invalidates its positive cache
+2/10 passed

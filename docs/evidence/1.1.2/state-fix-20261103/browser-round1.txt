@@ -1,0 +1,14 @@
+PASS Options force mode survives refresh and unrelated setting save
+FAIL disabled child switches retain all four paste restrictions: listener on http://easycv.localhost:18963/test/fixtures/state-sync.html?a
++ actual - expected
+
++ 'EASYCV_NEGATIVE'
+- ''
+
+PASS Popup enables four paste mechanisms in both existing tabs without reload
+PASS selection and trusted copy work after Popup enable without reload
+PASS global toggles do not activate an already excluded tab
+PASS auto list first visit unlocks actual inputs without refresh
+PASS adding a previously visited domain takes effect on next visit
+PASS removing an auto domain invalidates its positive cache
+7/8 passed
