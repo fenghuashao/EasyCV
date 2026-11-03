@@ -10,14 +10,16 @@
 
 const fs = require('fs');
 const path = require('path');
-const { chromium } = require(process.env.PLAYWRIGHT_PATH
-  || 'C:/Program Files/nodejs/node_modules/@playwright/cli/node_modules/playwright');
 
 const rootDir = path.resolve(__dirname, '..');
 const ALL_STATES = ['default', 'active', 'partial', 'inactive'];
 const SIZES = ['16', '32', '48', '128'];
 
 (async () => {
+  // playwright 未列为项目依赖（避免强制下载浏览器），默认解析全局 @playwright/cli 的嵌套依赖
+  const playwrightModule = process.env.PLAYWRIGHT_PATH
+    || path.join(path.dirname(process.execPath), 'node_modules/@playwright/cli/node_modules/playwright');
+  const { chromium } = await import(playwrightModule);
   const args = process.argv.slice(2);
   const states = args.includes('all')
     ? ALL_STATES

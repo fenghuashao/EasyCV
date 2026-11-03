@@ -9,12 +9,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createRequire } from 'node:module';
 
 // playwright 未列为项目依赖（避免强制下载浏览器），默认解析全局 @playwright/cli 的嵌套依赖
-const require = createRequire(import.meta.url);
-const { chromium } = require(process.env.PLAYWRIGHT_PATH
-  || 'C:/Program Files/nodejs/node_modules/@playwright/cli/node_modules/playwright');
+const playwrightModule = process.env.PLAYWRIGHT_PATH
+  || path.join(path.dirname(process.execPath), 'node_modules/@playwright/cli/node_modules/playwright');
+const { chromium } = await import(playwrightModule);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const extensionPath = path.resolve(__dirname, '../dist');

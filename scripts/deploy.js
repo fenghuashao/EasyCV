@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { spawnSync } = require('child_process');
+const { execFileSync } = require('child_process');
 const Builder = require('./build');
 const Packager = require('./package');
 const Cleaner = require('./clean');
@@ -112,13 +112,24 @@ class Deployer {
   async runTests() {
     const env = { ...process.env };
     delete env.NODE_TEST_CONTEXT; // A nested invocation must run real child tests as well.
-    for (const [name, args] of [
-      ['syntax', ['scripts/lint.js']],
-      ['unit', ['--test', 'test/unit/*.test.mjs']],
-      ['docs', ['scripts/check-docs.js']]
-    ]) {
-      const result = spawnSync(process.execPath, args, { cwd: this.sourceDir, stdio: 'inherit', windowsHide: true, env });
-      if (result.error || result.status !== 0) throw Error(`${name} check failed (exit ${result.status})`);
+    // Fixed argument vectors, no shell: each check runs the local script directly.
+    try {
+      execFileSync('node', ['scripts/lint.js'],
+        { cwd: this.sourceDir, stdio: 'inherit', windowsHide: true, env });
+    } catch (error) {
+      throw Error(`syntax check failed (exit ${error.status})`);
+    }
+    try {
+      execFileSync('node', ['--test', 'test/unit/*.test.mjs'],
+        { cwd: this.sourceDir, stdio: 'inherit', windowsHide: true, env });
+    } catch (error) {
+      throw Error(`unit check failed (exit ${error.status})`);
+    }
+    try {
+      execFileSync('node', ['scripts/check-docs.js'],
+        { cwd: this.sourceDir, stdio: 'inherit', windowsHide: true, env });
+    } catch (error) {
+      throw Error(`docs check failed (exit ${error.status})`);
     }
     console.log('Local checks passed; browser/upgrade acceptance: NOT_RUN');
   }

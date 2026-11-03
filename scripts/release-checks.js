@@ -23,8 +23,12 @@ function verifyVersions(sourceDir) {
 }
 function collectFiles(root, entries = fs.readdirSync(root)) {
   const files = {};
+  const rootPath = path.resolve(root);
   const walk = relative => {
-    const absolute = path.join(root, relative);
+    const absolute = path.resolve(rootPath, relative);
+    // Every entry must stay inside the package root; `..` segments are rejected.
+    const contained = absolute === rootPath || absolute.startsWith(rootPath + path.sep);
+    if (!contained) throw Error('Package entries must stay inside the package root');
     const stat = fs.lstatSync(absolute);
     if (stat.isSymbolicLink()) throw Error('Symlinks are not allowed in packages');
     if (stat.isDirectory()) for (const entry of fs.readdirSync(absolute)) walk(path.join(relative, entry));
