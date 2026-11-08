@@ -4,9 +4,9 @@ EasyCV helps with some restrictions on text selection, copying, pasting and the 
 
 EasyCV 协助处理普通网页对文字选择、复制、粘贴和右键菜单的部分限制，实际效果取决于网站。
 
-EasyCV 協助處理一般網頁對文字選取、複製、貼上和右鍵選單的部分限制，實際效果取決於網站。
+EasyCV 協助處理一般網頁對文字選取、複製、貼上和右鍵選單的部分限制，實際效果依網站而異。
 
-EasyCV は通常のウェブページでの文字選択、コピー、貼り付け、右クリックメニューの制限解除を支援します。効果はサイトによって異なります。
+EasyCV は通常のウェブページでの文字選択、コピー、貼り付け、右クリックメニューに関する制限の一部を解除できるよう支援します。効果はサイトによって異なります。
 
 | Language | User guide | Privacy policy | Changelog |
 | --- | --- | --- | --- |
