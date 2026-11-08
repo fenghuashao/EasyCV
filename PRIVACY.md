@@ -1,5 +1,7 @@
 # EasyCV 隐私政策
 
+[简体中文](#easycv-隐私政策) | [繁體中文](./docs/privacy/zh-TW.md) | [日本語](./docs/privacy/ja.md) | [English](#easycv-privacy-policy)
+
 生效日期：2026-11-03 ｜ 适用版本：EasyCV 1.1.1，以及 1.1.3 和之后包含同等数据处理方式的版本
 
 EasyCV 帮助你在受到限制的网页上使用复制、粘贴、文字选择和右键菜单。下文先说明 1.1.3 的处理方式，1.1.1 的区别见「1.1.1 版本」。
@@ -68,6 +70,8 @@ EasyCV 对从 Google API 获得的信息的使用和传输将遵守 Chrome Web S
 ---
 
 # EasyCV Privacy Policy
+
+[简体中文](#easycv-隐私政策) | [繁體中文](./docs/privacy/zh-TW.md) | [日本語](./docs/privacy/ja.md) | [English](#easycv-privacy-policy)
 
 Effective date: 2026-11-03 | Applies to: EasyCV 1.1.1, and 1.1.3 and later versions with the same data handling
 
