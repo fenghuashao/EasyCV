@@ -80,10 +80,25 @@ class DocsChecker {
     }
 
     const content = fs.readFileSync(this.indexPath, 'utf8');
+    this.checkMarkdownLinks(this.indexPath, content, 'index');
+  }
+
+  checkMarkdownLinks(filePath, content, type = 'path') {
+    // Ignore Markdown examples inside fenced blocks while preserving line offsets.
+    let fence = null;
+    const prose = content.split(/(?<=\n)/).map((line) => {
+      const marker = line.match(/^ {0,3}(`{3,}|~{3,})/);
+      if (marker) {
+        if (!fence) fence = marker[1];
+        else if (marker[1][0] === fence[0] && marker[1].length >= fence.length) fence = null;
+        return line.replace(/[^\r\n]/g, ' ');
+      }
+      return fence ? line.replace(/[^\r\n]/g, ' ') : line;
+    }).join('');
     const linkRegex = /\[[^\]]+\]\(([^)]+)\)/g;
     let match;
 
-    while ((match = linkRegex.exec(content)) !== null) {
+    while ((match = linkRegex.exec(prose)) !== null) {
       const rawTarget = match[1].trim();
 
       if (!rawTarget || this.isExternalTarget(rawTarget)) {
@@ -91,17 +106,17 @@ class DocsChecker {
       }
 
       const target = decodeURIComponent(rawTarget.split('#')[0]);
-      const resolvedPath = path.resolve(path.dirname(this.indexPath), target);
+      const resolvedPath = path.resolve(path.dirname(filePath), target);
       const line = this.getLineNumber(content, match.index);
 
       if (!fs.existsSync(resolvedPath)) {
         this.addFinding({
-          type: 'index',
-          file: this.toRepoPath(this.indexPath),
+          type,
+          file: this.toRepoPath(filePath),
           line,
           value: rawTarget,
-          message: '文档索引引用了不存在的本地文件。',
-          suggestion: '修正 docs/README.md 中的链接路径，或补齐缺失文件。'
+          message: 'Markdown 链接引用了不存在的本地文件。',
+          suggestion: '修正文档中的相对链接路径，或补齐缺失文件。'
         });
       }
     }
@@ -114,6 +129,7 @@ class DocsChecker {
       const content = fs.readFileSync(filePath, 'utf8');
       const relativeFile = this.toRepoPath(filePath);
       this.checkPlaceholders(relativeFile, content);
+      if (filePath !== this.indexPath) this.checkMarkdownLinks(filePath, content);
       this.checkPathReferences(relativeFile, content);
     });
   }
@@ -228,7 +244,7 @@ class DocsChecker {
   }
 
   isExternalTarget(target) {
-    return /^(https?:\/\/|chrome:\/\/|mailto:|#)/i.test(target);
+    return /^([a-z][a-z0-9+.-]*:|\/\/|#)/i.test(target);
   }
 
   isRepoPathCandidate(candidate) {

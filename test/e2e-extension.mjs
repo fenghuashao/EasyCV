@@ -1,6 +1,6 @@
 /**
  * EasyCV 扩展端到端验证脚本
- * 以持久化上下文加载 dist/ 扩展，对 test-page.html 的 7 个测试区逐项断言
+ * 以持久化上下文加载 dist/ 扩展，对 test/fixtures/copy-paste.html 的 7 个测试区逐项断言
  *
  * 前置条件：先执行 npm run build，并启动本地静态服务（默认 http://127.0.0.1:8931）
  * 运行：node test/e2e-extension.mjs
@@ -21,7 +21,7 @@ const extensionPath = path.resolve(__dirname, '../dist');
 const expectedVersion = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, '../manifest.json'), 'utf8')
 ).version;
-const testPageUrl = process.env.TEST_PAGE_URL || 'http://127.0.0.1:8931/test-page.html';
+const testPageUrl = process.env.TEST_PAGE_URL || 'http://127.0.0.1:8931/test/fixtures/copy-paste.html';
 
 const results = [];
 function report(name, pass, detail = '') {

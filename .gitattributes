@@ -2,3 +2,7 @@
 _locales/ja/messages.json whitespace=cr-at-eol
 _locales/zh_TW/messages.json whitespace=cr-at-eol
 test/unit/reliability.test.mjs whitespace=cr-at-eol
+
+# Documentation and captured evidence should not skew GitHub's language summary.
+docs/** linguist-documentation=true
+.trae/** linguist-documentation=true

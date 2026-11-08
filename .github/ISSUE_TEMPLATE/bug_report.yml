@@ -1,0 +1,48 @@
+name: Bug report / 问题反馈
+description: Report a problem with EasyCV, a website, or a translation.
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        English, 简体中文, 繁體中文 and 日本語 are welcome.
+        Use synthetic examples. Remove personal data, cookies, tokens and private URLs.
+        For vulnerabilities, follow the [security policy](https://github.com/fenghuashao/EasyCV/blob/master/.github/SECURITY.md).
+  - type: input
+    id: extension-version
+    attributes:
+      label: EasyCV version and source / 版本与安装来源
+      placeholder: "Example: 1.1.3, Chrome Web Store; or source commit"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser, OS and language / 浏览器、系统与语言
+      placeholder: "Example: Chrome version, Windows/macOS/Linux version, English"
+    validations:
+      required: true
+  - type: input
+    id: website
+    attributes:
+      label: Public website or minimal example / 公开网址或最小示例
+      description: Leave out account identifiers, access tokens and private page URLs.
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce / 复现步骤
+      description: Include copy/paste settings, Force Mode, auto-enable and exclusion rules.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-and-actual
+    attributes:
+      label: Expected and actual behavior / 预期与实际结果
+      description: State whether the problem also occurs with EasyCV disabled.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Redacted logs or screenshots / 脱敏日志或截图
+      description: Include only what is needed to understand the problem.

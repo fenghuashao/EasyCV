@@ -1,0 +1,21 @@
+name: Feature or translation request / 功能或翻译建议
+description: Suggest a focused improvement to EasyCV or its documentation.
+title: "[Feature] "
+body:
+  - type: markdown
+    attributes:
+      value: English, 简体中文, 繁體中文 and 日本語 are welcome. Please check existing issues first.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case / 问题与使用场景
+      description: Describe what you are trying to do and where the current behavior falls short.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed improvement / 改进建议
+      description: Include alternatives or examples. For translations, identify the language and text.
+    validations:
+      required: true

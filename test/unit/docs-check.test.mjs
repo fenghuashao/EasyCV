@@ -43,10 +43,17 @@ test('docs checker accepts an existing runtime directory', (t) => {
   assert.equal(result.status, 0, result.output);
 });
 
+test('docs checker ignores Unicode link examples inside fenced code', (t) => {
+  const result = checkDocs(t, '```markdown\n[Example](./不存在.md)\n```');
+  assert.equal(result.status, 0, result.output);
+});
+
 const failures = [
   ['ordinary missing file alongside optional profile', '`test/real-sites/.profile/` and `test/real-sites/missing.mjs`', {}, 'test/real-sites/missing.mjs'],
   ['ordinary broken Markdown link', '[Missing](../test/real-sites/missing.mjs)', {}, 'test/real-sites/missing.mjs'],
   ['ordinary broken document link', '[Missing](../docs/missing.md)', {}, '../docs/missing.md'],
+  ['broken Unicode document link', '[日本語](./存在しない.md)', {}, './存在しない.md'],
+  ['broken Unicode image link', '![截图](./截图.png)', {}, './截图.png'],
   ['runtime directory used as a Markdown link', '[Profile](../test/real-sites/.profile/)', {}, '../test/real-sites/.profile/'],
   ['runtime directory linked from index', '', { indexExtra: '[Profile](../test/real-sites/.profile/)\n' }, '../test/real-sites/.profile/', 2],
   ['missing child file under runtime directory', '`test/real-sites/.profile/missing.json`', {}, 'test/real-sites/.profile/missing.json'],

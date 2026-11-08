@@ -1,76 +1,100 @@
-# EasyCV 文档索引
+# EasyCV documentation / 文档索引
 
-## 面向用户的文档
+For installation and day-to-day use, choose a language from the [repository homepage](../README.md#user-guides). Contributor instructions are in [Contributing](../.github/CONTRIBUTING.md); most detailed engineering documents are currently in Simplified Chinese.
 
-[仓库首页](../README.md)提供简体中文、繁體中文、日文和英文的使用手册、隐私政策与更新日志入口。[对外文档核对记录](./对外文档核对记录-2026-11-08.md)记载 2026-11-08 的商店包比对和版本边界；[Wiki 更新模板](./wiki-draft/README.md)用于维护公开入口，实际状态以线上 Wiki 为准。当前仓库 manifest 为 1.1.2；同一天核对的 Chrome Web Store 分发包为 1.1.3，不能仅按本地版本号推断线上状态。
+用户文档按语言组织；工程文档按用途归类。历史报告只描述记录时点的构建与验证，不作为当前商店状态的证明。2026-11-08 的[分发包核对记录](./reports/2026-11/对外文档核对记录-2026-11-08.md)说明商店 1.1.3 与源码 manifest 1.1.2 的版本边界。
 
-历史阶段的本地实现与验收见[四语言支持验收](../EASYCV-I18N-ACCEPTANCE-20261103.md)、[W1–W6 本地验收报告](../EASYCV-W1-W6-LOCAL-ACCEPTANCE.md)和[状态修复验收](../EASYCV-1.1.2-STATE-FIX-ACCEPTANCE.md)。这些报告的“未发布”等状态描述仅适用于各自记录时点，不能作为现在商店状态的证明。
+## Quick links / 快速入口
 
-本索引用于帮助你快速判断：现在应该看哪份文档、改动时应该同步更新哪份文档。
+- 用户：从[首页](../README.md#user-guides)选择四语言手册、隐私政策和更新摘要。
+- 开发：[贡献指南](../.github/CONTRIBUTING.md)、[架构](./development/技术架构文档.md)、[API](./development/API设计文档.md)、[代码规范](./development/代码规范文档.md)。
+- 测试：[测试入口](../test/README.md)、[计划](./testing/测试计划.md)、[用例](./testing/测试用例.md)、[功能验证](./testing/功能验证指南.md)。
+- 发布：[部署与候选构建](./release/部署文档.md)、[打包说明](./release/自动化打包配置说明.md)、[发布清单](./release/release-checklist.md)。
+- 维护：[文档维护](./governance/文档维护指南.md)、[历史报告](./reports/README.md)、[GitHub 属性配置](./release/github-repository-settings.md)。
 
-文档角色（Vocabulary）以根目录的 [CONTEXT.md](../CONTEXT.md) 为准：Source Document / Reference Document / Working Document / Evidence Document / Governance Document / Archive / Asset。本文档用“状态=archive”表达“归档（Archive）材料”。
+## Layout / 目录用途
 
-## 1.1.2 本地修复与验收
+```text
+docs/
+├── user-guide/     English, 繁體中文、日本語手册
+├── 用户使用手册.md  简体中文手册，保留公开链接
+├── privacy/        繁體中文、日本語政策；中英文政策在根目录
+├── changelog/      英文、繁體中文、日本語更新摘要
+├── development/   架构、API、代码规范
+├── testing/       测试计划、用例与验证方法
+├── release/       构建发布、核验清单与仓库后台配置
+├── planning/      需求、计划与任务清单
+├── governance/    文档治理、词汇表与助手指南
+├── decisions/     架构决策记录
+├── research/      参考研究
+├── reports/       按年月归类的调查与验收报告
+├── evidence/      历史原始证据，保留原路径和内容
+├── archive/       早期日志、方案与历史分析页
+├── assets/        文档图示
+├── templates/     写作模板
+└── wiki-draft/    公开 Wiki 的维护草稿
+```
 
-[状态修复验收](../EASYCV-1.1.2-STATE-FIX-ACCEPTANCE.md)、[权限整改](../EASYCV-1.1.2-PERMISSION-FIX.md)、[旧包 Windows 验收](../EASYCV-1.1.2-WINDOWS-ACCEPTANCE.md)及[后续优化记录](../EASYCV-OPTIMIZATION-20261103.md)分别记录不同源码或本地候选包，不能互相替代。后续 Git 与商店状态以实际来源复核为准。
+扩展运行时源码保留在仓库根目录对应模块中，详见[首页目录说明](../README.md#repository-layout)。受控测试页位于 `test/fixtures/copy-paste.html`，图标辅助工具位于 `scripts/tools/svg-to-png.html`，Windows 快速打包入口位于 `scripts/package-quick.bat`。
 
-## 快速入口
+## Document inventory / 文档清单
 
-- 用户手册、隐私政策和更新日志：从 [仓库首页](../README.md)选择语言
-- 需求与范围：优先看 [EasyCV插件功能需求文档](./EasyCV插件功能需求文档%20.txt)
-- 当前实现与模块边界：优先看 [技术架构文档](./技术架构文档.md)
-- 工具类接口与模块 API：优先看 [API设计文档](./API设计文档.md)
-- 发布与打包：优先看 [部署文档](./部署文档.md) 与 [自动化打包配置说明](./自动化打包配置说明.md)
-- 测试怎么做：优先看 [测试计划](./测试计划.md) 与 [测试用例](./测试用例.md)
-- 文档如何维护：优先看 [文档维护指南](./文档维护指南.md) 与 [AI开发助手指南](./AI开发助手指南.md)
+角色术语以 [CONTEXT](./governance/CONTEXT.md) 为准。`active` 表示持续维护的入口或参考，`archive` 表示保留用于追溯；不把历史报告中的状态自动当作当前状态。
 
-## 文档清单
+| 文档 | 角色 | 状态 | 推荐读者 | 维护触发条件 |
+| --- | --- | --- | --- | --- |
+| [Repository homepage](../README.md) | Governance Document | active | 全员 | 对外介绍、安装入口、目录或版本范围变化 |
+| [Documentation index](./README.md) | Governance Document | active | 全员 | 文件分类、默认入口变化 |
+| [Contributing](../.github/CONTRIBUTING.md) | Governance Document | active | 贡献者 | 开发命令或贡献流程变化 |
+| [Support](../.github/SUPPORT.md) | Reference Document | active | 用户 | 反馈入口或所需信息变化 |
+| [Security policy](../.github/SECURITY.md) | Governance Document | active | 用户与贡献者 | 报告渠道或支持策略变化 |
+| [Code of conduct](../.github/CODE_OF_CONDUCT.md) | Governance Document | active | 社区 | 社区规范或联系渠道变化 |
+| [Test directory guide](../test/README.md) | Reference Document | active | 开发与测试 | 测试命令、环境或 fixture 变化 |
+| [CONTEXT](./governance/CONTEXT.md) | Governance Document | active | 维护者 | 文档治理术语变化 |
+| [用户使用手册（简体中文）](./用户使用手册.md) | Source Document | active | 用户 | 用户行为或版本范围变化 |
+| [User guide（English）](./user-guide/en.md) | Source Document | active | 用户 | 手册内容或翻译变化 |
+| [使用手冊（繁體中文）](./user-guide/zh-TW.md) | Source Document | active | 用户 | 手册内容或翻译变化 |
+| [ユーザーガイド（日本語）](./user-guide/ja.md) | Source Document | active | 用户 | 手册内容或翻译变化 |
+| [Privacy（简体中文 / English）](../PRIVACY.md) | Source Document | active | 用户与维护者 | 实际数据处理、权限或政策变化 |
+| [隱私權政策（繁體中文）](./privacy/zh-TW.md) | Source Document | active | 用户 | 政策正文或翻译变化 |
+| [プライバシーポリシー（日本語）](./privacy/ja.md) | Source Document | active | 用户 | 政策正文或翻译变化 |
+| [Changelog（简体中文）](../CHANGELOG.md) | Source Document | active | 用户与维护者 | 分发版本或历史状态补录 |
+| [Changelog（English）](./changelog/en.md) | Reference Document | active | 用户 | 用户相关更新摘要变化 |
+| [更新紀錄（繁體中文）](./changelog/zh-TW.md) | Reference Document | active | 用户 | 用户相关更新摘要变化 |
+| [更新履歴（日本語）](./changelog/ja.md) | Reference Document | active | 用户 | 用户相关更新摘要变化 |
+| [需求](./planning/requirements.txt) | Source Document | active | 产品与开发 | 需求、交互或范围变化 |
+| [复制粘贴限制研究](./research/copy-paste-analysis.txt) | Reference Document | active | 产品与开发 | 参考研究补充 |
+| [技术架构](./development/技术架构文档.md) | Source Document | active | 开发与测试 | 模块、消息或存储边界变化 |
+| [API 设计](./development/API设计文档.md) | Source Document | active | 开发与测试 | 接口或消息协议变化 |
+| [代码规范](./development/代码规范文档.md) | Governance Document | active | 开发 | 代码组织或规范变化 |
+| [测试计划](./testing/测试计划.md) | Source Document | active | 开发与测试 | 测试策略或发布门槛变化 |
+| [测试用例](./testing/测试用例.md) | Source Document | active | 开发与测试 | 功能回归范围变化 |
+| [功能验证指南](./testing/功能验证指南.md) | Reference Document | active | 开发与测试 | 操作步骤或环境变化 |
+| [部署文档](./release/部署文档.md) | Source Document | active | 发布维护者 | 构建、打包或发布流程变化 |
+| [自动化打包说明](./release/自动化打包配置说明.md) | Reference Document | active | 发布维护者 | 脚本或 npm 命令变化 |
+| [发布核验清单](./release/release-checklist.md) | Working Document | active | 发布维护者 | 新候选验证前刷新，保留旧包身份 |
+| [GitHub 属性配置](./release/github-repository-settings.md) | Reference Document | active | 维护者 | 仓库属性或协作配置变化 |
+| [文档维护指南](./governance/文档维护指南.md) | Governance Document | active | 维护者 | 分类、维护或校验流程变化 |
+| [AI 开发助手指南](./governance/AI开发助手指南.md) | Governance Document | active | 开发与助手 | 协作与验证流程变化 |
+| [项目开发计划](./planning/项目开发计划.md) | Working Document | active | 产品与开发 | 当前目标与计划变化 |
+| [待修复任务](./planning/待修复任务清单.md) | Working Document | active | 开发与测试 | 待办或优先级变化 |
+| [下一版计划](./planning/EASYCV-NEXT-VERSION-PLAN.md) | Working Document | archive | 维护者 | 追溯 2026-11 的计划依据 |
+| [ADR-001](./decisions/ADR-001-合并t1重写版.md) | Governance Document | active | 维护者 | 相关决策重新评估 |
+| [报告索引](./reports/README.md) | Governance Document | active | 维护者 | 新增或归档报告 |
+| [分发包核对记录](./reports/2026-11/对外文档核对记录-2026-11-08.md) | Evidence Document | archive | 维护者 | 仅补录当轮证据 |
+| [Wiki 草稿](./wiki-draft/README.md) | Working Document | active | 维护者 | 对外文档入口变化 |
+| [早期开发日志](./archive/开发日志-2024-12.md) | Evidence Document | archive | 维护者 | 历史追溯 |
+| [文档治理方案](./archive/spec-文档信息架构与治理（轻量治理）.md) | Working Document | archive | 维护者 | 历史追溯 |
+| [早期测试报告](./archive/测试报告-第三阶段.md) | Evidence Document | archive | 维护者 | 历史追溯 |
+| [历史一致性分析](./archive/analysis-report.html) | Evidence Document | archive | 维护者 | 历史追溯 |
+| [开发日志模板](./templates/开发日志模板.md) | Asset | active | 开发 | 模板结构变化 |
+| [UI 图示](./assets/EasyCV-UI.svg) | Asset | active | 产品与开发 | 视觉资产变化 |
+| [SVG 图标工具](../scripts/tools/svg-to-png.html) | Asset | active | 开发 | 图标生成方式变化 |
 
-| 文档 | 角色 | 状态 | 默认真相来源（Source Document / Governance Document） | 推荐读者 | 维护触发条件 |
-| --- | --- | --- | --- | --- | --- |
-| [docs/README](./README.md) | Governance Document | active | 本文档 | 全员 | 文档清单、默认入口或维护约定发生变化 |
-| [CONTEXT](../CONTEXT.md) | Governance Document | active | 本文档 | 全员 | 文档治理术语发生变化 |
-| [EasyCV插件功能需求文档](./EasyCV插件功能需求文档%20.txt) | Source Document | active | 本文档 | 产品/开发/测试 | 需求、交互、范围发生变化 |
-| [解除网页复制粘贴插件分析报告](./解除网页复制粘贴插件分析报告_.txt) | Reference Document | active | EasyCV插件功能需求文档 | 产品/开发 | 需要补充竞品研究或设计依据 |
-| [技术架构文档](./技术架构文档.md) | Source Document | active | 本文档 | 开发/测试 | 模块边界、消息流、存储结构、关键算法发生变化 |
-| [API设计文档](./API设计文档.md) | Source Document | active | 本文档 | 开发/测试 | utils/消息协议/API 接口发生变化 |
-| [代码规范文档](./代码规范文档.md) | Governance Document | active | 本文档 | 开发 | 引入新的代码组织方式、风格规范需要更新 |
-| [文档维护指南](./文档维护指南.md) | Governance Document | active | 本文档 | 开发/测试/维护者 | 文档分类、维护流程、质量门禁发生变化 |
-| [AI开发助手指南](./AI开发助手指南.md) | Governance Document | active | 本文档 | 开发/AI助手 | AI 执行流程、检查清单、质量门禁发生变化 |
-| [项目开发计划](./项目开发计划.md) | Working Document | active | EasyCV插件功能需求文档 | 开发/产品 | 里程碑、阶段目标、风险与优先级发生变化 |
-| [ADR-001 合并 t1 重写版](./decisions/ADR-001-合并t1重写版.md) | Governance Document | active | 本文档 | 开发/维护者 | 合并范围或移植选型被重新决策 |
-| [待修复任务清单](./待修复任务清单.md) | Working Document | active | 项目开发计划 | 开发/测试 | 新增任务、任务状态变化、优先级调整 |
-| [发布核验清单](./release-checklist.md) | Working Document | active | 测试计划 | 开发/发布 | 每次发布前按 release-readiness 流程刷新 |
-| [测试计划](./测试计划.md) | Source Document | active | 本文档 | 测试/开发 | 测试策略、浏览器支持范围、执行方式、发布前门槛发生变化 |
-| [测试用例](./测试用例.md) | Source Document | active | 测试计划 | 测试/开发 | 功能变更、新增功能、回归范围变化 |
-| [功能验证指南](./功能验证指南.md) | Reference Document | active | 测试计划 | 测试/开发 | 验证步骤、关键流程或测试环境发生变化 |
-| [测试报告-第三阶段](./测试报告-第三阶段.md) | Evidence Document | archive | 测试计划 | 测试/维护者 | 仅在补录历史证据或复盘时更新 |
-| [测试报告-真实站点回归-2026-08-v2](./测试报告-真实站点回归-2026-08-v2.md) | Evidence Document | active | 测试计划 | 测试/开发/维护者 | 真实站点复测结论变化；知乎/B站登录态补测与文库人工项完成后更新 |
-| [部署文档](./部署文档.md) | Source Document | active | 本文档 | 开发/发布 | 构建、打包、发布流程或脚本入口发生变化 |
-| [自动化打包配置说明](./自动化打包配置说明.md) | Reference Document | active | 部署文档 | 开发/发布 | scripts 或 npm 命令发生变化 |
-| [用户使用手册（简体中文）](./用户使用手册.md) | Source Document | active | 当前分发包及产品实现 | 用户/产品/开发 | 用户功能、隐私与权限说明、交互流程发生变化 |
-| [User Guide（繁體中文）](./user-guide/zh-TW.md) | Source Document | active | 用户使用手册（简体中文） | 用户/产品/开发 | 用户手册内容或翻译变化 |
-| [User Guide（日文）](./user-guide/ja.md) | Source Document | active | 用户使用手册（简体中文） | 用户/产品/开发 | 用户手册内容或翻译变化 |
-| [User Guide（英文）](./user-guide/en.md) | Source Document | active | 用户使用手册（简体中文） | 用户/产品/开发 | 用户手册内容或翻译变化 |
-| [隐私政策（简体中文 / 英文）](../PRIVACY.md) | Source Document | active | 实际分发包及数据处理实现 | 用户/维护者 | 数据处理、权限、版本范围或政策变化 |
-| [隐私政策（繁體中文）](./privacy/zh-TW.md) | Source Document | active | 隐私政策（简体中文 / 英文） | 用户/维护者 | 政策正文或翻译变化 |
-| [隐私政策（日文）](./privacy/ja.md) | Source Document | active | 隐私政策（简体中文 / 英文） | 用户/维护者 | 政策正文或翻译变化 |
-| [更新日志（简体中文）](../CHANGELOG.md) | Source Document | active | 分发版本及项目记录 | 用户/维护者 | 版本或状态变化 |
-| [更新日志（繁體中文）](./changelog/zh-TW.md) | Reference Document | active | 更新日志（简体中文） | 用户/维护者 | 更新日志的用户相关摘要变化 |
-| [更新日志（日文）](./changelog/ja.md) | Reference Document | active | 更新日志（简体中文） | 用户/维护者 | 更新日志的用户相关摘要变化 |
-| [更新日志（英文）](./changelog/en.md) | Reference Document | active | 更新日志（简体中文） | 用户/维护者 | 更新日志的用户相关摘要变化 |
-| [对外文档核对记录](./对外文档核对记录-2026-11-08.md) | Evidence Document | archive | 核对时实际代码及官方分发包 | 维护者 | 仅补录本轮证据 |
-| [Wiki 更新草稿](./wiki-draft/README.md) | Working Document | active | 用户手册、隐私政策、更新日志 | 维护者 | 仓库对外文档入口变化 |
-| [开发日志-2024-12](./开发日志-2024-12.md) | Evidence Document | archive | 项目开发计划 | 开发/维护者 | 仅在补录历史记录或复盘时更新 |
-| [开发日志模板](./开发日志模板.md) | Asset | active | 文档维护指南 | 开发/维护者 | 日志结构或记录要求发生变化 |
-| [spec-文档信息架构与治理（轻量治理）](./spec-文档信息架构与治理（轻量治理）.md) | Working Document | archive | 文档维护指南 | 维护者 | 仅用于追溯本次治理决策与范围 |
-| [EasyCV-UI](./EasyCV-UI.svg) | Asset | active | EasyCV插件功能需求文档 | 产品/开发 | UI 原型或视觉资产发生变化 |
-| [svg_to_png_converter](./svg_to_png_converter.html) | Asset | active | EasyCV插件功能需求文档 | 开发/维护者 | EasyCV-UI 变更或需要重新生成图标 |
+## Maintenance / 维护约定
 
-## 维护约定
-
-- 运行文档校验：`npm run docs:check`。该命令会检查索引链接，以及索引纳管的 active 非 Asset 文档中的明显占位内容和仓库内路径引用是否有效。
-- 用户功能、隐私、权限或版本状态变化时，核对四种语言的手册、政策、更新摘要和导航；发布前另核对商店及 Wiki，不把仓库修改当作线上同步。
-- 修改任何功能/代码时，至少检查并同步更新对应的 Source Document（例如：需求、架构、API、测试、发布、用户手册）。
-- Evidence Document 与 Archive 用于留痕与追溯，不作为当前实现的默认真相来源。
-- Asset 只承载辅助材料与工具，不应该包含“系统如何工作”的权威描述。
+- 运行 `npm run docs:check` 检查索引及纳管的 active 文档；移动文件时同步更新入站、出站链接和调用脚本。
+- 保留首页、根目录隐私政策及更新日志，以及既有四语言用户文档的公开路径。工程文档按上述目录归类。
+- 用户功能、权限和数据处理变化时核对全部语言、商店实际包及 Wiki。仓库文件修改不会自动发布这些外部内容。
+- 只调整历史报告链接，不倒写历史结论。原始证据中的旧路径和命令保留；当前报告位置见[报告索引](./reports/README.md)。
+- `docs/evidence` 作为文档证据纳入 GitHub 文档分类，扩展打包继续只包含既定运行时白名单。

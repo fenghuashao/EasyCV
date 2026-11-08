@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: User guides / 使用手册
+    url: https://github.com/fenghuashao/EasyCV#user-guides
+    about: Installation, settings and known limits in four languages.
+  - name: Security reporting / 安全报告
+    url: https://github.com/fenghuashao/EasyCV/blob/master/.github/SECURITY.md
+    about: Read the reporting policy before sharing vulnerability details.

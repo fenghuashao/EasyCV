@@ -1,6 +1,6 @@
 /**
  * 图标生成脚本
- * 复用 docs/svg_to_png_converter.html 内的 SVG 源数据，渲染四态图标到 icons/
+ * 复用 scripts/tools/svg-to-png.html 内的 SVG 源数据，渲染四态图标到 icons/
  *
  * 用法：
  *   node scripts/generate-icons.js              # 默认只生成缺失的 partial/inactive 两套
@@ -39,7 +39,7 @@ const SIZES = ['16', '32', '48', '128'];
 
   try {
     const page = await browser.newPage();
-    const converterPath = path.join(rootDir, 'docs', 'svg_to_png_converter.html');
+    const converterPath = path.join(rootDir, 'scripts', 'tools', 'svg-to-png.html');
     await page.goto('file:///' + converterPath.replace(/\\/g, '/'));
 
     for (const state of states) {

@@ -1,7 +1,11 @@
 {
   "name": "easycv",
   "version": "1.1.2",
-  "description": "EasyCV - 解除网页复制粘贴限制的浏览器插件",
+  "description": "Browser extension that helps restore text selection, copy, paste and context menus on supported web pages.",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
   "main": "manifest.json",
   "scripts": {
     "dev": "echo 'Development mode - Load extension in Chrome'",
@@ -9,6 +13,7 @@
     "docs:check": "node scripts/check-docs.js",
     "test": "node --test \"test/unit/*.test.mjs\"",
     "test:e2e": "npm run build && node test/e2e-extension.mjs",
+    "test:serve": "node test/static-server.mjs",
     "test:coverage": "node --test \"test/unit/*.test.mjs\"",
     "lint": "node scripts/lint.js",
     "lint:fix": "node scripts/lint.js",
